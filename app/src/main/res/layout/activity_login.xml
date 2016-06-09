@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".view.LoginActivity">
+
+    <!--login layout-->
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/login_layout"
+        android:orientation="vertical"
+        android:background="@color/loginBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/components_margin">
+
+        <LinearLayout
+            android:layout_margin="@dimen/activity_margin"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:src="@mipmap/logo"
+                android:scaleType="centerInside"
+                android:layout_width="wrap_content"
+                android:layout_height="72dp"
+                android:layout_marginBottom="24dp"/>
+
+            <!--Username label-->
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/login_username_layout"
+                android:layout_marginTop="@dimen/components_margin"
+                android:layout_marginBottom="@dimen/components_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/login_username_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <!--Password label-->
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/login_password_layout"
+                android:layout_marginTop="@dimen/components_margin"
+                android:layout_marginBottom="@dimen/components_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/login_password_et"
+                    android:inputType="textPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <!--login button-->
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/login_sign_in_btn"
+                android:text="@string/login"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:padding="12dp"
+                android:background="@color/loginButton"
+                android:layout_marginTop="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--language choose layout-->
+    <LinearLayout
+        android:id="@+id/language_layout"
+        android:background="@color/languageChoiceBackground"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/components_margin">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_margin="@dimen/activity_margin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_marginTop="@dimen/components_margin"
+                android:layout_marginBottom="@dimen/components_margin"
+                android:textSize="@dimen/title_text_size"
+                android:textColor="@android:color/white"
+                android:text="@string/language_setting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:id="@+id/language_english_layout"
+                android:layout_marginTop="@dimen/components_margin"
+                android:layout_marginBottom="@dimen/components_margin"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!--choose english-->
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/language_english_cb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:textSize="@dimen/body_text_size"
+                    android:textColor="@android:color/white"
+                    android:text="@string/english"
+                    android:layout_marginLeft="@dimen/components_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/language_simplified_chinese_layout"
+                android:layout_marginTop="@dimen/components_margin"
+                android:layout_marginBottom="@dimen/components_margin"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!--choose simplified chinese-->
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/language_simplified_chinese_cb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:textSize="@dimen/body_text_size"
+                    android:textColor="@android:color/white"
+                    android:text="@string/simplified_chinese"
+                    android:layout_marginLeft="@dimen/components_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <!--ok button-->
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/language_ok_btn"
+                android:text="@string/ok"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:padding="12dp"
+                android:background="@color/languageChoiceButton"
+                android:layout_marginTop="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

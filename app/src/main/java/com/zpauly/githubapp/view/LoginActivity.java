@@ -1,0 +1,192 @@
+package com.zpauly.githubapp.view;
+
+import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatCheckBox;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+
+import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.view.ViewPropertyAnimator;
+import com.zpauly.githubapp.Api;
+import com.zpauly.githubapp.R;
+import com.zpauly.githubapp.base.BaseActivity;
+import com.zpauly.githubapp.presenter.LoginContract;
+import com.zpauly.githubapp.presenter.LoginPresenter;
+import com.zpauly.githubapp.utils.AuthUtil;
+import com.zpauly.githubapp.utils.LanguageUtil;
+
+public class LoginActivity extends BaseActivity implements LoginContract.View {
+    private LoginContract.Presenter mPresenter;
+
+    private static final int SELECT_SIMPLIFIED_CHINESE = 0;
+    private static final int SELECT_ENGLISH = 1;
+
+    private LinearLayout mLanguageLayout;
+    private LinearLayout mLoginLayout;
+    private AppCompatCheckBox mSimplifiedChineseCB;
+    private AppCompatCheckBox mEnglishCB;
+    private AppCompatButton mLanguageOkBTN;
+    private AppCompatButton mLoginBTN;
+    private TextInputEditText mUsernameET;
+    private TextInputEditText mPasswordET;
+    private TextInputLayout mUsernameLayout;
+    private TextInputLayout mPasswordLayout;
+
+    private String username;
+    private String password;
+
+    private boolean isLanguageSetted = false;
+    private int languageChoice = -1;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+
+        new LoginPresenter(this);
+        mPresenter.start();
+
+        initViews();
+    }
+
+    @Override
+    protected void onStop() {
+        mPresenter.stop();
+        super.onStop();
+    }
+
+    @Override
+    public void initViews() {
+        mLanguageLayout = (LinearLayout) findViewById(R.id.language_layout);
+        mLoginLayout = (LinearLayout) findViewById(R.id.login_layout);
+        mSimplifiedChineseCB = (AppCompatCheckBox) findViewById(R.id.language_simplified_chinese_cb);
+        mEnglishCB = (AppCompatCheckBox) findViewById(R.id.language_english_cb);
+        mLanguageOkBTN = (AppCompatButton) findViewById(R.id.language_ok_btn);
+        mLoginBTN = (AppCompatButton) findViewById(R.id.login_sign_in_btn);
+        mUsernameET = (TextInputEditText) findViewById(R.id.login_username_et);
+        mPasswordET = (TextInputEditText) findViewById(R.id.login_password_et);
+        mUsernameLayout = (TextInputLayout) findViewById(R.id.login_username_layout);
+        mPasswordLayout = (TextInputLayout) findViewById(R.id.login_password_layout);
+
+        setupCheckBoxs();
+
+        setupButtons();
+    }
+
+    private void setupCheckBoxs() {
+        mSimplifiedChineseCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isLanguageSetted = true;
+                if (isChecked)
+                    mEnglishCB.setChecked(false);
+                languageChoice = SELECT_SIMPLIFIED_CHINESE;
+            }
+        });
+        mEnglishCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isLanguageSetted = true;
+                if (isChecked)
+                    mSimplifiedChineseCB.setChecked(false);
+                languageChoice = SELECT_ENGLISH;
+            }
+        });
+    }
+
+    private void setupButtons() {
+        mLanguageOkBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isLanguageSetted) {
+                    Snackbar.make(v, R.string.please_choose, Snackbar.LENGTH_SHORT).show();
+                    return;
+                }
+                if (languageChoice == SELECT_SIMPLIFIED_CHINESE) {
+                    LanguageUtil.setLanguageToChinese(LoginActivity.this);
+                } else if (languageChoice == SELECT_ENGLISH) {
+                    LanguageUtil.setLanguageToEnglish(LoginActivity.this);
+                }
+                ViewPropertyAnimator.animate(mLanguageLayout)
+                        .alpha(0f)
+                        .setDuration(1000)
+                        .setListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        mLoginLayout.setVisibility(View.VISIBLE);
+                        resetLoginView();
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        mLanguageLayout.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                }).start();
+            }
+        });
+        mLoginBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                username = mUsernameET.getText().toString();
+                password = mPasswordET.getText().toString();
+                if (TextUtils.isEmpty(username)) {
+                    mUsernameLayout.setError(getString(R.string.please_input_username));
+                    return;
+                }
+                if (TextUtils.isEmpty(password)) {
+                    mPasswordLayout.setError(getString(R.string.please_input_password));
+                    return;
+                }
+                String auth = AuthUtil.generateAuth(username, password);
+                mPresenter.login();
+            }
+        });
+    }
+
+    private void resetLoginView() {
+        mUsernameLayout.setHint(getString(R.string.username));
+        mPasswordLayout.setHint(getString(R.string.password));
+        mLoginBTN.setText(R.string.login);
+        mUsernameLayout.setErrorEnabled(true);
+        mUsernameLayout.setErrorEnabled(true);
+    }
+
+    @Override
+    public void setPresenter(LoginContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void loginSuccess() {
+        Snackbar.make(getCurrentFocus(), "login success", Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void loginFail() {
+        Snackbar.make(getCurrentFocus(), "login fail", Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public String getAuth() {
+        String username = mUsernameET.getText().toString();
+        String password = mPasswordET.getText().toString();
+        String auth = AuthUtil.generateAuth(username, password);
+        return auth;
+    }
+}

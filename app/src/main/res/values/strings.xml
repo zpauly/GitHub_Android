@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">GitHub</string>
+    <string name="test">22222</string>
+
+    <string name="language_setting">语言设置</string>
+    <string name="simplified_chinese">中文</string>
+    <string name="english">English</string>
+    <string name="ok">确认</string>
+    <string name="please_choose">请选择</string>
+    <string name="please_input_username">请输入用户名</string>
+    <string name="please_input_password">请输入密码</string>
+
+    <string name="username">用户名</string>
+    <string name="password">密码</string>
+    <string name="login">登录</string>
+</resources>

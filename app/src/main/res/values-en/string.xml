@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GitHub</string>
+    <string name="test">11111</string>
+
+    <string name="language_setting">LANGUAEG SETTING</string>
+    <string name="simplified_chinese">中文</string>
+    <string name="english">English</string>
+    <string name="ok">OK</string>
+    <string name="please_choose">Please Make a Choose</string>
+    <string name="please_input_username">Empty Username</string>
+    <string name="please_input_password">Empty Password</string>
+
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">LOGIN</string>
+</resources>
