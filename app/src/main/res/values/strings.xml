@@ -2,6 +2,11 @@
     <string name="app_name">GitHub</string>
     <string name="test">22222</string>
 
+    <string name="loading">加载中......</string>
+    <string name="please_wait">请稍等</string>
+
+    <string name="profile">个人主页</string>
+
     <string name="language_setting">语言设置</string>
     <string name="simplified_chinese">中文</string>
     <string name="english">English</string>

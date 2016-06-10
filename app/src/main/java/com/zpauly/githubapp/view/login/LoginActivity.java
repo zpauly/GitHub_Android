@@ -1,6 +1,6 @@
-package com.zpauly.githubapp.view;
+package com.zpauly.githubapp.view.login;
 
-import android.os.Bundle;
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
@@ -11,15 +11,16 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.view.ViewPropertyAnimator;
-import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.base.BaseActivity;
 import com.zpauly.githubapp.presenter.LoginContract;
 import com.zpauly.githubapp.presenter.LoginPresenter;
 import com.zpauly.githubapp.utils.AuthUtil;
 import com.zpauly.githubapp.utils.LanguageUtil;
+import com.zpauly.githubapp.view.home.HomeActivity;
 
 public class LoginActivity extends BaseActivity implements LoginContract.View {
     private LoginContract.Presenter mPresenter;
@@ -41,28 +42,24 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     private String username;
     private String password;
 
+    private MaterialDialog loadingDialog;
+
     private boolean isLanguageSetted = false;
     private int languageChoice = -1;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-        new LoginPresenter(this);
-        mPresenter.start();
-
-        initViews();
-    }
-
-    @Override
     protected void onStop() {
-        mPresenter.stop();
+        if (mPresenter != null) {
+            mPresenter.stop();
+        }
         super.onStop();
     }
 
     @Override
     public void initViews() {
+        new LoginPresenter(this);
+        mPresenter.start();
+
         mLanguageLayout = (LinearLayout) findViewById(R.id.language_layout);
         mLoginLayout = (LinearLayout) findViewById(R.id.login_layout);
         mSimplifiedChineseCB = (AppCompatCheckBox) findViewById(R.id.language_simplified_chinese_cb);
@@ -77,6 +74,11 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         setupCheckBoxs();
 
         setupButtons();
+    }
+
+    @Override
+    public void initContent() {
+        setContentView(R.layout.activity_login);
     }
 
     private void setupCheckBoxs() {
@@ -153,8 +155,15 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
                     mPasswordLayout.setError(getString(R.string.please_input_password));
                     return;
                 }
-                String auth = AuthUtil.generateAuth(username, password);
-                mPresenter.login();
+                if (mPresenter != null) {
+                    loadingDialog = new MaterialDialog.Builder(LoginActivity.this)
+                            .progress(true, 0)
+                            .title(R.string.please_wait)
+                            .content(R.string.loading)
+                            .build();
+                    loadingDialog.show();
+                    mPresenter.login();
+                }
             }
         });
     }
@@ -174,11 +183,15 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     public void loginSuccess() {
-        Snackbar.make(getCurrentFocus(), "login success", Snackbar.LENGTH_SHORT).show();
+        loadingDialog.dismiss();
+        Intent intent = new Intent();
+        intent.setClass(this, HomeActivity.class);
+        startActivity(intent);
     }
 
     @Override
     public void loginFail() {
+        loadingDialog.dismiss();
         Snackbar.make(getCurrentFocus(), "login fail", Snackbar.LENGTH_SHORT).show();
     }
 

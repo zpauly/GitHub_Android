@@ -3,6 +3,11 @@
     <string name="app_name">GitHub</string>
     <string name="test">11111</string>
 
+    <string name="loading">Loading......</string>
+    <string name="please_wait">Please Wait</string>
+
+    <string name="profile">Profile</string>
+
     <string name="language_setting">LANGUAEG SETTING</string>
     <string name="simplified_chinese">中文</string>
     <string name="english">English</string>
