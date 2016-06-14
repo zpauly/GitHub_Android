@@ -7,6 +7,13 @@
     <string name="please_wait">Please Wait</string>
 
     <string name="profile">Profile</string>
+    <string name="followers">Followers</string>
+    <string name="starred">Starred</string>
+    <string name="following">Following</string>
+    <string name="repos">Repositorites</string>
+    <string name="events">Events</string>
+    <string name="gists">Gists</string>
+    <string name="orgs">Organizations</string>
 
     <string name="language_setting">LANGUAEG SETTING</string>
     <string name="simplified_chinese">中文</string>

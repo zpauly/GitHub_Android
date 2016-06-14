@@ -1,13 +1,10 @@
-package com.zpauly.githubapp.presenter;
-
-import android.content.Context;
-import android.util.Log;
+package com.zpauly.githubapp.presenter.login;
 
 import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.entity.request.AuthorizationRequest;
 import com.zpauly.githubapp.entity.response.AppAuthorization;
-import com.zpauly.githubapp.network.OverviewMethod;
-import com.zpauly.githubapp.presenter.LoginContract.Presenter;
+import com.zpauly.githubapp.network.overview.OverviewMethod;
+import com.zpauly.githubapp.presenter.login.LoginContract.Presenter;
 
 import java.util.ArrayList;
 
@@ -20,7 +17,6 @@ public class LoginPresenter implements Presenter {
     private final String TAG = getClass().getName();
 
     private LoginContract.View mLoginView;
-    private Context mContext;
 
     private Subscriber<AppAuthorization> mLoginSubscriber;
 
@@ -61,7 +57,7 @@ public class LoginPresenter implements Presenter {
 
             @Override
             public void onNext(AppAuthorization appAuthorization) {
-                Log.i(TAG, appAuthorization.toString());
+                mLoginView.logining();
             }
         };
         String auth = mLoginView.getAuth();

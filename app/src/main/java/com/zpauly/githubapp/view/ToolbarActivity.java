@@ -14,7 +14,7 @@ import com.zpauly.githubapp.base.BaseActivity;
 /**
  * Created by zpauly on 16-6-9.
  */
-public abstract class BaseToolbarActivity extends BaseActivity {
+public abstract class ToolbarActivity extends BaseActivity {
     protected Toolbar mToolbar;
 
     @Override
@@ -27,7 +27,7 @@ public abstract class BaseToolbarActivity extends BaseActivity {
     private void initToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         if (mToolbar != null) {
-            Log.i("BaseToolbarActivity", "not null");
+            Log.i("ToolbarActivity", "not null");
             setSupportActionBar(mToolbar);
 
             //back down when click nav by default

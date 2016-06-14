@@ -39,4 +39,13 @@ public class AuthorizationRequest {
     public void setScopes(List<String> scopes) {
         this.scopes = scopes;
     }
+
+    @Override
+    public String toString() {
+        return "AuthorizationRequest{" +
+                "client_secret='" + client_secret + '\'' +
+                ", note='" + note + '\'' +
+                ", scopes=" + scopes +
+                '}';
+    }
 }

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">GitHub</string>
     <string name="test">22222</string>
@@ -6,6 +7,13 @@
     <string name="please_wait">请稍等</string>
 
     <string name="profile">个人主页</string>
+    <string name="followers">粉丝</string>
+    <string name="starred">收藏</string>
+    <string name="following">关注</string>
+    <string name="repos">仓库</string>
+    <string name="events">活动</string>
+    <string name="gists">记录</string>
+    <string name="orgs">组织</string>
 
     <string name="language_setting">语言设置</string>
     <string name="simplified_chinese">中文</string>

@@ -164,5 +164,32 @@ public class AppAuthorization {
         public void setClient_id(String client_id) {
             this.client_id = client_id;
         }
+
+        @Override
+        public String toString() {
+            return "App{" +
+                    "url='" + url + '\'' +
+                    ", name='" + name + '\'' +
+                    ", client_id='" + client_id + '\'' +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "AppAuthorization{" +
+                "id=" + id +
+                ", url='" + url + '\'' +
+                ", token='" + token + '\'' +
+                ", token_last_eight='" + token_last_eight + '\'' +
+                ", hashed_token='" + hashed_token + '\'' +
+                ", app=" + app +
+                ", note='" + note + '\'' +
+                ", note_url='" + note_url + '\'' +
+                ", updated_at='" + updated_at + '\'' +
+                ", created_at='" + created_at + '\'' +
+                ", fingerprint='" + fingerprint + '\'' +
+                ", scopes=" + scopes +
+                '}';
     }
 }

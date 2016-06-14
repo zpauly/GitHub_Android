@@ -1,6 +1,8 @@
 package com.zpauly.githubapp.view.login;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
@@ -14,12 +16,14 @@ import android.widget.LinearLayout;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.view.ViewPropertyAnimator;
+import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.base.BaseActivity;
-import com.zpauly.githubapp.presenter.LoginContract;
-import com.zpauly.githubapp.presenter.LoginPresenter;
+import com.zpauly.githubapp.presenter.login.LoginContract;
+import com.zpauly.githubapp.presenter.login.LoginPresenter;
 import com.zpauly.githubapp.utils.AuthUtil;
 import com.zpauly.githubapp.utils.LanguageUtil;
+import com.zpauly.githubapp.utils.SPUtil;
 import com.zpauly.githubapp.view.home.HomeActivity;
 
 public class LoginActivity extends BaseActivity implements LoginContract.View {
@@ -46,6 +50,16 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     private boolean isLanguageSetted = false;
     private int languageChoice = -1;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (SPUtil.getString(this, Constants.USER_INFO, Constants.USER_USERNAME, null) != null) {
+            Intent intent = new Intent();
+            intent.setClass(this, HomeActivity.class);
+            startActivity(intent);
+        }
+    }
 
     @Override
     protected void onStop() {
@@ -193,6 +207,14 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     public void loginFail() {
         loadingDialog.dismiss();
         Snackbar.make(getCurrentFocus(), "login fail", Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void logining() {
+        String username = mUsernameET.getText().toString();
+        String password = mPasswordET.getText().toString();
+        SPUtil.putString(this, Constants.USER_INFO, Constants.USER_USERNAME, username);
+        SPUtil.putString(this, Constants.USER_INFO, Constants.USER_PASSWORD, password);
     }
 
     @Override

@@ -19,6 +19,17 @@ public interface Constants {
     //languages value:simplified chinese
     int LANGUAGE_SIMPLIFIED_CHINESE = 1;
 
+    /**
+     * local user information in sharedprefrences
+     */
+    //sp name
+    String USER_INFO = "USER_INFO";
+
+    //user username
+    String USER_USERNAME = "USER_USERNAME";
+
+    //user password
+    String USER_PASSWORD = "USER_PASSWORD";
 
     /**
      * net

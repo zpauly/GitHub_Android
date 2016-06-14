@@ -1,4 +1,4 @@
-package com.zpauly.githubapp.network;
+package com.zpauly.githubapp.network.overview;
 
 import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.entity.request.AuthorizationRequest;

@@ -9,15 +9,29 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.zpauly.githubapp.R;
+import com.zpauly.githubapp.listener.OnNavItemClickListener;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by zpauly on 16-6-9.
  */
-public abstract class BaseDrawerActivity extends BaseToolbarActivity {
+public abstract class DrawerActivity extends ToolbarActivity {
     protected DrawerLayout mDrawerLayout;
     protected NavigationView mNavigationView;
+
+    protected CircleImageView mDrawerAvatar;
+    protected TextView mDrawerName;
+    protected TextView mDrawerEmail;
+
+    private OnNavItemClickListener listener;
+
+    protected void setOnNavItemClickListener(OnNavItemClickListener listener) {
+        this.listener = listener;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,8 +44,12 @@ public abstract class BaseDrawerActivity extends BaseToolbarActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.nav_drawer_layout);
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
 
+        mDrawerAvatar = (CircleImageView) findViewById(R.id.drawer_avatar_IV);
+        mDrawerName = (TextView) findViewById(R.id.drawer_name_TV);
+        mDrawerEmail = (TextView) findViewById(R.id.drawer_email_TV);
+
         if (mToolbar != null) {
-            Log.i("BaseDrawerActivity", "not null");
+            Log.i("DrawerActivity", "not null");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             mToolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
             setOnToolbarNavClickedListener(new View.OnClickListener() {
@@ -49,10 +67,8 @@ public abstract class BaseDrawerActivity extends BaseToolbarActivity {
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.navigation_item_1:
-                        Snackbar.make(mNavigationView, "item 1", Snackbar.LENGTH_SHORT).show();
-                        break;
+                if (listener != null) {
+                    listener.onItemClick(item);
                 }
                 return false;
             }

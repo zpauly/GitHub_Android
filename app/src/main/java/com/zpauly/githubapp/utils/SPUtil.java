@@ -36,6 +36,30 @@ public class SPUtil {
         return value;
     }
 
+    public static void putString(Context context, String tableName, String key, String value) {
+        mSP = getSPTable(context, tableName);
+        mSPEditor = mSP.edit();
+        mSPEditor.putString(key, value);
+        mSPEditor.commit();
+    }
+
+    public static String getString(Context context, String tableName, String key, String defValue) {
+        mSP = getSPTable(context, tableName);
+        return mSP.getString(key, defValue);
+    }
+
+    public static void putInt(Context context, String tableName, String key, int value) {
+        mSP = getSPTable(context, tableName);
+        mSPEditor = mSP.edit();
+        mSPEditor.putInt(key, value);
+        mSPEditor.commit();
+    }
+
+    public static int getInt(Context context, String tableName, String key, int defValue) {
+        mSP = getSPTable(context, tableName);
+        return mSP.getInt(key, defValue);
+    }
+
     public static <T> T getField(Context context, String tableName, String key, T defValue) {
         mSP = getSPTable(context, tableName);
         if (defValue instanceof String) {

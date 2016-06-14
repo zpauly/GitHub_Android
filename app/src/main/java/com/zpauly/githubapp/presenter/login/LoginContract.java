@@ -1,4 +1,4 @@
-package com.zpauly.githubapp.presenter;
+package com.zpauly.githubapp.presenter.login;
 
 import com.zpauly.githubapp.base.BasePresenter;
 import com.zpauly.githubapp.base.BaseView;
@@ -15,6 +15,8 @@ public class LoginContract {
         void loginSuccess();
 
         void loginFail();
+
+        void logining();
 
         String getAuth();
     }
