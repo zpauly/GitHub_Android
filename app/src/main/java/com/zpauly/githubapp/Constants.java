@@ -7,8 +7,11 @@ public interface Constants {
     /**
      * local configuration in sharedprefrences
      */
-    //sp name
+    //sp table name
     String LOCAL_CONFIGURATION = "LOCAL_CONFIGURATION";
+
+    //first use
+    String FIRST_USED = "FIRST_USED";
 
     //languages key
     String LOCAL_LANGUAGE_CONFIG = "LOCAL_LANGUAGE_CONFIG";
@@ -22,7 +25,7 @@ public interface Constants {
     /**
      * local user information in sharedprefrences
      */
-    //sp name
+    //sp table name
     String USER_INFO = "USER_INFO";
 
     //user username
@@ -30,6 +33,9 @@ public interface Constants {
 
     //user password
     String USER_PASSWORD = "USER_PASSWORD";
+
+    //user auth
+    String USER_AUTH = "USER_AUTH";
 
     /**
      * net

@@ -51,14 +51,18 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     private boolean isLanguageSetted = false;
     private int languageChoice = -1;
 
+    private boolean isFirstUsed = false;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (SPUtil.getString(this, Constants.USER_INFO, Constants.USER_USERNAME, null) != null) {
+        if (SPUtil.getString(this, Constants.USER_INFO, Constants.USER_AUTH, null) != null) {
             Intent intent = new Intent();
             intent.setClass(this, HomeActivity.class);
             startActivity(intent);
+            finish();
         }
+        isFirstUsed = SPUtil.getBoolean(this, Constants.LOCAL_CONFIGURATION, Constants.FIRST_USED, false);
     }
 
     @Override
@@ -88,6 +92,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         setupCheckBoxs();
 
         setupButtons();
+
+        if (!isFirstUsed) {
+            mLanguageLayout.setVisibility(View.GONE);
+            mLoginLayout.setVisibility(View.VISIBLE);
+            resetLoginView();
+        }
     }
 
     @Override
@@ -198,9 +208,11 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     @Override
     public void loginSuccess() {
         loadingDialog.dismiss();
+        SPUtil.putBoolean(this, Constants.LOCAL_CONFIGURATION, Constants.FIRST_USED, false);
         Intent intent = new Intent();
         intent.setClass(this, HomeActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @Override
@@ -213,8 +225,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     public void logining() {
         String username = mUsernameET.getText().toString();
         String password = mPasswordET.getText().toString();
-        SPUtil.putString(this, Constants.USER_INFO, Constants.USER_USERNAME, username);
-        SPUtil.putString(this, Constants.USER_INFO, Constants.USER_PASSWORD, password);
+        String auth = AuthUtil.generateAuth(username, password);
+        SPUtil.putString(this, Constants.USER_INFO, Constants.USER_AUTH, auth);
     }
 
     @Override

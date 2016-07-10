@@ -36,6 +36,18 @@ public class SPUtil {
         return value;
     }
 
+    public static void putBoolean(Context context, String tableName, String key, boolean value) {
+        mSP = getSPTable(context, tableName);
+        mSPEditor = mSP.edit();
+        mSPEditor.putBoolean(key, value);
+        mSPEditor.commit();
+    }
+
+    public static boolean getBoolean(Context context, String tableName, String key, boolean defvalue) {
+        mSP = getSPTable(context, tableName);
+        return mSP.getBoolean(key, defvalue);
+    }
+
     public static void putString(Context context, String tableName, String key, String value) {
         mSP = getSPTable(context, tableName);
         mSPEditor = mSP.edit();

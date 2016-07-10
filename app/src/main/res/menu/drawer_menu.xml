@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
+    <group android:id="@+id/grp1"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/navigation_profile"
             android:checked="true"
@@ -22,5 +23,13 @@
             android:id="@+id/navigation_gists"
             android:icon="@mipmap/ic_gists"
             android:title="@string/gists" />
+    </group>
+    <group android:id="@+id/grp2"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_exit"
+            android:icon="@drawable/ic_exit_to_app_grey_700_24dp"
+            android:title="@string/exit"
+            />
     </group>
 </menu>
