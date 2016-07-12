@@ -4,12 +4,17 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.R;
+import com.zpauly.githubapp.base.BaseFragment;
 import com.zpauly.githubapp.db.UserDao;
+import com.zpauly.githubapp.entity.response.AuthenticatedUser;
 import com.zpauly.githubapp.listener.OnNavItemClickListener;
+import com.zpauly.githubapp.presenter.home.HomeContract;
 import com.zpauly.githubapp.utils.SPUtil;
 import com.zpauly.githubapp.view.DrawerActivity;
 import com.zpauly.githubapp.view.events.EventsFragment;
@@ -22,19 +27,27 @@ import com.zpauly.githubapp.view.repos.ReposFragment;
 /**
  * Created by zpauly on 16-6-9.
  */
-public class HomeActivity extends DrawerActivity {
+public class HomeActivity extends DrawerActivity implements HomeContract.View {
+    private HomeContract.Presenter mPresenter;
+
     private static final int PROFILE = 0;
     private static final int EVENTS = 1;
     private static final int REPOS = 2;
     private static final int ORGS = 3;
     private static final int GISTS = 4;
 
-    private Fragment mCurrentFragment;
-    private Fragment[] fragments = {new ProfileFragment(), new EventsFragment()
+    private BaseFragment mCurrentFragment;
+    private BaseFragment[] fragments = {new ProfileFragment(), new EventsFragment()
             , new ReposFragment(), new OrgsFragment(), new GistsFragment()};
 
     private FragmentManager mFragmentManager;
     private FragmentTransaction mFragmentTransaction;
+
+    @Override
+    protected void onStop() {
+        mPresenter.stop();
+        super.onStop();
+    }
 
     @Override
     public void initViews() {
@@ -114,5 +127,25 @@ public class HomeActivity extends DrawerActivity {
         intent.setClass(this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void setPresenter(HomeContract.Presenter presenter) {
+        this.mPresenter = presenter;
+    }
+
+    @Override
+    public void loadInfoSuccess() {
+
+    }
+
+    @Override
+    public void loadInfoFail() {
+
+    }
+
+    @Override
+    public void loadInfo(AuthenticatedUser user) {
+
     }
 }

@@ -1,10 +1,16 @@
 package com.zpauly.githubapp.presenter.login;
 
+import android.content.Context;
+
 import com.zpauly.githubapp.Api;
+import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.entity.request.AuthorizationRequest;
 import com.zpauly.githubapp.entity.response.AppAuthorization;
+import com.zpauly.githubapp.entity.response.AuthenticatedUser;
 import com.zpauly.githubapp.network.overview.OverviewMethod;
+import com.zpauly.githubapp.network.user.UserMethod;
 import com.zpauly.githubapp.presenter.login.LoginContract.Presenter;
+import com.zpauly.githubapp.utils.SPUtil;
 
 import java.util.ArrayList;
 
@@ -16,20 +22,25 @@ import rx.Subscriber;
 public class LoginPresenter implements Presenter {
     private final String TAG = getClass().getName();
 
+    private Context mContext;
     private LoginContract.View mLoginView;
 
     private Subscriber<AppAuthorization> mLoginSubscriber;
+    private Subscriber<AuthenticatedUser> mUserSubscriber;
 
-    private OverviewMethod method;
+    private OverviewMethod overviewMethod;
+    private UserMethod userMethod;
 
-    public LoginPresenter(LoginContract.View view) {
+    public LoginPresenter(Context context, LoginContract.View view) {
+        mContext = context;
         mLoginView = view;
         mLoginView.setPresenter(this);
     }
 
     @Override
     public void start() {
-        method = OverviewMethod.getInstance();
+        overviewMethod = OverviewMethod.getInstance();
+        userMethod = UserMethod.getInstance();
     }
 
     @Override
@@ -37,6 +48,11 @@ public class LoginPresenter implements Presenter {
         if (mLoginSubscriber != null) {
             if (mLoginSubscriber.isUnsubscribed()) {
                 mLoginSubscriber.unsubscribe();
+            }
+        }
+        if (mUserSubscriber != null) {
+            if (mUserSubscriber.isUnsubscribed()) {
+                mUserSubscriber.unsubscribe();
             }
         }
     }
@@ -69,6 +85,28 @@ public class LoginPresenter implements Presenter {
         }
         request.setScopes(scopes);
         request.setNote(Api.NOTE);
-        method.getOrCreateAuthorization(mLoginSubscriber, auth, request);
+        overviewMethod.getOrCreateAuthorization(mLoginSubscriber, auth, request);
+    }
+
+    @Override
+    public void loadUserInfo() {
+        mUserSubscriber = new Subscriber<AuthenticatedUser>() {
+            @Override
+            public void onCompleted() {
+                mLoginView.loadSuccess();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                mLoginView.loadFail();
+            }
+
+            @Override
+            public void onNext(AuthenticatedUser authenticatedUser) {
+                mLoginView.loadUserInfo(authenticatedUser);
+            }
+        };
+        userMethod.getAuthenticatedUser(mUserSubscriber, SPUtil.getString(mContext, Constants.USER_INFO, Constants.USER_AUTH, null));
     }
 }

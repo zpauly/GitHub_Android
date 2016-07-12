@@ -7,16 +7,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.zpauly.githubapp.db.UserDao;
+import com.zpauly.githubapp.db.UserModel;
+
 /**
  * Created by zpauly on 16-6-10.
  */
 public abstract class BaseFragment extends Fragment {
     protected View mView;
 
+    protected UserModel userInfo;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setContentView(inflater, container);
+        userInfo = UserDao.queryUser();
         initViews();
         return mView;
     }

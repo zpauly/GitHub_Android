@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.base.BaseFragment;
+import com.zpauly.githubapp.view.home.HomeFragment;
 
 /**
  * Created by zpauly on 16-6-14.

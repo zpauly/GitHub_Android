@@ -8,11 +8,12 @@ import android.view.ViewGroup;
 
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.base.BaseFragment;
+import com.zpauly.githubapp.view.home.HomeFragment;
 
 /**
  * Created by zpauly on 16-6-14.
  */
-public class OrgsFragment extends BaseFragment {
+public class OrgsFragment extends HomeFragment {
     private SwipeRefreshLayout mSwpieRefreshLayout;
 
     private RecyclerView mContentRV;
@@ -26,5 +27,10 @@ public class OrgsFragment extends BaseFragment {
     @Override
     protected void setContentView(LayoutInflater inflater, @Nullable ViewGroup container) {
         mView = inflater.inflate(R.layout.fragment_orgs, container);
+    }
+
+    @Override
+    protected void onPullDownRefreshListener() {
+
     }
 }

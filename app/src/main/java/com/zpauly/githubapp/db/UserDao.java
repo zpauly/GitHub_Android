@@ -6,11 +6,13 @@ import com.zpauly.githubapp.entity.response.AuthenticatedUser;
 
 import org.litepal.crud.DataSupport;
 
+import java.util.List;
+
 /**
  * Created by zpauly on 16-6-12.
  */
 public class UserDao {
-    public static boolean insertUser(AuthenticatedUser user) {
+    public static void insertUser(AuthenticatedUser user) {
         UserModel userModel = new UserModel();
         userModel.setLogin(user.getLogin());
         userModel.setName(user.getName());
@@ -28,7 +30,14 @@ public class UserDao {
         userModel.setPublic_gists(user.getPublic_gists());
         userModel.setPublic_repos(user.getPublic_repos());
         userModel.setType(user.getType());
-        return userModel.save();
+        userModel.saveThrows();
+    }
+
+    public static UserModel queryUser() {
+        List<UserModel> list = DataSupport.findAll(UserModel.class);
+        if (list.size() == 0)
+            return null;
+        return list.get(list.size() - 1);
     }
 
     public static int deleteUser() {

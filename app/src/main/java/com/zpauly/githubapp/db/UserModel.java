@@ -87,7 +87,7 @@ public class UserModel extends DataSupport {
         this.email = email;
     }
 
-    public boolean getHirable() {
+    public boolean isHirable() {
         return hirable;
     }
 

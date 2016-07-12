@@ -19,6 +19,8 @@ import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.base.BaseActivity;
+import com.zpauly.githubapp.db.UserDao;
+import com.zpauly.githubapp.entity.response.AuthenticatedUser;
 import com.zpauly.githubapp.presenter.login.LoginContract;
 import com.zpauly.githubapp.presenter.login.LoginPresenter;
 import com.zpauly.githubapp.utils.AuthUtil;
@@ -54,18 +56,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     private boolean isFirstUsed = false;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (SPUtil.getString(this, Constants.USER_INFO, Constants.USER_AUTH, null) != null) {
-            Intent intent = new Intent();
-            intent.setClass(this, HomeActivity.class);
-            startActivity(intent);
-            finish();
-        }
-        isFirstUsed = SPUtil.getBoolean(this, Constants.LOCAL_CONFIGURATION, Constants.FIRST_USED, false);
-    }
-
-    @Override
     protected void onStop() {
         if (mPresenter != null) {
             mPresenter.stop();
@@ -75,7 +65,15 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     public void initViews() {
-        new LoginPresenter(this);
+        if (SPUtil.getString(this, Constants.USER_INFO, Constants.USER_AUTH, null) != null) {
+            Intent intent = new Intent();
+            intent.setClass(this, HomeActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        isFirstUsed = SPUtil.getBoolean(this, Constants.LOCAL_CONFIGURATION, Constants.FIRST_USED, true);
+
+        new LoginPresenter(this, this);
         mPresenter.start();
 
         mLanguageLayout = (LinearLayout) findViewById(R.id.language_layout);
@@ -200,6 +198,10 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         mUsernameLayout.setErrorEnabled(true);
     }
 
+    private void loadUser() {
+        mPresenter.loadUserInfo();
+    }
+
     @Override
     public void setPresenter(LoginContract.Presenter presenter) {
         mPresenter = presenter;
@@ -207,12 +209,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     public void loginSuccess() {
-        loadingDialog.dismiss();
-        SPUtil.putBoolean(this, Constants.LOCAL_CONFIGURATION, Constants.FIRST_USED, false);
-        Intent intent = new Intent();
-        intent.setClass(this, HomeActivity.class);
-        startActivity(intent);
-        finish();
+        loadUser();
     }
 
     @Override
@@ -227,6 +224,28 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         String password = mPasswordET.getText().toString();
         String auth = AuthUtil.generateAuth(username, password);
         SPUtil.putString(this, Constants.USER_INFO, Constants.USER_AUTH, auth);
+    }
+
+    @Override
+    public void loadUserInfo(AuthenticatedUser user) {
+        UserDao.deleteUser();
+        UserDao.insertUser(user);
+    }
+
+    @Override
+    public void loadSuccess() {
+        loadingDialog.dismiss();
+        SPUtil.putBoolean(this, Constants.LOCAL_CONFIGURATION, Constants.FIRST_USED, false);
+        Intent intent = new Intent();
+        intent.setClass(this, HomeActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void loadFail() {
+        loadingDialog.dismiss();
+        Snackbar.make(getCurrentFocus(), "login fail", Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

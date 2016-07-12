@@ -17,6 +17,7 @@ import com.zpauly.githubapp.db.UserDao;
 import com.zpauly.githubapp.entity.response.AuthenticatedUser;
 import com.zpauly.githubapp.presenter.profile.ProfileContract;
 import com.zpauly.githubapp.presenter.profile.ProfilePresenter;
+import com.zpauly.githubapp.view.home.HomeFragment;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -24,6 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by zpauly on 16-6-10.
  */
 public class ProfileFragment extends BaseFragment implements ProfileContract.View{
+    private final String TAG = getClass().getName();
     private ProfileContract.Presenter mPresenter;
 
     private View mView;
@@ -65,9 +67,29 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         mOrgsLayout = (RelativeLayout) mView.findViewById(R.id.profile_orgs_layout);
         mGistsLayout = (RelativeLayout) mView.findViewById(R.id.profile_gists_layout);
 
-        setupRefresh();
+        setUserInfo();
+
+        setupSwpieRefreshLayout();
 
         setClickListener();
+    }
+
+    private void setUserInfo() {
+        if (userInfo == null)
+            return;
+        Glide.with(this)
+                .load(Uri.parse(userInfo.getAvatar_url()))
+                .centerCrop()
+                .crossFade()
+                .into(mAvatarIV);
+        mFollowersTV.setText(String.valueOf(userInfo.getFollowers()));
+        mFollowingTV.setText(String.valueOf(userInfo.getFollowing()));
+        mLoginTV.setText(userInfo.getLogin());
+        mNameTV.setText(userInfo.getName());
+        mBioTV.setText(userInfo.getBio());
+        mLocationTV.setText(userInfo.getLocation());
+        mEmailTV.setText(userInfo.getEmail());
+        mJoinTimeTV.setText(userInfo.getCreated_at());
     }
 
     @Override
@@ -81,7 +103,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         mView = inflater.inflate(R.layout.fragment_profile, container);
     }
 
-    private void setupRefresh() {
+    private void setupSwpieRefreshLayout() {
         mSwipeRefreshLayout.measure(View.MEASURED_SIZE_MASK, View.MEASURED_HEIGHT_STATE_SHIFT);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -128,7 +150,13 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     @Override
     public void loadInfoSuccess() {
         mSwipeRefreshLayout.setRefreshing(false);
-        Log.i("profile", "load success");
+        Log.i(TAG, "load success");
+        if (UserDao.queryUser() == null) {
+            Log.i(TAG, "data save fail");
+        } else {
+            userInfo = UserDao.queryUser();
+            setUserInfo();
+        }
     }
 
     @Override
@@ -138,19 +166,6 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
     @Override
     public void loadInfo(AuthenticatedUser user) {
-        Glide.with(this)
-                .load(Uri.parse(user.getAvatar_url()))
-                .centerCrop()
-                .crossFade()
-                .into(mAvatarIV);
-        mFollowersTV.setText(String.valueOf(user.getFollowers()));
-        mFollowingTV.setText(String.valueOf(user.getFollowing()));
-        mLoginTV.setText(user.getLogin());
-        mNameTV.setText(user.getName());
-        mBioTV.setText(user.getBio());
-        mLocationTV.setText(user.getLocation());
-        mEmailTV.setText(user.getEmail());
-        mJoinTimeTV.setText(user.getCreated_at());
         UserDao.deleteUser();
         UserDao.insertUser(user);
     }
