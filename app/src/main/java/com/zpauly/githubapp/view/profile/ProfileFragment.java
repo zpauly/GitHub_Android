@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.base.BaseFragment;
 import com.zpauly.githubapp.db.UserDao;
@@ -81,6 +82,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
                 .load(Uri.parse(userInfo.getAvatar_url()))
                 .centerCrop()
                 .crossFade()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(mAvatarIV);
         mFollowersTV.setText(String.valueOf(userInfo.getFollowers()));
         mFollowingTV.setText(String.valueOf(userInfo.getFollowing()));

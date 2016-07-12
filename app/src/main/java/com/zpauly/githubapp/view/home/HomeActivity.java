@@ -1,12 +1,9 @@
 package com.zpauly.githubapp.view.home;
 
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.R;

@@ -11,7 +11,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zpauly.githubapp.R;
+import com.zpauly.githubapp.db.UserDao;
+import com.zpauly.githubapp.db.UserModel;
 import com.zpauly.githubapp.listener.OnNavItemClickListener;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -20,6 +24,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by zpauly on 16-6-9.
  */
 public abstract class DrawerActivity extends ToolbarActivity {
+    private final String TAG = getClass().getName();
+
+    private UserModel userInfo;
+
     protected DrawerLayout mDrawerLayout;
     protected NavigationView mNavigationView;
 
@@ -40,16 +48,22 @@ public abstract class DrawerActivity extends ToolbarActivity {
         initNavDrawer();
     }
 
+    private void getUserInfo() {
+        userInfo = UserDao.queryUser();
+    }
+
     private void initNavDrawer() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.nav_drawer_layout);
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
 
-        mDrawerAvatar = (CircleImageView) findViewById(R.id.drawer_avatar_IV);
-        mDrawerName = (TextView) findViewById(R.id.drawer_name_TV);
-        mDrawerEmail = (TextView) findViewById(R.id.drawer_email_TV);
+        View nav_header = mNavigationView.getHeaderView(0);
+
+        mDrawerAvatar = (CircleImageView) nav_header.findViewById(R.id.drawer_avatar_IV);
+        mDrawerName = (TextView) nav_header.findViewById(R.id.drawer_name_TV);
+        mDrawerEmail = (TextView) nav_header.findViewById(R.id.drawer_email_TV);
 
         if (mToolbar != null) {
-            Log.i("DrawerActivity", "not null");
+            Log.i(TAG, "not null");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             mToolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
             setOnToolbarNavClickedListener(new View.OnClickListener() {
@@ -73,6 +87,17 @@ public abstract class DrawerActivity extends ToolbarActivity {
                 return false;
             }
         });
+        getUserInfo();
+        if (userInfo != null) {
+            Glide.with(this)
+                    .load(userInfo.getAvatar_url())
+                    .centerCrop()
+                    .crossFade()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(mDrawerAvatar);
+            mDrawerName.setText(userInfo.getName());
+            mDrawerEmail.setText(userInfo.getEmail());
+        }
     }
 
     @Override
