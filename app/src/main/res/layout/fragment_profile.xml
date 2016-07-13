@@ -66,6 +66,8 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:clickable="true"
+                        android:background="?attr/selectableItemBackground"
                         android:gravity="center_vertical"
                         android:padding="@dimen/components_padding"
                         android:orientation="horizontal"
@@ -80,7 +82,7 @@
                         <TextView
                             android:id="@+id/profile_location_TV"
                             android:layout_marginLeft="@dimen/components_margin"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
                     </LinearLayout>
@@ -91,6 +93,8 @@
                         android:layout_height="1dp" />
 
                     <LinearLayout
+                        android:clickable="true"
+                        android:background="?attr/selectableItemBackground"
                         android:gravity="center_vertical"
                         android:padding="@dimen/components_padding"
                         android:orientation="horizontal"
@@ -105,7 +109,7 @@
                         <TextView
                             android:id="@+id/profile_email_TV"
                             android:layout_marginLeft="@dimen/components_margin"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
                     </LinearLayout>
@@ -116,6 +120,8 @@
                         android:layout_height="1dp" />
 
                     <LinearLayout
+                        android:clickable="true"
+                        android:background="?attr/selectableItemBackground"
                         android:gravity="center_vertical"
                         android:padding="@dimen/components_padding"
                         android:orientation="horizontal"
@@ -130,7 +136,7 @@
                         <TextView
                             android:id="@+id/profile_join_time_TV"
                             android:layout_marginLeft="@dimen/components_margin"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
                     </LinearLayout>
@@ -146,7 +152,9 @@
                         android:layout_height="wrap_content">
 
                         <LinearLayout
-                            android:layout_margin="@dimen/components_margin"
+                            android:clickable="true"
+                            android:background="?attr/selectableItemBackground"
+                            android:padding="@dimen/components_padding"
                             android:id="@+id/profile_followers_layout"
                             android:layout_weight="1"
                             android:gravity="center"
@@ -175,7 +183,9 @@
                             android:layout_height="match_parent" />
 
                         <LinearLayout
-                            android:layout_margin="@dimen/components_margin"
+                            android:clickable="true"
+                            android:background="?attr/selectableItemBackground"
+                            android:padding="@dimen/components_padding"
                             android:id="@+id/profile_following_layout"
                             android:layout_weight="1"
                             android:gravity="center"
@@ -215,6 +225,8 @@
                     android:layout_height="wrap_content">
 
                     <RelativeLayout
+                        android:clickable="true"
+                        android:background="?attr/selectableItemBackground"
                         android:id="@+id/profile_events_layout"
                         android:padding="@dimen/components_padding"
                         android:layout_width="match_parent"
@@ -250,6 +262,8 @@
                         android:layout_height="1dp" />
 
                     <RelativeLayout
+                        android:clickable="true"
+                        android:background="?attr/selectableItemBackground"
                         android:id="@+id/profile_repos_layout"
                         android:padding="@dimen/components_padding"
                         android:layout_width="match_parent"
@@ -285,6 +299,8 @@
                         android:layout_height="1dp" />
 
                     <RelativeLayout
+                        android:clickable="true"
+                        android:background="?attr/selectableItemBackground"
                         android:id="@+id/profile_orgs_layout"
                         android:padding="@dimen/components_padding"
                         android:layout_width="match_parent"
@@ -320,6 +336,8 @@
                         android:layout_height="1dp" />
 
                     <RelativeLayout
+                        android:clickable="true"
+                        android:background="?attr/selectableItemBackground"
                         android:id="@+id/profile_gists_layout"
                         android:padding="@dimen/components_padding"
                         android:layout_width="match_parent"
