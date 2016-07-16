@@ -14,6 +14,9 @@
     <string name="events">Events</string>
     <string name="gists">Gists</string>
     <string name="orgs">Organizations</string>
+    <string name="explore">Explore</string>
+    <string name="trend_repositories">Trending repositories</string>
+    <string name="starred_by_people_you_follow">Starred by people you follow</string>
 
     <string name="language_setting">LANGUAEG SETTING</string>
     <string name="simplified_chinese">中文</string>

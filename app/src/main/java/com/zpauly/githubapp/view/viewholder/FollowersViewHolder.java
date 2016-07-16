@@ -12,13 +12,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by zpauly on 16-6-15.
  */
 public class FollowersViewHolder extends RecyclerView.ViewHolder {
-    public CircleImageView mAvatarIV;
+    private CircleImageView mAvatarIV;
 
-    public TextView mPlaceTV;
+    private TextView mPlaceTV;
 
-    public TextView mEmailTV;
+    private TextView mEmailTV;
 
-    public TextView mTimeTV;
+    private TextView mTimeTV;
 
     public FollowersViewHolder(View itemView) {
         super(itemView);
@@ -27,5 +27,21 @@ public class FollowersViewHolder extends RecyclerView.ViewHolder {
         mPlaceTV = (TextView) itemView.findViewById(R.id.followers_place_TV);
         mEmailTV = (TextView) itemView.findViewById(R.id.followers_email_TV);
         mTimeTV = (TextView) itemView.findViewById(R.id.followers_time_TV);
+    }
+
+    public CircleImageView getmAvatarIV() {
+        return mAvatarIV;
+    }
+
+    public TextView getmPlaceTV() {
+        return mPlaceTV;
+    }
+
+    public TextView getmEmailTV() {
+        return mEmailTV;
+    }
+
+    public TextView getmTimeTV() {
+        return mTimeTV;
     }
 }

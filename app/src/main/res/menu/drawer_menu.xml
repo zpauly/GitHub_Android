@@ -8,21 +8,9 @@
             android:icon="@drawable/ic_account_circle_24dp"
             android:title="@string/profile" />
         <item
-            android:id="@+id/navigation_events"
-            android:icon="@mipmap/ic_events"
-            android:title="@string/events" />
-        <item
-            android:id="@+id/navigation_repos"
-            android:icon="@mipmap/ic_repos"
-            android:title="@string/repos" />
-        <item
-            android:id="@+id/navigation_orgs"
-            android:icon="@mipmap/ic_organization"
-            android:title="@string/orgs" />
-        <item
-            android:id="@+id/navigation_gists"
-            android:icon="@mipmap/ic_gists"
-            android:title="@string/gists" />
+            android:id="@+id/navigation_stars"
+            android:icon="@mipmap/ic_star"
+            android:title="@string/starred"/>
     </group>
     <group android:id="@+id/grp2"
         android:checkableBehavior="single">

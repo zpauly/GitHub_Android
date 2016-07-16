@@ -19,6 +19,12 @@ public class HomePresenter implements HomeContract.Presenter {
     private Context mContext;
     private HomeContract.View mHomeView;
 
+    public HomePresenter(Context context, HomeContract.View view) {
+        mContext = context;
+        mHomeView = view;
+        mHomeView.setPresenter(this);
+    }
+
     private String auth;
     private UserMethod method;
 

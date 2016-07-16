@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:padding="@dimen/components_padding">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:text="jxnugo_Android"
+        android:id="@+id/repos_title_TV"
+        android:textColor="@color/colorPrimaryDark"
+        style="@style/TextAppearance.AppCompat.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_marginTop="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_centerVertical="true"
+            android:text="updated"
+            android:id="@+id/repos_update_time_TV"
+            style="@style/Base.TextAppearance.AppCompat.Body1"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:text="Java"
+                android:id="@+id/repos_tech_language_TV"
+                style="@style/Base.TextAppearance.AppCompat.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_marginLeft="@dimen/components_margin"
+                android:src="@mipmap/ic_star"
+                android:layout_width="24dp"
+                android:layout_height="24dp" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/repos_stars_TV"
+                android:text="0"
+                style="@style/Base.TextAppearance.AppCompat.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_marginLeft="@dimen/components_margin"
+                android:src="@mipmap/ic_fork"
+                android:layout_width="24dp"
+                android:layout_height="24dp" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:text="0"
+                android:id="@+id/repos_forks_TV"
+                style="@style/Base.TextAppearance.AppCompat.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

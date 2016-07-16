@@ -12,14 +12,12 @@ import com.zpauly.githubapp.db.UserDao;
 import com.zpauly.githubapp.entity.response.AuthenticatedUser;
 import com.zpauly.githubapp.listener.OnNavItemClickListener;
 import com.zpauly.githubapp.presenter.home.HomeContract;
+import com.zpauly.githubapp.presenter.home.HomePresenter;
 import com.zpauly.githubapp.utils.SPUtil;
 import com.zpauly.githubapp.view.DrawerActivity;
-import com.zpauly.githubapp.view.events.EventsFragment;
-import com.zpauly.githubapp.view.gists.GistsFragment;
 import com.zpauly.githubapp.view.login.LoginActivity;
-import com.zpauly.githubapp.view.orgs.OrgsFragment;
 import com.zpauly.githubapp.view.profile.ProfileFragment;
-import com.zpauly.githubapp.view.repos.ReposFragment;
+import com.zpauly.githubapp.view.stars.StarsFragment;
 
 /**
  * Created by zpauly on 16-6-9.
@@ -28,14 +26,12 @@ public class HomeActivity extends DrawerActivity implements HomeContract.View {
     private HomeContract.Presenter mPresenter;
 
     private static final int PROFILE = 0;
-    private static final int EVENTS = 1;
-    private static final int REPOS = 2;
-    private static final int ORGS = 3;
-    private static final int GISTS = 4;
+    private static final int STARS = 1;
+
+    private int currentFragmentID = PROFILE;
 
     private BaseFragment mCurrentFragment;
-    private BaseFragment[] fragments = {new ProfileFragment(), new EventsFragment()
-            , new ReposFragment(), new OrgsFragment(), new GistsFragment()};
+    private BaseFragment[] fragments = {new ProfileFragment(), new StarsFragment()};
 
     private FragmentManager mFragmentManager;
     private FragmentTransaction mFragmentTransaction;
@@ -48,10 +44,13 @@ public class HomeActivity extends DrawerActivity implements HomeContract.View {
 
     @Override
     public void initViews() {
+        new HomePresenter(this, this);
+        mPresenter.start();
+
         setListener();
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
-        mCurrentFragment = fragments[0];
+        mCurrentFragment = fragments[currentFragmentID];
         mFragmentTransaction.replace(R.id.nav_content, mCurrentFragment);
         mFragmentTransaction.commit();
     }
@@ -62,37 +61,19 @@ public class HomeActivity extends DrawerActivity implements HomeContract.View {
             public void onItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.navigation_profile:
-                        if (mCurrentFragment instanceof ProfileFragment) {
+                        if (currentFragmentID == PROFILE) {
                         } else {
-                            mCurrentFragment = fragments[PROFILE];
+                            currentFragmentID = PROFILE;
+                            mCurrentFragment = fragments[currentFragmentID];
                             changeFragment();
                         }
                         break;
-                    case R.id.navigation_events:
-                        if (mCurrentFragment instanceof EventsFragment) {
+                    case R.id.navigation_stars:
+                        if (currentFragmentID == STARS) {
+
                         } else {
-                            mCurrentFragment = fragments[EVENTS];
-                            changeFragment();
-                        }
-                        break;
-                    case R.id.navigation_repos:
-                        if (mCurrentFragment instanceof ReposFragment) {
-                        } else {
-                            mCurrentFragment = fragments[REPOS];
-                            changeFragment();
-                        }
-                        break;
-                    case R.id.navigation_orgs:
-                        if (mCurrentFragment instanceof OrgsFragment) {
-                        } else {
-                            mCurrentFragment = fragments[ORGS];
-                            changeFragment();
-                        }
-                        break;
-                    case R.id.navigation_gists:
-                        if (mCurrentFragment instanceof GistsFragment) {
-                        } else {
-                            mCurrentFragment = fragments[GISTS];
+                            currentFragmentID = STARS;
+                            mCurrentFragment = fragments[currentFragmentID];
                             changeFragment();
                         }
                         break;
@@ -107,6 +88,7 @@ public class HomeActivity extends DrawerActivity implements HomeContract.View {
     }
 
     private void changeFragment() {
+        mFragmentTransaction = mFragmentManager.beginTransaction();
         mFragmentTransaction.replace(R.id.nav_content, mCurrentFragment);
         mFragmentTransaction.commit();
     }

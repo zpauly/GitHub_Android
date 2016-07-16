@@ -18,16 +18,17 @@ public abstract class BaseFragment extends Fragment {
 
     protected UserModel userInfo;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        setContentView(inflater, container);
+        mView = setContentView(inflater, container);
         userInfo = UserDao.queryUser();
-        initViews();
+        initViews(mView);
         return mView;
     }
 
-    protected abstract void initViews();
+    protected abstract void initViews(View view);
 
-    protected abstract void setContentView(LayoutInflater inflater, @Nullable ViewGroup container);
+    protected abstract View setContentView(LayoutInflater inflater, @Nullable ViewGroup container);
 }

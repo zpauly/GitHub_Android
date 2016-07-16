@@ -14,6 +14,9 @@
     <string name="events">活动</string>
     <string name="gists">记录</string>
     <string name="orgs">组织</string>
+    <string name="explore">探索</string>
+    <string name="trend_repositories">趋势库</string>
+    <string name="starred_by_people_you_follow">关注的人赞过的</string>
 
     <string name="language_setting">语言设置</string>
     <string name="simplified_chinese">中文</string>

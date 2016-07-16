@@ -48,25 +48,25 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     private RelativeLayout mGistsLayout;
 
     @Override
-    protected void initViews() {
+    protected void initViews(View view) {
         new ProfilePresenter(this, getContext());
         mPresenter.start();
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.profile_SRLayout);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.profile_SRLayout);
 
-        mAvatarIV = (CircleImageView) mView.findViewById(R.id.profile_avatar);
-        mLoginTV = (TextView) mView.findViewById(R.id.profile_login_TV);
-        mNameTV = (TextView) mView.findViewById(R.id.profile_name_TV);
-        mBioTV = (TextView) mView.findViewById(R.id.profile_bio_TV);
-        mLocationTV = (TextView) mView.findViewById(R.id.profile_location_TV);
-        mEmailTV = (TextView) mView.findViewById(R.id.profile_email_TV);
-        mJoinTimeTV = (TextView) mView.findViewById(R.id.profile_join_time_TV);
-        mFollowersTV = (TextView) mView.findViewById(R.id.profile_followers_TV);
-        mFollowingTV = (TextView) mView.findViewById(R.id.profile_following_TV);
-        mEventsLayout = (RelativeLayout) mView.findViewById(R.id.profile_events_layout);
-        mReposLayout = (RelativeLayout) mView.findViewById(R.id.profile_repos_layout);
-        mOrgsLayout = (RelativeLayout) mView.findViewById(R.id.profile_orgs_layout);
-        mGistsLayout = (RelativeLayout) mView.findViewById(R.id.profile_gists_layout);
+        mAvatarIV = (CircleImageView) view.findViewById(R.id.profile_avatar);
+        mLoginTV = (TextView) view.findViewById(R.id.profile_login_TV);
+        mNameTV = (TextView) view.findViewById(R.id.profile_name_TV);
+        mBioTV = (TextView) view.findViewById(R.id.profile_bio_TV);
+        mLocationTV = (TextView) view.findViewById(R.id.profile_location_TV);
+        mEmailTV = (TextView) view.findViewById(R.id.profile_email_TV);
+        mJoinTimeTV = (TextView) view.findViewById(R.id.profile_join_time_TV);
+        mFollowersTV = (TextView) view.findViewById(R.id.profile_followers_TV);
+        mFollowingTV = (TextView) view.findViewById(R.id.profile_following_TV);
+        mEventsLayout = (RelativeLayout) view.findViewById(R.id.profile_events_layout);
+        mReposLayout = (RelativeLayout) view.findViewById(R.id.profile_repos_layout);
+        mOrgsLayout = (RelativeLayout) view.findViewById(R.id.profile_orgs_layout);
+        mGistsLayout = (RelativeLayout) view.findViewById(R.id.profile_gists_layout);
 
         setUserInfo();
 
@@ -101,8 +101,8 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     }
 
     @Override
-    protected void setContentView(LayoutInflater inflater, @Nullable ViewGroup container) {
-        mView = inflater.inflate(R.layout.fragment_profile, container);
+    protected View setContentView(LayoutInflater inflater, @Nullable ViewGroup container) {
+        return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
     private void setupSwpieRefreshLayout() {
