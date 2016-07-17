@@ -2,7 +2,7 @@ package com.zpauly.githubapp.network.overview;
 
 import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.entity.request.AuthorizationRequest;
-import com.zpauly.githubapp.entity.response.AppAuthorization;
+import com.zpauly.githubapp.entity.response.AppAuthorizationBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
 
 import retrofit2.Retrofit;
@@ -37,7 +37,7 @@ public class OverviewMethod {
         return instance;
     }
 
-    public void getOrCreateAuthorization(Observer<AppAuthorization> observer, String auth, AuthorizationRequest requestBean) {
+    public void getOrCreateAuthorization(Observer<AppAuthorizationBean> observer, String auth, AuthorizationRequest requestBean) {
         service.login(auth, requestBean)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

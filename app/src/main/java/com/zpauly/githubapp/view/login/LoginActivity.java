@@ -1,8 +1,6 @@
 package com.zpauly.githubapp.view.login;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
@@ -20,7 +18,7 @@ import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.base.BaseActivity;
 import com.zpauly.githubapp.db.UserDao;
-import com.zpauly.githubapp.entity.response.AuthenticatedUser;
+import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 import com.zpauly.githubapp.presenter.login.LoginContract;
 import com.zpauly.githubapp.presenter.login.LoginPresenter;
 import com.zpauly.githubapp.utils.AuthUtil;
@@ -227,7 +225,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     }
 
     @Override
-    public void loadUserInfo(AuthenticatedUser user) {
+    public void loadUserInfo(AuthenticatedUserBean user) {
         UserDao.deleteUser();
         UserDao.insertUser(user);
     }

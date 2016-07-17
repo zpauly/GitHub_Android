@@ -2,7 +2,7 @@ package com.zpauly.githubapp.network.repositories;
 
 import android.support.annotation.Nullable;
 
-import com.zpauly.githubapp.entity.response.Repositories;
+import com.zpauly.githubapp.entity.response.RepositoriesBean;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public interface RepositoriesService {
      * @return
      */
     @GET("/user/repos")
-    Observable<List<Repositories>> getOwendRespositories(@Header("Authorization") String auth
+    Observable<List<RepositoriesBean>> getOwendRespositories(@Header("Authorization") String auth
             , @Nullable @Query("affiliation") List<String> affiliation
             , @Nullable @Query("sort") String sort);
 }

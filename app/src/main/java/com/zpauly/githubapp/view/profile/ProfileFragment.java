@@ -15,10 +15,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.base.BaseFragment;
 import com.zpauly.githubapp.db.UserDao;
-import com.zpauly.githubapp.entity.response.AuthenticatedUser;
+import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 import com.zpauly.githubapp.presenter.profile.ProfileContract;
 import com.zpauly.githubapp.presenter.profile.ProfilePresenter;
-import com.zpauly.githubapp.view.home.HomeFragment;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -28,8 +27,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileFragment extends BaseFragment implements ProfileContract.View{
     private final String TAG = getClass().getName();
     private ProfileContract.Presenter mPresenter;
-
-    private View mView;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -167,7 +164,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     }
 
     @Override
-    public void loadInfo(AuthenticatedUser user) {
+    public void loadInfo(AuthenticatedUserBean user) {
         UserDao.deleteUser();
         UserDao.insertUser(user);
     }

@@ -2,7 +2,7 @@ package com.zpauly.githubapp.db;
 
 import android.content.ContentValues;
 
-import com.zpauly.githubapp.entity.response.AuthenticatedUser;
+import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 
 import org.litepal.crud.DataSupport;
 
@@ -12,7 +12,7 @@ import java.util.List;
  * Created by zpauly on 16-6-12.
  */
 public class UserDao {
-    public static void insertUser(AuthenticatedUser user) {
+    public static void insertUser(AuthenticatedUserBean user) {
         UserModel userModel = new UserModel();
         userModel.setLogin(user.getLogin());
         userModel.setName(user.getName());

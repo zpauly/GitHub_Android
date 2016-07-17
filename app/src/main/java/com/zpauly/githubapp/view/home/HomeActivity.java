@@ -9,10 +9,7 @@ import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.base.BaseFragment;
 import com.zpauly.githubapp.db.UserDao;
-import com.zpauly.githubapp.entity.response.AuthenticatedUser;
 import com.zpauly.githubapp.listener.OnNavItemClickListener;
-import com.zpauly.githubapp.presenter.home.HomeContract;
-import com.zpauly.githubapp.presenter.home.HomePresenter;
 import com.zpauly.githubapp.utils.SPUtil;
 import com.zpauly.githubapp.view.DrawerActivity;
 import com.zpauly.githubapp.view.login.LoginActivity;
@@ -22,9 +19,7 @@ import com.zpauly.githubapp.view.stars.StarsFragment;
 /**
  * Created by zpauly on 16-6-9.
  */
-public class HomeActivity extends DrawerActivity implements HomeContract.View {
-    private HomeContract.Presenter mPresenter;
-
+public class HomeActivity extends DrawerActivity {
     private static final int PROFILE = 0;
     private static final int STARS = 1;
 
@@ -37,16 +32,7 @@ public class HomeActivity extends DrawerActivity implements HomeContract.View {
     private FragmentTransaction mFragmentTransaction;
 
     @Override
-    protected void onStop() {
-        mPresenter.stop();
-        super.onStop();
-    }
-
-    @Override
     public void initViews() {
-        new HomePresenter(this, this);
-        mPresenter.start();
-
         setListener();
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
@@ -63,21 +49,26 @@ public class HomeActivity extends DrawerActivity implements HomeContract.View {
                     case R.id.navigation_profile:
                         if (currentFragmentID == PROFILE) {
                         } else {
+                            item.setChecked(true);
                             currentFragmentID = PROFILE;
                             mCurrentFragment = fragments[currentFragmentID];
                             changeFragment();
+                            setToolbarTitle(R.string.profile);
                         }
                         break;
                     case R.id.navigation_stars:
                         if (currentFragmentID == STARS) {
 
                         } else {
+                            item.setChecked(true);
                             currentFragmentID = STARS;
                             mCurrentFragment = fragments[currentFragmentID];
                             changeFragment();
+                            setToolbarTitle(R.string.starred);
                         }
                         break;
                     case R.id.navigation_exit:
+                        item.setChecked(true);
                         exit();
                         break;
                     default:
@@ -106,25 +97,5 @@ public class HomeActivity extends DrawerActivity implements HomeContract.View {
         intent.setClass(this, LoginActivity.class);
         startActivity(intent);
         finish();
-    }
-
-    @Override
-    public void setPresenter(HomeContract.Presenter presenter) {
-        this.mPresenter = presenter;
-    }
-
-    @Override
-    public void loadInfoSuccess() {
-
-    }
-
-    @Override
-    public void loadInfoFail() {
-
-    }
-
-    @Override
-    public void loadInfo(AuthenticatedUser user) {
-
     }
 }

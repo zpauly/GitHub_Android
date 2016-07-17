@@ -84,6 +84,7 @@ public abstract class DrawerActivity extends ToolbarActivity {
                 if (listener != null) {
                     listener.onItemClick(item);
                 }
+                mDrawerLayout.closeDrawer(GravityCompat.START);
                 return false;
             }
         });

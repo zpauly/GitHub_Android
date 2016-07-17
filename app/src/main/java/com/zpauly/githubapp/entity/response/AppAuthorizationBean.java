@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by zpauly on 16-6-9.
  */
-public class AppAuthorization {
+public class AppAuthorizationBean {
     /**
      * id : 1
      * url : https://api.github.com/authorizations/1
@@ -177,7 +177,7 @@ public class AppAuthorization {
 
     @Override
     public String toString() {
-        return "AppAuthorization{" +
+        return "AppAuthorizationBean{" +
                 "id=" + id +
                 ", url='" + url + '\'' +
                 ", token='" + token + '\'' +

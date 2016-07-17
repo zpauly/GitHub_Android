@@ -1,10 +1,9 @@
 package com.zpauly.githubapp.network.repositories;
 
 import android.support.annotation.Nullable;
-import android.text.AndroidCharacter;
 
 import com.zpauly.githubapp.Api;
-import com.zpauly.githubapp.entity.response.Repositories;
+import com.zpauly.githubapp.entity.response.RepositoriesBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
 
 import java.util.List;
@@ -32,7 +31,7 @@ public class RepositoriesMethod {
 
     public static RepositoriesMethod getInstance() {
         if (instance == null) {
-            synchronized (Repositories.class) {
+            synchronized (RepositoriesBean.class) {
                 if (instance == null) {
                     instance = new RepositoriesMethod();
                 }
@@ -41,7 +40,7 @@ public class RepositoriesMethod {
         return instance;
     }
 
-    public void getOwendRespositories(Observer<List<Repositories>> observer, String auth
+    public void getOwendRespositories(Observer<List<RepositoriesBean>> observer, String auth
             , @Nullable List<String> affiliation, @Nullable String sort) {
         service.getOwendRespositories(auth, affiliation, sort)
                 .subscribeOn(Schedulers.io())

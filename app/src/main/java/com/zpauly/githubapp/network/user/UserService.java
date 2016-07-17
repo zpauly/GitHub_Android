@@ -1,6 +1,6 @@
 package com.zpauly.githubapp.network.user;
 
-import com.zpauly.githubapp.entity.response.AuthenticatedUser;
+import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -11,5 +11,5 @@ import rx.Observable;
  */
 public interface UserService {
     @GET("/user")
-    Observable<AuthenticatedUser> getAuthenticatedUser(@Header("Authorization") String auth);
+    Observable<AuthenticatedUserBean> getAuthenticatedUser(@Header("Authorization") String auth);
 }

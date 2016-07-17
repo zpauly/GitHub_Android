@@ -11,15 +11,15 @@ import com.zpauly.githubapp.R;
  */
 
 public class ReposViewHolder extends RecyclerView.ViewHolder {
-    private AppCompatTextView mReposTitleTV;
+    public final AppCompatTextView mReposTitleTV;
 
-    private AppCompatTextView mReposUpdateTimeTV;
+    public final AppCompatTextView mReposUpdateTimeTV;
 
-    private AppCompatTextView mReposTechLanguageTV;
+    public final AppCompatTextView mReposTechLanguageTV;
 
-    private AppCompatTextView mReposStarsTV;
+    public final AppCompatTextView mReposStarsTV;
 
-    private AppCompatTextView mReposForksTV;
+    public final AppCompatTextView mReposForksTV;
 
     public ReposViewHolder(View itemView) {
         super(itemView);
@@ -29,25 +29,5 @@ public class ReposViewHolder extends RecyclerView.ViewHolder {
         mReposTechLanguageTV = (AppCompatTextView) itemView.findViewById(R.id.repos_tech_language_TV);
         mReposStarsTV = (AppCompatTextView) itemView.findViewById(R.id.repos_stars_TV);
         mReposForksTV = (AppCompatTextView) itemView.findViewById(R.id.repos_forks_TV);
-    }
-
-    public AppCompatTextView getmReposTitleTV() {
-        return mReposTitleTV;
-    }
-
-    public AppCompatTextView getmReposForksTV() {
-        return mReposForksTV;
-    }
-
-    public AppCompatTextView getmReposStarsTV() {
-        return mReposStarsTV;
-    }
-
-    public AppCompatTextView getmReposTechLanguageTV() {
-        return mReposTechLanguageTV;
-    }
-
-    public AppCompatTextView getmReposUpdateTimeTV() {
-        return mReposUpdateTimeTV;
     }
 }

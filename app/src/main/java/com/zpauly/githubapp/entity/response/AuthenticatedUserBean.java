@@ -3,7 +3,7 @@ package com.zpauly.githubapp.entity.response;
 /**
  * Created by zpauly on 16-6-10.
  */
-public class AuthenticatedUser {
+public class AuthenticatedUserBean {
     /**
      * login : octocat
      * id : 1
@@ -426,7 +426,7 @@ public class AuthenticatedUser {
 
     @Override
     public String toString() {
-        return "AuthenticatedUser{" +
+        return "AuthenticatedUserBean{" +
                 "login='" + login + '\'' +
                 ", id=" + id +
                 ", avatar_url='" + avatar_url + '\'' +

@@ -3,8 +3,8 @@
     <group android:id="@+id/grp1"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/navigation_profile"
             android:checked="true"
+            android:id="@+id/navigation_profile"
             android:icon="@drawable/ic_account_circle_24dp"
             android:title="@string/profile" />
         <item

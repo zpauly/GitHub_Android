@@ -3,12 +3,9 @@ package com.zpauly.githubapp.presenter.profile;
 import android.content.Context;
 
 import com.zpauly.githubapp.Constants;
-import com.zpauly.githubapp.entity.response.AuthenticatedUser;
+import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 import com.zpauly.githubapp.network.user.UserMethod;
-import com.zpauly.githubapp.utils.AuthUtil;
 import com.zpauly.githubapp.utils.SPUtil;
-
-import org.litepal.util.Const;
 
 import rx.Subscriber;
 
@@ -22,7 +19,7 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     private UserMethod method;
     private String auth;
 
-    private Subscriber<AuthenticatedUser> authenticatedUserSubscriber;
+    private Subscriber<AuthenticatedUserBean> authenticatedUserSubscriber;
 
     public ProfilePresenter(ProfileContract.View view, Context context) {
         mHomeView = view;
@@ -47,7 +44,7 @@ public class ProfilePresenter implements ProfileContract.Presenter {
 
     @Override
     public void loadUserInfo() {
-        authenticatedUserSubscriber = new Subscriber<AuthenticatedUser>() {
+        authenticatedUserSubscriber = new Subscriber<AuthenticatedUserBean>() {
             @Override
             public void onCompleted() {
                 mHomeView.loadInfoSuccess();
@@ -60,7 +57,7 @@ public class ProfilePresenter implements ProfileContract.Presenter {
             }
 
             @Override
-            public void onNext(AuthenticatedUser authenticatedUser) {
+            public void onNext(AuthenticatedUserBean authenticatedUser) {
                 mHomeView.loadInfo(authenticatedUser);
             }
         };

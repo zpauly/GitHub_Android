@@ -5,8 +5,8 @@ import android.content.Context;
 import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.entity.request.AuthorizationRequest;
-import com.zpauly.githubapp.entity.response.AppAuthorization;
-import com.zpauly.githubapp.entity.response.AuthenticatedUser;
+import com.zpauly.githubapp.entity.response.AppAuthorizationBean;
+import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 import com.zpauly.githubapp.network.overview.OverviewMethod;
 import com.zpauly.githubapp.network.user.UserMethod;
 import com.zpauly.githubapp.presenter.login.LoginContract.Presenter;
@@ -25,8 +25,8 @@ public class LoginPresenter implements Presenter {
     private Context mContext;
     private LoginContract.View mLoginView;
 
-    private Subscriber<AppAuthorization> mLoginSubscriber;
-    private Subscriber<AuthenticatedUser> mUserSubscriber;
+    private Subscriber<AppAuthorizationBean> mLoginSubscriber;
+    private Subscriber<AuthenticatedUserBean> mUserSubscriber;
 
     private OverviewMethod overviewMethod;
     private UserMethod userMethod;
@@ -59,7 +59,7 @@ public class LoginPresenter implements Presenter {
 
     @Override
     public void login() {
-        mLoginSubscriber = new Subscriber<AppAuthorization>() {
+        mLoginSubscriber = new Subscriber<AppAuthorizationBean>() {
             @Override
             public void onCompleted() {
                 mLoginView.loginSuccess();
@@ -72,7 +72,7 @@ public class LoginPresenter implements Presenter {
             }
 
             @Override
-            public void onNext(AppAuthorization appAuthorization) {
+            public void onNext(AppAuthorizationBean appAuthorization) {
                 mLoginView.logining();
             }
         };
@@ -90,7 +90,7 @@ public class LoginPresenter implements Presenter {
 
     @Override
     public void loadUserInfo() {
-        mUserSubscriber = new Subscriber<AuthenticatedUser>() {
+        mUserSubscriber = new Subscriber<AuthenticatedUserBean>() {
             @Override
             public void onCompleted() {
                 mLoginView.loadSuccess();
@@ -103,7 +103,7 @@ public class LoginPresenter implements Presenter {
             }
 
             @Override
-            public void onNext(AuthenticatedUser authenticatedUser) {
+            public void onNext(AuthenticatedUserBean authenticatedUser) {
                 mLoginView.loadUserInfo(authenticatedUser);
             }
         };

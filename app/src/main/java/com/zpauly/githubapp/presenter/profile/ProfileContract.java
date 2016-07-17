@@ -2,7 +2,7 @@ package com.zpauly.githubapp.presenter.profile;
 
 import com.zpauly.githubapp.base.BasePresenter;
 import com.zpauly.githubapp.base.BaseView;
-import com.zpauly.githubapp.entity.response.AuthenticatedUser;
+import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 
 /**
  * Created by zpauly on 16-6-10.
@@ -17,6 +17,6 @@ public class ProfileContract {
 
         void loadInfoFail();
 
-        void loadInfo(AuthenticatedUser user);
+        void loadInfo(AuthenticatedUserBean user);
     }
 }

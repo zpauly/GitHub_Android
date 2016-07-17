@@ -3,10 +3,10 @@ package com.zpauly.githubapp.entity.response;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by zpauly on 16-6-11.
+ * Created by zpauly on 16-7-17.
  */
-public class Repositories {
 
+public class StarredRepositories {
     /**
      * id : 1296269
      * owner : {"login":"octocat","id":1,"avatar_url":"https:/github.com/images/error/octocat_happy.gif","gravatar_id":"","url":"https:/api.github.com/users/octocat","html_url":"https:/github.com/octocat","followers_url":"https:/api.github.com/users/octocat/followers","following_url":"https:/api.github.com/users/octocat/following{/other_user}","gists_url":"https:/api.github.com/users/octocat/gists{/gist_id}","starred_url":"https:/api.github.com/users/octocat/starred{/owner}{/repo}","subscriptions_url":"https:/api.github.com/users/octocat/subscriptions","organizations_url":"https:/api.github.com/users/octocat/orgs","repos_url":"https:/api.github.com/users/octocat/repos","events_url":"https:/api.github.com/users/octocat/events{/privacy}","received_events_url":"https:/api.github.com/users/octocat/received_events","type":"User","site_admin":false}
@@ -148,7 +148,7 @@ public class Repositories {
     private String teams_url;
     private String trees_url;
     private String homepage;
-    private Object language;
+    private String language;
     private int forks_count;
     private int stargazers_count;
     private int watchers_count;
@@ -578,11 +578,11 @@ public class Repositories {
         this.homepage = homepage;
     }
 
-    public Object getLanguage() {
+    public String getLanguage() {
         return language;
     }
 
-    public void setLanguage(Object language) {
+    public void setLanguage(String language) {
         this.language = language;
     }
 

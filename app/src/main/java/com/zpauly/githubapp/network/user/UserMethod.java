@@ -1,7 +1,7 @@
 package com.zpauly.githubapp.network.user;
 
 import com.zpauly.githubapp.Api;
-import com.zpauly.githubapp.entity.response.AuthenticatedUser;
+import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
 
 import retrofit2.Retrofit;
@@ -35,7 +35,7 @@ public class UserMethod {
         return instance;
     }
 
-    public void getAuthenticatedUser(Observer<AuthenticatedUser> observer, String auth) {
+    public void getAuthenticatedUser(Observer<AuthenticatedUserBean> observer, String auth) {
         service.getAuthenticatedUser(auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

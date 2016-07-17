@@ -3,7 +3,7 @@ package com.zpauly.githubapp.entity.response;
 /**
  * Created by zpauly on 16-6-12.
  */
-public class Followers {
+public class FollowersBean {
 
     /**
      * login : octocat

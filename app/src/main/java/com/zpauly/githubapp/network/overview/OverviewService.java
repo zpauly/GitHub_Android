@@ -2,7 +2,7 @@ package com.zpauly.githubapp.network.overview;
 
 import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.entity.request.AuthorizationRequest;
-import com.zpauly.githubapp.entity.response.AppAuthorization;
+import com.zpauly.githubapp.entity.response.AppAuthorizationBean;
 
 import retrofit2.http.Body;
 import retrofit2.http.Header;
@@ -14,6 +14,6 @@ import rx.Observable;
  */
 public interface OverviewService {
     @PUT("/authorizations/clients/" + Api.CLIENT_ID)
-    Observable<AppAuthorization> login(@Header("Authorization") String auth,
-                                       @Body AuthorizationRequest request);
+    Observable<AppAuthorizationBean> login(@Header("Authorization") String auth,
+                                           @Body AuthorizationRequest request);
 }
