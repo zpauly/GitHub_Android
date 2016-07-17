@@ -1,2 +1,2 @@
 # GitHub_Android
-A simple client for GitHub
+A simple client for GitHub.
