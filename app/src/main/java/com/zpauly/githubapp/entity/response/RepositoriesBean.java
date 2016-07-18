@@ -148,7 +148,7 @@ public class RepositoriesBean {
     private String teams_url;
     private String trees_url;
     private String homepage;
-    private Object language;
+    private String language;
     private int forks_count;
     private int stargazers_count;
     private int watchers_count;
@@ -578,11 +578,11 @@ public class RepositoriesBean {
         this.homepage = homepage;
     }
 
-    public Object getLanguage() {
+    public String getLanguage() {
         return language;
     }
 
-    public void setLanguage(Object language) {
+    public void setLanguage(String language) {
         this.language = language;
     }
 

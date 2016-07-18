@@ -63,7 +63,7 @@ public class StarsFragment extends BaseFragment implements StarContract.View {
     }
 
     private void setupRecyclerView() {
-        mAdapter = new ReposRecyclerViewAdapter(getContext());
+        mAdapter = new ReposRecyclerViewAdapter(getContext(), ReposRecyclerViewAdapter.STARREDREPOSITORIES_ID);
         mStarredReposRV.setLayoutManager(new LinearLayoutManager(getContext()));
         mStarredReposRV.setAdapter(mAdapter);
         mStarredReposRV.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));

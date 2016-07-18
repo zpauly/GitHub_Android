@@ -1,6 +1,7 @@
 package com.zpauly.githubapp.view.home;
 
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
@@ -20,6 +21,10 @@ import com.zpauly.githubapp.view.stars.StarsFragment;
  * Created by zpauly on 16-6-9.
  */
 public class HomeActivity extends DrawerActivity {
+    private final String TAG = getClass().getName();
+
+    private long lastPressTime = System.currentTimeMillis();
+
     private static final int PROFILE = 0;
     private static final int STARS = 1;
 
@@ -50,9 +55,7 @@ public class HomeActivity extends DrawerActivity {
                         if (currentFragmentID == PROFILE) {
                         } else {
                             item.setChecked(true);
-                            currentFragmentID = PROFILE;
-                            mCurrentFragment = fragments[currentFragmentID];
-                            changeFragment();
+                            changeFragment(PROFILE );
                             setToolbarTitle(R.string.profile);
                         }
                         break;
@@ -61,9 +64,7 @@ public class HomeActivity extends DrawerActivity {
 
                         } else {
                             item.setChecked(true);
-                            currentFragmentID = STARS;
-                            mCurrentFragment = fragments[currentFragmentID];
-                            changeFragment();
+                            changeFragment(STARS);
                             setToolbarTitle(R.string.starred);
                         }
                         break;
@@ -78,7 +79,9 @@ public class HomeActivity extends DrawerActivity {
         });
     }
 
-    private void changeFragment() {
+    private void changeFragment(int fragmentID) {
+        currentFragmentID = fragmentID;
+        mCurrentFragment = fragments[currentFragmentID];
         mFragmentTransaction = mFragmentManager.beginTransaction();
         mFragmentTransaction.replace(R.id.nav_content, mCurrentFragment);
         mFragmentTransaction.commit();
@@ -97,5 +100,22 @@ public class HomeActivity extends DrawerActivity {
         intent.setClass(this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (canExit()) {
+            super.onBackPressed();
+        }
+    }
+
+    private boolean canExit(){
+        if(System.currentTimeMillis() - lastPressTime > Constants.CLICK_EXIT_TIME){
+            Snackbar.make(getCurrentFocus(), R.string.double_click_to_exit, Snackbar.LENGTH_SHORT).show();
+            lastPressTime = System.currentTimeMillis();
+            return false;
+        } else {
+            return true;
+        }
     }
 }

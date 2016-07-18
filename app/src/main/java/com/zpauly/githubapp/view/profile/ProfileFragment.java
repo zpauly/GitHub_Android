@@ -1,5 +1,6 @@
 package com.zpauly.githubapp.view.profile;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,6 +19,7 @@ import com.zpauly.githubapp.db.UserDao;
 import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 import com.zpauly.githubapp.presenter.profile.ProfileContract;
 import com.zpauly.githubapp.presenter.profile.ProfilePresenter;
+import com.zpauly.githubapp.view.repositories.ReposActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -70,6 +72,9 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         setupSwpieRefreshLayout();
 
         setClickListener();
+
+        mSwipeRefreshLayout.setRefreshing(true);
+        loadUserInfo();
     }
 
     private void setUserInfo() {
@@ -123,7 +128,9 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         mReposLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent();
+                intent.setClass(getContext(), ReposActivity.class);
+                startActivity(intent);
             }
         });
 

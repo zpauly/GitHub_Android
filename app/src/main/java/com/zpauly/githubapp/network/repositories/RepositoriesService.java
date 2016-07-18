@@ -17,6 +17,22 @@ import rx.Observable;
  */
 
 public interface RepositoriesService {
+    String AFFILIATION_OWNER = "owner";
+
+    String AFFILAITION_COLLABORATOR = "collaborator";
+
+    String AFFILIATION_ORGANIZATION_MEMBER = "organization_member";
+
+    String SORT_ALL = "all";
+
+    String SORT_OWNER = "owner";
+
+    String SORT_PUBLIC = "public";
+
+    String SORT_PRIVATE = "private";
+
+    String SORT_MEMBER = "member";
+
     /**
      * List repositories that are accessible to the authenticated user.
      * This includes repositories owned by the authenticated user,

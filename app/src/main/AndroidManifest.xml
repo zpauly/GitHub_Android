@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.home.HomeActivity" />
+        <activity android:name=".view.repositories.ReposActivity" />
     </application>
 
 </manifest>

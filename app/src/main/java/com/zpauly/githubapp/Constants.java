@@ -45,4 +45,7 @@ public interface Constants {
 
     //github api
     String GITHUB_API_URL = "https://api.github.com/";
+
+
+    long CLICK_EXIT_TIME = 2000;
 }
