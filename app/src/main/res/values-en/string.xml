@@ -30,6 +30,12 @@
     <string name="password">Password</string>
     <string name="login">LOGIN</string>
 
+    <string name="repos_all">All</string>
+    <string name="repos_public">Public</string>
+    <string name="repos_private">Private</string>
+    <string name="repos_sources">Sources</string>
+    <string name="repos_forks">Forks</string>
+
     <string name="exit">Sign out</string>
 
     <string name="double_click_to_exit">Click Again to Exit</string>
