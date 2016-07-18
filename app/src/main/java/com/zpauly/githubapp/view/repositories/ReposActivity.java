@@ -1,16 +1,15 @@
 package com.zpauly.githubapp.view.repositories;
 
+import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.zpauly.githubapp.R;
-import com.zpauly.githubapp.adapter.ReposRecyclerViewAdapter;
+import com.zpauly.githubapp.adapter.ViewPagerAdapter;
 import com.zpauly.githubapp.db.ReposDao;
 import com.zpauly.githubapp.entity.response.RepositoriesBean;
 import com.zpauly.githubapp.presenter.repos.ReposContract;
@@ -54,6 +53,27 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
         setToolbarTitle(R.string.repos);
     }
 
+    private void setupViewPager() {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(createFragment(ReposFragment.PUBLIC), getString(R.string.repos_public));
+        adapter.addFragment(createFragment(ReposFragment.PRIVATE), getString(R.string.repos_private));
+        adapter.addFragment(createFragment(ReposFragment.SOURCE), getString(R.string.repos_sources));
+        adapter.addFragment(createFragment(ReposFragment.FORK), getString(R.string.repos_forks));
+        mReposVP.setAdapter(adapter);
+    }
+
+    private Fragment createFragment(String tag) {
+        Bundle bundle = new Bundle();
+        bundle.putString(ReposFragment.FRAGMENT_TAG, tag);
+        ReposFragment fragment = new ReposFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    private void setupTabLayout() {
+        mReposTBLayout.setupWithViewPager(mReposVP);
+    }
+
     private void setupSwipeRefreshLayout() {
         mReposSwLayout.measure(View.MEASURED_SIZE_MASK, View.MEASURED_HEIGHT_STATE_SHIFT);
         mReposSwLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -95,5 +115,7 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
     public void loadSuccess() {
         mReposSwLayout.setRefreshing(false);
         mReposSwLayout.setEnabled(false);
+        setupViewPager();
+        setupTabLayout();
     }
 }

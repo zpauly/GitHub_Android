@@ -2,9 +2,10 @@
 <litepal>
     <dbname value="github" ></dbname>
 
-    <version value="2" ></version>
+    <version value="3" ></version>
 
     <list>
         <mapping class="com.zpauly.githubapp.db.UserModel"/>
+        <mapping class="com.zpauly.githubapp.db.ReposModel"/>
     </list>
 </litepal>
