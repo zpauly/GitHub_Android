@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.ReposRecyclerViewAdapter;
 import com.zpauly.githubapp.base.BaseFragment;
+import com.zpauly.githubapp.db.ReposDao;
+import com.zpauly.githubapp.db.ReposModel;
 import com.zpauly.githubapp.entity.response.StarredRepositories;
 import com.zpauly.githubapp.presenter.star.StarContract;
 import com.zpauly.githubapp.presenter.star.StarPresenter;
@@ -63,7 +65,7 @@ public class StarsFragment extends BaseFragment implements StarContract.View {
     }
 
     private void setupRecyclerView() {
-        mAdapter = new ReposRecyclerViewAdapter(getContext(), ReposRecyclerViewAdapter.STARREDREPOSITORIES_ID);
+        mAdapter = new ReposRecyclerViewAdapter(getContext());
         mStarredReposRV.setLayoutManager(new LinearLayoutManager(getContext()));
         mStarredReposRV.setAdapter(mAdapter);
         mStarredReposRV.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
@@ -85,7 +87,10 @@ public class StarsFragment extends BaseFragment implements StarContract.View {
 
     @Override
     public void loading(List<StarredRepositories> starredRepositories) {
-        mAdapter.addAllData(starredRepositories);
+        ReposDao.deleteRepos();
+        for (StarredRepositories repo : starredRepositories) {
+            ReposDao.insertRepo(repo);
+        }
     }
 
     @Override
@@ -95,6 +100,8 @@ public class StarsFragment extends BaseFragment implements StarContract.View {
 
     @Override
     public void loadSuccess() {
+        List<ReposModel> list = ReposDao.queryRepos();
+        mAdapter.addAllData(list);
         mStarredReposSRLayout.setRefreshing(false);
     }
 }

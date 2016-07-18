@@ -2,6 +2,8 @@ package com.zpauly.githubapp.view.repositories;
 
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +11,7 @@ import android.view.View;
 
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.ReposRecyclerViewAdapter;
+import com.zpauly.githubapp.db.ReposDao;
 import com.zpauly.githubapp.entity.response.RepositoriesBean;
 import com.zpauly.githubapp.presenter.repos.ReposContract;
 import com.zpauly.githubapp.presenter.repos.ReposPresenter;
@@ -27,9 +30,8 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
 
     private AppBarLayout mReposABLayout;
     private SwipeRefreshLayout mReposSwLayout;
-    private RecyclerView mReposRV;
-
-    private ReposRecyclerViewAdapter mReposRVAdapter;
+    private TabLayout mReposTBLayout;
+    private ViewPager mReposVP;
 
     @Override
     public void initViews() {
@@ -37,9 +39,9 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
 
         mReposABLayout = (AppBarLayout) findViewById(R.id.repos_ABLayout);
         mReposSwLayout = (SwipeRefreshLayout) findViewById(R.id.repos_SWLayout);
-        mReposRV = (RecyclerView) findViewById(R.id.repos_RV);
+        mReposTBLayout = (TabLayout) findViewById(R.id.repos_TBLayout);
+        mReposVP = (ViewPager) findViewById(R.id.repos_VP);
 
-        setupRecyclerView();
         setupSwipeRefreshLayout();
 
         mReposSwLayout.setRefreshing(true);
@@ -50,12 +52,6 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
     protected void setToolbar() {
         super.setToolbar();
         setToolbarTitle(R.string.repos);
-    }
-
-    private void setupRecyclerView() {
-        mReposRV.setLayoutManager(new LinearLayoutManager(this));
-        mReposRVAdapter = new ReposRecyclerViewAdapter(this, ReposRecyclerViewAdapter.REPOSITORIESBEAN_ID);
-        mReposRV.setAdapter(mReposRVAdapter);
     }
 
     private void setupSwipeRefreshLayout() {
@@ -84,7 +80,10 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
 
     @Override
     public void loadingRepos(List<RepositoriesBean> list) {
-        mReposRVAdapter.swapReposData(list);
+        ReposDao.deleteRepos();
+        for (RepositoriesBean repo : list) {
+            ReposDao.insertRepo(repo);
+        }
     }
 
     @Override
@@ -95,5 +94,6 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
     @Override
     public void loadSuccess() {
         mReposSwLayout.setRefreshing(false);
+        mReposSwLayout.setEnabled(false);
     }
 }
