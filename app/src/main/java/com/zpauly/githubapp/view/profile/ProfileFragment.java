@@ -144,7 +144,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         mGistsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                
             }
         });
     }
