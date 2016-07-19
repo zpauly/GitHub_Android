@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.View;
 
 import com.zpauly.githubapp.R;
@@ -16,6 +17,7 @@ import com.zpauly.githubapp.presenter.repos.ReposContract;
 import com.zpauly.githubapp.presenter.repos.ReposPresenter;
 import com.zpauly.githubapp.view.ToolbarActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,6 +34,10 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
     private TabLayout mReposTBLayout;
     private ViewPager mReposVP;
 
+    private ViewPagerAdapter adapter;
+
+    private List<ReposFragment> mFragmentList = new ArrayList<>();
+
     @Override
     public void initViews() {
         new ReposPresenter(this, this);
@@ -43,6 +49,9 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
 
         setupSwipeRefreshLayout();
 
+        setupViewPager();
+        setupTabLayout();
+
         mReposSwLayout.setRefreshing(true);
         loadOwnerRepos();
     }
@@ -51,22 +60,34 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
     protected void setToolbar() {
         super.setToolbar();
         setToolbarTitle(R.string.repos);
+        setOnToolbarNavClickedListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
-    private void setupViewPager() {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+    private void addPagers() {
+        adapter.addFragment(createFragment(ReposFragment.ALL), getString(R.string.repos_all));
         adapter.addFragment(createFragment(ReposFragment.PUBLIC), getString(R.string.repos_public));
         adapter.addFragment(createFragment(ReposFragment.PRIVATE), getString(R.string.repos_private));
         adapter.addFragment(createFragment(ReposFragment.SOURCE), getString(R.string.repos_sources));
         adapter.addFragment(createFragment(ReposFragment.FORK), getString(R.string.repos_forks));
+        adapter.notifyDataSetChanged();
+    }
+
+    private void setupViewPager() {
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
         mReposVP.setAdapter(adapter);
     }
 
-    private Fragment createFragment(String tag) {
+    private Fragment createFragment(int tag) {
         Bundle bundle = new Bundle();
-        bundle.putString(ReposFragment.FRAGMENT_TAG, tag);
+        bundle.putInt(ReposFragment.FRAGMENT_TAG, tag);
         ReposFragment fragment = new ReposFragment();
         fragment.setArguments(bundle);
+        mFragmentList.add(fragment);
         return fragment;
     }
 
@@ -115,7 +136,6 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
     public void loadSuccess() {
         mReposSwLayout.setRefreshing(false);
         mReposSwLayout.setEnabled(false);
-        setupViewPager();
-        setupTabLayout();
+        addPagers();
     }
 }
