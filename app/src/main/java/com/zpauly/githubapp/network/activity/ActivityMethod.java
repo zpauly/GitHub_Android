@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 
 import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.entity.response.StarredRepositories;
+import com.zpauly.githubapp.entity.response.events.EventsBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
 
 import java.util.List;
@@ -44,6 +45,13 @@ public class ActivityMethod {
     public void getStarredRepositories(Observer<List<StarredRepositories>> observer, String auth,
                                        @Nullable String sort, @Nullable String direction) {
         service.getStarredRepositories(auth, sort, direction)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getReceivedEvents(Observer<List<EventsBean>> observer, String auth, String username) {
+        service.getReceivedEvents(auth, username)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

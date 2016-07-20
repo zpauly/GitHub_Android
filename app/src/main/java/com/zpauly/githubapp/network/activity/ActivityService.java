@@ -3,11 +3,13 @@ package com.zpauly.githubapp.network.activity;
 import android.support.annotation.Nullable;
 
 import com.zpauly.githubapp.entity.response.StarredRepositories;
+import com.zpauly.githubapp.entity.response.events.EventsBean;
 
 import java.util.List;
 
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -32,4 +34,19 @@ public interface ActivityService {
     @GET("/user/starred")
     Observable<List<StarredRepositories>> getStarredRepositories(@Header("Authorization") String auth
             , @Nullable @Query("sort") String sort, @Nullable @Query("direction") String direction);
+
+    //----------------------------------------
+    //Events
+
+    /**
+     * These are events that you've received by watching repos and following users.
+     * If you are authenticated as the given user, you will see private events.
+     * Otherwise, you'll only see public events.
+     * @param auth
+     * @param username
+     * @return
+     */
+    @GET("users/{username}/received_events")
+    Observable<List<EventsBean>> getReceivedEvents(@Header("Authorization") String auth,
+                                                   @Path("username") String username);
 }
