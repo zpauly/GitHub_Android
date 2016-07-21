@@ -50,6 +50,13 @@ public class ActivityMethod {
                 .subscribe(observer);
     }
 
+    public void getUserEvents(Observer<List<EventsBean>> observer, String auth, String username) {
+        service.getUserEvents(auth, username)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
     public void getReceivedEvents(Observer<List<EventsBean>> observer, String auth, String username) {
         service.getReceivedEvents(auth, username)
                 .subscribeOn(Schedulers.io())

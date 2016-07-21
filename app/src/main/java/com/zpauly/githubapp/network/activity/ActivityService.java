@@ -46,7 +46,20 @@ public interface ActivityService {
      * @param username
      * @return
      */
-    @GET("users/{username}/received_events")
+    @GET("/users/{username}/received_events")
     Observable<List<EventsBean>> getReceivedEvents(@Header("Authorization") String auth,
                                                    @Path("username") String username);
+
+    /**
+     * List events performed by a user
+     * If you are authenticated as the given user,
+     * you will see your private events. Otherwise,
+     * you'll only see public events.
+     * @param auth
+     * @param username
+     * @return
+     */
+    @GET("/users/{username}/events")
+    Observable<List<EventsBean>> getUserEvents(@Header("Authorization") String auth,
+                                               @Path("username") String username);
 }

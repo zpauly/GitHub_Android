@@ -48,7 +48,30 @@ public class EventsPresenter implements EventsContract.Presenter {
     }
 
     @Override
-    public void getEvents() {
+    public void getUserEvents() {
+        String username = SPUtil.getString(mContext, Constants.USER_INFO, Constants.USER_USERNAME, null);
+        mEventsSubscriber = new Subscriber<List<EventsBean>>() {
+            @Override
+            public void onCompleted() {
+                mEventsView.loadSuccess();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                mEventsView.loadFail();
+            }
+
+            @Override
+            public void onNext(List<EventsBean> eventsBeen) {
+                mEventsView.loadEvents(eventsBeen);
+            }
+        };
+        activityMethod.getUserEvents(mEventsSubscriber, auth, username);
+    }
+
+    @Override
+    public void getReceivedEvents() {
         String username = SPUtil.getString(mContext, Constants.USER_INFO, Constants.USER_USERNAME, null);
         mEventsSubscriber = new Subscriber<List<EventsBean>>() {
             @Override

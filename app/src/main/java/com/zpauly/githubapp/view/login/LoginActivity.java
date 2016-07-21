@@ -222,6 +222,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         String password = mPasswordET.getText().toString();
         String auth = AuthUtil.generateAuth(username, password);
         SPUtil.putString(this, Constants.USER_INFO, Constants.USER_AUTH, auth);
+        SPUtil.putString(this, Constants.USER_INFO, Constants.USER_USERNAME, username);
     }
 
     @Override

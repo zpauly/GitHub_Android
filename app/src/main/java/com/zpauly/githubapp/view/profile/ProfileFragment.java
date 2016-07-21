@@ -19,6 +19,7 @@ import com.zpauly.githubapp.db.UserDao;
 import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 import com.zpauly.githubapp.presenter.profile.ProfileContract;
 import com.zpauly.githubapp.presenter.profile.ProfilePresenter;
+import com.zpauly.githubapp.view.events.EventsActivity;
 import com.zpauly.githubapp.view.repositories.ReposActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -121,7 +122,11 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         mEventsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent();
+                intent.putExtra(EventsActivity.EVENTS_ID, EventsActivity.USER_EVENTS);
+                intent.setClass(getContext(), EventsActivity.class);
+                startActivity(intent);
+                getActivity().finish();
             }
         });
 

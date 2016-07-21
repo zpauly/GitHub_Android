@@ -12,7 +12,9 @@ import java.util.List;
 
 public class EventsContract {
     public interface Presenter extends BasePresenter {
-        void getEvents();
+        void getUserEvents();
+
+        void getReceivedEvents();
     }
 
     public interface View extends BaseView<Presenter> {
