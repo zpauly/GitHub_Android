@@ -12,12 +12,11 @@ import android.view.ViewGroup;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.EventsRecyclerViewAdapter;
 import com.zpauly.githubapp.base.BaseFragment;
-import com.zpauly.githubapp.db.EventsDao;
-import com.zpauly.githubapp.db.EventsModel;
 import com.zpauly.githubapp.entity.response.events.EventsBean;
 import com.zpauly.githubapp.presenter.events.EventsContract;
 import com.zpauly.githubapp.presenter.events.EventsPresenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,6 +35,8 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
     private int item_count = 0;
 
     private int events_id = -1;
+
+    private List<EventsBean> list = new ArrayList<>();
 
     @Override
     protected void initViews(View view) {
@@ -71,7 +72,6 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
     }
 
     private void loadData() {
-        Log.i(TAG, "load data");
         switch (events_id) {
             case -1:
                 mEventsSRLayout.setRefreshing(false);
@@ -94,8 +94,9 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
 
     @Override
     public void loadEvents(List<EventsBean> eventsBeanList) {
-        for (EventsBean bean : eventsBeanList) {
-            EventsDao.insert(bean);
+        list = eventsBeanList;
+        if (list.get(0).getPayload() == null) {
+            Log.i(TAG, "payload is null");
         }
     }
 
@@ -106,7 +107,6 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
 
     @Override
     public void loadSuccess() {
-        List<EventsModel> list = EventsDao.queryTenItems(item_count);
         item_count += 10;
         mAdapter.swapData(list);
         mEventsSRLayout.setRefreshing(false);

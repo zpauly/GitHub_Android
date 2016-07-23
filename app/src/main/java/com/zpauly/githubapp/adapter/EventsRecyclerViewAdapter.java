@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zpauly.githubapp.R;
-import com.zpauly.githubapp.db.EventsModel;
 import com.zpauly.githubapp.entity.response.events.EventsBean;
 import com.zpauly.githubapp.entity.response.events.PushEventsBean;
 import com.zpauly.githubapp.entity.response.events.WatchEventsBean;
@@ -26,19 +25,19 @@ public class EventsRecyclerViewAdapter extends RecyclerView.Adapter<EventsViewHo
     private final String TAG = getClass().getName();
 
     private Context mContext;
-    private List<EventsModel> mData;
+    private List<EventsBean> mData;
 
     public EventsRecyclerViewAdapter(Context context) {
         this.mContext = context;
         mData = new ArrayList<>();
     }
 
-    public void addAllData(List<EventsModel> list) {
+    public void addAllData(List<EventsBean> list) {
         mData.addAll(list);
         notifyDataSetChanged();
     }
 
-    public void swapData(List<EventsModel> list) {
+    public void swapData(List<EventsBean> list) {
         mData.clear();
         mData.addAll(list);
         notifyDataSetChanged();
@@ -53,15 +52,15 @@ public class EventsRecyclerViewAdapter extends RecyclerView.Adapter<EventsViewHo
 
     @Override
     public void onBindViewHolder(EventsViewHolder holder, int position) {
-        EventsModel data = mData.get(position);
+        EventsBean data = mData.get(position);
         Glide.with(mContext)
-                .load(data.getAvatarUrl())
+                .load(data.getActor().getAvatar_url())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
                 .crossFade()
                 .into(holder.mUserAvatarIV);
-        holder.mRepoTV.setText(data.getRepoName());
-        holder.mUsernameTV.setText(data.getActorName());
+        holder.mRepoTV.setText(data.getRepo().getName());
+        holder.mUsernameTV.setText(data.getActor().getLogin());
         setAction(data.getType(), data.getPayload(), holder.mActionTV);
 
         holder.mEventLayout.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +83,7 @@ public class EventsRecyclerViewAdapter extends RecyclerView.Adapter<EventsViewHo
     }
 
     private void setAction(String type, EventsBean.PayloadBean payloadBean, AppCompatTextView textView) {
-        /*switch (type) {
+        switch (type) {
             case "WatchEvent":
                 WatchEventsBean bean = (WatchEventsBean) payloadBean;
                 textView.setText(bean.getAction());
@@ -95,6 +94,6 @@ public class EventsRecyclerViewAdapter extends RecyclerView.Adapter<EventsViewHo
                 String branch = str[str.length - 1];
                 textView.setText("pushed to " + branch + "at ");
                 break;
-        }*/
+        }
     }
 }

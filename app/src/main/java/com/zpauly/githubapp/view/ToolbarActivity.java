@@ -27,7 +27,6 @@ public abstract class ToolbarActivity extends BaseActivity {
     private void initToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         if (mToolbar != null) {
-            Log.i("ToolbarActivity", "not null");
             setSupportActionBar(mToolbar);
 
             //back down when click nav by default

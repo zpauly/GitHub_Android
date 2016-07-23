@@ -58,7 +58,7 @@ public class EventsPresenter implements EventsContract.Presenter {
 
             @Override
             public void onError(Throwable e) {
-                e.printStackTrace();
+//                e.printStackTrace();
                 mEventsView.loadFail();
             }
 
