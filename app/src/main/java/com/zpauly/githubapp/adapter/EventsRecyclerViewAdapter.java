@@ -11,8 +11,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.response.events.EventsBean;
-import com.zpauly.githubapp.entity.response.events.PushEventsBean;
-import com.zpauly.githubapp.entity.response.events.WatchEventsBean;
+import com.zpauly.githubapp.entity.response.events.Payload;
 import com.zpauly.githubapp.view.viewholder.EventsViewHolder;
 
 import java.util.ArrayList;
@@ -82,17 +81,15 @@ public class EventsRecyclerViewAdapter extends RecyclerView.Adapter<EventsViewHo
         return mData.size();
     }
 
-    private void setAction(String type, EventsBean.PayloadBean payloadBean, AppCompatTextView textView) {
+    private void setAction(String type, Payload payloadBean, AppCompatTextView textView) {
         switch (type) {
             case "WatchEvent":
-                WatchEventsBean bean = (WatchEventsBean) payloadBean;
-                textView.setText(bean.getAction());
+                textView.setText(payloadBean.getAction());
                 break;
             case "PushEvent":
-                PushEventsBean pushEventsBean = (PushEventsBean) payloadBean;
-                String[] str = pushEventsBean.getRef().split("/");
+                String[] str = payloadBean.getRef().split("/");
                 String branch = str[str.length - 1];
-                textView.setText("pushed to " + branch + "at ");
+                textView.setText("pushed to " + branch + " at ");
                 break;
         }
     }

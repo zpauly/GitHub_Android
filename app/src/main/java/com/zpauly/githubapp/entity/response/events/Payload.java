@@ -2,163 +2,30 @@ package com.zpauly.githubapp.entity.response.events;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
- * Created by root on 16-7-19.
+ * Created by zpauly on 16-7-23.
  */
 
-public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
-    /**
-     * action : created
-     * comment : {"url":"https://api.github.com/repos/baxterthehacker/public-repo/pulls/comments/29724692","id":29724692,"diff_hunk":"@@ -1 +1 @@\n-# public-repo","path":"README.md","position":1,"original_position":1,"commit_id":"0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c","original_commit_id":"0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c","user":{"login":"baxterthehacker","id":6752317,"avatar_url":"https://avatars.githubusercontent.com/u/6752317?v=3","gravatar_id":"","url":"https://api.github.com/users/baxterthehacker","html_url":"https://github.com/baxterthehacker","followers_url":"https://api.github.com/users/baxterthehacker/followers","following_url":"https://api.github.com/users/baxterthehacker/following{/other_user}","gists_url":"https://api.github.com/users/baxterthehacker/gists{/gist_id}","starred_url":"https://api.github.com/users/baxterthehacker/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/baxterthehacker/subscriptions","organizations_url":"https://api.github.com/users/baxterthehacker/orgs","repos_url":"https://api.github.com/users/baxterthehacker/repos","events_url":"https://api.github.com/users/baxterthehacker/events{/privacy}","received_events_url":"https://api.github.com/users/baxterthehacker/received_events","type":"User","site_admin":false},"body":"Maybe you should use more emojji on this line.","created_at":"2015-05-05T23:40:27Z","updated_at":"2015-05-05T23:40:27Z","html_url":"https://github.com/baxterthehacker/public-repo/pull/1#discussion_r29724692","pull_request_url":"https://api.github.com/repos/baxterthehacker/public-repo/pulls/1","_links":{"self":{"href":"https://api.github.com/repos/baxterthehacker/public-repo/pulls/comments/29724692"},"html":{"href":"https://github.com/baxterthehacker/public-repo/pull/1#discussion_r29724692"},"pull_request":{"href":"https://api.github.com/repos/baxterthehacker/public-repo/pulls/1"}}}
-     * pull_request : {"url":"https://api.github.com/repos/baxterthehacker/public-repo/pulls/1","id":34778301,"html_url":"https://github.com/baxterthehacker/public-repo/pull/1","diff_url":"https://github.com/baxterthehacker/public-repo/pull/1.diff","patch_url":"https://github.com/baxterthehacker/public-repo/pull/1.patch","issue_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues/1","number":1,"state":"open","locked":false,"title":"Update the README with new information","user":{"login":"baxterthehacker","id":6752317,"avatar_url":"https://avatars.githubusercontent.com/u/6752317?v=3","gravatar_id":"","url":"https://api.github.com/users/baxterthehacker","html_url":"https://github.com/baxterthehacker","followers_url":"https://api.github.com/users/baxterthehacker/followers","following_url":"https://api.github.com/users/baxterthehacker/following{/other_user}","gists_url":"https://api.github.com/users/baxterthehacker/gists{/gist_id}","starred_url":"https://api.github.com/users/baxterthehacker/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/baxterthehacker/subscriptions","organizations_url":"https://api.github.com/users/baxterthehacker/orgs","repos_url":"https://api.github.com/users/baxterthehacker/repos","events_url":"https://api.github.com/users/baxterthehacker/events{/privacy}","received_events_url":"https://api.github.com/users/baxterthehacker/received_events","type":"User","site_admin":false},"body":"This is a pretty simple change that we need to pull into master.","created_at":"2015-05-05T23:40:27Z","updated_at":"2015-05-05T23:40:27Z","closed_at":null,"merged_at":null,"merge_commit_sha":"18721552ba489fb84e12958c1b5694b5475f7991","assignee":null,"milestone":null,"commits_url":"https://api.github.com/repos/baxterthehacker/public-repo/pulls/1/commits","review_comments_url":"https://api.github.com/repos/baxterthehacker/public-repo/pulls/1/comments","review_comment_url":"https://api.github.com/repos/baxterthehacker/public-repo/pulls/comments{/number}","comments_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues/1/comments","statuses_url":"https://api.github.com/repos/baxterthehacker/public-repo/statuses/0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c","head":{"label":"baxterthehacker:changes","ref":"changes","sha":"0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c","user":{"login":"baxterthehacker","id":6752317,"avatar_url":"https://avatars.githubusercontent.com/u/6752317?v=3","gravatar_id":"","url":"https://api.github.com/users/baxterthehacker","html_url":"https://github.com/baxterthehacker","followers_url":"https://api.github.com/users/baxterthehacker/followers","following_url":"https://api.github.com/users/baxterthehacker/following{/other_user}","gists_url":"https://api.github.com/users/baxterthehacker/gists{/gist_id}","starred_url":"https://api.github.com/users/baxterthehacker/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/baxterthehacker/subscriptions","organizations_url":"https://api.github.com/users/baxterthehacker/orgs","repos_url":"https://api.github.com/users/baxterthehacker/repos","events_url":"https://api.github.com/users/baxterthehacker/events{/privacy}","received_events_url":"https://api.github.com/users/baxterthehacker/received_events","type":"User","site_admin":false},"repo":{"id":35129377,"name":"public-repo","full_name":"baxterthehacker/public-repo","owner":{"login":"baxterthehacker","id":6752317,"avatar_url":"https://avatars.githubusercontent.com/u/6752317?v=3","gravatar_id":"","url":"https://api.github.com/users/baxterthehacker","html_url":"https://github.com/baxterthehacker","followers_url":"https://api.github.com/users/baxterthehacker/followers","following_url":"https://api.github.com/users/baxterthehacker/following{/other_user}","gists_url":"https://api.github.com/users/baxterthehacker/gists{/gist_id}","starred_url":"https://api.github.com/users/baxterthehacker/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/baxterthehacker/subscriptions","organizations_url":"https://api.github.com/users/baxterthehacker/orgs","repos_url":"https://api.github.com/users/baxterthehacker/repos","events_url":"https://api.github.com/users/baxterthehacker/events{/privacy}","received_events_url":"https://api.github.com/users/baxterthehacker/received_events","type":"User","site_admin":false},"private":false,"html_url":"https://github.com/baxterthehacker/public-repo","description":"","fork":false,"url":"https://api.github.com/repos/baxterthehacker/public-repo","forks_url":"https://api.github.com/repos/baxterthehacker/public-repo/forks","keys_url":"https://api.github.com/repos/baxterthehacker/public-repo/keys{/key_id}","collaborators_url":"https://api.github.com/repos/baxterthehacker/public-repo/collaborators{/collaborator}","teams_url":"https://api.github.com/repos/baxterthehacker/public-repo/teams","hooks_url":"https://api.github.com/repos/baxterthehacker/public-repo/hooks","issue_events_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues/events{/number}","events_url":"https://api.github.com/repos/baxterthehacker/public-repo/events","assignees_url":"https://api.github.com/repos/baxterthehacker/public-repo/assignees{/user}","branches_url":"https://api.github.com/repos/baxterthehacker/public-repo/branches{/branch}","tags_url":"https://api.github.com/repos/baxterthehacker/public-repo/tags","blobs_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/blobs{/sha}","git_tags_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/tags{/sha}","git_refs_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/refs{/sha}","trees_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/trees{/sha}","statuses_url":"https://api.github.com/repos/baxterthehacker/public-repo/statuses/{sha}","languages_url":"https://api.github.com/repos/baxterthehacker/public-repo/languages","stargazers_url":"https://api.github.com/repos/baxterthehacker/public-repo/stargazers","contributors_url":"https://api.github.com/repos/baxterthehacker/public-repo/contributors","subscribers_url":"https://api.github.com/repos/baxterthehacker/public-repo/subscribers","subscription_url":"https://api.github.com/repos/baxterthehacker/public-repo/subscription","commits_url":"https://api.github.com/repos/baxterthehacker/public-repo/commits{/sha}","git_commits_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/commits{/sha}","comments_url":"https://api.github.com/repos/baxterthehacker/public-repo/comments{/number}","issue_comment_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues/comments{/number}","contents_url":"https://api.github.com/repos/baxterthehacker/public-repo/contents/{+path}","compare_url":"https://api.github.com/repos/baxterthehacker/public-repo/compare/{base}...{head}","merges_url":"https://api.github.com/repos/baxterthehacker/public-repo/merges","archive_url":"https://api.github.com/repos/baxterthehacker/public-repo/{archive_format}{/ref}","downloads_url":"https://api.github.com/repos/baxterthehacker/public-repo/downloads","issues_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues{/number}","pulls_url":"https://api.github.com/repos/baxterthehacker/public-repo/pulls{/number}","milestones_url":"https://api.github.com/repos/baxterthehacker/public-repo/milestones{/number}","notifications_url":"https://api.github.com/repos/baxterthehacker/public-repo/notifications{?since,all,participating}","labels_url":"https://api.github.com/repos/baxterthehacker/public-repo/labels{/name}","releases_url":"https://api.github.com/repos/baxterthehacker/public-repo/releases{/id}","created_at":"2015-05-05T23:40:12Z","updated_at":"2015-05-05T23:40:12Z","pushed_at":"2015-05-05T23:40:27Z","git_url":"git://github.com/baxterthehacker/public-repo.git","ssh_url":"git@github.com:baxterthehacker/public-repo.git","clone_url":"https://github.com/baxterthehacker/public-repo.git","svn_url":"https://github.com/baxterthehacker/public-repo","homepage":null,"size":0,"stargazers_count":0,"watchers_count":0,"language":null,"has_issues":true,"has_downloads":true,"has_wiki":true,"has_pages":true,"forks_count":0,"mirror_url":null,"open_issues_count":1,"forks":0,"open_issues":1,"watchers":0,"default_branch":"master"}},"base":{"label":"baxterthehacker:master","ref":"master","sha":"9049f1265b7d61be4a8904a9a27120d2064dab3b","user":{"login":"baxterthehacker","id":6752317,"avatar_url":"https://avatars.githubusercontent.com/u/6752317?v=3","gravatar_id":"","url":"https://api.github.com/users/baxterthehacker","html_url":"https://github.com/baxterthehacker","followers_url":"https://api.github.com/users/baxterthehacker/followers","following_url":"https://api.github.com/users/baxterthehacker/following{/other_user}","gists_url":"https://api.github.com/users/baxterthehacker/gists{/gist_id}","starred_url":"https://api.github.com/users/baxterthehacker/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/baxterthehacker/subscriptions","organizations_url":"https://api.github.com/users/baxterthehacker/orgs","repos_url":"https://api.github.com/users/baxterthehacker/repos","events_url":"https://api.github.com/users/baxterthehacker/events{/privacy}","received_events_url":"https://api.github.com/users/baxterthehacker/received_events","type":"User","site_admin":false},"repo":{"id":35129377,"name":"public-repo","full_name":"baxterthehacker/public-repo","owner":{"login":"baxterthehacker","id":6752317,"avatar_url":"https://avatars.githubusercontent.com/u/6752317?v=3","gravatar_id":"","url":"https://api.github.com/users/baxterthehacker","html_url":"https://github.com/baxterthehacker","followers_url":"https://api.github.com/users/baxterthehacker/followers","following_url":"https://api.github.com/users/baxterthehacker/following{/other_user}","gists_url":"https://api.github.com/users/baxterthehacker/gists{/gist_id}","starred_url":"https://api.github.com/users/baxterthehacker/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/baxterthehacker/subscriptions","organizations_url":"https://api.github.com/users/baxterthehacker/orgs","repos_url":"https://api.github.com/users/baxterthehacker/repos","events_url":"https://api.github.com/users/baxterthehacker/events{/privacy}","received_events_url":"https://api.github.com/users/baxterthehacker/received_events","type":"User","site_admin":false},"private":false,"html_url":"https://github.com/baxterthehacker/public-repo","description":"","fork":false,"url":"https://api.github.com/repos/baxterthehacker/public-repo","forks_url":"https://api.github.com/repos/baxterthehacker/public-repo/forks","keys_url":"https://api.github.com/repos/baxterthehacker/public-repo/keys{/key_id}","collaborators_url":"https://api.github.com/repos/baxterthehacker/public-repo/collaborators{/collaborator}","teams_url":"https://api.github.com/repos/baxterthehacker/public-repo/teams","hooks_url":"https://api.github.com/repos/baxterthehacker/public-repo/hooks","issue_events_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues/events{/number}","events_url":"https://api.github.com/repos/baxterthehacker/public-repo/events","assignees_url":"https://api.github.com/repos/baxterthehacker/public-repo/assignees{/user}","branches_url":"https://api.github.com/repos/baxterthehacker/public-repo/branches{/branch}","tags_url":"https://api.github.com/repos/baxterthehacker/public-repo/tags","blobs_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/blobs{/sha}","git_tags_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/tags{/sha}","git_refs_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/refs{/sha}","trees_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/trees{/sha}","statuses_url":"https://api.github.com/repos/baxterthehacker/public-repo/statuses/{sha}","languages_url":"https://api.github.com/repos/baxterthehacker/public-repo/languages","stargazers_url":"https://api.github.com/repos/baxterthehacker/public-repo/stargazers","contributors_url":"https://api.github.com/repos/baxterthehacker/public-repo/contributors","subscribers_url":"https://api.github.com/repos/baxterthehacker/public-repo/subscribers","subscription_url":"https://api.github.com/repos/baxterthehacker/public-repo/subscription","commits_url":"https://api.github.com/repos/baxterthehacker/public-repo/commits{/sha}","git_commits_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/commits{/sha}","comments_url":"https://api.github.com/repos/baxterthehacker/public-repo/comments{/number}","issue_comment_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues/comments{/number}","contents_url":"https://api.github.com/repos/baxterthehacker/public-repo/contents/{+path}","compare_url":"https://api.github.com/repos/baxterthehacker/public-repo/compare/{base}...{head}","merges_url":"https://api.github.com/repos/baxterthehacker/public-repo/merges","archive_url":"https://api.github.com/repos/baxterthehacker/public-repo/{archive_format}{/ref}","downloads_url":"https://api.github.com/repos/baxterthehacker/public-repo/downloads","issues_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues{/number}","pulls_url":"https://api.github.com/repos/baxterthehacker/public-repo/pulls{/number}","milestones_url":"https://api.github.com/repos/baxterthehacker/public-repo/milestones{/number}","notifications_url":"https://api.github.com/repos/baxterthehacker/public-repo/notifications{?since,all,participating}","labels_url":"https://api.github.com/repos/baxterthehacker/public-repo/labels{/name}","releases_url":"https://api.github.com/repos/baxterthehacker/public-repo/releases{/id}","created_at":"2015-05-05T23:40:12Z","updated_at":"2015-05-05T23:40:12Z","pushed_at":"2015-05-05T23:40:27Z","git_url":"git://github.com/baxterthehacker/public-repo.git","ssh_url":"git@github.com:baxterthehacker/public-repo.git","clone_url":"https://github.com/baxterthehacker/public-repo.git","svn_url":"https://github.com/baxterthehacker/public-repo","homepage":null,"size":0,"stargazers_count":0,"watchers_count":0,"language":null,"has_issues":true,"has_downloads":true,"has_wiki":true,"has_pages":true,"forks_count":0,"mirror_url":null,"open_issues_count":1,"forks":0,"open_issues":1,"watchers":0,"default_branch":"master"}},"_links":{"self":{"href":"https://api.github.com/repos/baxterthehacker/public-repo/pulls/1"},"html":{"href":"https://github.com/baxterthehacker/public-repo/pull/1"},"issue":{"href":"https://api.github.com/repos/baxterthehacker/public-repo/issues/1"},"comments":{"href":"https://api.github.com/repos/baxterthehacker/public-repo/issues/1/comments"},"review_comments":{"href":"https://api.github.com/repos/baxterthehacker/public-repo/pulls/1/comments"},"review_comment":{"href":"https://api.github.com/repos/baxterthehacker/public-repo/pulls/comments{/number}"},"commits":{"href":"https://api.github.com/repos/baxterthehacker/public-repo/pulls/1/commits"},"statuses":{"href":"https://api.github.com/repos/baxterthehacker/public-repo/statuses/0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c"}}}
-     * repository : {"id":35129377,"name":"public-repo","full_name":"baxterthehacker/public-repo","owner":{"login":"baxterthehacker","id":6752317,"avatar_url":"https://avatars.githubusercontent.com/u/6752317?v=3","gravatar_id":"","url":"https://api.github.com/users/baxterthehacker","html_url":"https://github.com/baxterthehacker","followers_url":"https://api.github.com/users/baxterthehacker/followers","following_url":"https://api.github.com/users/baxterthehacker/following{/other_user}","gists_url":"https://api.github.com/users/baxterthehacker/gists{/gist_id}","starred_url":"https://api.github.com/users/baxterthehacker/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/baxterthehacker/subscriptions","organizations_url":"https://api.github.com/users/baxterthehacker/orgs","repos_url":"https://api.github.com/users/baxterthehacker/repos","events_url":"https://api.github.com/users/baxterthehacker/events{/privacy}","received_events_url":"https://api.github.com/users/baxterthehacker/received_events","type":"User","site_admin":false},"private":false,"html_url":"https://github.com/baxterthehacker/public-repo","description":"","fork":false,"url":"https://api.github.com/repos/baxterthehacker/public-repo","forks_url":"https://api.github.com/repos/baxterthehacker/public-repo/forks","keys_url":"https://api.github.com/repos/baxterthehacker/public-repo/keys{/key_id}","collaborators_url":"https://api.github.com/repos/baxterthehacker/public-repo/collaborators{/collaborator}","teams_url":"https://api.github.com/repos/baxterthehacker/public-repo/teams","hooks_url":"https://api.github.com/repos/baxterthehacker/public-repo/hooks","issue_events_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues/events{/number}","events_url":"https://api.github.com/repos/baxterthehacker/public-repo/events","assignees_url":"https://api.github.com/repos/baxterthehacker/public-repo/assignees{/user}","branches_url":"https://api.github.com/repos/baxterthehacker/public-repo/branches{/branch}","tags_url":"https://api.github.com/repos/baxterthehacker/public-repo/tags","blobs_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/blobs{/sha}","git_tags_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/tags{/sha}","git_refs_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/refs{/sha}","trees_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/trees{/sha}","statuses_url":"https://api.github.com/repos/baxterthehacker/public-repo/statuses/{sha}","languages_url":"https://api.github.com/repos/baxterthehacker/public-repo/languages","stargazers_url":"https://api.github.com/repos/baxterthehacker/public-repo/stargazers","contributors_url":"https://api.github.com/repos/baxterthehacker/public-repo/contributors","subscribers_url":"https://api.github.com/repos/baxterthehacker/public-repo/subscribers","subscription_url":"https://api.github.com/repos/baxterthehacker/public-repo/subscription","commits_url":"https://api.github.com/repos/baxterthehacker/public-repo/commits{/sha}","git_commits_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/commits{/sha}","comments_url":"https://api.github.com/repos/baxterthehacker/public-repo/comments{/number}","issue_comment_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues/comments{/number}","contents_url":"https://api.github.com/repos/baxterthehacker/public-repo/contents/{+path}","compare_url":"https://api.github.com/repos/baxterthehacker/public-repo/compare/{base}...{head}","merges_url":"https://api.github.com/repos/baxterthehacker/public-repo/merges","archive_url":"https://api.github.com/repos/baxterthehacker/public-repo/{archive_format}{/ref}","downloads_url":"https://api.github.com/repos/baxterthehacker/public-repo/downloads","issues_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues{/number}","pulls_url":"https://api.github.com/repos/baxterthehacker/public-repo/pulls{/number}","milestones_url":"https://api.github.com/repos/baxterthehacker/public-repo/milestones{/number}","notifications_url":"https://api.github.com/repos/baxterthehacker/public-repo/notifications{?since,all,participating}","labels_url":"https://api.github.com/repos/baxterthehacker/public-repo/labels{/name}","releases_url":"https://api.github.com/repos/baxterthehacker/public-repo/releases{/id}","created_at":"2015-05-05T23:40:12Z","updated_at":"2015-05-05T23:40:12Z","pushed_at":"2015-05-05T23:40:27Z","git_url":"git://github.com/baxterthehacker/public-repo.git","ssh_url":"git@github.com:baxterthehacker/public-repo.git","clone_url":"https://github.com/baxterthehacker/public-repo.git","svn_url":"https://github.com/baxterthehacker/public-repo","homepage":null,"size":0,"stargazers_count":0,"watchers_count":0,"language":null,"has_issues":true,"has_downloads":true,"has_wiki":true,"has_pages":true,"forks_count":0,"mirror_url":null,"open_issues_count":1,"forks":0,"open_issues":1,"watchers":0,"default_branch":"master"}
-     * sender : {"login":"baxterthehacker","id":6752317,"avatar_url":"https://avatars.githubusercontent.com/u/6752317?v=3","gravatar_id":"","url":"https://api.github.com/users/baxterthehacker","html_url":"https://github.com/baxterthehacker","followers_url":"https://api.github.com/users/baxterthehacker/followers","following_url":"https://api.github.com/users/baxterthehacker/following{/other_user}","gists_url":"https://api.github.com/users/baxterthehacker/gists{/gist_id}","starred_url":"https://api.github.com/users/baxterthehacker/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/baxterthehacker/subscriptions","organizations_url":"https://api.github.com/users/baxterthehacker/orgs","repos_url":"https://api.github.com/users/baxterthehacker/repos","events_url":"https://api.github.com/users/baxterthehacker/events{/privacy}","received_events_url":"https://api.github.com/users/baxterthehacker/received_events","type":"User","site_admin":false}
-     */
-
+public class Payload {
     private String action;
-    /**
-     * url : https://api.github.com/repos/baxterthehacker/public-repo/pulls/comments/29724692
-     * id : 29724692
-     * diff_hunk : @@ -1 +1 @@
-     -# public-repo
-     * path : README.md
-     * position : 1
-     * original_position : 1
-     * commit_id : 0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c
-     * original_commit_id : 0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c
-     * user : {"login":"baxterthehacker","id":6752317,"avatar_url":"https://avatars.githubusercontent.com/u/6752317?v=3","gravatar_id":"","url":"https://api.github.com/users/baxterthehacker","html_url":"https://github.com/baxterthehacker","followers_url":"https://api.github.com/users/baxterthehacker/followers","following_url":"https://api.github.com/users/baxterthehacker/following{/other_user}","gists_url":"https://api.github.com/users/baxterthehacker/gists{/gist_id}","starred_url":"https://api.github.com/users/baxterthehacker/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/baxterthehacker/subscriptions","organizations_url":"https://api.github.com/users/baxterthehacker/orgs","repos_url":"https://api.github.com/users/baxterthehacker/repos","events_url":"https://api.github.com/users/baxterthehacker/events{/privacy}","received_events_url":"https://api.github.com/users/baxterthehacker/received_events","type":"User","site_admin":false}
-     * body : Maybe you should use more emojji on this line.
-     * created_at : 2015-05-05T23:40:27Z
-     * updated_at : 2015-05-05T23:40:27Z
-     * html_url : https://github.com/baxterthehacker/public-repo/pull/1#discussion_r29724692
-     * pull_request_url : https://api.github.com/repos/baxterthehacker/public-repo/pulls/1
-     * _links : {"self":{"href":"https://api.github.com/repos/baxterthehacker/public-repo/pulls/comments/29724692"},"html":{"href":"https://github.com/baxterthehacker/public-repo/pull/1#discussion_r29724692"},"pull_request":{"href":"https://api.github.com/repos/baxterthehacker/public-repo/pulls/1"}}
-     */
-
-    private CommentBean comment;
-    /**
-     * url : https://api.github.com/repos/baxterthehacker/public-repo/pulls/1
-     * id : 34778301
-     * html_url : https://github.com/baxterthehacker/public-repo/pull/1
-     * diff_url : https://github.com/baxterthehacker/public-repo/pull/1.diff
-     * patch_url : https://github.com/baxterthehacker/public-repo/pull/1.patch
-     * issue_url : https://api.github.com/repos/baxterthehacker/public-repo/issues/1
-     * number : 1
-     * state : open
-     * locked : false
-     * title : Update the README with new information
-     * user : {"login":"baxterthehacker","id":6752317,"avatar_url":"https://avatars.githubusercontent.com/u/6752317?v=3","gravatar_id":"","url":"https://api.github.com/users/baxterthehacker","html_url":"https://github.com/baxterthehacker","followers_url":"https://api.github.com/users/baxterthehacker/followers","following_url":"https://api.github.com/users/baxterthehacker/following{/other_user}","gists_url":"https://api.github.com/users/baxterthehacker/gists{/gist_id}","starred_url":"https://api.github.com/users/baxterthehacker/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/baxterthehacker/subscriptions","organizations_url":"https://api.github.com/users/baxterthehacker/orgs","repos_url":"https://api.github.com/users/baxterthehacker/repos","events_url":"https://api.github.com/users/baxterthehacker/events{/privacy}","received_events_url":"https://api.github.com/users/baxterthehacker/received_events","type":"User","site_admin":false}
-     * body : This is a pretty simple change that we need to pull into master.
-     * created_at : 2015-05-05T23:40:27Z
-     * updated_at : 2015-05-05T23:40:27Z
-     * closed_at : null
-     * merged_at : null
-     * merge_commit_sha : 18721552ba489fb84e12958c1b5694b5475f7991
-     * assignee : null
-     * milestone : null
-     * commits_url : https://api.github.com/repos/baxterthehacker/public-repo/pulls/1/commits
-     * review_comments_url : https://api.github.com/repos/baxterthehacker/public-repo/pulls/1/comments
-     * review_comment_url : https://api.github.com/repos/baxterthehacker/public-repo/pulls/comments{/number}
-     * comments_url : https://api.github.com/repos/baxterthehacker/public-repo/issues/1/comments
-     * statuses_url : https://api.github.com/repos/baxterthehacker/public-repo/statuses/0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c
-     * head : {"label":"baxterthehacker:changes","ref":"changes","sha":"0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c","user":{"login":"baxterthehacker","id":6752317,"avatar_url":"https://avatars.githubusercontent.com/u/6752317?v=3","gravatar_id":"","url":"https://api.github.com/users/baxterthehacker","html_url":"https://github.com/baxterthehacker","followers_url":"https://api.github.com/users/baxterthehacker/followers","following_url":"https://api.github.com/users/baxterthehacker/following{/other_user}","gists_url":"https://api.github.com/users/baxterthehacker/gists{/gist_id}","starred_url":"https://api.github.com/users/baxterthehacker/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/baxterthehacker/subscriptions","organizations_url":"https://api.github.com/users/baxterthehacker/orgs","repos_url":"https://api.github.com/users/baxterthehacker/repos","events_url":"https://api.github.com/users/baxterthehacker/events{/privacy}","received_events_url":"https://api.github.com/users/baxterthehacker/received_events","type":"User","site_admin":false},"repo":{"id":35129377,"name":"public-repo","full_name":"baxterthehacker/public-repo","owner":{"login":"baxterthehacker","id":6752317,"avatar_url":"https://avatars.githubusercontent.com/u/6752317?v=3","gravatar_id":"","url":"https://api.github.com/users/baxterthehacker","html_url":"https://github.com/baxterthehacker","followers_url":"https://api.github.com/users/baxterthehacker/followers","following_url":"https://api.github.com/users/baxterthehacker/following{/other_user}","gists_url":"https://api.github.com/users/baxterthehacker/gists{/gist_id}","starred_url":"https://api.github.com/users/baxterthehacker/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/baxterthehacker/subscriptions","organizations_url":"https://api.github.com/users/baxterthehacker/orgs","repos_url":"https://api.github.com/users/baxterthehacker/repos","events_url":"https://api.github.com/users/baxterthehacker/events{/privacy}","received_events_url":"https://api.github.com/users/baxterthehacker/received_events","type":"User","site_admin":false},"private":false,"html_url":"https://github.com/baxterthehacker/public-repo","description":"","fork":false,"url":"https://api.github.com/repos/baxterthehacker/public-repo","forks_url":"https://api.github.com/repos/baxterthehacker/public-repo/forks","keys_url":"https://api.github.com/repos/baxterthehacker/public-repo/keys{/key_id}","collaborators_url":"https://api.github.com/repos/baxterthehacker/public-repo/collaborators{/collaborator}","teams_url":"https://api.github.com/repos/baxterthehacker/public-repo/teams","hooks_url":"https://api.github.com/repos/baxterthehacker/public-repo/hooks","issue_events_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues/events{/number}","events_url":"https://api.github.com/repos/baxterthehacker/public-repo/events","assignees_url":"https://api.github.com/repos/baxterthehacker/public-repo/assignees{/user}","branches_url":"https://api.github.com/repos/baxterthehacker/public-repo/branches{/branch}","tags_url":"https://api.github.com/repos/baxterthehacker/public-repo/tags","blobs_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/blobs{/sha}","git_tags_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/tags{/sha}","git_refs_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/refs{/sha}","trees_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/trees{/sha}","statuses_url":"https://api.github.com/repos/baxterthehacker/public-repo/statuses/{sha}","languages_url":"https://api.github.com/repos/baxterthehacker/public-repo/languages","stargazers_url":"https://api.github.com/repos/baxterthehacker/public-repo/stargazers","contributors_url":"https://api.github.com/repos/baxterthehacker/public-repo/contributors","subscribers_url":"https://api.github.com/repos/baxterthehacker/public-repo/subscribers","subscription_url":"https://api.github.com/repos/baxterthehacker/public-repo/subscription","commits_url":"https://api.github.com/repos/baxterthehacker/public-repo/commits{/sha}","git_commits_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/commits{/sha}","comments_url":"https://api.github.com/repos/baxterthehacker/public-repo/comments{/number}","issue_comment_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues/comments{/number}","contents_url":"https://api.github.com/repos/baxterthehacker/public-repo/contents/{+path}","compare_url":"https://api.github.com/repos/baxterthehacker/public-repo/compare/{base}...{head}","merges_url":"https://api.github.com/repos/baxterthehacker/public-repo/merges","archive_url":"https://api.github.com/repos/baxterthehacker/public-repo/{archive_format}{/ref}","downloads_url":"https://api.github.com/repos/baxterthehacker/public-repo/downloads","issues_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues{/number}","pulls_url":"https://api.github.com/repos/baxterthehacker/public-repo/pulls{/number}","milestones_url":"https://api.github.com/repos/baxterthehacker/public-repo/milestones{/number}","notifications_url":"https://api.github.com/repos/baxterthehacker/public-repo/notifications{?since,all,participating}","labels_url":"https://api.github.com/repos/baxterthehacker/public-repo/labels{/name}","releases_url":"https://api.github.com/repos/baxterthehacker/public-repo/releases{/id}","created_at":"2015-05-05T23:40:12Z","updated_at":"2015-05-05T23:40:12Z","pushed_at":"2015-05-05T23:40:27Z","git_url":"git://github.com/baxterthehacker/public-repo.git","ssh_url":"git@github.com:baxterthehacker/public-repo.git","clone_url":"https://github.com/baxterthehacker/public-repo.git","svn_url":"https://github.com/baxterthehacker/public-repo","homepage":null,"size":0,"stargazers_count":0,"watchers_count":0,"language":null,"has_issues":true,"has_downloads":true,"has_wiki":true,"has_pages":true,"forks_count":0,"mirror_url":null,"open_issues_count":1,"forks":0,"open_issues":1,"watchers":0,"default_branch":"master"}}
-     * base : {"label":"baxterthehacker:master","ref":"master","sha":"9049f1265b7d61be4a8904a9a27120d2064dab3b","user":{"login":"baxterthehacker","id":6752317,"avatar_url":"https://avatars.githubusercontent.com/u/6752317?v=3","gravatar_id":"","url":"https://api.github.com/users/baxterthehacker","html_url":"https://github.com/baxterthehacker","followers_url":"https://api.github.com/users/baxterthehacker/followers","following_url":"https://api.github.com/users/baxterthehacker/following{/other_user}","gists_url":"https://api.github.com/users/baxterthehacker/gists{/gist_id}","starred_url":"https://api.github.com/users/baxterthehacker/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/baxterthehacker/subscriptions","organizations_url":"https://api.github.com/users/baxterthehacker/orgs","repos_url":"https://api.github.com/users/baxterthehacker/repos","events_url":"https://api.github.com/users/baxterthehacker/events{/privacy}","received_events_url":"https://api.github.com/users/baxterthehacker/received_events","type":"User","site_admin":false},"repo":{"id":35129377,"name":"public-repo","full_name":"baxterthehacker/public-repo","owner":{"login":"baxterthehacker","id":6752317,"avatar_url":"https://avatars.githubusercontent.com/u/6752317?v=3","gravatar_id":"","url":"https://api.github.com/users/baxterthehacker","html_url":"https://github.com/baxterthehacker","followers_url":"https://api.github.com/users/baxterthehacker/followers","following_url":"https://api.github.com/users/baxterthehacker/following{/other_user}","gists_url":"https://api.github.com/users/baxterthehacker/gists{/gist_id}","starred_url":"https://api.github.com/users/baxterthehacker/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/baxterthehacker/subscriptions","organizations_url":"https://api.github.com/users/baxterthehacker/orgs","repos_url":"https://api.github.com/users/baxterthehacker/repos","events_url":"https://api.github.com/users/baxterthehacker/events{/privacy}","received_events_url":"https://api.github.com/users/baxterthehacker/received_events","type":"User","site_admin":false},"private":false,"html_url":"https://github.com/baxterthehacker/public-repo","description":"","fork":false,"url":"https://api.github.com/repos/baxterthehacker/public-repo","forks_url":"https://api.github.com/repos/baxterthehacker/public-repo/forks","keys_url":"https://api.github.com/repos/baxterthehacker/public-repo/keys{/key_id}","collaborators_url":"https://api.github.com/repos/baxterthehacker/public-repo/collaborators{/collaborator}","teams_url":"https://api.github.com/repos/baxterthehacker/public-repo/teams","hooks_url":"https://api.github.com/repos/baxterthehacker/public-repo/hooks","issue_events_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues/events{/number}","events_url":"https://api.github.com/repos/baxterthehacker/public-repo/events","assignees_url":"https://api.github.com/repos/baxterthehacker/public-repo/assignees{/user}","branches_url":"https://api.github.com/repos/baxterthehacker/public-repo/branches{/branch}","tags_url":"https://api.github.com/repos/baxterthehacker/public-repo/tags","blobs_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/blobs{/sha}","git_tags_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/tags{/sha}","git_refs_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/refs{/sha}","trees_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/trees{/sha}","statuses_url":"https://api.github.com/repos/baxterthehacker/public-repo/statuses/{sha}","languages_url":"https://api.github.com/repos/baxterthehacker/public-repo/languages","stargazers_url":"https://api.github.com/repos/baxterthehacker/public-repo/stargazers","contributors_url":"https://api.github.com/repos/baxterthehacker/public-repo/contributors","subscribers_url":"https://api.github.com/repos/baxterthehacker/public-repo/subscribers","subscription_url":"https://api.github.com/repos/baxterthehacker/public-repo/subscription","commits_url":"https://api.github.com/repos/baxterthehacker/public-repo/commits{/sha}","git_commits_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/commits{/sha}","comments_url":"https://api.github.com/repos/baxterthehacker/public-repo/comments{/number}","issue_comment_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues/comments{/number}","contents_url":"https://api.github.com/repos/baxterthehacker/public-repo/contents/{+path}","compare_url":"https://api.github.com/repos/baxterthehacker/public-repo/compare/{base}...{head}","merges_url":"https://api.github.com/repos/baxterthehacker/public-repo/merges","archive_url":"https://api.github.com/repos/baxterthehacker/public-repo/{archive_format}{/ref}","downloads_url":"https://api.github.com/repos/baxterthehacker/public-repo/downloads","issues_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues{/number}","pulls_url":"https://api.github.com/repos/baxterthehacker/public-repo/pulls{/number}","milestones_url":"https://api.github.com/repos/baxterthehacker/public-repo/milestones{/number}","notifications_url":"https://api.github.com/repos/baxterthehacker/public-repo/notifications{?since,all,participating}","labels_url":"https://api.github.com/repos/baxterthehacker/public-repo/labels{/name}","releases_url":"https://api.github.com/repos/baxterthehacker/public-repo/releases{/id}","created_at":"2015-05-05T23:40:12Z","updated_at":"2015-05-05T23:40:12Z","pushed_at":"2015-05-05T23:40:27Z","git_url":"git://github.com/baxterthehacker/public-repo.git","ssh_url":"git@github.com:baxterthehacker/public-repo.git","clone_url":"https://github.com/baxterthehacker/public-repo.git","svn_url":"https://github.com/baxterthehacker/public-repo","homepage":null,"size":0,"stargazers_count":0,"watchers_count":0,"language":null,"has_issues":true,"has_downloads":true,"has_wiki":true,"has_pages":true,"forks_count":0,"mirror_url":null,"open_issues_count":1,"forks":0,"open_issues":1,"watchers":0,"default_branch":"master"}}
-     * _links : {"self":{"href":"https://api.github.com/repos/baxterthehacker/public-repo/pulls/1"},"html":{"href":"https://github.com/baxterthehacker/public-repo/pull/1"},"issue":{"href":"https://api.github.com/repos/baxterthehacker/public-repo/issues/1"},"comments":{"href":"https://api.github.com/repos/baxterthehacker/public-repo/issues/1/comments"},"review_comments":{"href":"https://api.github.com/repos/baxterthehacker/public-repo/pulls/1/comments"},"review_comment":{"href":"https://api.github.com/repos/baxterthehacker/public-repo/pulls/comments{/number}"},"commits":{"href":"https://api.github.com/repos/baxterthehacker/public-repo/pulls/1/commits"},"statuses":{"href":"https://api.github.com/repos/baxterthehacker/public-repo/statuses/0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c"}}
-     */
-
-    private PullRequestBean pull_request;
-    /**
-     * id : 35129377
-     * name : public-repo
-     * full_name : baxterthehacker/public-repo
-     * owner : {"login":"baxterthehacker","id":6752317,"avatar_url":"https://avatars.githubusercontent.com/u/6752317?v=3","gravatar_id":"","url":"https://api.github.com/users/baxterthehacker","html_url":"https://github.com/baxterthehacker","followers_url":"https://api.github.com/users/baxterthehacker/followers","following_url":"https://api.github.com/users/baxterthehacker/following{/other_user}","gists_url":"https://api.github.com/users/baxterthehacker/gists{/gist_id}","starred_url":"https://api.github.com/users/baxterthehacker/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/baxterthehacker/subscriptions","organizations_url":"https://api.github.com/users/baxterthehacker/orgs","repos_url":"https://api.github.com/users/baxterthehacker/repos","events_url":"https://api.github.com/users/baxterthehacker/events{/privacy}","received_events_url":"https://api.github.com/users/baxterthehacker/received_events","type":"User","site_admin":false}
-     * private : false
-     * html_url : https://github.com/baxterthehacker/public-repo
-     * description :
-     * fork : false
-     * url : https://api.github.com/repos/baxterthehacker/public-repo
-     * forks_url : https://api.github.com/repos/baxterthehacker/public-repo/forks
-     * keys_url : https://api.github.com/repos/baxterthehacker/public-repo/keys{/key_id}
-     * collaborators_url : https://api.github.com/repos/baxterthehacker/public-repo/collaborators{/collaborator}
-     * teams_url : https://api.github.com/repos/baxterthehacker/public-repo/teams
-     * hooks_url : https://api.github.com/repos/baxterthehacker/public-repo/hooks
-     * issue_events_url : https://api.github.com/repos/baxterthehacker/public-repo/issues/events{/number}
-     * events_url : https://api.github.com/repos/baxterthehacker/public-repo/events
-     * assignees_url : https://api.github.com/repos/baxterthehacker/public-repo/assignees{/user}
-     * branches_url : https://api.github.com/repos/baxterthehacker/public-repo/branches{/branch}
-     * tags_url : https://api.github.com/repos/baxterthehacker/public-repo/tags
-     * blobs_url : https://api.github.com/repos/baxterthehacker/public-repo/git/blobs{/sha}
-     * git_tags_url : https://api.github.com/repos/baxterthehacker/public-repo/git/tags{/sha}
-     * git_refs_url : https://api.github.com/repos/baxterthehacker/public-repo/git/refs{/sha}
-     * trees_url : https://api.github.com/repos/baxterthehacker/public-repo/git/trees{/sha}
-     * statuses_url : https://api.github.com/repos/baxterthehacker/public-repo/statuses/{sha}
-     * languages_url : https://api.github.com/repos/baxterthehacker/public-repo/languages
-     * stargazers_url : https://api.github.com/repos/baxterthehacker/public-repo/stargazers
-     * contributors_url : https://api.github.com/repos/baxterthehacker/public-repo/contributors
-     * subscribers_url : https://api.github.com/repos/baxterthehacker/public-repo/subscribers
-     * subscription_url : https://api.github.com/repos/baxterthehacker/public-repo/subscription
-     * commits_url : https://api.github.com/repos/baxterthehacker/public-repo/commits{/sha}
-     * git_commits_url : https://api.github.com/repos/baxterthehacker/public-repo/git/commits{/sha}
-     * comments_url : https://api.github.com/repos/baxterthehacker/public-repo/comments{/number}
-     * issue_comment_url : https://api.github.com/repos/baxterthehacker/public-repo/issues/comments{/number}
-     * contents_url : https://api.github.com/repos/baxterthehacker/public-repo/contents/{+path}
-     * compare_url : https://api.github.com/repos/baxterthehacker/public-repo/compare/{base}...{head}
-     * merges_url : https://api.github.com/repos/baxterthehacker/public-repo/merges
-     * archive_url : https://api.github.com/repos/baxterthehacker/public-repo/{archive_format}{/ref}
-     * downloads_url : https://api.github.com/repos/baxterthehacker/public-repo/downloads
-     * issues_url : https://api.github.com/repos/baxterthehacker/public-repo/issues{/number}
-     * pulls_url : https://api.github.com/repos/baxterthehacker/public-repo/pulls{/number}
-     * milestones_url : https://api.github.com/repos/baxterthehacker/public-repo/milestones{/number}
-     * notifications_url : https://api.github.com/repos/baxterthehacker/public-repo/notifications{?since,all,participating}
-     * labels_url : https://api.github.com/repos/baxterthehacker/public-repo/labels{/name}
-     * releases_url : https://api.github.com/repos/baxterthehacker/public-repo/releases{/id}
-     * created_at : 2015-05-05T23:40:12Z
-     * updated_at : 2015-05-05T23:40:12Z
-     * pushed_at : 2015-05-05T23:40:27Z
-     * git_url : git://github.com/baxterthehacker/public-repo.git
-     * ssh_url : git@github.com:baxterthehacker/public-repo.git
-     * clone_url : https://github.com/baxterthehacker/public-repo.git
-     * svn_url : https://github.com/baxterthehacker/public-repo
-     * homepage : null
-     * size : 0
-     * stargazers_count : 0
-     * watchers_count : 0
-     * language : null
-     * has_issues : true
-     * has_downloads : true
-     * has_wiki : true
-     * has_pages : true
-     * forks_count : 0
-     * mirror_url : null
-     * open_issues_count : 1
-     * forks : 0
-     * open_issues : 1
-     * watchers : 0
-     * default_branch : master
-     */
-
     private RepositoryBean repository;
-    /**
-     * login : baxterthehacker
-     * id : 6752317
-     * avatar_url : https://avatars.githubusercontent.com/u/6752317?v=3
-     * gravatar_id :
-     * url : https://api.github.com/users/baxterthehacker
-     * html_url : https://github.com/baxterthehacker
-     * followers_url : https://api.github.com/users/baxterthehacker/followers
-     * following_url : https://api.github.com/users/baxterthehacker/following{/other_user}
-     * gists_url : https://api.github.com/users/baxterthehacker/gists{/gist_id}
-     * starred_url : https://api.github.com/users/baxterthehacker/starred{/owner}{/repo}
-     * subscriptions_url : https://api.github.com/users/baxterthehacker/subscriptions
-     * organizations_url : https://api.github.com/users/baxterthehacker/orgs
-     * repos_url : https://api.github.com/users/baxterthehacker/repos
-     * events_url : https://api.github.com/users/baxterthehacker/events{/privacy}
-     * received_events_url : https://api.github.com/users/baxterthehacker/received_events
-     * type : User
-     * site_admin : false
-     */
-
     private SenderBean sender;
+    private int number;
+    private PullRequestBean pull_request;
+    @SerializedName("public")
+    private boolean publicX;
+    private OrganizationBean org;
+    private String created_at;
+    private IssueBean issue;
+    private CommentBean comment;
+    private ReleaseBean release;
+    private TeamBean team;
+    private long push_id;
+    private int size;
+    private int distinct_size;
+    private String ref_type;
 
     public String getAction() {
         return action;
@@ -166,22 +33,6 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
 
     public void setAction(String action) {
         this.action = action;
-    }
-
-    public CommentBean getComment() {
-        return comment;
-    }
-
-    public void setComment(CommentBean comment) {
-        this.comment = comment;
-    }
-
-    public PullRequestBean getPull_request() {
-        return pull_request;
-    }
-
-    public void setPull_request(PullRequestBean pull_request) {
-        this.pull_request = pull_request;
     }
 
     public RepositoryBean getRepository() {
@@ -200,15 +51,250 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
         this.sender = sender;
     }
 
-    public static class CommentBean {
-        private String url;
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public PullRequestBean getPull_request() {
+        return pull_request;
+    }
+
+    public void setPull_request(PullRequestBean pull_request) {
+        this.pull_request = pull_request;
+    }
+
+    public boolean isPublicX() {
+        return publicX;
+    }
+
+    public void setPublicX(boolean publicX) {
+        this.publicX = publicX;
+    }
+
+    public OrganizationBean getOrg() {
+        return org;
+    }
+
+    public void setOrg(OrganizationBean org) {
+        this.org = org;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
+
+    public IssueBean getIssue() {
+        return issue;
+    }
+
+    public void setIssue(IssueBean issue) {
+        this.issue = issue;
+    }
+
+    public CommentBean getComment() {
+        return comment;
+    }
+
+    public void setComment(CommentBean comment) {
+        this.comment = comment;
+    }
+
+    public ReleaseBean getRelease() {
+        return release;
+    }
+
+    public void setRelease(ReleaseBean release) {
+        this.release = release;
+    }
+
+    public TeamBean getTeam() {
+        return team;
+    }
+
+    public void setTeam(TeamBean team) {
+        this.team = team;
+    }
+
+    public long getPush_id() {
+        return push_id;
+    }
+
+    public void setPush_id(long push_id) {
+        this.push_id = push_id;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public int getDistinct_size() {
+        return distinct_size;
+    }
+
+    public void setDistinct_size(int distinct_size) {
+        this.distinct_size = distinct_size;
+    }
+
+    public String getRef_type() {
+        return ref_type;
+    }
+
+    public void setRef_type(String ref_type) {
+        this.ref_type = ref_type;
+    }
+
+    public String getRef() {
+        return ref;
+    }
+
+    public void setRef(String ref) {
+        this.ref = ref;
+    }
+
+    public String getHead() {
+        return head;
+    }
+
+    public void setHead(String head) {
+        this.head = head;
+    }
+
+    public String getBefore() {
+        return before;
+    }
+
+    public void setBefore(String before) {
+        this.before = before;
+    }
+
+    public List<CommentBean> getCommits() {
+        return commits;
+    }
+
+    public void setCommits(List<CommentBean> commits) {
+        this.commits = commits;
+    }
+
+    public RepositoryBean getForkee() {
+        return forkee;
+    }
+
+    public void setForkee(RepositoryBean forkee) {
+        this.forkee = forkee;
+    }
+
+    public SenderBean getMember() {
+        return member;
+    }
+
+    public void setMember(SenderBean member) {
+        this.member = member;
+    }
+
+    private String ref;
+    private String head;
+    private String before;
+    private List<CommentBean> commits;
+    private RepositoryBean forkee;
+    private SenderBean member;
+
+    public static class TeamBean {
+        private String name;
         private int id;
-        private String diff_hunk;
-        private String path;
-        private int position;
-        private int original_position;
-        private String commit_id;
-        private String original_commit_id;
+        private String slug;
+        private String description;
+        private String permission;
+        private String url;
+        private String members_url;
+        private String repositories_url;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getSlug() {
+            return slug;
+        }
+
+        public void setSlug(String slug) {
+            this.slug = slug;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getPermission() {
+            return permission;
+        }
+
+        public void setPermission(String permission) {
+            this.permission = permission;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public String getMembers_url() {
+            return members_url;
+        }
+
+        public void setMembers_url(String members_url) {
+            this.members_url = members_url;
+        }
+
+        public String getRepositories_url() {
+            return repositories_url;
+        }
+
+        public void setRepositories_url(String repositories_url) {
+            this.repositories_url = repositories_url;
+        }
+    }
+
+    public static class ReleaseBean {
+        private String url;
+        private String assets_url;
+        private String upload_url;
+        private String html_url;
+        private int id;
+        private String tag_name;
+        private String target_commitish;
+        private Object name;
+        private boolean draft;
         /**
          * login : baxterthehacker
          * id : 6752317
@@ -229,19 +315,14 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
          * site_admin : false
          */
 
-        private UserBean user;
-        private String body;
+        private ReleaseBean.AuthorBean author;
+        private boolean prerelease;
         private String created_at;
-        private String updated_at;
-        private String html_url;
-        private String pull_request_url;
-        /**
-         * self : {"href":"https://api.github.com/repos/baxterthehacker/public-repo/pulls/comments/29724692"}
-         * html : {"href":"https://github.com/baxterthehacker/public-repo/pull/1#discussion_r29724692"}
-         * pull_request : {"href":"https://api.github.com/repos/baxterthehacker/public-repo/pulls/1"}
-         */
-
-        private LinksBean _links;
+        private String published_at;
+        private String tarball_url;
+        private String zipball_url;
+        private Object body;
+        private List<?> assets;
 
         public String getUrl() {
             return url;
@@ -249,6 +330,30 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
 
         public void setUrl(String url) {
             this.url = url;
+        }
+
+        public String getAssets_url() {
+            return assets_url;
+        }
+
+        public void setAssets_url(String assets_url) {
+            this.assets_url = assets_url;
+        }
+
+        public String getUpload_url() {
+            return upload_url;
+        }
+
+        public void setUpload_url(String upload_url) {
+            this.upload_url = upload_url;
+        }
+
+        public String getHtml_url() {
+            return html_url;
+        }
+
+        public void setHtml_url(String html_url) {
+            this.html_url = html_url;
         }
 
         public int getId() {
@@ -259,36 +364,346 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
             this.id = id;
         }
 
-        public String getDiff_hunk() {
-            return diff_hunk;
+        public String getTag_name() {
+            return tag_name;
         }
 
-        public void setDiff_hunk(String diff_hunk) {
-            this.diff_hunk = diff_hunk;
+        public void setTag_name(String tag_name) {
+            this.tag_name = tag_name;
         }
 
-        public String getPath() {
-            return path;
+        public String getTarget_commitish() {
+            return target_commitish;
         }
 
-        public void setPath(String path) {
-            this.path = path;
+        public void setTarget_commitish(String target_commitish) {
+            this.target_commitish = target_commitish;
         }
 
-        public int getPosition() {
+        public Object getName() {
+            return name;
+        }
+
+        public void setName(Object name) {
+            this.name = name;
+        }
+
+        public boolean isDraft() {
+            return draft;
+        }
+
+        public void setDraft(boolean draft) {
+            this.draft = draft;
+        }
+
+        public ReleaseBean.AuthorBean getAuthor() {
+            return author;
+        }
+
+        public void setAuthor(ReleaseBean.AuthorBean author) {
+            this.author = author;
+        }
+
+        public boolean isPrerelease() {
+            return prerelease;
+        }
+
+        public void setPrerelease(boolean prerelease) {
+            this.prerelease = prerelease;
+        }
+
+        public String getCreated_at() {
+            return created_at;
+        }
+
+        public void setCreated_at(String created_at) {
+            this.created_at = created_at;
+        }
+
+        public String getPublished_at() {
+            return published_at;
+        }
+
+        public void setPublished_at(String published_at) {
+            this.published_at = published_at;
+        }
+
+        public String getTarball_url() {
+            return tarball_url;
+        }
+
+        public void setTarball_url(String tarball_url) {
+            this.tarball_url = tarball_url;
+        }
+
+        public String getZipball_url() {
+            return zipball_url;
+        }
+
+        public void setZipball_url(String zipball_url) {
+            this.zipball_url = zipball_url;
+        }
+
+        public Object getBody() {
+            return body;
+        }
+
+        public void setBody(Object body) {
+            this.body = body;
+        }
+
+        public List<?> getAssets() {
+            return assets;
+        }
+
+        public void setAssets(List<?> assets) {
+            this.assets = assets;
+        }
+
+        public static class AuthorBean {
+            private String login;
+            private int id;
+            private String avatar_url;
+            private String gravatar_id;
+            private String url;
+            private String html_url;
+            private String followers_url;
+            private String following_url;
+            private String gists_url;
+            private String starred_url;
+            private String subscriptions_url;
+            private String organizations_url;
+            private String repos_url;
+            private String events_url;
+            private String received_events_url;
+            private String type;
+            private boolean site_admin;
+
+            public String getLogin() {
+                return login;
+            }
+
+            public void setLogin(String login) {
+                this.login = login;
+            }
+
+            public int getId() {
+                return id;
+            }
+
+            public void setId(int id) {
+                this.id = id;
+            }
+
+            public String getAvatar_url() {
+                return avatar_url;
+            }
+
+            public void setAvatar_url(String avatar_url) {
+                this.avatar_url = avatar_url;
+            }
+
+            public String getGravatar_id() {
+                return gravatar_id;
+            }
+
+            public void setGravatar_id(String gravatar_id) {
+                this.gravatar_id = gravatar_id;
+            }
+
+            public String getUrl() {
+                return url;
+            }
+
+            public void setUrl(String url) {
+                this.url = url;
+            }
+
+            public String getHtml_url() {
+                return html_url;
+            }
+
+            public void setHtml_url(String html_url) {
+                this.html_url = html_url;
+            }
+
+            public String getFollowers_url() {
+                return followers_url;
+            }
+
+            public void setFollowers_url(String followers_url) {
+                this.followers_url = followers_url;
+            }
+
+            public String getFollowing_url() {
+                return following_url;
+            }
+
+            public void setFollowing_url(String following_url) {
+                this.following_url = following_url;
+            }
+
+            public String getGists_url() {
+                return gists_url;
+            }
+
+            public void setGists_url(String gists_url) {
+                this.gists_url = gists_url;
+            }
+
+            public String getStarred_url() {
+                return starred_url;
+            }
+
+            public void setStarred_url(String starred_url) {
+                this.starred_url = starred_url;
+            }
+
+            public String getSubscriptions_url() {
+                return subscriptions_url;
+            }
+
+            public void setSubscriptions_url(String subscriptions_url) {
+                this.subscriptions_url = subscriptions_url;
+            }
+
+            public String getOrganizations_url() {
+                return organizations_url;
+            }
+
+            public void setOrganizations_url(String organizations_url) {
+                this.organizations_url = organizations_url;
+            }
+
+            public String getRepos_url() {
+                return repos_url;
+            }
+
+            public void setRepos_url(String repos_url) {
+                this.repos_url = repos_url;
+            }
+
+            public String getEvents_url() {
+                return events_url;
+            }
+
+            public void setEvents_url(String events_url) {
+                this.events_url = events_url;
+            }
+
+            public String getReceived_events_url() {
+                return received_events_url;
+            }
+
+            public void setReceived_events_url(String received_events_url) {
+                this.received_events_url = received_events_url;
+            }
+
+            public String getType() {
+                return type;
+            }
+
+            public void setType(String type) {
+                this.type = type;
+            }
+
+            public boolean isSite_admin() {
+                return site_admin;
+            }
+
+            public void setSite_admin(boolean site_admin) {
+                this.site_admin = site_admin;
+            }
+        }
+    }
+
+    public static class CommentBean {
+        private String url;
+        private String html_url;
+        private int id;
+        /**
+         * login : baxterthehacker
+         * id : 6752317
+         * avatar_url : https://avatars.githubusercontent.com/u/6752317?v=3
+         * gravatar_id :
+         * url : https://api.github.com/users/baxterthehacker
+         * html_url : https://github.com/baxterthehacker
+         * followers_url : https://api.github.com/users/baxterthehacker/followers
+         * following_url : https://api.github.com/users/baxterthehacker/following{/other_user}
+         * gists_url : https://api.github.com/users/baxterthehacker/gists{/gist_id}
+         * starred_url : https://api.github.com/users/baxterthehacker/starred{/owner}{/repo}
+         * subscriptions_url : https://api.github.com/users/baxterthehacker/subscriptions
+         * organizations_url : https://api.github.com/users/baxterthehacker/orgs
+         * repos_url : https://api.github.com/users/baxterthehacker/repos
+         * events_url : https://api.github.com/users/baxterthehacker/events{/privacy}
+         * received_events_url : https://api.github.com/users/baxterthehacker/received_events
+         * type : User
+         * site_admin : false
+         */
+
+        private CommentBean.UserBean user;
+        private Object position;
+        private Object line;
+        private Object path;
+        private String commit_id;
+        private String created_at;
+        private String updated_at;
+        private String body;
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public String getHtml_url() {
+            return html_url;
+        }
+
+        public void setHtml_url(String html_url) {
+            this.html_url = html_url;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public CommentBean.UserBean getUser() {
+            return user;
+        }
+
+        public void setUser(CommentBean.UserBean user) {
+            this.user = user;
+        }
+
+        public Object getPosition() {
             return position;
         }
 
-        public void setPosition(int position) {
+        public void setPosition(Object position) {
             this.position = position;
         }
 
-        public int getOriginal_position() {
-            return original_position;
+        public Object getLine() {
+            return line;
         }
 
-        public void setOriginal_position(int original_position) {
-            this.original_position = original_position;
+        public void setLine(Object line) {
+            this.line = line;
+        }
+
+        public Object getPath() {
+            return path;
+        }
+
+        public void setPath(Object path) {
+            this.path = path;
         }
 
         public String getCommit_id() {
@@ -297,30 +712,6 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
 
         public void setCommit_id(String commit_id) {
             this.commit_id = commit_id;
-        }
-
-        public String getOriginal_commit_id() {
-            return original_commit_id;
-        }
-
-        public void setOriginal_commit_id(String original_commit_id) {
-            this.original_commit_id = original_commit_id;
-        }
-
-        public UserBean getUser() {
-            return user;
-        }
-
-        public void setUser(UserBean user) {
-            this.user = user;
-        }
-
-        public String getBody() {
-            return body;
-        }
-
-        public void setBody(String body) {
-            this.body = body;
         }
 
         public String getCreated_at() {
@@ -339,6 +730,250 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
             this.updated_at = updated_at;
         }
 
+        public String getBody() {
+            return body;
+        }
+
+        public void setBody(String body) {
+            this.body = body;
+        }
+
+        public static class UserBean {
+            private String login;
+            private int id;
+            private String avatar_url;
+            private String gravatar_id;
+            private String url;
+            private String html_url;
+            private String followers_url;
+            private String following_url;
+            private String gists_url;
+            private String starred_url;
+            private String subscriptions_url;
+            private String organizations_url;
+            private String repos_url;
+            private String events_url;
+            private String received_events_url;
+            private String type;
+            private boolean site_admin;
+
+            public String getLogin() {
+                return login;
+            }
+
+            public void setLogin(String login) {
+                this.login = login;
+            }
+
+            public int getId() {
+                return id;
+            }
+
+            public void setId(int id) {
+                this.id = id;
+            }
+
+            public String getAvatar_url() {
+                return avatar_url;
+            }
+
+            public void setAvatar_url(String avatar_url) {
+                this.avatar_url = avatar_url;
+            }
+
+            public String getGravatar_id() {
+                return gravatar_id;
+            }
+
+            public void setGravatar_id(String gravatar_id) {
+                this.gravatar_id = gravatar_id;
+            }
+
+            public String getUrl() {
+                return url;
+            }
+
+            public void setUrl(String url) {
+                this.url = url;
+            }
+
+            public String getHtml_url() {
+                return html_url;
+            }
+
+            public void setHtml_url(String html_url) {
+                this.html_url = html_url;
+            }
+
+            public String getFollowers_url() {
+                return followers_url;
+            }
+
+            public void setFollowers_url(String followers_url) {
+                this.followers_url = followers_url;
+            }
+
+            public String getFollowing_url() {
+                return following_url;
+            }
+
+            public void setFollowing_url(String following_url) {
+                this.following_url = following_url;
+            }
+
+            public String getGists_url() {
+                return gists_url;
+            }
+
+            public void setGists_url(String gists_url) {
+                this.gists_url = gists_url;
+            }
+
+            public String getStarred_url() {
+                return starred_url;
+            }
+
+            public void setStarred_url(String starred_url) {
+                this.starred_url = starred_url;
+            }
+
+            public String getSubscriptions_url() {
+                return subscriptions_url;
+            }
+
+            public void setSubscriptions_url(String subscriptions_url) {
+                this.subscriptions_url = subscriptions_url;
+            }
+
+            public String getOrganizations_url() {
+                return organizations_url;
+            }
+
+            public void setOrganizations_url(String organizations_url) {
+                this.organizations_url = organizations_url;
+            }
+
+            public String getRepos_url() {
+                return repos_url;
+            }
+
+            public void setRepos_url(String repos_url) {
+                this.repos_url = repos_url;
+            }
+
+            public String getEvents_url() {
+                return events_url;
+            }
+
+            public void setEvents_url(String events_url) {
+                this.events_url = events_url;
+            }
+
+            public String getReceived_events_url() {
+                return received_events_url;
+            }
+
+            public void setReceived_events_url(String received_events_url) {
+                this.received_events_url = received_events_url;
+            }
+
+            public String getType() {
+                return type;
+            }
+
+            public void setType(String type) {
+                this.type = type;
+            }
+
+            public boolean isSite_admin() {
+                return site_admin;
+            }
+
+            public void setSite_admin(boolean site_admin) {
+                this.site_admin = site_admin;
+            }
+        }
+    }
+
+    public static class IssueBean {
+        private String url;
+        private String labels_url;
+        private String comments_url;
+        private String events_url;
+        private String html_url;
+        private int id;
+        private int number;
+        private String title;
+        /**
+         * login : baxterthehacker
+         * id : 6752317
+         * avatar_url : https://avatars.githubusercontent.com/u/6752317?v=3
+         * gravatar_id :
+         * url : https://api.github.com/users/baxterthehacker
+         * html_url : https://github.com/baxterthehacker
+         * followers_url : https://api.github.com/users/baxterthehacker/followers
+         * following_url : https://api.github.com/users/baxterthehacker/following{/other_user}
+         * gists_url : https://api.github.com/users/baxterthehacker/gists{/gist_id}
+         * starred_url : https://api.github.com/users/baxterthehacker/starred{/owner}{/repo}
+         * subscriptions_url : https://api.github.com/users/baxterthehacker/subscriptions
+         * organizations_url : https://api.github.com/users/baxterthehacker/orgs
+         * repos_url : https://api.github.com/users/baxterthehacker/repos
+         * events_url : https://api.github.com/users/baxterthehacker/events{/privacy}
+         * received_events_url : https://api.github.com/users/baxterthehacker/received_events
+         * type : User
+         * site_admin : false
+         */
+
+        private IssueBean.UserBean user;
+        private String state;
+        private boolean locked;
+        private Object assignee;
+        private Object milestone;
+        private int comments;
+        private String created_at;
+        private String updated_at;
+        private Object closed_at;
+        private String body;
+        /**
+         * url : https://api.github.com/repos/baxterthehacker/public-repo/labels/bug
+         * name : bug
+         * color : fc2929
+         */
+
+        private List<IssueBean.LabelsBean> labels;
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public String getLabels_url() {
+            return labels_url;
+        }
+
+        public void setLabels_url(String labels_url) {
+            this.labels_url = labels_url;
+        }
+
+        public String getComments_url() {
+            return comments_url;
+        }
+
+        public void setComments_url(String comments_url) {
+            this.comments_url = comments_url;
+        }
+
+        public String getEvents_url() {
+            return events_url;
+        }
+
+        public void setEvents_url(String events_url) {
+            this.events_url = events_url;
+        }
+
         public String getHtml_url() {
             return html_url;
         }
@@ -347,20 +982,116 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
             this.html_url = html_url;
         }
 
-        public String getPull_request_url() {
-            return pull_request_url;
+        public int getId() {
+            return id;
         }
 
-        public void setPull_request_url(String pull_request_url) {
-            this.pull_request_url = pull_request_url;
+        public void setId(int id) {
+            this.id = id;
         }
 
-        public LinksBean get_links() {
-            return _links;
+        public int getNumber() {
+            return number;
         }
 
-        public void set_links(LinksBean _links) {
-            this._links = _links;
+        public void setNumber(int number) {
+            this.number = number;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public IssueBean.UserBean getUser() {
+            return user;
+        }
+
+        public void setUser(IssueBean.UserBean user) {
+            this.user = user;
+        }
+
+        public String getState() {
+            return state;
+        }
+
+        public void setState(String state) {
+            this.state = state;
+        }
+
+        public boolean isLocked() {
+            return locked;
+        }
+
+        public void setLocked(boolean locked) {
+            this.locked = locked;
+        }
+
+        public Object getAssignee() {
+            return assignee;
+        }
+
+        public void setAssignee(Object assignee) {
+            this.assignee = assignee;
+        }
+
+        public Object getMilestone() {
+            return milestone;
+        }
+
+        public void setMilestone(Object milestone) {
+            this.milestone = milestone;
+        }
+
+        public int getComments() {
+            return comments;
+        }
+
+        public void setComments(int comments) {
+            this.comments = comments;
+        }
+
+        public String getCreated_at() {
+            return created_at;
+        }
+
+        public void setCreated_at(String created_at) {
+            this.created_at = created_at;
+        }
+
+        public String getUpdated_at() {
+            return updated_at;
+        }
+
+        public void setUpdated_at(String updated_at) {
+            this.updated_at = updated_at;
+        }
+
+        public Object getClosed_at() {
+            return closed_at;
+        }
+
+        public void setClosed_at(Object closed_at) {
+            this.closed_at = closed_at;
+        }
+
+        public String getBody() {
+            return body;
+        }
+
+        public void setBody(String body) {
+            this.body = body;
+        }
+
+        public List<IssueBean.LabelsBean> getLabels() {
+            return labels;
+        }
+
+        public void setLabels(List<IssueBean.LabelsBean> labels) {
+            this.labels = labels;
         }
 
         public static class UserBean {
@@ -519,82 +1250,109 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
             }
         }
 
-        public static class LinksBean {
-            /**
-             * href : https://api.github.com/repos/baxterthehacker/public-repo/pulls/comments/29724692
-             */
+        public static class LabelsBean {
+            private String url;
+            private String name;
+            private String color;
 
-            private SelfBean self;
-            /**
-             * href : https://github.com/baxterthehacker/public-repo/pull/1#discussion_r29724692
-             */
-
-            private HtmlBean html;
-            /**
-             * href : https://api.github.com/repos/baxterthehacker/public-repo/pulls/1
-             */
-
-            private PullRequestBean pull_request;
-
-            public SelfBean getSelf() {
-                return self;
+            public String getUrl() {
+                return url;
             }
 
-            public void setSelf(SelfBean self) {
-                this.self = self;
+            public void setUrl(String url) {
+                this.url = url;
             }
 
-            public HtmlBean getHtml() {
-                return html;
+            public String getName() {
+                return name;
             }
 
-            public void setHtml(HtmlBean html) {
-                this.html = html;
+            public void setName(String name) {
+                this.name = name;
             }
 
-            public PullRequestBean getPull_request() {
-                return pull_request;
+            public String getColor() {
+                return color;
             }
 
-            public void setPull_request(PullRequestBean pull_request) {
-                this.pull_request = pull_request;
+            public void setColor(String color) {
+                this.color = color;
             }
+        }
+    }
 
-            public static class SelfBean {
-                private String href;
+    public static class OrganizationBean {
+        private String login;
+        private int id;
+        private String url;
+        private String repos_url;
+        private String events_url;
+        private String members_url;
+        private String public_members_url;
+        private String avatar_url;
 
-                public String getHref() {
-                    return href;
-                }
+        public String getLogin() {
+            return login;
+        }
 
-                public void setHref(String href) {
-                    this.href = href;
-                }
-            }
+        public void setLogin(String login) {
+            this.login = login;
+        }
 
-            public static class HtmlBean {
-                private String href;
+        public int getId() {
+            return id;
+        }
 
-                public String getHref() {
-                    return href;
-                }
+        public void setId(int id) {
+            this.id = id;
+        }
 
-                public void setHref(String href) {
-                    this.href = href;
-                }
-            }
+        public String getUrl() {
+            return url;
+        }
 
-            public static class PullRequestBean {
-                private String href;
+        public void setUrl(String url) {
+            this.url = url;
+        }
 
-                public String getHref() {
-                    return href;
-                }
+        public String getRepos_url() {
+            return repos_url;
+        }
 
-                public void setHref(String href) {
-                    this.href = href;
-                }
-            }
+        public void setRepos_url(String repos_url) {
+            this.repos_url = repos_url;
+        }
+
+        public String getEvents_url() {
+            return events_url;
+        }
+
+        public void setEvents_url(String events_url) {
+            this.events_url = events_url;
+        }
+
+        public String getMembers_url() {
+            return members_url;
+        }
+
+        public void setMembers_url(String members_url) {
+            this.members_url = members_url;
+        }
+
+        public String getPublic_members_url() {
+            return public_members_url;
+        }
+
+        public void setPublic_members_url(String public_members_url) {
+            this.public_members_url = public_members_url;
+        }
+
+        public String getAvatar_url() {
+            return avatar_url;
+        }
+
+        public void setAvatar_url(String avatar_url) {
+            this.avatar_url = avatar_url;
         }
     }
 
@@ -629,13 +1387,13 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
          * site_admin : false
          */
 
-        private UserBean user;
+        private PullRequestBean.UserBean user;
         private String body;
         private String created_at;
         private String updated_at;
         private Object closed_at;
         private Object merged_at;
-        private String merge_commit_sha;
+        private Object merge_commit_sha;
         private Object assignee;
         private Object milestone;
         private String commits_url;
@@ -648,19 +1406,19 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
          * ref : changes
          * sha : 0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c
          * user : {"login":"baxterthehacker","id":6752317,"avatar_url":"https://avatars.githubusercontent.com/u/6752317?v=3","gravatar_id":"","url":"https://api.github.com/users/baxterthehacker","html_url":"https://github.com/baxterthehacker","followers_url":"https://api.github.com/users/baxterthehacker/followers","following_url":"https://api.github.com/users/baxterthehacker/following{/other_user}","gists_url":"https://api.github.com/users/baxterthehacker/gists{/gist_id}","starred_url":"https://api.github.com/users/baxterthehacker/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/baxterthehacker/subscriptions","organizations_url":"https://api.github.com/users/baxterthehacker/orgs","repos_url":"https://api.github.com/users/baxterthehacker/repos","events_url":"https://api.github.com/users/baxterthehacker/events{/privacy}","received_events_url":"https://api.github.com/users/baxterthehacker/received_events","type":"User","site_admin":false}
-         * repo : {"id":35129377,"name":"public-repo","full_name":"baxterthehacker/public-repo","owner":{"login":"baxterthehacker","id":6752317,"avatar_url":"https://avatars.githubusercontent.com/u/6752317?v=3","gravatar_id":"","url":"https://api.github.com/users/baxterthehacker","html_url":"https://github.com/baxterthehacker","followers_url":"https://api.github.com/users/baxterthehacker/followers","following_url":"https://api.github.com/users/baxterthehacker/following{/other_user}","gists_url":"https://api.github.com/users/baxterthehacker/gists{/gist_id}","starred_url":"https://api.github.com/users/baxterthehacker/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/baxterthehacker/subscriptions","organizations_url":"https://api.github.com/users/baxterthehacker/orgs","repos_url":"https://api.github.com/users/baxterthehacker/repos","events_url":"https://api.github.com/users/baxterthehacker/events{/privacy}","received_events_url":"https://api.github.com/users/baxterthehacker/received_events","type":"User","site_admin":false},"private":false,"html_url":"https://github.com/baxterthehacker/public-repo","description":"","fork":false,"url":"https://api.github.com/repos/baxterthehacker/public-repo","forks_url":"https://api.github.com/repos/baxterthehacker/public-repo/forks","keys_url":"https://api.github.com/repos/baxterthehacker/public-repo/keys{/key_id}","collaborators_url":"https://api.github.com/repos/baxterthehacker/public-repo/collaborators{/collaborator}","teams_url":"https://api.github.com/repos/baxterthehacker/public-repo/teams","hooks_url":"https://api.github.com/repos/baxterthehacker/public-repo/hooks","issue_events_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues/events{/number}","events_url":"https://api.github.com/repos/baxterthehacker/public-repo/events","assignees_url":"https://api.github.com/repos/baxterthehacker/public-repo/assignees{/user}","branches_url":"https://api.github.com/repos/baxterthehacker/public-repo/branches{/branch}","tags_url":"https://api.github.com/repos/baxterthehacker/public-repo/tags","blobs_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/blobs{/sha}","git_tags_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/tags{/sha}","git_refs_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/refs{/sha}","trees_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/trees{/sha}","statuses_url":"https://api.github.com/repos/baxterthehacker/public-repo/statuses/{sha}","languages_url":"https://api.github.com/repos/baxterthehacker/public-repo/languages","stargazers_url":"https://api.github.com/repos/baxterthehacker/public-repo/stargazers","contributors_url":"https://api.github.com/repos/baxterthehacker/public-repo/contributors","subscribers_url":"https://api.github.com/repos/baxterthehacker/public-repo/subscribers","subscription_url":"https://api.github.com/repos/baxterthehacker/public-repo/subscription","commits_url":"https://api.github.com/repos/baxterthehacker/public-repo/commits{/sha}","git_commits_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/commits{/sha}","comments_url":"https://api.github.com/repos/baxterthehacker/public-repo/comments{/number}","issue_comment_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues/comments{/number}","contents_url":"https://api.github.com/repos/baxterthehacker/public-repo/contents/{+path}","compare_url":"https://api.github.com/repos/baxterthehacker/public-repo/compare/{base}...{head}","merges_url":"https://api.github.com/repos/baxterthehacker/public-repo/merges","archive_url":"https://api.github.com/repos/baxterthehacker/public-repo/{archive_format}{/ref}","downloads_url":"https://api.github.com/repos/baxterthehacker/public-repo/downloads","issues_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues{/number}","pulls_url":"https://api.github.com/repos/baxterthehacker/public-repo/pulls{/number}","milestones_url":"https://api.github.com/repos/baxterthehacker/public-repo/milestones{/number}","notifications_url":"https://api.github.com/repos/baxterthehacker/public-repo/notifications{?since,all,participating}","labels_url":"https://api.github.com/repos/baxterthehacker/public-repo/labels{/name}","releases_url":"https://api.github.com/repos/baxterthehacker/public-repo/releases{/id}","created_at":"2015-05-05T23:40:12Z","updated_at":"2015-05-05T23:40:12Z","pushed_at":"2015-05-05T23:40:27Z","git_url":"git://github.com/baxterthehacker/public-repo.git","ssh_url":"git@github.com:baxterthehacker/public-repo.git","clone_url":"https://github.com/baxterthehacker/public-repo.git","svn_url":"https://github.com/baxterthehacker/public-repo","homepage":null,"size":0,"stargazers_count":0,"watchers_count":0,"language":null,"has_issues":true,"has_downloads":true,"has_wiki":true,"has_pages":true,"forks_count":0,"mirror_url":null,"open_issues_count":1,"forks":0,"open_issues":1,"watchers":0,"default_branch":"master"}
+         * repo : {"id":35129377,"name":"public-repo","full_name":"baxterthehacker/public-repo","owner":{"login":"baxterthehacker","id":6752317,"avatar_url":"https://avatars.githubusercontent.com/u/6752317?v=3","gravatar_id":"","url":"https://api.github.com/users/baxterthehacker","html_url":"https://github.com/baxterthehacker","followers_url":"https://api.github.com/users/baxterthehacker/followers","following_url":"https://api.github.com/users/baxterthehacker/following{/other_user}","gists_url":"https://api.github.com/users/baxterthehacker/gists{/gist_id}","starred_url":"https://api.github.com/users/baxterthehacker/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/baxterthehacker/subscriptions","organizations_url":"https://api.github.com/users/baxterthehacker/orgs","repos_url":"https://api.github.com/users/baxterthehacker/repos","events_url":"https://api.github.com/users/baxterthehacker/events{/privacy}","received_events_url":"https://api.github.com/users/baxterthehacker/received_events","type":"User","site_admin":false},"private":false,"html_url":"https://github.com/baxterthehacker/public-repo","description":"","fork":false,"url":"https://api.github.com/repos/baxterthehacker/public-repo","forks_url":"https://api.github.com/repos/baxterthehacker/public-repo/forks","keys_url":"https://api.github.com/repos/baxterthehacker/public-repo/keys{/key_id}","collaborators_url":"https://api.github.com/repos/baxterthehacker/public-repo/collaborators{/collaborator}","teams_url":"https://api.github.com/repos/baxterthehacker/public-repo/teams","hooks_url":"https://api.github.com/repos/baxterthehacker/public-repo/hooks","issue_events_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues/events{/number}","events_url":"https://api.github.com/repos/baxterthehacker/public-repo/events","assignees_url":"https://api.github.com/repos/baxterthehacker/public-repo/assignees{/user}","branches_url":"https://api.github.com/repos/baxterthehacker/public-repo/branches{/branch}","tags_url":"https://api.github.com/repos/baxterthehacker/public-repo/tags","blobs_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/blobs{/sha}","git_tags_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/tags{/sha}","git_refs_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/refs{/sha}","trees_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/trees{/sha}","statuses_url":"https://api.github.com/repos/baxterthehacker/public-repo/statuses/{sha}","languages_url":"https://api.github.com/repos/baxterthehacker/public-repo/languages","stargazers_url":"https://api.github.com/repos/baxterthehacker/public-repo/stargazers","contributors_url":"https://api.github.com/repos/baxterthehacker/public-repo/contributors","subscribers_url":"https://api.github.com/repos/baxterthehacker/public-repo/subscribers","subscription_url":"https://api.github.com/repos/baxterthehacker/public-repo/subscription","commits_url":"https://api.github.com/repos/baxterthehacker/public-repo/commits{/sha}","git_commits_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/commits{/sha}","comments_url":"https://api.github.com/repos/baxterthehacker/public-repo/comments{/number}","issue_comment_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues/comments{/number}","contents_url":"https://api.github.com/repos/baxterthehacker/public-repo/contents/{+path}","compare_url":"https://api.github.com/repos/baxterthehacker/public-repo/compare/{base}...{head}","merges_url":"https://api.github.com/repos/baxterthehacker/public-repo/merges","archive_url":"https://api.github.com/repos/baxterthehacker/public-repo/{archive_format}{/ref}","downloads_url":"https://api.github.com/repos/baxterthehacker/public-repo/downloads","issues_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues{/number}","pulls_url":"https://api.github.com/repos/baxterthehacker/public-repo/pulls{/number}","milestones_url":"https://api.github.com/repos/baxterthehacker/public-repo/milestones{/number}","notifications_url":"https://api.github.com/repos/baxterthehacker/public-repo/notifications{?since,all,participating}","labels_url":"https://api.github.com/repos/baxterthehacker/public-repo/labels{/name}","releases_url":"https://api.github.com/repos/baxterthehacker/public-repo/releases{/id}","created_at":"2015-05-05T23:40:12Z","updated_at":"2015-05-05T23:40:12Z","pushed_at":"2015-05-05T23:40:26Z","git_url":"git://github.com/baxterthehacker/public-repo.git","ssh_url":"git@github.com:baxterthehacker/public-repo.git","clone_url":"https://github.com/baxterthehacker/public-repo.git","svn_url":"https://github.com/baxterthehacker/public-repo","homepage":null,"size":0,"stargazers_count":0,"watchers_count":0,"language":null,"has_issues":true,"has_downloads":true,"has_wiki":true,"has_pages":true,"forks_count":0,"mirror_url":null,"open_issues_count":1,"forks":0,"open_issues":1,"watchers":0,"default_branch":"master"}
          */
 
-        private HeadBean head;
+        private PullRequestBean.HeadBean head;
         /**
          * label : baxterthehacker:master
          * ref : master
          * sha : 9049f1265b7d61be4a8904a9a27120d2064dab3b
          * user : {"login":"baxterthehacker","id":6752317,"avatar_url":"https://avatars.githubusercontent.com/u/6752317?v=3","gravatar_id":"","url":"https://api.github.com/users/baxterthehacker","html_url":"https://github.com/baxterthehacker","followers_url":"https://api.github.com/users/baxterthehacker/followers","following_url":"https://api.github.com/users/baxterthehacker/following{/other_user}","gists_url":"https://api.github.com/users/baxterthehacker/gists{/gist_id}","starred_url":"https://api.github.com/users/baxterthehacker/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/baxterthehacker/subscriptions","organizations_url":"https://api.github.com/users/baxterthehacker/orgs","repos_url":"https://api.github.com/users/baxterthehacker/repos","events_url":"https://api.github.com/users/baxterthehacker/events{/privacy}","received_events_url":"https://api.github.com/users/baxterthehacker/received_events","type":"User","site_admin":false}
-         * repo : {"id":35129377,"name":"public-repo","full_name":"baxterthehacker/public-repo","owner":{"login":"baxterthehacker","id":6752317,"avatar_url":"https://avatars.githubusercontent.com/u/6752317?v=3","gravatar_id":"","url":"https://api.github.com/users/baxterthehacker","html_url":"https://github.com/baxterthehacker","followers_url":"https://api.github.com/users/baxterthehacker/followers","following_url":"https://api.github.com/users/baxterthehacker/following{/other_user}","gists_url":"https://api.github.com/users/baxterthehacker/gists{/gist_id}","starred_url":"https://api.github.com/users/baxterthehacker/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/baxterthehacker/subscriptions","organizations_url":"https://api.github.com/users/baxterthehacker/orgs","repos_url":"https://api.github.com/users/baxterthehacker/repos","events_url":"https://api.github.com/users/baxterthehacker/events{/privacy}","received_events_url":"https://api.github.com/users/baxterthehacker/received_events","type":"User","site_admin":false},"private":false,"html_url":"https://github.com/baxterthehacker/public-repo","description":"","fork":false,"url":"https://api.github.com/repos/baxterthehacker/public-repo","forks_url":"https://api.github.com/repos/baxterthehacker/public-repo/forks","keys_url":"https://api.github.com/repos/baxterthehacker/public-repo/keys{/key_id}","collaborators_url":"https://api.github.com/repos/baxterthehacker/public-repo/collaborators{/collaborator}","teams_url":"https://api.github.com/repos/baxterthehacker/public-repo/teams","hooks_url":"https://api.github.com/repos/baxterthehacker/public-repo/hooks","issue_events_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues/events{/number}","events_url":"https://api.github.com/repos/baxterthehacker/public-repo/events","assignees_url":"https://api.github.com/repos/baxterthehacker/public-repo/assignees{/user}","branches_url":"https://api.github.com/repos/baxterthehacker/public-repo/branches{/branch}","tags_url":"https://api.github.com/repos/baxterthehacker/public-repo/tags","blobs_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/blobs{/sha}","git_tags_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/tags{/sha}","git_refs_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/refs{/sha}","trees_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/trees{/sha}","statuses_url":"https://api.github.com/repos/baxterthehacker/public-repo/statuses/{sha}","languages_url":"https://api.github.com/repos/baxterthehacker/public-repo/languages","stargazers_url":"https://api.github.com/repos/baxterthehacker/public-repo/stargazers","contributors_url":"https://api.github.com/repos/baxterthehacker/public-repo/contributors","subscribers_url":"https://api.github.com/repos/baxterthehacker/public-repo/subscribers","subscription_url":"https://api.github.com/repos/baxterthehacker/public-repo/subscription","commits_url":"https://api.github.com/repos/baxterthehacker/public-repo/commits{/sha}","git_commits_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/commits{/sha}","comments_url":"https://api.github.com/repos/baxterthehacker/public-repo/comments{/number}","issue_comment_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues/comments{/number}","contents_url":"https://api.github.com/repos/baxterthehacker/public-repo/contents/{+path}","compare_url":"https://api.github.com/repos/baxterthehacker/public-repo/compare/{base}...{head}","merges_url":"https://api.github.com/repos/baxterthehacker/public-repo/merges","archive_url":"https://api.github.com/repos/baxterthehacker/public-repo/{archive_format}{/ref}","downloads_url":"https://api.github.com/repos/baxterthehacker/public-repo/downloads","issues_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues{/number}","pulls_url":"https://api.github.com/repos/baxterthehacker/public-repo/pulls{/number}","milestones_url":"https://api.github.com/repos/baxterthehacker/public-repo/milestones{/number}","notifications_url":"https://api.github.com/repos/baxterthehacker/public-repo/notifications{?since,all,participating}","labels_url":"https://api.github.com/repos/baxterthehacker/public-repo/labels{/name}","releases_url":"https://api.github.com/repos/baxterthehacker/public-repo/releases{/id}","created_at":"2015-05-05T23:40:12Z","updated_at":"2015-05-05T23:40:12Z","pushed_at":"2015-05-05T23:40:27Z","git_url":"git://github.com/baxterthehacker/public-repo.git","ssh_url":"git@github.com:baxterthehacker/public-repo.git","clone_url":"https://github.com/baxterthehacker/public-repo.git","svn_url":"https://github.com/baxterthehacker/public-repo","homepage":null,"size":0,"stargazers_count":0,"watchers_count":0,"language":null,"has_issues":true,"has_downloads":true,"has_wiki":true,"has_pages":true,"forks_count":0,"mirror_url":null,"open_issues_count":1,"forks":0,"open_issues":1,"watchers":0,"default_branch":"master"}
+         * repo : {"id":35129377,"name":"public-repo","full_name":"baxterthehacker/public-repo","owner":{"login":"baxterthehacker","id":6752317,"avatar_url":"https://avatars.githubusercontent.com/u/6752317?v=3","gravatar_id":"","url":"https://api.github.com/users/baxterthehacker","html_url":"https://github.com/baxterthehacker","followers_url":"https://api.github.com/users/baxterthehacker/followers","following_url":"https://api.github.com/users/baxterthehacker/following{/other_user}","gists_url":"https://api.github.com/users/baxterthehacker/gists{/gist_id}","starred_url":"https://api.github.com/users/baxterthehacker/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/baxterthehacker/subscriptions","organizations_url":"https://api.github.com/users/baxterthehacker/orgs","repos_url":"https://api.github.com/users/baxterthehacker/repos","events_url":"https://api.github.com/users/baxterthehacker/events{/privacy}","received_events_url":"https://api.github.com/users/baxterthehacker/received_events","type":"User","site_admin":false},"private":false,"html_url":"https://github.com/baxterthehacker/public-repo","description":"","fork":false,"url":"https://api.github.com/repos/baxterthehacker/public-repo","forks_url":"https://api.github.com/repos/baxterthehacker/public-repo/forks","keys_url":"https://api.github.com/repos/baxterthehacker/public-repo/keys{/key_id}","collaborators_url":"https://api.github.com/repos/baxterthehacker/public-repo/collaborators{/collaborator}","teams_url":"https://api.github.com/repos/baxterthehacker/public-repo/teams","hooks_url":"https://api.github.com/repos/baxterthehacker/public-repo/hooks","issue_events_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues/events{/number}","events_url":"https://api.github.com/repos/baxterthehacker/public-repo/events","assignees_url":"https://api.github.com/repos/baxterthehacker/public-repo/assignees{/user}","branches_url":"https://api.github.com/repos/baxterthehacker/public-repo/branches{/branch}","tags_url":"https://api.github.com/repos/baxterthehacker/public-repo/tags","blobs_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/blobs{/sha}","git_tags_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/tags{/sha}","git_refs_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/refs{/sha}","trees_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/trees{/sha}","statuses_url":"https://api.github.com/repos/baxterthehacker/public-repo/statuses/{sha}","languages_url":"https://api.github.com/repos/baxterthehacker/public-repo/languages","stargazers_url":"https://api.github.com/repos/baxterthehacker/public-repo/stargazers","contributors_url":"https://api.github.com/repos/baxterthehacker/public-repo/contributors","subscribers_url":"https://api.github.com/repos/baxterthehacker/public-repo/subscribers","subscription_url":"https://api.github.com/repos/baxterthehacker/public-repo/subscription","commits_url":"https://api.github.com/repos/baxterthehacker/public-repo/commits{/sha}","git_commits_url":"https://api.github.com/repos/baxterthehacker/public-repo/git/commits{/sha}","comments_url":"https://api.github.com/repos/baxterthehacker/public-repo/comments{/number}","issue_comment_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues/comments{/number}","contents_url":"https://api.github.com/repos/baxterthehacker/public-repo/contents/{+path}","compare_url":"https://api.github.com/repos/baxterthehacker/public-repo/compare/{base}...{head}","merges_url":"https://api.github.com/repos/baxterthehacker/public-repo/merges","archive_url":"https://api.github.com/repos/baxterthehacker/public-repo/{archive_format}{/ref}","downloads_url":"https://api.github.com/repos/baxterthehacker/public-repo/downloads","issues_url":"https://api.github.com/repos/baxterthehacker/public-repo/issues{/number}","pulls_url":"https://api.github.com/repos/baxterthehacker/public-repo/pulls{/number}","milestones_url":"https://api.github.com/repos/baxterthehacker/public-repo/milestones{/number}","notifications_url":"https://api.github.com/repos/baxterthehacker/public-repo/notifications{?since,all,participating}","labels_url":"https://api.github.com/repos/baxterthehacker/public-repo/labels{/name}","releases_url":"https://api.github.com/repos/baxterthehacker/public-repo/releases{/id}","created_at":"2015-05-05T23:40:12Z","updated_at":"2015-05-05T23:40:12Z","pushed_at":"2015-05-05T23:40:26Z","git_url":"git://github.com/baxterthehacker/public-repo.git","ssh_url":"git@github.com:baxterthehacker/public-repo.git","clone_url":"https://github.com/baxterthehacker/public-repo.git","svn_url":"https://github.com/baxterthehacker/public-repo","homepage":null,"size":0,"stargazers_count":0,"watchers_count":0,"language":null,"has_issues":true,"has_downloads":true,"has_wiki":true,"has_pages":true,"forks_count":0,"mirror_url":null,"open_issues_count":1,"forks":0,"open_issues":1,"watchers":0,"default_branch":"master"}
          */
 
-        private BaseBean base;
+        private PullRequestBean.BaseBean base;
         /**
          * self : {"href":"https://api.github.com/repos/baxterthehacker/public-repo/pulls/1"}
          * html : {"href":"https://github.com/baxterthehacker/public-repo/pull/1"}
@@ -672,7 +1430,17 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
          * statuses : {"href":"https://api.github.com/repos/baxterthehacker/public-repo/statuses/0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c"}
          */
 
-        private LinksBean _links;
+        private PullRequestBean.LinksBean _links;
+        private boolean merged;
+        private Object mergeable;
+        private String mergeable_state;
+        private Object merged_by;
+        private int comments;
+        private int review_comments;
+        private int commits;
+        private int additions;
+        private int deletions;
+        private int changed_files;
 
         public String getUrl() {
             return url;
@@ -754,11 +1522,11 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
             this.title = title;
         }
 
-        public UserBean getUser() {
+        public PullRequestBean.UserBean getUser() {
             return user;
         }
 
-        public void setUser(UserBean user) {
+        public void setUser(PullRequestBean.UserBean user) {
             this.user = user;
         }
 
@@ -802,11 +1570,11 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
             this.merged_at = merged_at;
         }
 
-        public String getMerge_commit_sha() {
+        public Object getMerge_commit_sha() {
             return merge_commit_sha;
         }
 
-        public void setMerge_commit_sha(String merge_commit_sha) {
+        public void setMerge_commit_sha(Object merge_commit_sha) {
             this.merge_commit_sha = merge_commit_sha;
         }
 
@@ -866,28 +1634,108 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
             this.statuses_url = statuses_url;
         }
 
-        public HeadBean getHead() {
+        public PullRequestBean.HeadBean getHead() {
             return head;
         }
 
-        public void setHead(HeadBean head) {
+        public void setHead(PullRequestBean.HeadBean head) {
             this.head = head;
         }
 
-        public BaseBean getBase() {
+        public PullRequestBean.BaseBean getBase() {
             return base;
         }
 
-        public void setBase(BaseBean base) {
+        public void setBase(PullRequestBean.BaseBean base) {
             this.base = base;
         }
 
-        public LinksBean get_links() {
+        public PullRequestBean.LinksBean get_links() {
             return _links;
         }
 
-        public void set_links(LinksBean _links) {
+        public void set_links(PullRequestBean.LinksBean _links) {
             this._links = _links;
+        }
+
+        public boolean isMerged() {
+            return merged;
+        }
+
+        public void setMerged(boolean merged) {
+            this.merged = merged;
+        }
+
+        public Object getMergeable() {
+            return mergeable;
+        }
+
+        public void setMergeable(Object mergeable) {
+            this.mergeable = mergeable;
+        }
+
+        public String getMergeable_state() {
+            return mergeable_state;
+        }
+
+        public void setMergeable_state(String mergeable_state) {
+            this.mergeable_state = mergeable_state;
+        }
+
+        public Object getMerged_by() {
+            return merged_by;
+        }
+
+        public void setMerged_by(Object merged_by) {
+            this.merged_by = merged_by;
+        }
+
+        public int getComments() {
+            return comments;
+        }
+
+        public void setComments(int comments) {
+            this.comments = comments;
+        }
+
+        public int getReview_comments() {
+            return review_comments;
+        }
+
+        public void setReview_comments(int review_comments) {
+            this.review_comments = review_comments;
+        }
+
+        public int getCommits() {
+            return commits;
+        }
+
+        public void setCommits(int commits) {
+            this.commits = commits;
+        }
+
+        public int getAdditions() {
+            return additions;
+        }
+
+        public void setAdditions(int additions) {
+            this.additions = additions;
+        }
+
+        public int getDeletions() {
+            return deletions;
+        }
+
+        public void setDeletions(int deletions) {
+            this.deletions = deletions;
+        }
+
+        public int getChanged_files() {
+            return changed_files;
+        }
+
+        public void setChanged_files(int changed_files) {
+            this.changed_files = changed_files;
         }
 
         public static class UserBean {
@@ -1070,7 +1918,7 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
              * site_admin : false
              */
 
-            private UserBean user;
+            private PullRequestBean.HeadBean.UserBean user;
             /**
              * id : 35129377
              * name : public-repo
@@ -1118,7 +1966,7 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
              * releases_url : https://api.github.com/repos/baxterthehacker/public-repo/releases{/id}
              * created_at : 2015-05-05T23:40:12Z
              * updated_at : 2015-05-05T23:40:12Z
-             * pushed_at : 2015-05-05T23:40:27Z
+             * pushed_at : 2015-05-05T23:40:26Z
              * git_url : git://github.com/baxterthehacker/public-repo.git
              * ssh_url : git@github.com:baxterthehacker/public-repo.git
              * clone_url : https://github.com/baxterthehacker/public-repo.git
@@ -1141,7 +1989,7 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
              * default_branch : master
              */
 
-            private RepoBean repo;
+            private PullRequestBean.HeadBean.RepoBean repo;
 
             public String getLabel() {
                 return label;
@@ -1167,19 +2015,19 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
                 this.sha = sha;
             }
 
-            public UserBean getUser() {
+            public PullRequestBean.HeadBean.UserBean getUser() {
                 return user;
             }
 
-            public void setUser(UserBean user) {
+            public void setUser(PullRequestBean.HeadBean.UserBean user) {
                 this.user = user;
             }
 
-            public RepoBean getRepo() {
+            public PullRequestBean.HeadBean.RepoBean getRepo() {
                 return repo;
             }
 
-            public void setRepo(RepoBean repo) {
+            public void setRepo(PullRequestBean.HeadBean.RepoBean repo) {
                 this.repo = repo;
             }
 
@@ -1363,7 +2211,7 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
                  * site_admin : false
                  */
 
-                private OwnerBean owner;
+                private PullRequestBean.HeadBean.RepoBean.OwnerBean owner;
                 @SerializedName("private")
                 private boolean privateX;
                 private String html_url;
@@ -1453,11 +2301,11 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
                     this.full_name = full_name;
                 }
 
-                public OwnerBean getOwner() {
+                public PullRequestBean.HeadBean.RepoBean.OwnerBean getOwner() {
                     return owner;
                 }
 
-                public void setOwner(OwnerBean owner) {
+                public void setOwner(PullRequestBean.HeadBean.RepoBean.OwnerBean owner) {
                     this.owner = owner;
                 }
 
@@ -2147,7 +2995,7 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
              * site_admin : false
              */
 
-            private UserBean user;
+            private PullRequestBean.BaseBean.UserBean user;
             /**
              * id : 35129377
              * name : public-repo
@@ -2195,7 +3043,7 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
              * releases_url : https://api.github.com/repos/baxterthehacker/public-repo/releases{/id}
              * created_at : 2015-05-05T23:40:12Z
              * updated_at : 2015-05-05T23:40:12Z
-             * pushed_at : 2015-05-05T23:40:27Z
+             * pushed_at : 2015-05-05T23:40:26Z
              * git_url : git://github.com/baxterthehacker/public-repo.git
              * ssh_url : git@github.com:baxterthehacker/public-repo.git
              * clone_url : https://github.com/baxterthehacker/public-repo.git
@@ -2218,7 +3066,7 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
              * default_branch : master
              */
 
-            private RepoBean repo;
+            private PullRequestBean.BaseBean.RepoBean repo;
 
             public String getLabel() {
                 return label;
@@ -2244,19 +3092,19 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
                 this.sha = sha;
             }
 
-            public UserBean getUser() {
+            public PullRequestBean.BaseBean.UserBean getUser() {
                 return user;
             }
 
-            public void setUser(UserBean user) {
+            public void setUser(PullRequestBean.BaseBean.UserBean user) {
                 this.user = user;
             }
 
-            public RepoBean getRepo() {
+            public PullRequestBean.BaseBean.RepoBean getRepo() {
                 return repo;
             }
 
-            public void setRepo(RepoBean repo) {
+            public void setRepo(PullRequestBean.BaseBean.RepoBean repo) {
                 this.repo = repo;
             }
 
@@ -2440,7 +3288,7 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
                  * site_admin : false
                  */
 
-                private OwnerBean owner;
+                private PullRequestBean.BaseBean.RepoBean.OwnerBean owner;
                 @SerializedName("private")
                 private boolean privateX;
                 private String html_url;
@@ -2530,11 +3378,11 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
                     this.full_name = full_name;
                 }
 
-                public OwnerBean getOwner() {
+                public PullRequestBean.BaseBean.RepoBean.OwnerBean getOwner() {
                     return owner;
                 }
 
-                public void setOwner(OwnerBean owner) {
+                public void setOwner(PullRequestBean.BaseBean.RepoBean.OwnerBean owner) {
                     this.owner = owner;
                 }
 
@@ -3205,104 +4053,104 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
              * href : https://api.github.com/repos/baxterthehacker/public-repo/pulls/1
              */
 
-            private SelfBean self;
+            private PullRequestBean.LinksBean.SelfBean self;
             /**
              * href : https://github.com/baxterthehacker/public-repo/pull/1
              */
 
-            private HtmlBean html;
+            private PullRequestBean.LinksBean.HtmlBean html;
             /**
              * href : https://api.github.com/repos/baxterthehacker/public-repo/issues/1
              */
 
-            private IssueBean issue;
+            private PullRequestBean.LinksBean.IssueBean issue;
             /**
              * href : https://api.github.com/repos/baxterthehacker/public-repo/issues/1/comments
              */
 
-            private CommentsBean comments;
+            private PullRequestBean.LinksBean.CommentsBean comments;
             /**
              * href : https://api.github.com/repos/baxterthehacker/public-repo/pulls/1/comments
              */
 
-            private ReviewCommentsBean review_comments;
+            private PullRequestBean.LinksBean.ReviewCommentsBean review_comments;
             /**
              * href : https://api.github.com/repos/baxterthehacker/public-repo/pulls/comments{/number}
              */
 
-            private ReviewCommentBean review_comment;
+            private PullRequestBean.LinksBean.ReviewCommentBean review_comment;
             /**
              * href : https://api.github.com/repos/baxterthehacker/public-repo/pulls/1/commits
              */
 
-            private CommitsBean commits;
+            private PullRequestBean.LinksBean.CommitsBean commits;
             /**
              * href : https://api.github.com/repos/baxterthehacker/public-repo/statuses/0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c
              */
 
-            private StatusesBean statuses;
+            private PullRequestBean.LinksBean.StatusesBean statuses;
 
-            public SelfBean getSelf() {
+            public PullRequestBean.LinksBean.SelfBean getSelf() {
                 return self;
             }
 
-            public void setSelf(SelfBean self) {
+            public void setSelf(PullRequestBean.LinksBean.SelfBean self) {
                 this.self = self;
             }
 
-            public HtmlBean getHtml() {
+            public PullRequestBean.LinksBean.HtmlBean getHtml() {
                 return html;
             }
 
-            public void setHtml(HtmlBean html) {
+            public void setHtml(PullRequestBean.LinksBean.HtmlBean html) {
                 this.html = html;
             }
 
-            public IssueBean getIssue() {
+            public PullRequestBean.LinksBean.IssueBean getIssue() {
                 return issue;
             }
 
-            public void setIssue(IssueBean issue) {
+            public void setIssue(PullRequestBean.LinksBean.IssueBean issue) {
                 this.issue = issue;
             }
 
-            public CommentsBean getComments() {
+            public PullRequestBean.LinksBean.CommentsBean getComments() {
                 return comments;
             }
 
-            public void setComments(CommentsBean comments) {
+            public void setComments(PullRequestBean.LinksBean.CommentsBean comments) {
                 this.comments = comments;
             }
 
-            public ReviewCommentsBean getReview_comments() {
+            public PullRequestBean.LinksBean.ReviewCommentsBean getReview_comments() {
                 return review_comments;
             }
 
-            public void setReview_comments(ReviewCommentsBean review_comments) {
+            public void setReview_comments(PullRequestBean.LinksBean.ReviewCommentsBean review_comments) {
                 this.review_comments = review_comments;
             }
 
-            public ReviewCommentBean getReview_comment() {
+            public PullRequestBean.LinksBean.ReviewCommentBean getReview_comment() {
                 return review_comment;
             }
 
-            public void setReview_comment(ReviewCommentBean review_comment) {
+            public void setReview_comment(PullRequestBean.LinksBean.ReviewCommentBean review_comment) {
                 this.review_comment = review_comment;
             }
 
-            public CommitsBean getCommits() {
+            public PullRequestBean.LinksBean.CommitsBean getCommits() {
                 return commits;
             }
 
-            public void setCommits(CommitsBean commits) {
+            public void setCommits(PullRequestBean.LinksBean.CommitsBean commits) {
                 this.commits = commits;
             }
 
-            public StatusesBean getStatuses() {
+            public PullRequestBean.LinksBean.StatusesBean getStatuses() {
                 return statuses;
             }
 
-            public void setStatuses(StatusesBean statuses) {
+            public void setStatuses(PullRequestBean.LinksBean.StatusesBean statuses) {
                 this.statuses = statuses;
             }
 
@@ -3404,31 +4252,187 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
         }
     }
 
+    public static class SenderBean {
+        private String login;
+        private int id;
+        private String avatar_url;
+        private String gravatar_id;
+        private String url;
+        private String html_url;
+        private String followers_url;
+        private String following_url;
+        private String gists_url;
+        private String starred_url;
+        private String subscriptions_url;
+        private String organizations_url;
+        private String repos_url;
+        private String events_url;
+        private String received_events_url;
+        private String type;
+        private boolean site_admin;
+
+        public String getLogin() {
+            return login;
+        }
+
+        public void setLogin(String login) {
+            this.login = login;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getAvatar_url() {
+            return avatar_url;
+        }
+
+        public void setAvatar_url(String avatar_url) {
+            this.avatar_url = avatar_url;
+        }
+
+        public String getGravatar_id() {
+            return gravatar_id;
+        }
+
+        public void setGravatar_id(String gravatar_id) {
+            this.gravatar_id = gravatar_id;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public String getHtml_url() {
+            return html_url;
+        }
+
+        public void setHtml_url(String html_url) {
+            this.html_url = html_url;
+        }
+
+        public String getFollowers_url() {
+            return followers_url;
+        }
+
+        public void setFollowers_url(String followers_url) {
+            this.followers_url = followers_url;
+        }
+
+        public String getFollowing_url() {
+            return following_url;
+        }
+
+        public void setFollowing_url(String following_url) {
+            this.following_url = following_url;
+        }
+
+        public String getGists_url() {
+            return gists_url;
+        }
+
+        public void setGists_url(String gists_url) {
+            this.gists_url = gists_url;
+        }
+
+        public String getStarred_url() {
+            return starred_url;
+        }
+
+        public void setStarred_url(String starred_url) {
+            this.starred_url = starred_url;
+        }
+
+        public String getSubscriptions_url() {
+            return subscriptions_url;
+        }
+
+        public void setSubscriptions_url(String subscriptions_url) {
+            this.subscriptions_url = subscriptions_url;
+        }
+
+        public String getOrganizations_url() {
+            return organizations_url;
+        }
+
+        public void setOrganizations_url(String organizations_url) {
+            this.organizations_url = organizations_url;
+        }
+
+        public String getRepos_url() {
+            return repos_url;
+        }
+
+        public void setRepos_url(String repos_url) {
+            this.repos_url = repos_url;
+        }
+
+        public String getEvents_url() {
+            return events_url;
+        }
+
+        public void setEvents_url(String events_url) {
+            this.events_url = events_url;
+        }
+
+        public String getReceived_events_url() {
+            return received_events_url;
+        }
+
+        public void setReceived_events_url(String received_events_url) {
+            this.received_events_url = received_events_url;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public boolean isSite_admin() {
+            return site_admin;
+        }
+
+        public void setSite_admin(boolean site_admin) {
+            this.site_admin = site_admin;
+        }
+    }
+
     public static class RepositoryBean {
         private int id;
         private String name;
         private String full_name;
         /**
-         * login : baxterthehacker
-         * id : 6752317
-         * avatar_url : https://avatars.githubusercontent.com/u/6752317?v=3
+         * login : baxterandthehackers
+         * id : 7649605
+         * avatar_url : https://avatars.githubusercontent.com/u/7649605?v=3
          * gravatar_id :
-         * url : https://api.github.com/users/baxterthehacker
-         * html_url : https://github.com/baxterthehacker
-         * followers_url : https://api.github.com/users/baxterthehacker/followers
-         * following_url : https://api.github.com/users/baxterthehacker/following{/other_user}
-         * gists_url : https://api.github.com/users/baxterthehacker/gists{/gist_id}
-         * starred_url : https://api.github.com/users/baxterthehacker/starred{/owner}{/repo}
-         * subscriptions_url : https://api.github.com/users/baxterthehacker/subscriptions
-         * organizations_url : https://api.github.com/users/baxterthehacker/orgs
-         * repos_url : https://api.github.com/users/baxterthehacker/repos
-         * events_url : https://api.github.com/users/baxterthehacker/events{/privacy}
-         * received_events_url : https://api.github.com/users/baxterthehacker/received_events
-         * type : User
+         * url : https://api.github.com/users/baxterandthehackers
+         * html_url : https://github.com/baxterandthehackers
+         * followers_url : https://api.github.com/users/baxterandthehackers/followers
+         * following_url : https://api.github.com/users/baxterandthehackers/following{/other_user}
+         * gists_url : https://api.github.com/users/baxterandthehackers/gists{/gist_id}
+         * starred_url : https://api.github.com/users/baxterandthehackers/starred{/owner}{/repo}
+         * subscriptions_url : https://api.github.com/users/baxterandthehackers/subscriptions
+         * organizations_url : https://api.github.com/users/baxterandthehackers/orgs
+         * repos_url : https://api.github.com/users/baxterandthehackers/repos
+         * events_url : https://api.github.com/users/baxterandthehackers/events{/privacy}
+         * received_events_url : https://api.github.com/users/baxterandthehackers/received_events
+         * type : Organization
          * site_admin : false
          */
 
-        private OwnerBean owner;
+        private RepositoryBean.OwnerBean owner;
         @SerializedName("private")
         private boolean privateX;
         private String html_url;
@@ -3518,11 +4522,11 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
             this.full_name = full_name;
         }
 
-        public OwnerBean getOwner() {
+        public RepositoryBean.OwnerBean getOwner() {
             return owner;
         }
 
-        public void setOwner(OwnerBean owner) {
+        public void setOwner(RepositoryBean.OwnerBean owner) {
             this.owner = owner;
         }
 
@@ -4184,162 +5188,6 @@ public class PullRequestReviewEventsBean extends EventsBean.PayloadBean {
             public void setSite_admin(boolean site_admin) {
                 this.site_admin = site_admin;
             }
-        }
-    }
-
-    public static class SenderBean {
-        private String login;
-        private int id;
-        private String avatar_url;
-        private String gravatar_id;
-        private String url;
-        private String html_url;
-        private String followers_url;
-        private String following_url;
-        private String gists_url;
-        private String starred_url;
-        private String subscriptions_url;
-        private String organizations_url;
-        private String repos_url;
-        private String events_url;
-        private String received_events_url;
-        private String type;
-        private boolean site_admin;
-
-        public String getLogin() {
-            return login;
-        }
-
-        public void setLogin(String login) {
-            this.login = login;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getAvatar_url() {
-            return avatar_url;
-        }
-
-        public void setAvatar_url(String avatar_url) {
-            this.avatar_url = avatar_url;
-        }
-
-        public String getGravatar_id() {
-            return gravatar_id;
-        }
-
-        public void setGravatar_id(String gravatar_id) {
-            this.gravatar_id = gravatar_id;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
-        public String getHtml_url() {
-            return html_url;
-        }
-
-        public void setHtml_url(String html_url) {
-            this.html_url = html_url;
-        }
-
-        public String getFollowers_url() {
-            return followers_url;
-        }
-
-        public void setFollowers_url(String followers_url) {
-            this.followers_url = followers_url;
-        }
-
-        public String getFollowing_url() {
-            return following_url;
-        }
-
-        public void setFollowing_url(String following_url) {
-            this.following_url = following_url;
-        }
-
-        public String getGists_url() {
-            return gists_url;
-        }
-
-        public void setGists_url(String gists_url) {
-            this.gists_url = gists_url;
-        }
-
-        public String getStarred_url() {
-            return starred_url;
-        }
-
-        public void setStarred_url(String starred_url) {
-            this.starred_url = starred_url;
-        }
-
-        public String getSubscriptions_url() {
-            return subscriptions_url;
-        }
-
-        public void setSubscriptions_url(String subscriptions_url) {
-            this.subscriptions_url = subscriptions_url;
-        }
-
-        public String getOrganizations_url() {
-            return organizations_url;
-        }
-
-        public void setOrganizations_url(String organizations_url) {
-            this.organizations_url = organizations_url;
-        }
-
-        public String getRepos_url() {
-            return repos_url;
-        }
-
-        public void setRepos_url(String repos_url) {
-            this.repos_url = repos_url;
-        }
-
-        public String getEvents_url() {
-            return events_url;
-        }
-
-        public void setEvents_url(String events_url) {
-            this.events_url = events_url;
-        }
-
-        public String getReceived_events_url() {
-            return received_events_url;
-        }
-
-        public void setReceived_events_url(String received_events_url) {
-            this.received_events_url = received_events_url;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        public boolean isSite_admin() {
-            return site_admin;
-        }
-
-        public void setSite_admin(boolean site_admin) {
-            this.site_admin = site_admin;
         }
     }
 }

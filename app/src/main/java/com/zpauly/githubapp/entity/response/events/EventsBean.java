@@ -21,7 +21,7 @@ public class EventsBean {
     private String type;
     @SerializedName("public")
     private boolean publicX;
-    private PayloadBean payload;
+    private Payload payload;
     /**
      * id : 3
      * name : octocat/Hello-World
@@ -66,11 +66,11 @@ public class EventsBean {
         this.publicX = publicX;
     }
 
-    public PayloadBean getPayload() {
+    public Payload getPayload() {
         return payload;
     }
 
-    public void setPayload(PayloadBean payload) {
+    public void setPayload(Payload payload) {
         this.payload = payload;
     }
 
@@ -112,9 +112,6 @@ public class EventsBean {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public static class PayloadBean {
     }
 
     public static class RepoBean {
