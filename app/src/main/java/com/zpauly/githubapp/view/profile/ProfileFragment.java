@@ -126,7 +126,6 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
                 intent.putExtra(EventsActivity.EVENTS_ID, EventsActivity.USER_EVENTS);
                 intent.setClass(getContext(), EventsActivity.class);
                 startActivity(intent);
-                getActivity().finish();
             }
         });
 

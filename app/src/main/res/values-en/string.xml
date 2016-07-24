@@ -12,6 +12,7 @@
     <string name="following">Following</string>
     <string name="repos">Repositorites</string>
     <string name="events">Events</string>
+    <string name="public_events">Public Events</string>
     <string name="gists">Gists</string>
     <string name="orgs">Organizations</string>
     <string name="explore">Explore</string>

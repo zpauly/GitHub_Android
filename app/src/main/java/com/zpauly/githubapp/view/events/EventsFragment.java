@@ -15,6 +15,7 @@ import com.zpauly.githubapp.base.BaseFragment;
 import com.zpauly.githubapp.entity.response.events.EventsBean;
 import com.zpauly.githubapp.presenter.events.EventsContract;
 import com.zpauly.githubapp.presenter.events.EventsPresenter;
+import com.zpauly.githubapp.ui.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +69,7 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
     private void setupRecyclerView() {
         mAdapter = new EventsRecyclerViewAdapter(getContext());
         mEventsRV.setLayoutManager(new LinearLayoutManager(getContext()));
+        mEventsRV.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         mEventsRV.setAdapter(mAdapter);
     }
 

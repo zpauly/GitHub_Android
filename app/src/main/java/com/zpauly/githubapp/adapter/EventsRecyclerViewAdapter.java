@@ -2,6 +2,7 @@ package com.zpauly.githubapp.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,8 @@ public class EventsRecyclerViewAdapter extends RecyclerView.Adapter<EventsViewHo
     private Context mContext;
     private List<EventsBean> mData;
 
+    private EventsCommitsRecyclerViewAdapter mAdapter;
+
     public EventsRecyclerViewAdapter(Context context) {
         this.mContext = context;
         mData = new ArrayList<>();
@@ -46,6 +49,9 @@ public class EventsRecyclerViewAdapter extends RecyclerView.Adapter<EventsViewHo
     public EventsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View mView = LayoutInflater.from(mContext).inflate(R.layout.item_recylcleview_events, parent, false);
         EventsViewHolder holder = new EventsViewHolder(mView);
+        holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
+        mAdapter = new EventsCommitsRecyclerViewAdapter(mContext);
+        holder.mCommitsRV.setAdapter(mAdapter);
         return holder;
     }
 
@@ -60,20 +66,8 @@ public class EventsRecyclerViewAdapter extends RecyclerView.Adapter<EventsViewHo
                 .into(holder.mUserAvatarIV);
         holder.mRepoTV.setText(data.getRepo().getName());
         holder.mUsernameTV.setText(data.getActor().getLogin());
-        setAction(data.getType(), data.getPayload(), holder.mActionTV);
-
-        holder.mEventLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        holder.mUserLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        holder.mTimeTV.setText(data.getCreated_at());
+        setAction(data.getType(), data.getPayload(), holder);
     }
 
     @Override
@@ -81,15 +75,35 @@ public class EventsRecyclerViewAdapter extends RecyclerView.Adapter<EventsViewHo
         return mData.size();
     }
 
-    private void setAction(String type, Payload payloadBean, AppCompatTextView textView) {
+    private void setAction(String type, Payload payloadBean, EventsViewHolder holder) {
         switch (type) {
             case "WatchEvent":
-                textView.setText(payloadBean.getAction());
+                holder.mActionTV.setText("starred ");
+                holder.mTypeIV.setImageResource(R.mipmap.ic_star);
                 break;
             case "PushEvent":
                 String[] str = payloadBean.getRef().split("/");
                 String branch = str[str.length - 1];
-                textView.setText("pushed to " + branch + " at ");
+                holder.mActionTV.setText("pushed to " + branch + " at ");
+                holder.mTypeIV.setImageResource(R.mipmap.ic_commit);
+                holder.mCommitsRV.setVisibility(View.VISIBLE);
+                mAdapter.swapData(payloadBean.getCommits());
+                holder.mCommitsRV.setEnabled(false);
+                break;
+            case "CreateEvent":
+                if (payloadBean.getRef() == null) {
+                    holder.mActionTV.setText("create " + payloadBean.getRef_type());
+                    holder.mTypeIV.setImageResource(R.mipmap.ic_repos);
+                } else {
+                    holder.mActionTV.setText("create branch " + payloadBean.getMaster_branch() + " at");
+                    holder.mTypeIV.setImageResource(R.mipmap.ic_fork);
+                }
+                break;
+            case "ForkEvent":
+                holder.mActionTV.setText("forked");
+                holder.mTypeIV.setImageResource(R.mipmap.ic_fork);
+                break;
+            default:
                 break;
         }
     }

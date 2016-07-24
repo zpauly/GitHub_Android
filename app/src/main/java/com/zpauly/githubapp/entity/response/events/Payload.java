@@ -18,6 +18,7 @@ public class Payload {
     private boolean publicX;
     private OrganizationBean org;
     private String created_at;
+    private String master_branch;
     private IssueBean issue;
     private CommentBean comment;
     private ReleaseBean release;
@@ -26,6 +27,14 @@ public class Payload {
     private int size;
     private int distinct_size;
     private String ref_type;
+
+    public String getMaster_branch() {
+        return master_branch;
+    }
+
+    public void setMaster_branch(String master_branch) {
+        this.master_branch = master_branch;
+    }
 
     public String getAction() {
         return action;
@@ -179,11 +188,11 @@ public class Payload {
         this.before = before;
     }
 
-    public List<CommentBean> getCommits() {
+    public List<CommitsBean> getCommits() {
         return commits;
     }
 
-    public void setCommits(List<CommentBean> commits) {
+    public void setCommits(List<CommitsBean> commits) {
         this.commits = commits;
     }
 
@@ -206,9 +215,92 @@ public class Payload {
     private String ref;
     private String head;
     private String before;
-    private List<CommentBean> commits;
+    private List<CommitsBean> commits;
     private RepositoryBean forkee;
     private SenderBean member;
+
+    public static class CommitsBean {
+
+        /**
+         * sha : ca69bed865bf007cce3349dd104c5af916a6b007
+         * author : {"email":"zpauly1996@gmail.com","name":"zpauly"}
+         * message : delete events in db
+         * distinct : true
+         * url : https://api.github.com/repos/zpauly/GitHub_Android/commits/ca69bed865bf007cce3349dd104c5af916a6b007
+         */
+
+        private String sha;
+        /**
+         * email : zpauly1996@gmail.com
+         * name : zpauly
+         */
+
+        private AuthorBean author;
+        private String message;
+        private boolean distinct;
+        private String url;
+
+        public String getSha() {
+            return sha;
+        }
+
+        public void setSha(String sha) {
+            this.sha = sha;
+        }
+
+        public AuthorBean getAuthor() {
+            return author;
+        }
+
+        public void setAuthor(AuthorBean author) {
+            this.author = author;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        public boolean isDistinct() {
+            return distinct;
+        }
+
+        public void setDistinct(boolean distinct) {
+            this.distinct = distinct;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public static class AuthorBean {
+            private String email;
+            private String name;
+
+            public String getEmail() {
+                return email;
+            }
+
+            public void setEmail(String email) {
+                this.email = email;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+        }
+    }
 
     public static class TeamBean {
         private String name;
