@@ -1,6 +1,7 @@
 package com.zpauly.githubapp.view.home;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -13,6 +14,8 @@ import com.zpauly.githubapp.db.UserDao;
 import com.zpauly.githubapp.listener.OnNavItemClickListener;
 import com.zpauly.githubapp.utils.SPUtil;
 import com.zpauly.githubapp.view.DrawerActivity;
+import com.zpauly.githubapp.view.events.EventsActivity;
+import com.zpauly.githubapp.view.events.EventsFragment;
 import com.zpauly.githubapp.view.login.LoginActivity;
 import com.zpauly.githubapp.view.profile.ProfileFragment;
 import com.zpauly.githubapp.view.stars.StarsFragment;
@@ -27,17 +30,23 @@ public class HomeActivity extends DrawerActivity {
 
     private static final int PROFILE = 0;
     private static final int STARS = 1;
+    private static final int EVENTS = 2;
 
     private int currentFragmentID = PROFILE;
 
     private BaseFragment mCurrentFragment;
-    private BaseFragment[] fragments = {new ProfileFragment(), new StarsFragment()};
+    private BaseFragment[] fragments;
 
     private FragmentManager mFragmentManager;
     private FragmentTransaction mFragmentTransaction;
 
     @Override
     public void initViews() {
+        fragments = new BaseFragment[]{new ProfileFragment(), new StarsFragment(), new EventsFragment()};
+        Bundle eventsBundle = new Bundle();
+        eventsBundle.putInt(EventsActivity.EVENTS_ID, EventsActivity.RECEIVED_EVENTS);
+        fragments[2].setArguments(eventsBundle);
+
         setListener();
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
@@ -61,12 +70,21 @@ public class HomeActivity extends DrawerActivity {
                         break;
                     case R.id.navigation_stars:
                         if (currentFragmentID == STARS) {
-
                         } else {
                             item.setChecked(true);
                             changeFragment(STARS);
                             setToolbarTitle(R.string.starred);
                         }
+                        break;
+                    case R.id.navigation_events:
+                        if (currentFragmentID == EVENTS) {
+                        } else {
+                            item.setChecked(true);
+                            changeFragment(EVENTS);
+                            setToolbarTitle(R.string.events);
+                        }
+                        break;
+                    case R.id.navigation_settings:
                         break;
                     case R.id.navigation_exit:
                         item.setChecked(true);

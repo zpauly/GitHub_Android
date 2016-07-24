@@ -11,9 +11,17 @@
             android:id="@+id/navigation_stars"
             android:icon="@mipmap/ic_star"
             android:title="@string/starred"/>
+        <item
+            android:id="@+id/navigation_events"
+            android:icon="@drawable/ic_event"
+            android:title="@string/events"/>
     </group>
     <group android:id="@+id/grp2"
         android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/settings"/>
         <item
             android:id="@+id/navigation_exit"
             android:icon="@drawable/ic_exit_to_app_grey_700_24dp"
