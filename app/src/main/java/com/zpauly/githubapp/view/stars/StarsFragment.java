@@ -101,7 +101,7 @@ public class StarsFragment extends BaseFragment implements StarContract.View {
     @Override
     public void loadSuccess() {
         List<ReposModel> list = ReposDao.queryRepos();
-        mAdapter.addAllData(list);
+        mAdapter.swapData(list);
         mStarredReposSRLayout.setRefreshing(false);
     }
 }
