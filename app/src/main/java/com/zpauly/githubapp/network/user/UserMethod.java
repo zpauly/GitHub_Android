@@ -2,7 +2,10 @@ package com.zpauly.githubapp.network.user;
 
 import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
+import com.zpauly.githubapp.entity.response.FollowersBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
+
+import java.util.List;
 
 import retrofit2.Retrofit;
 import rx.Observer;
@@ -37,6 +40,20 @@ public class UserMethod {
 
     public void getAuthenticatedUser(Observer<AuthenticatedUserBean> observer, String auth) {
         service.getAuthenticatedUser(auth)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getFollowers(Observer<List<FollowersBean>> observer, String auth) {
+        service.getFollowers(auth)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getFollowing(Observer<List<FollowersBean>> observer, String auth) {
+        service.getFollowing(auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
