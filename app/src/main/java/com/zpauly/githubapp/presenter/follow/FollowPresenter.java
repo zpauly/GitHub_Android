@@ -57,17 +57,18 @@ public class FollowPresenter implements FollowContract.Presenter {
         mFollowersSubscriber = new Subscriber<List<FollowersBean>>() {
             @Override
             public void onCompleted() {
-
+                mFollowView.loadSuccess();
             }
 
             @Override
             public void onError(Throwable e) {
-
+                mFollowView.loadFail();
+                e.printStackTrace();
             }
 
             @Override
             public void onNext(List<FollowersBean> followersBean) {
-
+                mFollowView.loading(followersBean);
             }
         };
         method.getFollowers(mFollowersSubscriber, auth);

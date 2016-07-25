@@ -22,6 +22,15 @@ public class UserModel extends DataSupport {
     private int following;
     private String created_at;
     private String updated_at;
+    private boolean user;
+
+    public void setUser(boolean user) {
+        this.user = user;
+    }
+
+    public boolean isUser() {
+        return user;
+    }
 
     public String getLogin() {
         return login;

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 import com.zpauly.githubapp.presenter.profile.ProfileContract;
 import com.zpauly.githubapp.presenter.profile.ProfilePresenter;
 import com.zpauly.githubapp.view.events.EventsActivity;
+import com.zpauly.githubapp.view.followers.FollowersActivity;
 import com.zpauly.githubapp.view.repositories.ReposActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -42,6 +44,8 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     private TextView mJoinTimeTV;
     private TextView mFollowersTV;
     private TextView mFollowingTV;
+    private LinearLayout mFollowersLayout;
+    private LinearLayout mFollowingLayout;
     private RelativeLayout mEventsLayout;
     private RelativeLayout mReposLayout;
     private RelativeLayout mOrgsLayout;
@@ -63,6 +67,8 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         mJoinTimeTV = (TextView) view.findViewById(R.id.profile_join_time_TV);
         mFollowersTV = (TextView) view.findViewById(R.id.profile_followers_TV);
         mFollowingTV = (TextView) view.findViewById(R.id.profile_following_TV);
+        mFollowersLayout = (LinearLayout) view.findViewById(R.id.profile_followers_layout);
+        mFollowingLayout = (LinearLayout) view.findViewById(R.id.profile_following_layout);
         mEventsLayout = (RelativeLayout) view.findViewById(R.id.profile_events_layout);
         mReposLayout = (RelativeLayout) view.findViewById(R.id.profile_repos_layout);
         mOrgsLayout = (RelativeLayout) view.findViewById(R.id.profile_orgs_layout);
@@ -119,6 +125,26 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     }
 
     private void setClickListener() {
+        mFollowersLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putExtra(FollowersActivity.FOLLOW_ID, FollowersActivity.FOLLOWERS);
+                intent.setClass(getContext(), FollowersActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mFollowingLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putExtra(FollowersActivity.FOLLOW_ID, FollowersActivity.FOLLOWING);
+                intent.setClass(getContext(), FollowersActivity.class);
+                startActivity(intent);
+            }
+        });
+
         mEventsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

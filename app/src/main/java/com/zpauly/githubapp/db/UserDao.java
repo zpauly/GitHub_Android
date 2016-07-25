@@ -3,6 +3,7 @@ package com.zpauly.githubapp.db;
 import android.content.ContentValues;
 
 import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
+import com.zpauly.githubapp.entity.response.FollowersBean;
 
 import org.litepal.crud.DataSupport;
 
@@ -12,7 +13,7 @@ import java.util.List;
  * Created by zpauly on 16-6-12.
  */
 public class UserDao {
-    public static void insertUser(AuthenticatedUserBean user) {
+    public static boolean insertUser(AuthenticatedUserBean user) {
         UserModel userModel = new UserModel();
         userModel.setLogin(user.getLogin());
         userModel.setName(user.getName());
@@ -30,7 +31,15 @@ public class UserDao {
         userModel.setPublic_gists(user.getPublic_gists());
         userModel.setPublic_repos(user.getPublic_repos());
         userModel.setType(user.getType());
-        userModel.saveThrows();
+        userModel.setUser(true);
+        return userModel.save();
+    }
+
+    public static boolean insertUser(FollowersBean other) {
+        UserModel userModel = new UserModel();
+        userModel.setLogin(other.getLogin());
+        userModel.setUser(true);
+        return userModel.save();
     }
 
     public static UserModel queryUser() {

@@ -1,10 +1,14 @@
 package com.zpauly.githubapp.view.followers;
 
+import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 
 import com.zpauly.githubapp.R;
+import com.zpauly.githubapp.presenter.follow.FollowContract;
 import com.zpauly.githubapp.view.ToolbarActivity;
 
 /**
@@ -13,6 +17,8 @@ import com.zpauly.githubapp.view.ToolbarActivity;
 public class FollowersActivity extends ToolbarActivity {
     private final String TAG = getClass().getName();
 
+    private FollowContract.Presenter mPresenter;
+
     public static final String FOLLOW_ID = "FOLLOW_ID";
     public static final int FOLLOWERS = 0;
     public static final int FOLLOWING = 1;
@@ -20,16 +26,32 @@ public class FollowersActivity extends ToolbarActivity {
     private int followId;
 
     private AppBarLayout mABLayout;
-    private SwipeRefreshLayout mSWLayout;
-    private RecyclerView mContentRV;
+
+    private FragmentManager mFragmentManager;
+    private FragmentTransaction mFragmentTransaction;
 
     @Override
     public void initViews() {
         followId = getIntent().getIntExtra(FOLLOW_ID, -1);
 
         mABLayout = (AppBarLayout) findViewById(R.id.followers_ABLayout);
-        mSWLayout = (SwipeRefreshLayout) findViewById(R.id.followers_SWLayout);
-        mContentRV = (RecyclerView) findViewById(R.id.followers_content_RV);
+        setFragment();
+    }
+
+    private void setFragment() {
+        mFragmentManager = getSupportFragmentManager();
+        mFragmentTransaction = mFragmentManager.beginTransaction();
+        Bundle bundle = new Bundle();
+        bundle.putInt(FOLLOW_ID, followId);
+        Fragment fragment = new FollowersFragment();
+        fragment.setArguments(bundle);
+        mFragmentTransaction.replace(R.id.followers_content, fragment);
+        mFragmentTransaction.commit();
+    }
+
+    @Override
+    public void initContent() {
+        setContentView(R.layout.activity_followers);
     }
 
     @Override
@@ -40,10 +62,11 @@ public class FollowersActivity extends ToolbarActivity {
         } else if (followId == FOLLOWING) {
             setToolbarTitle(R.string.following);
         }
-    }
-
-    @Override
-    public void initContent() {
-        setContentView(R.layout.activity_followers);
+        setOnToolbarNavClickedListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 }
