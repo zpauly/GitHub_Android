@@ -33,6 +33,11 @@ public class EventsCommitsRecyclerViewAdapter extends RecyclerView.Adapter<Event
         notifyDataSetChanged();
     }
 
+    public void clearData() {
+        mData.clear();
+        notifyDataSetChanged();
+    }
+
     @Override
     public EventsCommitsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View mView = LayoutInflater.from(mContext).inflate(R.layout.item_recyclerview_event_commits, parent, false);
