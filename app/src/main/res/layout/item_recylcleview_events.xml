@@ -73,15 +73,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <android.support.v7.widget.RecyclerView
+                android:clickable="false"
+                android:id="@+id/events_commits_RV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
         </LinearLayout>
 
     </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:clickable="false"
-        android:id="@+id/events_commits_RV"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
 
 </LinearLayout>

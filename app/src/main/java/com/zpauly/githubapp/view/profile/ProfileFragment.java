@@ -31,6 +31,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class ProfileFragment extends BaseFragment implements ProfileContract.View{
     private final String TAG = getClass().getName();
+
     private ProfileContract.Presenter mPresenter;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;

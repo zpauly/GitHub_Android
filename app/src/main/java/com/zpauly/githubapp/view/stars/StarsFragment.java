@@ -18,6 +18,7 @@ import com.zpauly.githubapp.presenter.star.StarContract;
 import com.zpauly.githubapp.presenter.star.StarPresenter;
 import com.zpauly.githubapp.ui.DividerItemDecoration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,6 +33,8 @@ public class StarsFragment extends BaseFragment implements StarContract.View {
     private RecyclerView mStarredReposRV;
 
     private ReposRecyclerViewAdapter mAdapter;
+
+    private List<ReposModel> list = new ArrayList<>();
 
     @Override
     public void onStop() {
@@ -91,6 +94,8 @@ public class StarsFragment extends BaseFragment implements StarContract.View {
         for (StarredRepositories repo : starredRepositories) {
             ReposDao.insertRepo(repo);
         }
+        list.clear();
+        list.addAll(ReposDao.queryRepos());
     }
 
     @Override
@@ -100,7 +105,6 @@ public class StarsFragment extends BaseFragment implements StarContract.View {
 
     @Override
     public void loadSuccess() {
-        List<ReposModel> list = ReposDao.queryRepos();
         mAdapter.swapData(list);
         mStarredReposSRLayout.setRefreshing(false);
     }

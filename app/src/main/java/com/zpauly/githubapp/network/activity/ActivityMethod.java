@@ -4,7 +4,9 @@ import android.support.annotation.Nullable;
 
 import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.entity.response.StarredRepositories;
+import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.entity.response.events.EventsBean;
+import com.zpauly.githubapp.entity.response.events.Payload;
 import com.zpauly.githubapp.utils.RetrofitUtil;
 
 import java.util.List;

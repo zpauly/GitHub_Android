@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
+import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.network.user.UserMethod;
 import com.zpauly.githubapp.utils.SPUtil;
 

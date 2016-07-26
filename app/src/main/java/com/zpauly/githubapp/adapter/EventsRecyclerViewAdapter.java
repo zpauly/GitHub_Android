@@ -49,9 +49,6 @@ public class EventsRecyclerViewAdapter extends RecyclerView.Adapter<EventsViewHo
     public EventsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View mView = LayoutInflater.from(mContext).inflate(R.layout.item_recylcleview_events, parent, false);
         EventsViewHolder holder = new EventsViewHolder(mView);
-        holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
-        mAdapter = new EventsCommitsRecyclerViewAdapter(mContext);
-        holder.mCommitsRV.setAdapter(mAdapter);
         return holder;
     }
 
@@ -76,35 +73,29 @@ public class EventsRecyclerViewAdapter extends RecyclerView.Adapter<EventsViewHo
     }
 
     private void setAction(String type, Payload payloadBean, EventsViewHolder holder) {
-        switch (type) {
-            case "WatchEvent":
-                holder.mActionTV.setText("starred ");
-                holder.mTypeIV.setImageResource(R.mipmap.ic_star);
-                break;
-            case "PushEvent":
-                String[] str = payloadBean.getRef().split("/");
-                String branch = str[str.length - 1];
-                holder.mActionTV.setText("pushed to " + branch + " at ");
-                holder.mTypeIV.setImageResource(R.mipmap.ic_commit);
-                holder.mCommitsRV.setVisibility(View.VISIBLE);
-                mAdapter.swapData(payloadBean.getCommits());
-                holder.mCommitsRV.setEnabled(false);
-                break;
-            case "CreateEvent":
-                if (payloadBean.getRef() == null) {
-                    holder.mActionTV.setText("create " + payloadBean.getRef_type());
-                    holder.mTypeIV.setImageResource(R.mipmap.ic_repos);
-                } else {
-                    holder.mActionTV.setText("create branch " + payloadBean.getMaster_branch() + " at");
-                    holder.mTypeIV.setImageResource(R.mipmap.ic_fork);
-                }
-                break;
-            case "ForkEvent":
-                holder.mActionTV.setText("forked");
+        if ("WatchEvent".equals(type)) {
+            holder.mActionTV.setText("starred ");
+            holder.mTypeIV.setImageResource(R.mipmap.ic_star);
+        } else if ("CreateEvent".equals(type)) {
+            if (payloadBean.getRef() == null) {
+                holder.mActionTV.setText("create " + payloadBean.getRef_type());
+                holder.mTypeIV.setImageResource(R.mipmap.ic_repos);
+            } else {
+                holder.mActionTV.setText("create branch " + payloadBean.getMaster_branch() + " at");
                 holder.mTypeIV.setImageResource(R.mipmap.ic_fork);
-                break;
-            default:
-                break;
+            }
+        } else if ("PushEvent".equals(type)) {
+            String[] str = payloadBean.getRef().split("/");
+            String branch = str[str.length - 1];
+            holder.mActionTV.setText("pushed to " + branch + " at ");
+            holder.mTypeIV.setImageResource(R.mipmap.ic_commit);
+            holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
+            mAdapter = new EventsCommitsRecyclerViewAdapter(mContext);
+            holder.mCommitsRV.setAdapter(mAdapter);
+            mAdapter.swapData(payloadBean.getCommits());
+        } else if ("ForkEvent".equals(type)) {
+            holder.mActionTV.setText("forked");
+            holder.mTypeIV.setImageResource(R.mipmap.ic_fork);
         }
     }
 }

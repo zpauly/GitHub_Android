@@ -3,6 +3,7 @@ package com.zpauly.githubapp.network.activity;
 import android.support.annotation.Nullable;
 
 import com.zpauly.githubapp.entity.response.StarredRepositories;
+import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.entity.response.events.EventsBean;
 
 import java.util.List;
@@ -18,6 +19,7 @@ import rx.Observable;
  */
 
 public interface ActivityService {
+    //starring
     /**
      * List repositories being starred
      *
@@ -34,7 +36,6 @@ public interface ActivityService {
     @GET("/user/starred")
     Observable<List<StarredRepositories>> getStarredRepositories(@Header("Authorization") String auth
             , @Nullable @Query("sort") String sort, @Nullable @Query("direction") String direction);
-
     //----------------------------------------
     //Events
 
