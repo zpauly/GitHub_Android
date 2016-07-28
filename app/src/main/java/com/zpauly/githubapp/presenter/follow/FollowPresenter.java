@@ -25,6 +25,8 @@ public class FollowPresenter implements FollowContract.Presenter {
     private Subscriber<List<FollowersBean>> mFollowersSubscriber;
     private Subscriber<List<FollowersBean>> mFollowingSubscriber;
 
+    private int loadPageId = 1;
+
     public FollowPresenter(Context context, FollowContract.View view) {
         mContext = context;
         mFollowView = view;
@@ -58,6 +60,7 @@ public class FollowPresenter implements FollowContract.Presenter {
             @Override
             public void onCompleted() {
                 mFollowView.loadSuccess();
+                loadPageId ++;
             }
 
             @Override
@@ -72,9 +75,9 @@ public class FollowPresenter implements FollowContract.Presenter {
             }
         };
         if (mFollowView.getUsername() != null) {
-            method.getUserFollowers(mFollowersSubscriber, mFollowView.getUsername(), 1);
+            method.getUserFollowers(mFollowersSubscriber, mFollowView.getUsername(), loadPageId);
         } else {
-            method.getFollowers(mFollowersSubscriber, auth, 1);
+            method.getFollowers(mFollowersSubscriber, auth, loadPageId);
         }
     }
 
@@ -84,6 +87,7 @@ public class FollowPresenter implements FollowContract.Presenter {
             @Override
             public void onCompleted() {
                 mFollowView.loadSuccess();
+                loadPageId ++;
             }
 
             @Override
@@ -98,9 +102,9 @@ public class FollowPresenter implements FollowContract.Presenter {
             }
         };
         if (mFollowView.getUsername() != null) {
-            method.getUserFollowing(mFollowingSubscriber, mFollowView.getUsername(), 1);
+            method.getUserFollowing(mFollowingSubscriber, mFollowView.getUsername(), loadPageId);
         } else {
-            method.getFollowing(mFollowingSubscriber, auth, 1);
+            method.getFollowing(mFollowingSubscriber, auth, loadPageId);
         }
     }
 }

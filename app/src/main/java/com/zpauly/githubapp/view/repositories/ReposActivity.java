@@ -79,7 +79,7 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
     private void addPagers() {
         adapter.addFragment(createFragment(ReposFragment.ALL), getString(R.string.repos_all));
         adapter.addFragment(createFragment(ReposFragment.PUBLIC), getString(R.string.repos_public));
-        if (username != null) {
+        if (username == null) {
             adapter.addFragment(createFragment(ReposFragment.PRIVATE), getString(R.string.repos_private));
         }
         adapter.addFragment(createFragment(ReposFragment.SOURCE), getString(R.string.repos_sources));

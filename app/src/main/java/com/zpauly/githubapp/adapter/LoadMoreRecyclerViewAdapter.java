@@ -2,7 +2,6 @@ package com.zpauly.githubapp.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,25 +21,35 @@ public abstract class LoadMoreRecyclerViewAdapter<VH extends RecyclerView.ViewHo
 
     protected Context mContext;
 
+    private boolean hasMoreData = true;
+
     protected LoadMoreRecyclerViewAdapter(Context context) {
         this.mContext = context;
     }
 
     @Override
-    public final RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == LOAD_MORE_VIEW_TYPE) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_loadmore, parent, false);
             return new LoadMoreViewHolder(view);
+        } else {
+            return createContentViewHolder(parent, viewType);
         }
-        return createContentViewHolder(parent, viewType);
     }
 
     public abstract VH createContentViewHolder(ViewGroup parent, int viewType);
 
     @Override
-    public final void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (position == getItemCount() - 1) {
             LoadMoreViewHolder loadMoreViewHolder = (LoadMoreViewHolder) holder;
+            if (hasMoreData) {
+                loadMoreViewHolder.mLoadPB.setVisibility(View.VISIBLE);
+                loadMoreViewHolder.mLoadTV.setVisibility(View.GONE);
+            } else {
+                loadMoreViewHolder.mLoadPB.setVisibility(View.GONE);
+                loadMoreViewHolder.mLoadTV.setVisibility(View.VISIBLE);
+            }
         } else {
             VH viewholder = (VH) holder;
             bindContentViewHolder(viewholder, position);
@@ -55,5 +64,14 @@ public abstract class LoadMoreRecyclerViewAdapter<VH extends RecyclerView.ViewHo
             return LOAD_MORE_VIEW_TYPE;
         }
         return super.getItemViewType(position);
+    }
+
+    public void setHasLoading(boolean hasMoreData) {
+        this.hasMoreData = hasMoreData;
+        notifyDataSetChanged();
+    }
+
+    public boolean isHasMoreData() {
+        return hasMoreData;
     }
 }

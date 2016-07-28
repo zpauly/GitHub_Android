@@ -1,10 +1,7 @@
 package com.zpauly.githubapp.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +43,6 @@ public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Event
 
     @Override
     public EventsViewHolder createContentViewHolder(ViewGroup parent, int viewType) {
-        Log.i(TAG, "createContentViewHolder");
         View mView = LayoutInflater.from(mContext).inflate(R.layout.item_recylcleview_events, parent, false);
         EventsViewHolder holder = new EventsViewHolder(mView);
         return holder;

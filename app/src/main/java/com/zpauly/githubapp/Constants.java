@@ -41,7 +41,7 @@ public interface Constants {
      * net
      */
     ///time out
-    long DEFAULT_TIMEOUT = 5000;
+    long DEFAULT_TIMEOUT = 10000;
 
     //github api
     String GITHUB_API_URL = "https://api.github.com/";

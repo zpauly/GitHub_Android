@@ -81,6 +81,30 @@ public class FollowersFragment extends BaseFragment implements FollowContract.Vi
         mContentRV.setLayoutManager(new LinearLayoutManager(getContext()));
         mContentRV.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         mContentRV.setAdapter(mRVAdapter);
+
+        final LinearLayoutManager manager = (LinearLayoutManager) mContentRV.getLayoutManager();
+        mContentRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int lastVisiableItemPosition = manager.findLastCompletelyVisibleItemPosition();
+                if (lastVisiableItemPosition == mRVAdapter.getItemCount() - 1
+                        && manager.findFirstCompletelyVisibleItemPosition() != mRVAdapter.getItemCount() - 1
+                        && mRVAdapter.isHasMoreData()) {
+                    mRVAdapter.setHasLoading(true);
+                    if (!mSWLayout.isRefreshing()) {
+                        loadFollow();
+                    }
+                } else {
+
+                }
+            }
+        });
     }
 
     private void loadFollow() {
@@ -109,8 +133,11 @@ public class FollowersFragment extends BaseFragment implements FollowContract.Vi
 
     @Override
     public void loadSuccess() {
-        mRVAdapter.swapData(list);
+        mRVAdapter.addData(list);
         mSWLayout.setRefreshing(false);
+        if (list == null || list.size() == 0) {
+            mRVAdapter.setHasLoading(false);
+        }
     }
 
     @Override
