@@ -1,6 +1,7 @@
 package com.zpauly.githubapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.response.FollowersBean;
+import com.zpauly.githubapp.view.others.OthersActivity;
 import com.zpauly.githubapp.view.viewholder.FollowersViewHolder;
 
 import java.util.ArrayList;
@@ -45,13 +47,22 @@ public class FollowersRecyclerViewAdapter extends RecyclerView.Adapter<Followers
 
     @Override
     public void onBindViewHolder(FollowersViewHolder holder, int position) {
-        FollowersBean bean = mData.get(position);
+        final FollowersBean bean = mData.get(position);
         holder.mUsernameTV.setText(bean.getLogin());
         Glide.with(mContext)
                 .load(Uri.parse(bean.getAvatar_url()))
                 .centerCrop()
                 .crossFade()
                 .into(holder.mAvatarIV);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(mContext, OthersActivity.class);
+                intent.putExtra(OthersActivity.USERNAME, bean.getLogin());
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override

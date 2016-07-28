@@ -63,9 +63,9 @@ public class EventsRecyclerViewAdapter extends RecyclerView.Adapter<EventsViewHo
                 .crossFade()
                 .into(holder.mUserAvatarIV);
         holder.mRepoTV.setText(data.getRepo().getName());
-        holder.mUsernameTV.setText(String.valueOf(position));
+        holder.mUsernameTV.setText(data.getActor().getLogin());
         holder.mTimeTV.setText(data.getCreated_at());
-        setAction(data.getType(), data.getPayload(), holder, position);
+        setAction(data.getType(), data.getPayload(), holder);
     }
 
     @Override
@@ -73,26 +73,26 @@ public class EventsRecyclerViewAdapter extends RecyclerView.Adapter<EventsViewHo
         return mData.size();
     }
 
-    private void setAction(String type, Payload payloadBean, EventsViewHolder holder, int position) {
+    private void setAction(String type, Payload payloadBean, EventsViewHolder holder) {
         if ("WatchEvent".equals(type)) {
             holder.mActionTV.setText("starred ");
             holder.mTypeIV.setImageResource(R.mipmap.ic_star);
             mAdapter = new EventsCommitsRecyclerViewAdapter(mContext);
             holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
             holder.mCommitsRV.setAdapter(mAdapter);
-            Log.i(TAG, "item " + position + ", type = " + type + "adapter = " + mAdapter.toString());
         } else if ("CreateEvent".equals(type)) {
-            if (payloadBean.getRef() == null) {
+            if (payloadBean.getRef_type().equals("repository")) {
                 holder.mActionTV.setText("create " + payloadBean.getRef_type());
                 holder.mTypeIV.setImageResource(R.mipmap.ic_repos);
-            } else {
+            } else if (payloadBean.getRef_type().equals("branch")) {
                 holder.mActionTV.setText("create branch " + payloadBean.getMaster_branch() + " at");
                 holder.mTypeIV.setImageResource(R.mipmap.ic_fork);
+            } else if (payloadBean.getRef_type().equals("tag")) {
+                holder.mActionTV.setText("create tag " + payloadBean.getRef() + " at");
             }
             mAdapter = new EventsCommitsRecyclerViewAdapter(mContext);
             holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
             holder.mCommitsRV.setAdapter(mAdapter);
-            Log.i(TAG, "item " + position + ", type = " + type + "adapter = " + mAdapter.toString());
         } else if ("PushEvent".equals(type)) {
             String[] str = payloadBean.getRef().split("/");
             String branch = str[str.length - 1];
@@ -102,13 +102,53 @@ public class EventsRecyclerViewAdapter extends RecyclerView.Adapter<EventsViewHo
             holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
             holder.mCommitsRV.setAdapter(mAdapter);
             mAdapter.swapData(payloadBean.getCommits());
-            Log.i(TAG, "item " + position + ", type = " + type + "adapter = " + mAdapter.toString());
         } else if ("ForkEvent".equals(type)) {
             holder.mActionTV.setText("forked");
+            holder.mTypeIV.setImageResource(R.mipmap.ic_fork);
             mAdapter = new EventsCommitsRecyclerViewAdapter(mContext);
             holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
             holder.mCommitsRV.setAdapter(mAdapter);
-            Log.i(TAG, "item " + position + ", type = " + type + "adapter = " + mAdapter.toString());
+        } else if ("ReleaseEvent".equals(type)) {
+            holder.mActionTV.setText("release " + payloadBean.getRelease().getName() + " at ");
+            mAdapter = new EventsCommitsRecyclerViewAdapter(mContext);
+            holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
+            holder.mCommitsRV.setAdapter(mAdapter);
+        } else if ("PullRequestEvent".equals(type)) {
+            holder.mTypeIV.setImageResource(R.mipmap.ic_pull_request);
+            holder.mActionTV.setText(payloadBean.getAction() + " pull request "
+                    + payloadBean.getPull_request().getNumber() + " at ");
+            mAdapter = new EventsCommitsRecyclerViewAdapter(mContext);
+            holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
+            holder.mCommitsRV.setAdapter(mAdapter);
+        } else if ("CommentCommitEvent".equals(type)) {
+            holder.mActionTV.setText("comment on ");
+            holder.mTypeIV.setImageResource(R.mipmap.ic_comment);
+            mAdapter = new EventsCommitsRecyclerViewAdapter(mContext);
+            holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
+            holder.mCommitsRV.setAdapter(mAdapter);
+            List<Payload.CommitsBean> list = new ArrayList<>();
+            Payload.CommitsBean bean = new Payload.CommitsBean();
+            bean.setSha(payloadBean.getComment().getCommit_id());
+            bean.setMessage(payloadBean.getComment().getBody());
+            list.add(bean);
+            mAdapter.swapData(list);
+        } else if ("MemberEvent".equals(type)) {
+            holder.mActionTV.setText(payloadBean.getAction() + " " + payloadBean.getMember().getLogin() + "to ");
+            mAdapter = new EventsCommitsRecyclerViewAdapter(mContext);
+            holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
+            holder.mCommitsRV.setAdapter(mAdapter);
+        } else if ("IssueCommentEvent".equals(type)) {
+            holder.mActionTV.setText("comment on issue " + payloadBean.getIssue().getNumber() + " at ");
+            holder.mCommentTV.setVisibility(View.VISIBLE);
+            holder.mCommentTV.setText(payloadBean.getComment().getBody());
+            mAdapter = new EventsCommitsRecyclerViewAdapter(mContext);
+            holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
+            holder.mCommitsRV.setAdapter(mAdapter);
+        } else if ("DeleteEvent".equals(type)) {
+            holder.mActionTV.setText("delete " + payloadBean.getRef_type() + " " + payloadBean.getRef() + " at");
+            mAdapter = new EventsCommitsRecyclerViewAdapter(mContext);
+            holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
+            holder.mCommitsRV.setAdapter(mAdapter);
         }
     }
 }

@@ -39,6 +39,14 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
     private List<ReposFragment> mFragmentList = new ArrayList<>();
 
     @Override
+    protected void onStop() {
+        if (mPresenter != null) {
+            mPresenter.stop();
+        }
+        super.onStop();
+    }
+
+    @Override
     public void initViews() {
         new ReposPresenter(this, this);
 

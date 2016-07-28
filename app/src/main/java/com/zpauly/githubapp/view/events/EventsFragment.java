@@ -33,11 +33,18 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
     private RecyclerView mEventsRV;
 
     private EventsRecyclerViewAdapter mAdapter;
-    private int item_count = 0;
 
     private int events_id = -1;
 
     private List<EventsBean> list = new ArrayList<>();
+
+    @Override
+    public void onStop() {
+        if (mPresenter != null) {
+            mPresenter.stop();
+        }
+        super.onStop();
+    }
 
     @Override
     protected void initViews(View view) {
@@ -109,7 +116,6 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
 
     @Override
     public void loadSuccess() {
-        item_count += 10;
         mAdapter.swapData(list);
         mEventsSRLayout.setRefreshing(false);
     }

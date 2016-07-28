@@ -31,6 +31,8 @@ public class EventsViewHolder extends RecyclerView.ViewHolder {
 
     public final AppCompatTextView mTimeTV;
 
+    public final AppCompatTextView mCommentTV;
+
     public EventsViewHolder(View itemView) {
         super(itemView);
 
@@ -42,5 +44,6 @@ public class EventsViewHolder extends RecyclerView.ViewHolder {
         mTypeIV = (ImageView) itemView.findViewById(R.id.events_type_IV);
         mCommitsRV = (RecyclerView) itemView.findViewById(R.id.events_commits_RV);
         mTimeTV = (AppCompatTextView) itemView.findViewById(R.id.events_time_TV);
+        mCommentTV = (AppCompatTextView) itemView.findViewById(R.id.events_comment_TV);
     }
 }

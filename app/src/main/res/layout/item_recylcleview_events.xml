@@ -66,10 +66,16 @@
                 android:layout_height="wrap_content" />
 
             <android.support.v7.widget.AppCompatTextView
-                android:text="@string/app_name"
                 style="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/colorPrimaryDark"
                 android:id="@+id/events_repo_TV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/TextAppearance.AppCompat.Body2"
+                android:visibility="gone"
+                android:id="@+id/events_comment_TV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

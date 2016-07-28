@@ -26,6 +26,8 @@ import java.util.List;
  */
 
 public class StarsFragment extends BaseFragment implements StarContract.View {
+    private final String TAG = getClass().getName();
+
     private StarContract.Presenter mPresenter;
 
     private SwipeRefreshLayout mStarredReposSRLayout;
@@ -38,7 +40,9 @@ public class StarsFragment extends BaseFragment implements StarContract.View {
 
     @Override
     public void onStop() {
-        mPresenter.stop();
+        if (mPresenter != null) {
+            mPresenter.stop();
+        }
         super.onStop();
     }
 

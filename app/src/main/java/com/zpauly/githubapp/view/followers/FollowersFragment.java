@@ -37,6 +37,14 @@ public class FollowersFragment extends BaseFragment implements FollowContract.Vi
     private int followId = 0;
 
     @Override
+    public void onStop() {
+        if (mPresenter != null) {
+            mPresenter.stop();
+        }
+        super.onStop();
+    }
+
+    @Override
     protected void initViews(View view) {
         new FollowPresenter(getContext(), this);
 

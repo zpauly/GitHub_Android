@@ -18,6 +18,7 @@ import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.base.BaseFragment;
 import com.zpauly.githubapp.db.UserDao;
 import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
+import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.presenter.profile.ProfileContract;
 import com.zpauly.githubapp.presenter.profile.ProfilePresenter;
 import com.zpauly.githubapp.view.events.EventsActivity;
@@ -55,17 +56,22 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     @Override
     protected void initViews(View view) {
         new ProfilePresenter(this, getContext());
-        mPresenter.start();
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.profile_SRLayout);
 
         mAvatarIV = (CircleImageView) view.findViewById(R.id.profile_avatar);
         mLoginTV = (TextView) view.findViewById(R.id.profile_login_TV);
+        mLoginTV.setText("");
         mNameTV = (TextView) view.findViewById(R.id.profile_name_TV);
+        mNameTV.setText("");
         mBioTV = (TextView) view.findViewById(R.id.profile_bio_TV);
+        mBioTV.setText("");
         mLocationTV = (TextView) view.findViewById(R.id.profile_location_TV);
+        mLocationTV.setText("");
         mEmailTV = (TextView) view.findViewById(R.id.profile_email_TV);
+        mEmailTV.setText("");
         mJoinTimeTV = (TextView) view.findViewById(R.id.profile_join_time_TV);
+        mJoinTimeTV.setText("");
         mFollowersTV = (TextView) view.findViewById(R.id.profile_followers_TV);
         mFollowingTV = (TextView) view.findViewById(R.id.profile_following_TV);
         mFollowersLayout = (LinearLayout) view.findViewById(R.id.profile_followers_layout);
@@ -106,7 +112,9 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
     @Override
     public void onStop() {
-        mPresenter.stop();
+        if (mPresenter != null) {
+            mPresenter.stop();
+        }
         super.onStop();
     }
 
@@ -205,6 +213,16 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     public void loadInfo(AuthenticatedUserBean user) {
         UserDao.deleteUser();
         UserDao.insertUser(user);
+    }
+
+    @Override
+    public void loadOtherInfo(UserBean user) {
+
+    }
+
+    @Override
+    public String getUsername() {
+        return userInfo.getLogin();
     }
 
     @Override

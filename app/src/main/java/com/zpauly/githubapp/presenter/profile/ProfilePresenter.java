@@ -21,11 +21,13 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     private String auth;
 
     private Subscriber<AuthenticatedUserBean> authenticatedUserSubscriber;
+    private Subscriber<UserBean> userSubscriber;
 
     public ProfilePresenter(ProfileContract.View view, Context context) {
         mHomeView = view;
         mContext = context;
         mHomeView.setPresenter(this);
+        start();
     }
 
     @Override
@@ -39,6 +41,11 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         if (authenticatedUserSubscriber != null) {
             if (authenticatedUserSubscriber.isUnsubscribed()) {
                 authenticatedUserSubscriber.unsubscribe();
+            }
+        }
+        if (userSubscriber != null) {
+            if (userSubscriber.isUnsubscribed()) {
+                userSubscriber.unsubscribe();
             }
         }
     }
@@ -63,5 +70,27 @@ public class ProfilePresenter implements ProfileContract.Presenter {
             }
         };
         method.getAuthenticatedUser(authenticatedUserSubscriber, auth);
+    }
+
+    @Override
+    public void loadOtherInfo() {
+        userSubscriber = new Subscriber<UserBean>() {
+            @Override
+            public void onCompleted() {
+                mHomeView.loadInfoSuccess();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                mHomeView.loadInfoFail();
+            }
+
+            @Override
+            public void onNext(UserBean bean) {
+                mHomeView.loadOtherInfo(bean);
+            }
+        };
+        method.getUser(userSubscriber, mHomeView.getUsername());
     }
 }
