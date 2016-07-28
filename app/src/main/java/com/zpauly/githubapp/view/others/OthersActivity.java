@@ -1,5 +1,6 @@
 package com.zpauly.githubapp.view.others;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,6 +18,9 @@ import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.presenter.profile.ProfileContract;
 import com.zpauly.githubapp.presenter.profile.ProfilePresenter;
 import com.zpauly.githubapp.view.ToolbarActivity;
+import com.zpauly.githubapp.view.events.EventsActivity;
+import com.zpauly.githubapp.view.followers.FollowersActivity;
+import com.zpauly.githubapp.view.repositories.ReposActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -126,28 +130,39 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
         mFollowersLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent();
+                intent.putExtra(FollowersActivity.FOLLOW_ID, FollowersActivity.FOLLOWERS);
+                intent.setClass(OthersActivity.this, FollowersActivity.class);
+                startActivity(intent);
             }
         });
 
         mFollowingLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent();
+                intent.putExtra(FollowersActivity.FOLLOW_ID, FollowersActivity.FOLLOWING);
+                intent.setClass(OthersActivity.this, FollowersActivity.class);
+                startActivity(intent);
             }
         });
 
         mEventsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent();
+                intent.putExtra(EventsActivity.EVENTS_ID, EventsActivity.USER_EVENTS);
+                intent.setClass(OthersActivity.this, EventsActivity.class);
+                startActivity(intent);
             }
         });
 
         mReposLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent();
+                intent.setClass(OthersActivity.this, ReposActivity.class);
+                startActivity(intent);
             }
         });
 
