@@ -10,6 +10,7 @@ import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.db.ReposModel;
 import com.zpauly.githubapp.entity.response.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.StarredRepositories;
+import com.zpauly.githubapp.view.viewholder.LoadMoreViewHolder;
 import com.zpauly.githubapp.view.viewholder.ReposViewHolder;
 
 import java.util.ArrayList;
@@ -19,13 +20,12 @@ import java.util.List;
  * Created by zpauly on 16-7-15.
  */
 
-public class ReposRecyclerViewAdapter extends RecyclerView.Adapter<ReposViewHolder> {
-    private Context mContext;
-
-    private List<ReposModel> mData = new ArrayList<>();
+public class ReposRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<ReposViewHolder> {
+    private List<ReposModel> mData;
 
     public ReposRecyclerViewAdapter(Context context) {
-        mContext = context;
+        super(context);
+        mData = new ArrayList<>();
     }
 
     public void addData(ReposModel data) {
@@ -45,14 +45,14 @@ public class ReposRecyclerViewAdapter extends RecyclerView.Adapter<ReposViewHold
     }
 
     @Override
-    public ReposViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ReposViewHolder createContentViewHolder(ViewGroup parent, int viewType) {
         View mView = LayoutInflater.from(mContext).inflate(R.layout.item_recyclerview_repositories, parent, false);
         ReposViewHolder holder = new ReposViewHolder(mView);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(ReposViewHolder holder, int position) {
+    public void bindContentViewHolder(ReposViewHolder holder, int position) {
         ReposModel repo = mData.get(position);
         holder.mReposForksTV.setText(String.valueOf(repo.getForks_count()));
         holder.mReposStarsTV.setText(String.valueOf(repo.getStargazers_count()));
@@ -63,6 +63,6 @@ public class ReposRecyclerViewAdapter extends RecyclerView.Adapter<ReposViewHold
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return mData.size() + 1;
     }
 }

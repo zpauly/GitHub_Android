@@ -45,22 +45,22 @@ public class ActivityMethod {
     }
 
     public void getStarredRepositories(Observer<List<StarredRepositories>> observer, String auth,
-                                       @Nullable String sort, @Nullable String direction) {
-        service.getStarredRepositories(auth, sort, direction)
+                                       @Nullable String sort, @Nullable String direction, int pageId) {
+        service.getStarredRepositories(auth, sort, direction, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 
-    public void getUserEvents(Observer<List<EventsBean>> observer, String auth, String username) {
-        service.getUserEvents(auth, username)
+    public void getUserEvents(Observer<List<EventsBean>> observer, String auth, String username, int pageId) {
+        service.getUserEvents(auth, username, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 
-    public void getReceivedEvents(Observer<List<EventsBean>> observer, String auth, String username) {
-        service.getReceivedEvents(auth, username)
+    public void getReceivedEvents(Observer<List<EventsBean>> observer, String auth, String username, int pageId) {
+        service.getReceivedEvents(auth, username, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

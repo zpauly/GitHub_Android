@@ -17,13 +17,11 @@ import java.util.List;
  * Created by zpauly on 16-7-24.
  */
 
-public class EventsCommitsRecyclerViewAdapter extends RecyclerView.Adapter<EventsCommitsViewHolder> {
-    private Context mContext;
-
+public class EventsCommitsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<EventsCommitsViewHolder> {
     private List<Payload.CommitsBean> mData;
 
     public EventsCommitsRecyclerViewAdapter(Context context) {
-        mContext = context;
+        super(context);
         mData = new ArrayList<>();
     }
 
@@ -39,14 +37,14 @@ public class EventsCommitsRecyclerViewAdapter extends RecyclerView.Adapter<Event
     }
 
     @Override
-    public EventsCommitsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public EventsCommitsViewHolder createContentViewHolder(ViewGroup parent, int viewType) {
         View mView = LayoutInflater.from(mContext).inflate(R.layout.item_recyclerview_event_commits, parent, false);
         EventsCommitsViewHolder viewHolder = new EventsCommitsViewHolder(mView);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(EventsCommitsViewHolder holder, int position) {
+    public void bindContentViewHolder(EventsCommitsViewHolder holder, int position) {
         Payload.CommitsBean bean = mData.get(position);
         holder.mShaTV.setText(bean.getSha().substring(0, 7));
         holder.mMessageTV.setText(bean.getMessage());
@@ -54,6 +52,6 @@ public class EventsCommitsRecyclerViewAdapter extends RecyclerView.Adapter<Event
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return mData.size() + 1;
     }
 }

@@ -20,15 +20,13 @@ import java.util.List;
 /**
  * Created by zpauly on 16-6-15.
  */
-public class FollowersRecyclerViewAdapter extends RecyclerView.Adapter<FollowersViewHolder> {
-    private Context mContext;
-
+public class FollowersRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<FollowersViewHolder> {
     private View mView;
 
     private List<FollowersBean> mData;
 
     public FollowersRecyclerViewAdapter(Context context) {
-        mContext = context;
+        super(context);
         mData = new ArrayList<>();
     }
 
@@ -39,14 +37,14 @@ public class FollowersRecyclerViewAdapter extends RecyclerView.Adapter<Followers
     }
 
     @Override
-    public FollowersViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public FollowersViewHolder createContentViewHolder(ViewGroup parent, int viewType) {
         mView = LayoutInflater.from(mContext).inflate(R.layout.item_recyclerview_followers, parent, false);
         FollowersViewHolder viewHolder = new FollowersViewHolder(mView);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(FollowersViewHolder holder, int position) {
+    public void bindContentViewHolder(FollowersViewHolder holder, int position) {
         final FollowersBean bean = mData.get(position);
         holder.mUsernameTV.setText(bean.getLogin());
         Glide.with(mContext)

@@ -22,16 +22,14 @@ import java.util.List;
 /**
  * Created by zpauly on 16-6-14.
  */
-public class EventsRecyclerViewAdapter extends RecyclerView.Adapter<EventsViewHolder> {
+public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<EventsViewHolder> {
     private final String TAG = getClass().getName();
-
-    private Context mContext;
     private List<EventsBean> mData;
 
     private EventsCommitsRecyclerViewAdapter mAdapter;
 
     public EventsRecyclerViewAdapter(Context context) {
-        this.mContext = context;
+        super(context);
         mData = new ArrayList<>();
     }
 
@@ -47,14 +45,15 @@ public class EventsRecyclerViewAdapter extends RecyclerView.Adapter<EventsViewHo
     }
 
     @Override
-    public EventsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public EventsViewHolder createContentViewHolder(ViewGroup parent, int viewType) {
+        Log.i(TAG, "createContentViewHolder");
         View mView = LayoutInflater.from(mContext).inflate(R.layout.item_recylcleview_events, parent, false);
         EventsViewHolder holder = new EventsViewHolder(mView);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(EventsViewHolder holder, int position) {
+    public void bindContentViewHolder(EventsViewHolder holder, int position) {
         EventsBean data = mData.get(position);
         Glide.with(mContext)
                 .load(data.getActor().getAvatar_url())
@@ -70,7 +69,7 @@ public class EventsRecyclerViewAdapter extends RecyclerView.Adapter<EventsViewHo
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return mData.size() + 1;
     }
 
     private void setAction(String type, Payload payloadBean, EventsViewHolder holder) {

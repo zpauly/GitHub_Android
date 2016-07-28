@@ -72,9 +72,9 @@ public class FollowPresenter implements FollowContract.Presenter {
             }
         };
         if (mFollowView.getUsername() != null) {
-            method.getUserFollowers(mFollowersSubscriber, mFollowView.getUsername());
+            method.getUserFollowers(mFollowersSubscriber, mFollowView.getUsername(), 1);
         } else {
-            method.getFollowers(mFollowersSubscriber, auth);
+            method.getFollowers(mFollowersSubscriber, auth, 1);
         }
     }
 
@@ -98,9 +98,9 @@ public class FollowPresenter implements FollowContract.Presenter {
             }
         };
         if (mFollowView.getUsername() != null) {
-            method.getUserFollowing(mFollowingSubscriber, mFollowView.getUsername());
+            method.getUserFollowing(mFollowingSubscriber, mFollowView.getUsername(), 1);
         } else {
-            method.getFollowing(mFollowingSubscriber, auth);
+            method.getFollowing(mFollowingSubscriber, auth, 1);
         }
     }
 }

@@ -35,7 +35,8 @@ public interface ActivityService {
      */
     @GET("/user/starred")
     Observable<List<StarredRepositories>> getStarredRepositories(@Header("Authorization") String auth
-            , @Nullable @Query("sort") String sort, @Nullable @Query("direction") String direction);
+            , @Nullable @Query("sort") String sort, @Nullable @Query("direction") String direction,
+                                                                 @Query("page") int pageId);
     //----------------------------------------
     //Events
 
@@ -49,7 +50,8 @@ public interface ActivityService {
      */
     @GET("/users/{username}/received_events")
     Observable<List<EventsBean>> getReceivedEvents(@Header("Authorization") String auth,
-                                                   @Path("username") String username);
+                                                   @Path("username") String username,
+                                                   @Query("page") int pageId);
 
     /**
      * List events performed by a user
@@ -62,5 +64,6 @@ public interface ActivityService {
      */
     @GET("/users/{username}/events")
     Observable<List<EventsBean>> getUserEvents(@Header("Authorization") String auth,
-                                               @Path("username") String username);
+                                               @Path("username") String username,
+                                               @Query("page") int pageId);
 }

@@ -46,29 +46,29 @@ public class UserMethod {
                 .subscribe(observer);
     }
 
-    public void getFollowers(Observer<List<FollowersBean>> observer, String auth) {
-        service.getFollowers(auth)
+    public void getFollowers(Observer<List<FollowersBean>> observer, String auth, int pageId) {
+        service.getFollowers(auth, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 
-    public void getUserFollowers(Observer<List<FollowersBean>> observer, String username) {
-        service.getUserFollowers(username)
+    public void getUserFollowers(Observer<List<FollowersBean>> observer, String username, int pageId) {
+        service.getUserFollowers(username, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 
-    public void getFollowing(Observer<List<FollowersBean>> observer, String auth) {
-        service.getFollowing(auth)
+    public void getFollowing(Observer<List<FollowersBean>> observer, String auth, int pageId) {
+        service.getFollowing(auth, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 
-    public void getUserFollowing(Observer<List<FollowersBean>> observer, String username) {
-        service.getUserFollowing(username)
+    public void getUserFollowing(Observer<List<FollowersBean>> observer, String username, int pageId) {
+        service.getUserFollowing(username, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

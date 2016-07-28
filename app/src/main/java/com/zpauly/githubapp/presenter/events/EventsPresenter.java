@@ -68,9 +68,9 @@ public class EventsPresenter implements EventsContract.Presenter {
             }
         };
         if (mEventsView.getUsername() != null) {
-            activityMethod.getUserEvents(mEventsSubscriber, null, mEventsView.getUsername());
+            activityMethod.getUserEvents(mEventsSubscriber, null, mEventsView.getUsername(), 1);
         } else {
-            activityMethod.getUserEvents(mEventsSubscriber, auth, username);
+            activityMethod.getUserEvents(mEventsSubscriber, auth, username, 1);
         }
     }
 
@@ -94,6 +94,6 @@ public class EventsPresenter implements EventsContract.Presenter {
                 mEventsView.loadEvents(eventsBeen);
             }
         };
-        activityMethod.getReceivedEvents(mEventsSubscriber, auth, username);
+        activityMethod.getReceivedEvents(mEventsSubscriber, auth, username, 1);
     }
 }

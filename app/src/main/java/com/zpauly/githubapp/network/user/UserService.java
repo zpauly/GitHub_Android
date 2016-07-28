@@ -9,6 +9,7 @@ import java.util.List;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -34,10 +35,12 @@ public interface UserService {
      * @return
      */
     @GET("/user/followers")
-    Observable<List<FollowersBean>> getFollowers(@Header("Authorization") String auth);
+    Observable<List<FollowersBean>> getFollowers(@Header("Authorization") String auth,
+                                                 @Query("page") int pageId);
 
     @GET("/users/{username}/followers")
-    Observable<List<FollowersBean>> getUserFollowers(@Path("username") String username);
+    Observable<List<FollowersBean>> getUserFollowers(@Path("username") String username,
+                                                     @Query("page") int pageId);
 
     /**
      * List who the authenticated user is following
@@ -45,8 +48,10 @@ public interface UserService {
      * @return
      */
     @GET("/user/following")
-    Observable<List<FollowersBean>> getFollowing(@Header("Authorization") String auth);
+    Observable<List<FollowersBean>> getFollowing(@Header("Authorization") String auth,
+                                                 @Query("page") int pageId);
 
     @GET("/users/{username}/following")
-    Observable<List<FollowersBean>> getUserFollowing(@Path("username") String username);
+    Observable<List<FollowersBean>> getUserFollowing(@Path("username") String username,
+                                                     @Query("page") int pageId);
 }
