@@ -79,7 +79,9 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
     private void addPagers() {
         adapter.addFragment(createFragment(ReposFragment.ALL), getString(R.string.repos_all));
         adapter.addFragment(createFragment(ReposFragment.PUBLIC), getString(R.string.repos_public));
-        adapter.addFragment(createFragment(ReposFragment.PRIVATE), getString(R.string.repos_private));
+        if (username != null) {
+            adapter.addFragment(createFragment(ReposFragment.PRIVATE), getString(R.string.repos_private));
+        }
         adapter.addFragment(createFragment(ReposFragment.SOURCE), getString(R.string.repos_sources));
         adapter.addFragment(createFragment(ReposFragment.FORK), getString(R.string.repos_forks));
         adapter.notifyDataSetChanged();
@@ -145,5 +147,10 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
         mReposSwLayout.setRefreshing(false);
         mReposSwLayout.setEnabled(false);
         addPagers();
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
     }
 }

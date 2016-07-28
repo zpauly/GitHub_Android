@@ -67,7 +67,11 @@ public class EventsPresenter implements EventsContract.Presenter {
                 mEventsView.loadEvents(eventsBeen);
             }
         };
-        activityMethod.getUserEvents(mEventsSubscriber, auth, username);
+        if (mEventsView.getUsername() != null) {
+            activityMethod.getUserEvents(mEventsSubscriber, null, mEventsView.getUsername());
+        } else {
+            activityMethod.getUserEvents(mEventsSubscriber, auth, username);
+        }
     }
 
     @Override

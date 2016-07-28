@@ -121,6 +121,11 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
     }
 
     @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
     public void setPresenter(EventsContract.Presenter presenter) {
         this.mPresenter = presenter;
     }

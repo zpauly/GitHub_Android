@@ -23,5 +23,7 @@ public class EventsContract {
         void loadFail();
 
         void loadSuccess();
+
+        String getUsername();
     }
 }

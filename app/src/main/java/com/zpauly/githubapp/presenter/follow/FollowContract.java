@@ -23,5 +23,7 @@ public class FollowContract {
         void loadFail();
 
         void loadSuccess();
+
+        String getUsername();
     }
 }

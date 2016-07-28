@@ -26,7 +26,9 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = setContentView(inflater, container);
         userInfo = UserDao.queryUser();
-        username = getArguments().getString(OthersActivity.USERNAME, null);
+        if (getArguments() != null) {
+            username = getArguments().getString(OthersActivity.USERNAME, null);
+        }
         initViews(mView);
         return mView;
     }

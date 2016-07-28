@@ -21,5 +21,7 @@ public class ReposContract {
         void loadFail();
 
         void loadSuccess();
+
+        String getUsername();
     }
 }

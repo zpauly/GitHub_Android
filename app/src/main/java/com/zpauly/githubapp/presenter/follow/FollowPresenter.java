@@ -71,7 +71,11 @@ public class FollowPresenter implements FollowContract.Presenter {
                 mFollowView.loading(followersBean);
             }
         };
-        method.getFollowers(mFollowersSubscriber, auth);
+        if (mFollowView.getUsername() != null) {
+            method.getUserFollowers(mFollowersSubscriber, mFollowView.getUsername());
+        } else {
+            method.getFollowers(mFollowersSubscriber, auth);
+        }
     }
 
     @Override
@@ -93,6 +97,10 @@ public class FollowPresenter implements FollowContract.Presenter {
                 mFollowView.loading(followersBean);
             }
         };
-        method.getFollowing(mFollowingSubscriber, auth);
+        if (mFollowView.getUsername() != null) {
+            method.getUserFollowing(mFollowingSubscriber, mFollowView.getUsername());
+        } else {
+            method.getFollowing(mFollowingSubscriber, auth);
+        }
     }
 }

@@ -114,6 +114,11 @@ public class FollowersFragment extends BaseFragment implements FollowContract.Vi
     }
 
     @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
     public void setPresenter(FollowContract.Presenter presenter) {
         this.mPresenter = presenter;
     }
