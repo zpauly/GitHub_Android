@@ -70,6 +70,6 @@ public class ReposPresenter implements ReposContract.Presenter {
         };
         List<String> affiliation = new ArrayList<>();
         affiliation.add(RepositoriesService.AFFILIATION_OWNER);
-        mReposMethod.getOwendRespositories(mReposSubscriber, auth, affiliation, RepositoriesService.SORT_ALL);
+        mReposMethod.getOwendRepositories(mReposSubscriber, auth, affiliation, RepositoriesService.SORT_ALL);
     }
 }

@@ -132,6 +132,7 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.putExtra(FollowersActivity.FOLLOW_ID, FollowersActivity.FOLLOWERS);
+                intent.putExtra(USERNAME, username);
                 intent.setClass(OthersActivity.this, FollowersActivity.class);
                 startActivity(intent);
             }
@@ -142,6 +143,7 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.putExtra(FollowersActivity.FOLLOW_ID, FollowersActivity.FOLLOWING);
+                intent.putExtra(USERNAME, username);
                 intent.setClass(OthersActivity.this, FollowersActivity.class);
                 startActivity(intent);
             }
@@ -152,6 +154,7 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.putExtra(EventsActivity.EVENTS_ID, EventsActivity.USER_EVENTS);
+                intent.putExtra(USERNAME, username);
                 intent.setClass(OthersActivity.this, EventsActivity.class);
                 startActivity(intent);
             }
@@ -162,6 +165,7 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(OthersActivity.this, ReposActivity.class);
+                intent.putExtra(USERNAME, username);
                 startActivity(intent);
             }
         });

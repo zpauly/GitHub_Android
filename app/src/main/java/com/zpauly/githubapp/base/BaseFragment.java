@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.zpauly.githubapp.db.UserDao;
 import com.zpauly.githubapp.db.UserModel;
+import com.zpauly.githubapp.view.others.OthersActivity;
 
 /**
  * Created by zpauly on 16-6-10.
@@ -17,6 +18,7 @@ public abstract class BaseFragment extends Fragment {
     protected View mView;
 
     protected UserModel userInfo;
+    protected String username;
 
 
     @Nullable
@@ -24,6 +26,7 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = setContentView(inflater, container);
         userInfo = UserDao.queryUser();
+        username = getArguments().getString(OthersActivity.USERNAME, null);
         initViews(mView);
         return mView;
     }

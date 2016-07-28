@@ -10,14 +10,13 @@ import android.view.View;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.presenter.follow.FollowContract;
 import com.zpauly.githubapp.view.ToolbarActivity;
+import com.zpauly.githubapp.view.others.OthersActivity;
 
 /**
  * Created by zpauly on 16-6-15.
  */
 public class FollowersActivity extends ToolbarActivity {
     private final String TAG = getClass().getName();
-
-    private FollowContract.Presenter mPresenter;
 
     public static final String FOLLOW_ID = "FOLLOW_ID";
     public static final int FOLLOWERS = 0;
@@ -43,6 +42,7 @@ public class FollowersActivity extends ToolbarActivity {
         mFragmentTransaction = mFragmentManager.beginTransaction();
         Bundle bundle = new Bundle();
         bundle.putInt(FOLLOW_ID, followId);
+        bundle.putString(OthersActivity.USERNAME, username);
         Fragment fragment = new FollowersFragment();
         fragment.setArguments(bundle);
         mFragmentTransaction.replace(R.id.followers_content, fragment);

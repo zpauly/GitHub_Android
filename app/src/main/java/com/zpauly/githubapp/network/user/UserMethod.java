@@ -53,8 +53,22 @@ public class UserMethod {
                 .subscribe(observer);
     }
 
+    public void getUserFollowers(Observer<List<FollowersBean>> observer, String username) {
+        service.getUserFollowers(username)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
     public void getFollowing(Observer<List<FollowersBean>> observer, String auth) {
         service.getFollowing(auth)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getUserFollowing(Observer<List<FollowersBean>> observer, String username) {
+        service.getUserFollowing(username)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

@@ -40,9 +40,17 @@ public class RepositoriesMethod {
         return instance;
     }
 
-    public void getOwendRespositories(Observer<List<RepositoriesBean>> observer, String auth
+    public void getOwendRepositories(Observer<List<RepositoriesBean>> observer, String auth
             , @Nullable List<String> affiliation, @Nullable String sort) {
-        service.getOwendRespositories(auth, affiliation, sort)
+        service.getOwendRepositories(auth, affiliation, sort)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getRepositories(Observer<List<RepositoriesBean>> observer, String username,
+                                @Nullable List<String> affiliation, @Nullable String sort) {
+        service.getRepositories(username, affiliation, sort)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

@@ -9,6 +9,7 @@ import java.util.List;
 
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -44,7 +45,12 @@ public interface RepositoriesService {
      * @return
      */
     @GET("/user/repos")
-    Observable<List<RepositoriesBean>> getOwendRespositories(@Header("Authorization") String auth
+    Observable<List<RepositoriesBean>> getOwendRepositories(@Header("Authorization") String auth
+            , @Nullable @Query("affiliation") List<String> affiliation
+            , @Nullable @Query("sort") String sort);
+
+    @GET("/users/{username}/repos")
+    Observable<List<RepositoriesBean>> getRepositories(@Path("username") String username
             , @Nullable @Query("affiliation") List<String> affiliation
             , @Nullable @Query("sort") String sort);
 }

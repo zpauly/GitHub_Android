@@ -36,6 +36,9 @@ public interface UserService {
     @GET("/user/followers")
     Observable<List<FollowersBean>> getFollowers(@Header("Authorization") String auth);
 
+    @GET("/users/{username}/followers")
+    Observable<List<FollowersBean>> getUserFollowers(@Path("username") String username);
+
     /**
      * List who the authenticated user is following
      * @param auth
@@ -43,4 +46,7 @@ public interface UserService {
      */
     @GET("/user/following")
     Observable<List<FollowersBean>> getFollowing(@Header("Authorization") String auth);
+
+    @GET("/users/{username}/following")
+    Observable<List<FollowersBean>> getUserFollowing(@Path("username") String username);
 }
