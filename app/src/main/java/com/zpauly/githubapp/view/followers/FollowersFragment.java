@@ -67,6 +67,7 @@ public class FollowersFragment extends BaseFragment implements FollowContract.Vi
 
     private void setupSwipeRefreshLayout() {
         mSWLayout.measure(View.MEASURED_SIZE_MASK, View.MEASURED_HEIGHT_STATE_SHIFT);
+        mSWLayout.setColorSchemeResources(R.color.colorAccent);
         mSWLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

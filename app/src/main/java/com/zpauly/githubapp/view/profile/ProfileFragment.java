@@ -125,6 +125,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
     private void setupSwpieRefreshLayout() {
         mSwipeRefreshLayout.measure(View.MEASURED_SIZE_MASK, View.MEASURED_HEIGHT_STATE_SHIFT);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

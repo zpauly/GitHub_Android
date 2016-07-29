@@ -65,6 +65,7 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
 
     private void setupSwipeRefreshLayout() {
         mEventsSRLayout.measure(View.MEASURED_SIZE_MASK, View.MEASURED_HEIGHT_STATE_SHIFT);
+        mEventsSRLayout.setColorSchemeResources(R.color.colorAccent);
         mEventsSRLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

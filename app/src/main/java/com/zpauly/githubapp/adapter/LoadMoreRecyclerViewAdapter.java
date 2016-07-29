@@ -22,6 +22,7 @@ public abstract class LoadMoreRecyclerViewAdapter<VH extends RecyclerView.ViewHo
     protected Context mContext;
 
     private boolean hasMoreData = true;
+    private boolean flag = false;
 
     protected LoadMoreRecyclerViewAdapter(Context context) {
         this.mContext = context;
@@ -43,12 +44,16 @@ public abstract class LoadMoreRecyclerViewAdapter<VH extends RecyclerView.ViewHo
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (position == getItemCount() - 1) {
             LoadMoreViewHolder loadMoreViewHolder = (LoadMoreViewHolder) holder;
-            loadMoreViewHolder.mLoadPB.setVisibility(View.GONE);
-            loadMoreViewHolder.mLoadTV.setVisibility(View.VISIBLE);
+            loadMoreViewHolder.itemView.setVisibility(View.GONE);
+            if (!flag) {
+                return;
+            }
             if (hasMoreData) {
+                loadMoreViewHolder.itemView.setVisibility(View.VISIBLE);
                 loadMoreViewHolder.mLoadPB.setVisibility(View.VISIBLE);
                 loadMoreViewHolder.mLoadTV.setVisibility(View.GONE);
             } else {
+                loadMoreViewHolder.itemView.setVisibility(View.VISIBLE);
                 loadMoreViewHolder.mLoadPB.setVisibility(View.GONE);
                 loadMoreViewHolder.mLoadTV.setVisibility(View.VISIBLE);
             }
@@ -70,6 +75,7 @@ public abstract class LoadMoreRecyclerViewAdapter<VH extends RecyclerView.ViewHo
 
     public void setHasLoading(boolean hasMoreData) {
         this.hasMoreData = hasMoreData;
+        flag = true;
         notifyDataSetChanged();
     }
 

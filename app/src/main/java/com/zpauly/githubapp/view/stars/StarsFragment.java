@@ -63,6 +63,7 @@ public class StarsFragment extends BaseFragment implements StarContract.View {
 
     private void setupSwipeRefreshLayout() {
         mStarredReposSRLayout.measure(View.MEASURED_SIZE_MASK, View.MEASURED_HEIGHT_STATE_SHIFT);
+        mStarredReposSRLayout.setColorSchemeResources(R.color.colorAccent);
         mStarredReposSRLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

@@ -107,6 +107,7 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
 
     private void setupSwipeRefreshLayout() {
         mReposSwLayout.measure(View.MEASURED_SIZE_MASK, View.MEASURED_HEIGHT_STATE_SHIFT);
+        mReposSwLayout.setColorSchemeResources(R.color.colorAccent);
         mReposSwLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
