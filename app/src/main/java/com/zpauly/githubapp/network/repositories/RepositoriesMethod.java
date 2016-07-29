@@ -41,16 +41,16 @@ public class RepositoriesMethod {
     }
 
     public void getOwendRepositories(Observer<List<RepositoriesBean>> observer, String auth
-            , @Nullable List<String> affiliation, @Nullable String sort) {
-        service.getOwendRepositories(auth, affiliation, sort)
+            , @Nullable List<String> affiliation, @Nullable String sort, int pageId) {
+        service.getOwendRepositories(auth, affiliation, sort, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 
     public void getRepositories(Observer<List<RepositoriesBean>> observer, String username,
-                                @Nullable List<String> affiliation, @Nullable String sort) {
-        service.getRepositories(username, affiliation, sort)
+                                @Nullable List<String> affiliation, @Nullable String sort, int pageId) {
+        service.getRepositories(username, affiliation, sort, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

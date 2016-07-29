@@ -43,6 +43,8 @@ public abstract class LoadMoreRecyclerViewAdapter<VH extends RecyclerView.ViewHo
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (position == getItemCount() - 1) {
             LoadMoreViewHolder loadMoreViewHolder = (LoadMoreViewHolder) holder;
+            loadMoreViewHolder.mLoadPB.setVisibility(View.GONE);
+            loadMoreViewHolder.mLoadTV.setVisibility(View.VISIBLE);
             if (hasMoreData) {
                 loadMoreViewHolder.mLoadPB.setVisibility(View.VISIBLE);
                 loadMoreViewHolder.mLoadTV.setVisibility(View.GONE);

@@ -64,7 +64,6 @@ public class StarPresenter implements StarContract.Presenter {
                  mStarView.loading(starredRepositories);
             }
         };
-        activityMethod.getStarredRepositories(starredRepositoriesSubscriber, auth, null, null, 1
-        );
+        activityMethod.getStarredRepositories(starredRepositoriesSubscriber, auth, null, null, 1);
     }
 }

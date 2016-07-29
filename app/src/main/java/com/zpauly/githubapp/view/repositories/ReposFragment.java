@@ -2,6 +2,7 @@ package com.zpauly.githubapp.view.repositories;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,6 +15,9 @@ import com.zpauly.githubapp.adapter.ReposRecyclerViewAdapter;
 import com.zpauly.githubapp.base.BaseFragment;
 import com.zpauly.githubapp.db.ReposDao;
 import com.zpauly.githubapp.db.ReposModel;
+import com.zpauly.githubapp.entity.response.RepositoriesBean;
+import com.zpauly.githubapp.presenter.repos.ReposContract;
+import com.zpauly.githubapp.presenter.repos.ReposPresenter;
 import com.zpauly.githubapp.ui.DividerItemDecoration;
 
 import java.util.ArrayList;
@@ -44,6 +48,7 @@ public class ReposFragment extends BaseFragment {
         fragmentTag = getArguments().getInt(FRAGMENT_TAG);
 
         mReposRV = (RecyclerView) view.findViewById(R.id.repos_RV);
+
         setupRecyclerView();
     }
 
@@ -52,6 +57,7 @@ public class ReposFragment extends BaseFragment {
         mReposRV.setLayoutManager(new LinearLayoutManager(getContext()));
         mReposRV.setAdapter(mReposRVAdapter);
         mReposRV.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
+        mReposRVAdapter.setHasLoading(false);
 
         loadData();
     }
@@ -61,7 +67,6 @@ public class ReposFragment extends BaseFragment {
         switch (fragmentTag) {
             case ALL:
                 list = ReposDao.queryRepos();
-                Log.i(TAG, String.valueOf(list.get(0).isPrivateX()));
                 break;
             case PUBLIC:
                 list = ReposDao.queryRepos("privatex", String.valueOf(0));

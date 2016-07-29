@@ -3,6 +3,7 @@ package com.zpauly.githubapp.presenter.repos;
 import android.content.Context;
 
 import com.zpauly.githubapp.Constants;
+import com.zpauly.githubapp.db.ReposDao;
 import com.zpauly.githubapp.entity.response.RepositoriesBean;
 import com.zpauly.githubapp.network.repositories.RepositoriesMethod;
 import com.zpauly.githubapp.network.repositories.RepositoriesService;
@@ -24,6 +25,8 @@ public class ReposPresenter implements ReposContract.Presenter {
     private RepositoriesMethod mReposMethod;
     private String auth;
 
+    private int pageId = 1;
+    private boolean flag = false;
     private Subscriber<List<RepositoriesBean>> mReposSubscriber;
 
     public ReposPresenter(Context context, ReposContract.View view) {
@@ -54,7 +57,12 @@ public class ReposPresenter implements ReposContract.Presenter {
         mReposSubscriber = new Subscriber<List<RepositoriesBean>>() {
             @Override
             public void onCompleted() {
-                mReposView.loadSuccess();
+                if (flag) {
+                    mReposView.loadSuccess();
+                } else {
+                    pageId ++;
+                    loadUserRepositories();
+                }
             }
 
             @Override
@@ -66,14 +74,17 @@ public class ReposPresenter implements ReposContract.Presenter {
             @Override
             public void onNext(List<RepositoriesBean> repositoriesBeen) {
                 mReposView.loadingRepos(repositoriesBeen);
+                if (repositoriesBeen == null || repositoriesBeen.size() == 0) {
+                    flag = true;
+                }
             }
         };
         List<String> affiliation = new ArrayList<>();
         affiliation.add(RepositoriesService.AFFILIATION_OWNER);
         if (mReposView.getUsername() != null) {
-            mReposMethod.getRepositories(mReposSubscriber, mReposView.getUsername(), affiliation, RepositoriesService.SORT_ALL);
+            mReposMethod.getRepositories(mReposSubscriber, mReposView.getUsername(), affiliation, RepositoriesService.SORT_ALL, pageId);
         } else {
-            mReposMethod.getOwendRepositories(mReposSubscriber, auth, affiliation, RepositoriesService.SORT_ALL);
+            mReposMethod.getOwendRepositories(mReposSubscriber, auth, affiliation, RepositoriesService.SORT_ALL, pageId);
         }
     }
 }

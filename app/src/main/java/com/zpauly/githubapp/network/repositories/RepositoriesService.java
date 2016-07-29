@@ -47,10 +47,10 @@ public interface RepositoriesService {
     @GET("/user/repos")
     Observable<List<RepositoriesBean>> getOwendRepositories(@Header("Authorization") String auth
             , @Nullable @Query("affiliation") List<String> affiliation
-            , @Nullable @Query("sort") String sort);
+            , @Nullable @Query("sort") String sort, @Query("page") int pageId);
 
     @GET("/users/{username}/repos")
     Observable<List<RepositoriesBean>> getRepositories(@Path("username") String username
             , @Nullable @Query("affiliation") List<String> affiliation
-            , @Nullable @Query("sort") String sort);
+            , @Nullable @Query("sort") String sort, @Query("page") int pageId);
 }

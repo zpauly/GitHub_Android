@@ -100,8 +100,6 @@ public class FollowersFragment extends BaseFragment implements FollowContract.Vi
                     if (!mSWLayout.isRefreshing()) {
                         loadFollow();
                     }
-                } else {
-
                 }
             }
         });

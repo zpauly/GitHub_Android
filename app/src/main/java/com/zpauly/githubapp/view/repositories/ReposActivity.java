@@ -116,6 +116,7 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
     }
 
     private void loadOwnerRepos() {
+        ReposDao.deleteRepos();
         mPresenter.loadUserRepositories();
     }
 
@@ -131,7 +132,6 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
 
     @Override
     public void loadingRepos(List<RepositoriesBean> list) {
-        ReposDao.deleteRepos();
         for (RepositoriesBean repo : list) {
             ReposDao.insertRepo(repo);
         }
