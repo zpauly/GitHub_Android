@@ -60,6 +60,10 @@ public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Event
         holder.mRepoTV.setText(data.getRepo().getName());
         holder.mUsernameTV.setText(data.getActor().getLogin());
         holder.mTimeTV.setText(data.getCreated_at());
+        holder.mCommentTV.setVisibility(View.GONE);
+        mAdapter = new EventsCommitsRecyclerViewAdapter(mContext);
+        holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
+        holder.mCommitsRV.setAdapter(mAdapter);
         setAction(data.getType(), data.getPayload(), holder);
     }
 
@@ -72,9 +76,6 @@ public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Event
         if ("WatchEvent".equals(type)) {
             holder.mActionTV.setText("starred ");
             holder.mTypeIV.setImageResource(R.mipmap.ic_star);
-            mAdapter = new EventsCommitsRecyclerViewAdapter(mContext);
-            holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
-            holder.mCommitsRV.setAdapter(mAdapter);
         } else if ("CreateEvent".equals(type)) {
             if (payloadBean.getRef_type().equals("repository")) {
                 holder.mActionTV.setText("create " + payloadBean.getRef_type());
@@ -85,42 +86,24 @@ public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Event
             } else if (payloadBean.getRef_type().equals("tag")) {
                 holder.mActionTV.setText("create tag " + payloadBean.getRef() + " at");
             }
-            mAdapter = new EventsCommitsRecyclerViewAdapter(mContext);
-            holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
-            holder.mCommitsRV.setAdapter(mAdapter);
         } else if ("PushEvent".equals(type)) {
             String[] str = payloadBean.getRef().split("/");
             String branch = str[str.length - 1];
             holder.mActionTV.setText("pushed to " + branch + " at ");
             holder.mTypeIV.setImageResource(R.mipmap.ic_commit);
-            mAdapter = new EventsCommitsRecyclerViewAdapter(mContext);
-            holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
-            holder.mCommitsRV.setAdapter(mAdapter);
             mAdapter.swapData(payloadBean.getCommits());
         } else if ("ForkEvent".equals(type)) {
             holder.mActionTV.setText("forked");
             holder.mTypeIV.setImageResource(R.mipmap.ic_fork);
-            mAdapter = new EventsCommitsRecyclerViewAdapter(mContext);
-            holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
-            holder.mCommitsRV.setAdapter(mAdapter);
         } else if ("ReleaseEvent".equals(type)) {
             holder.mActionTV.setText("release " + payloadBean.getRelease().getName() + " at ");
-            mAdapter = new EventsCommitsRecyclerViewAdapter(mContext);
-            holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
-            holder.mCommitsRV.setAdapter(mAdapter);
         } else if ("PullRequestEvent".equals(type)) {
             holder.mTypeIV.setImageResource(R.mipmap.ic_pull_request);
             holder.mActionTV.setText(payloadBean.getAction() + " pull request "
                     + payloadBean.getPull_request().getNumber() + " at ");
-            mAdapter = new EventsCommitsRecyclerViewAdapter(mContext);
-            holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
-            holder.mCommitsRV.setAdapter(mAdapter);
         } else if ("CommentCommitEvent".equals(type)) {
             holder.mActionTV.setText("comment on ");
             holder.mTypeIV.setImageResource(R.mipmap.ic_comment);
-            mAdapter = new EventsCommitsRecyclerViewAdapter(mContext);
-            holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
-            holder.mCommitsRV.setAdapter(mAdapter);
             List<Payload.CommitsBean> list = new ArrayList<>();
             Payload.CommitsBean bean = new Payload.CommitsBean();
             bean.setSha(payloadBean.getComment().getCommit_id());
@@ -129,21 +112,27 @@ public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Event
             mAdapter.swapData(list);
         } else if ("MemberEvent".equals(type)) {
             holder.mActionTV.setText(payloadBean.getAction() + " " + payloadBean.getMember().getLogin() + "to ");
-            mAdapter = new EventsCommitsRecyclerViewAdapter(mContext);
-            holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
-            holder.mCommitsRV.setAdapter(mAdapter);
         } else if ("IssueCommentEvent".equals(type)) {
+            holder.mTypeIV.setImageResource(R.mipmap.ic_comment);
             holder.mActionTV.setText("comment on issue " + payloadBean.getIssue().getNumber() + " at ");
             holder.mCommentTV.setVisibility(View.VISIBLE);
             holder.mCommentTV.setText(payloadBean.getComment().getBody());
-            mAdapter = new EventsCommitsRecyclerViewAdapter(mContext);
-            holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
-            holder.mCommitsRV.setAdapter(mAdapter);
         } else if ("DeleteEvent".equals(type)) {
+            holder.mTypeIV.setImageResource(R.mipmap.ic_delete);
             holder.mActionTV.setText("delete " + payloadBean.getRef_type() + " " + payloadBean.getRef() + " at");
-            mAdapter = new EventsCommitsRecyclerViewAdapter(mContext);
-            holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
-            holder.mCommitsRV.setAdapter(mAdapter);
+        } else if ("IssueEvent".equals(type)) {
+            if (payloadBean.getAction().equals("opened")) {
+                holder.mActionTV.setText("opened issue " + payloadBean.getIssue().getNumber() + " at");
+                holder.mTypeIV.setImageResource(R.mipmap.ic_issue_opened);
+            } else if (payloadBean.getAction().equals("closed")) {
+                holder.mActionTV.setText("closed issue " + payloadBean.getIssue().getNumber() + " at");
+                holder.mTypeIV.setImageResource(R.mipmap.ic_issue_closed);
+            } else if (payloadBean.getAction().equals("reopened")) {
+                holder.mActionTV.setText("reopened issue " + payloadBean.getIssue().getNumber() + " at");
+                holder.mTypeIV.setImageResource(R.mipmap.ic_issue_reopened);
+            }
+            holder.mCommentTV.setVisibility(View.VISIBLE);
+            holder.mCommentTV.setText(payloadBean.getIssue().getBody());
         }
     }
 }

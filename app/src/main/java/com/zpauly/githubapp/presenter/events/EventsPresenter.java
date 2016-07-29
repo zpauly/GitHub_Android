@@ -25,11 +25,17 @@ public class EventsPresenter implements EventsContract.Presenter {
     private Subscriber<List<EventsBean>> mEventsSubscriber;
     private ActivityMethod activityMethod;
 
+    private int pageId = 1;
+
     public EventsPresenter(Context context, EventsContract.View view) {
         mContext = context;
         mEventsView = view;
         view.setPresenter(this);
         start();
+    }
+
+    public void setPageId(int pageId) {
+        this.pageId = pageId;
     }
 
     @Override
@@ -53,33 +59,7 @@ public class EventsPresenter implements EventsContract.Presenter {
         mEventsSubscriber = new Subscriber<List<EventsBean>>() {
             @Override
             public void onCompleted() {
-                mEventsView.loadSuccess();
-            }
-
-            @Override
-            public void onError(Throwable e) {
-//                e.printStackTrace();
-                mEventsView.loadFail();
-            }
-
-            @Override
-            public void onNext(List<EventsBean> eventsBeen) {
-                mEventsView.loadEvents(eventsBeen);
-            }
-        };
-        if (mEventsView.getUsername() != null) {
-            activityMethod.getUserEvents(mEventsSubscriber, null, mEventsView.getUsername(), 1);
-        } else {
-            activityMethod.getUserEvents(mEventsSubscriber, auth, username, 1);
-        }
-    }
-
-    @Override
-    public void getReceivedEvents() {
-        String username = SPUtil.getString(mContext, Constants.USER_INFO, Constants.USER_USERNAME, null);
-        mEventsSubscriber = new Subscriber<List<EventsBean>>() {
-            @Override
-            public void onCompleted() {
+                pageId ++;
                 mEventsView.loadSuccess();
             }
 
@@ -94,6 +74,34 @@ public class EventsPresenter implements EventsContract.Presenter {
                 mEventsView.loadEvents(eventsBeen);
             }
         };
-        activityMethod.getReceivedEvents(mEventsSubscriber, auth, username, 1);
+        if (mEventsView.getUsername() != null) {
+            activityMethod.getUserEvents(mEventsSubscriber, null, mEventsView.getUsername(), pageId);
+        } else {
+            activityMethod.getUserEvents(mEventsSubscriber, auth, username, pageId);
+        }
+    }
+
+    @Override
+    public void getReceivedEvents() {
+        String username = SPUtil.getString(mContext, Constants.USER_INFO, Constants.USER_USERNAME, null);
+        mEventsSubscriber = new Subscriber<List<EventsBean>>() {
+            @Override
+            public void onCompleted() {
+                pageId ++;
+                mEventsView.loadSuccess();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                mEventsView.loadFail();
+            }
+
+            @Override
+            public void onNext(List<EventsBean> eventsBeen) {
+                mEventsView.loadEvents(eventsBeen);
+            }
+        };
+        activityMethod.getReceivedEvents(mEventsSubscriber, auth, username, pageId);
     }
 }

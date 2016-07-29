@@ -68,7 +68,11 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
         mEventsSRLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                EventsPresenter presenter = (EventsPresenter) mPresenter;
+                presenter.setPageId(1);
+                mAdapter.setHasLoading(true);
                 loadData();
+                mAdapter.swapData(new ArrayList<EventsBean>());
             }
         });
     }
@@ -78,6 +82,22 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
         mEventsRV.setLayoutManager(new LinearLayoutManager(getContext()));
         mEventsRV.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         mEventsRV.setAdapter(mAdapter);
+
+        final LinearLayoutManager manager = (LinearLayoutManager) mEventsRV.getLayoutManager();
+        mEventsRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
+                int firstItemPosition = manager.findFirstCompletelyVisibleItemPosition();
+                if (lastItemPosition == mAdapter.getItemCount() - 1
+                        && firstItemPosition != mAdapter.getItemCount() - 1
+                        && mAdapter.isHasMoreData()) {
+                    mAdapter.setHasLoading(true);
+                    loadData();
+                }
+            }
+        });
     }
 
     private void loadData() {
@@ -104,9 +124,6 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
     @Override
     public void loadEvents(List<EventsBean> eventsBeanList) {
         list = eventsBeanList;
-        if (list.get(0).getPayload() == null) {
-            Log.i(TAG, "payload is null");
-        }
     }
 
     @Override
@@ -116,7 +133,10 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
 
     @Override
     public void loadSuccess() {
-        mAdapter.swapData(list);
+        if (list == null || list.size() == 0) {
+            mAdapter.setHasLoading(false);
+        }
+        mAdapter.addAllData(list);
         mEventsSRLayout.setRefreshing(false);
     }
 
