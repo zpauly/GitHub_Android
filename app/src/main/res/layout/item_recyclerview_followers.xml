@@ -6,7 +6,8 @@
     android:layout_margin="@dimen/card_margin"
     style="@style/CardView">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
+        android:id="@+id/followers_layout"
         android:orientation="horizontal" android:layout_width="match_parent"
         android:layout_height="wrap_content" android:gravity="center_vertical"
         android:clickable="true"

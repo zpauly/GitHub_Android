@@ -3,6 +3,7 @@ package com.zpauly.githubapp.view.viewholder;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.zpauly.githubapp.R;
 
@@ -11,6 +12,8 @@ import com.zpauly.githubapp.R;
  */
 
 public class ReposViewHolder extends RecyclerView.ViewHolder {
+    public final LinearLayout mLayout;
+
     public final AppCompatTextView mReposTitleTV;
 
     public final AppCompatTextView mReposUpdateTimeTV;
@@ -24,6 +27,7 @@ public class ReposViewHolder extends RecyclerView.ViewHolder {
     public ReposViewHolder(View itemView) {
         super(itemView);
 
+        mLayout = (LinearLayout) itemView.findViewById(R.id.repos_layout);
         mReposTitleTV = (AppCompatTextView) itemView.findViewById(R.id.repos_title_TV);
         mReposUpdateTimeTV = (AppCompatTextView) itemView.findViewById(R.id.repos_update_time_TV);
         mReposTechLanguageTV = (AppCompatTextView) itemView.findViewById(R.id.repos_tech_language_TV);

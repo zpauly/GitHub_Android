@@ -7,6 +7,7 @@
     style="@style/CardView">
 
     <LinearLayout
+        android:id="@+id/repos_layout"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

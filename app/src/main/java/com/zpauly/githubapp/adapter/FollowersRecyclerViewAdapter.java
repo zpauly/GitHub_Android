@@ -3,6 +3,7 @@ package com.zpauly.githubapp.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ import java.util.List;
  * Created by zpauly on 16-6-15.
  */
 public class FollowersRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<FollowersViewHolder> {
+    private final String TAG = getClass().getName();
+
     private View mView;
 
     private List<FollowersBean> mData;
@@ -50,13 +53,7 @@ public class FollowersRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Fo
     @Override
     public void bindContentViewHolder(FollowersViewHolder holder, int position) {
         final FollowersBean bean = mData.get(position);
-        holder.mUsernameTV.setText(bean.getLogin());
-        Glide.with(mContext)
-                .load(Uri.parse(bean.getAvatar_url()))
-                .centerCrop()
-                .crossFade()
-                .into(holder.mAvatarIV);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.mLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -65,6 +62,13 @@ public class FollowersRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Fo
                 mContext.startActivity(intent);
             }
         });
+        holder.mUsernameTV.setText(bean.getLogin());
+        Glide.with(mContext)
+                .load(Uri.parse(bean.getAvatar_url()))
+                .centerCrop()
+                .crossFade()
+                .into(holder.mAvatarIV);
+        Log.i(TAG, "item" + position);
     }
 
     @Override
