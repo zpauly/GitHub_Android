@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.zpauly.githubapp.db.UserDao;
 import com.zpauly.githubapp.db.UserModel;
-import com.zpauly.githubapp.view.profile.ProfileActivity;
+import com.zpauly.githubapp.view.profile.OthersActivity;
 
 /**
  * Created by zpauly on 16-6-10.
@@ -27,7 +27,7 @@ public abstract class BaseFragment extends Fragment {
         mView = setContentView(inflater, container);
         userInfo = UserDao.queryUser();
         if (getArguments() != null) {
-            username = getArguments().getString(ProfileActivity.USERNAME, null);
+            username = getArguments().getString(OthersActivity.USERNAME, null);
         }
         initViews(mView);
         return mView;

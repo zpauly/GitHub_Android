@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.view.ToolbarActivity;
-import com.zpauly.githubapp.view.profile.ProfileActivity;
+import com.zpauly.githubapp.view.profile.OthersActivity;
 
 /**
  * Created by zpauly on 16-6-15.
@@ -41,7 +41,7 @@ public class FollowersActivity extends ToolbarActivity {
         mFragmentTransaction = mFragmentManager.beginTransaction();
         Bundle bundle = new Bundle();
         bundle.putInt(FOLLOW_ID, followId);
-        bundle.putString(ProfileActivity.USERNAME, username);
+        bundle.putString(OthersActivity.USERNAME, username);
         Fragment fragment = new FollowersFragment();
         fragment.setArguments(bundle);
         mFragmentTransaction.replace(R.id.followers_content, fragment);

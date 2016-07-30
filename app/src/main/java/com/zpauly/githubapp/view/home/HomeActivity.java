@@ -6,17 +6,22 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.base.BaseFragment;
 import com.zpauly.githubapp.db.UserDao;
+import com.zpauly.githubapp.listener.OnNavHeaderAvatarClickListener;
 import com.zpauly.githubapp.listener.OnNavItemClickListener;
 import com.zpauly.githubapp.utils.SPUtil;
 import com.zpauly.githubapp.view.DrawerActivity;
 import com.zpauly.githubapp.view.events.EventsActivity;
 import com.zpauly.githubapp.view.events.EventsFragment;
 import com.zpauly.githubapp.view.login.LoginActivity;
+import com.zpauly.githubapp.view.profile.OthersActivity;
+import com.zpauly.githubapp.view.profile.ProfileActivity;
 import com.zpauly.githubapp.view.profile.ProfileFragment;
 import com.zpauly.githubapp.view.stars.StarsFragment;
 
@@ -56,6 +61,14 @@ public class HomeActivity extends DrawerActivity {
     }
 
     private void setListener() {
+        setOnNavHeaderAvatarClickListener(new OnNavHeaderAvatarClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(HomeActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
         setOnNavItemClickListener(new OnNavItemClickListener() {
             @Override
             public void onItemClick(MenuItem item) {

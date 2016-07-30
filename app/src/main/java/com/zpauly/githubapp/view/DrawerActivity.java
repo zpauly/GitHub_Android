@@ -3,7 +3,6 @@ package com.zpauly.githubapp.view;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -16,6 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.db.UserDao;
 import com.zpauly.githubapp.db.UserModel;
+import com.zpauly.githubapp.listener.OnNavHeaderAvatarClickListener;
 import com.zpauly.githubapp.listener.OnNavItemClickListener;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -36,9 +36,14 @@ public abstract class DrawerActivity extends ToolbarActivity {
     protected TextView mDrawerEmail;
 
     private OnNavItemClickListener listener;
+    private OnNavHeaderAvatarClickListener avatarClickListener;
 
     protected void setOnNavItemClickListener(OnNavItemClickListener listener) {
         this.listener = listener;
+    }
+
+    protected void setOnNavHeaderAvatarClickListener(OnNavHeaderAvatarClickListener listener) {
+        this.avatarClickListener = listener;
     }
 
     @Override
@@ -61,6 +66,15 @@ public abstract class DrawerActivity extends ToolbarActivity {
         mDrawerAvatar = (CircleImageView) nav_header.findViewById(R.id.drawer_avatar_IV);
         mDrawerName = (TextView) nav_header.findViewById(R.id.drawer_name_TV);
         mDrawerEmail = (TextView) nav_header.findViewById(R.id.drawer_email_TV);
+
+        mDrawerAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (avatarClickListener != null) {
+                    avatarClickListener.onClick(v);
+                }
+            }
+        });
 
         if (mToolbar != null) {
             Log.i(TAG, "not null");

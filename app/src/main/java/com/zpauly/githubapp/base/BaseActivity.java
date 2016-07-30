@@ -8,7 +8,7 @@ import android.view.WindowManager;
 
 import com.zpauly.githubapp.db.UserDao;
 import com.zpauly.githubapp.db.UserModel;
-import com.zpauly.githubapp.view.profile.ProfileActivity;
+import com.zpauly.githubapp.view.profile.OthersActivity;
 
 /**
  * Created by zpauly on 16-6-8.
@@ -24,7 +24,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         userInfo = UserDao.queryUser();
-        username = getIntent().getStringExtra(ProfileActivity.USERNAME);
+        username = getIntent().getStringExtra(OthersActivity.USERNAME);
 
         initContent();
 
