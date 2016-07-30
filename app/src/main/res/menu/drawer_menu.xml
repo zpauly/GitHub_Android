@@ -4,17 +4,14 @@
         android:checkableBehavior="single">
         <item
             android:checked="true"
-            android:id="@+id/navigation_profile"
-            android:icon="@drawable/ic_account_circle_24dp"
-            android:title="@string/profile" />
+            android:id="@+id/navigation_events"
+            android:icon="@drawable/ic_event"
+            android:title="@string/events"/>
+
         <item
             android:id="@+id/navigation_stars"
             android:icon="@mipmap/ic_star"
             android:title="@string/starred"/>
-        <item
-            android:id="@+id/navigation_events"
-            android:icon="@drawable/ic_event"
-            android:title="@string/events"/>
     </group>
     <group android:id="@+id/grp2"
         android:checkableBehavior="single">

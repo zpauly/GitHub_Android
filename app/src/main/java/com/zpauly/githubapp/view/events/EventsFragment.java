@@ -94,8 +94,10 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
                 if (lastItemPosition == mAdapter.getItemCount() - 1
                         && firstItemPosition != mAdapter.getItemCount() - 1
                         && mAdapter.isHasMoreData()) {
-                    mAdapter.setHasLoading(true);
-                    loadData();
+                    if (!mEventsSRLayout.isRefreshing()) {
+                        mAdapter.setHasLoading(true);
+                        loadData();
+                    }
                 }
             }
         });
@@ -124,7 +126,8 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
 
     @Override
     public void loadEvents(List<EventsBean> eventsBeanList) {
-        list = eventsBeanList;
+        list.clear();
+        list.addAll(eventsBeanList);
     }
 
     @Override

@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.R;
@@ -20,9 +19,7 @@ import com.zpauly.githubapp.view.DrawerActivity;
 import com.zpauly.githubapp.view.events.EventsActivity;
 import com.zpauly.githubapp.view.events.EventsFragment;
 import com.zpauly.githubapp.view.login.LoginActivity;
-import com.zpauly.githubapp.view.profile.OthersActivity;
 import com.zpauly.githubapp.view.profile.ProfileActivity;
-import com.zpauly.githubapp.view.profile.ProfileFragment;
 import com.zpauly.githubapp.view.stars.StarsFragment;
 
 /**
@@ -33,11 +30,10 @@ public class HomeActivity extends DrawerActivity {
 
     private long lastPressTime = System.currentTimeMillis();
 
-    private static final int PROFILE = 0;
+    private static final int EVENTS = 0;
     private static final int STARS = 1;
-    private static final int EVENTS = 2;
 
-    private int currentFragmentID = PROFILE;
+    private int currentFragmentID = EVENTS;
 
     private BaseFragment mCurrentFragment;
     private BaseFragment[] fragments;
@@ -47,10 +43,10 @@ public class HomeActivity extends DrawerActivity {
 
     @Override
     public void initViews() {
-        fragments = new BaseFragment[]{new ProfileFragment(), new StarsFragment(), new EventsFragment()};
+        fragments = new BaseFragment[]{ new EventsFragment(), new StarsFragment()};
         Bundle eventsBundle = new Bundle();
         eventsBundle.putInt(EventsActivity.EVENTS_ID, EventsActivity.RECEIVED_EVENTS);
-        fragments[2].setArguments(eventsBundle);
+        fragments[0].setArguments(eventsBundle);
 
         setListener();
         mFragmentManager = getSupportFragmentManager();
@@ -73,14 +69,6 @@ public class HomeActivity extends DrawerActivity {
             @Override
             public void onItemClick(MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.navigation_profile:
-                        if (currentFragmentID == PROFILE) {
-                        } else {
-                            item.setChecked(true);
-                            changeFragment(PROFILE );
-                            setToolbarTitle(R.string.profile);
-                        }
-                        break;
                     case R.id.navigation_stars:
                         if (currentFragmentID == STARS) {
                         } else {
@@ -121,7 +109,7 @@ public class HomeActivity extends DrawerActivity {
     @Override
     protected void setToolbar() {
         super.setToolbar();
-        setToolbarTitle(R.string.profile);
+        setToolbarTitle(R.string.events);
     }
 
     private void exit() {

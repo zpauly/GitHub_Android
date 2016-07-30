@@ -26,6 +26,7 @@ public class StarPresenter implements StarContract.Presenter {
     private Subscriber<List<RepositoriesBean>> starredRepositoriesSubscriber;
 
     private int pageId = 1;
+    private boolean loading = false;
     private String username;
 
     public void setPageId(int pageId) {
@@ -62,12 +63,14 @@ public class StarPresenter implements StarContract.Presenter {
             public void onCompleted() {
                 mStarView.loadSuccess();
                 pageId ++;
+                loading = false;
             }
 
             @Override
             public void onError(Throwable e) {
                 e.printStackTrace();
                 mStarView.loadFail();
+                loading = false;
             }
 
             @Override
@@ -75,9 +78,11 @@ public class StarPresenter implements StarContract.Presenter {
                  mStarView.loading(starredRepositories);
             }
         };
-        if (username != null) {
+        if (username != null && !loading) {
+            loading = true;
             activityMethod.getOthersStarredRepositories(starredRepositoriesSubscriber, username, pageId);
         } else {
+            loading = true;
             activityMethod.getStarredRepositories(starredRepositoriesSubscriber, auth, null, null, pageId);
         }
     }

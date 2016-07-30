@@ -26,6 +26,7 @@ public class FollowPresenter implements FollowContract.Presenter {
     private Subscriber<List<FollowersBean>> mFollowingSubscriber;
 
     private int loadPageId = 1;
+    private boolean loading = false;
 
     public FollowPresenter(Context context, FollowContract.View view) {
         mContext = context;
@@ -61,12 +62,14 @@ public class FollowPresenter implements FollowContract.Presenter {
             public void onCompleted() {
                 mFollowView.loadSuccess();
                 loadPageId ++;
+                loading = false;
             }
 
             @Override
             public void onError(Throwable e) {
                 mFollowView.loadFail();
                 e.printStackTrace();
+                loading = false;
             }
 
             @Override
@@ -74,9 +77,11 @@ public class FollowPresenter implements FollowContract.Presenter {
                 mFollowView.loading(followersBean);
             }
         };
-        if (mFollowView.getUsername() != null) {
+        if (mFollowView.getUsername() != null && !loading) {
+            loading = true;
             method.getUserFollowers(mFollowersSubscriber, mFollowView.getUsername(), loadPageId);
         } else {
+            loading = true;
             method.getFollowers(mFollowersSubscriber, auth, loadPageId);
         }
     }
@@ -88,12 +93,14 @@ public class FollowPresenter implements FollowContract.Presenter {
             public void onCompleted() {
                 mFollowView.loadSuccess();
                 loadPageId ++;
+                loading = false;
             }
 
             @Override
             public void onError(Throwable e) {
                 mFollowView.loadFail();
                 e.printStackTrace();
+                loading = false;
             }
 
             @Override
@@ -101,9 +108,11 @@ public class FollowPresenter implements FollowContract.Presenter {
                 mFollowView.loading(followersBean);
             }
         };
-        if (mFollowView.getUsername() != null) {
+        if (mFollowView.getUsername() != null && !loading) {
+            loading = true;
             method.getUserFollowing(mFollowingSubscriber, mFollowView.getUsername(), loadPageId);
         } else {
+            loading = true;
             method.getFollowing(mFollowingSubscriber, auth, loadPageId);
         }
     }

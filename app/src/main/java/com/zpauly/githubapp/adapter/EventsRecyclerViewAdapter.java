@@ -2,6 +2,7 @@ package com.zpauly.githubapp.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,12 +60,13 @@ public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Event
                 .into(holder.mUserAvatarIV);
         holder.mRepoTV.setText(data.getRepo().getName());
         holder.mUsernameTV.setText(data.getActor().getLogin());
+//        holder.mUsernameTV.setText(String.valueOf(position));
         holder.mTimeTV.setText(data.getCreated_at());
         holder.mCommentTV.setVisibility(View.GONE);
         mAdapter = new EventsCommitsRecyclerViewAdapter(mContext);
         holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
         holder.mCommitsRV.setAdapter(mAdapter);
-        setAction(data.getType(), data.getPayload(), holder);
+        setAction(data.getType(), data.getPayload(), holder, position);
     }
 
     @Override
@@ -72,7 +74,7 @@ public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Event
         return mData.size() + 1;
     }
 
-    private void setAction(String type, Payload payloadBean, EventsViewHolder holder) {
+    private void setAction(String type, Payload payloadBean, EventsViewHolder holder, int position) {
         if ("WatchEvent".equals(type)) {
             holder.mActionTV.setText("starred ");
             holder.mTypeIV.setImageResource(R.mipmap.ic_star);
@@ -120,7 +122,7 @@ public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Event
         } else if ("DeleteEvent".equals(type)) {
             holder.mTypeIV.setImageResource(R.mipmap.ic_delete);
             holder.mActionTV.setText("delete " + payloadBean.getRef_type() + " " + payloadBean.getRef() + " at");
-        } else if ("IssueEvent".equals(type)) {
+        } else if ("IssuesEvent".equals(type)) {
             if (payloadBean.getAction().equals("opened")) {
                 holder.mActionTV.setText("opened issue " + payloadBean.getIssue().getNumber() + " at");
                 holder.mTypeIV.setImageResource(R.mipmap.ic_issue_opened);
@@ -133,6 +135,11 @@ public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Event
             }
             holder.mCommentTV.setVisibility(View.VISIBLE);
             holder.mCommentTV.setText(payloadBean.getIssue().getBody());
+        } else if ("PublicEvent".equals(type)) {
+            holder.mTypeIV.setImageResource(R.mipmap.ic_repos);
+            holder.mActionTV.setText("made the repository public");
+        } else {
+            Log.i(TAG, type + position);
         }
     }
 }

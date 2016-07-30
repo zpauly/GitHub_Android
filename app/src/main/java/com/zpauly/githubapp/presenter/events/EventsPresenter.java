@@ -1,6 +1,7 @@
 package com.zpauly.githubapp.presenter.events;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.entity.response.events.EventsBean;
@@ -26,6 +27,7 @@ public class EventsPresenter implements EventsContract.Presenter {
     private ActivityMethod activityMethod;
 
     private int pageId = 1;
+    private boolean loading = false;
 
     public EventsPresenter(Context context, EventsContract.View view) {
         mContext = context;
@@ -88,13 +90,16 @@ public class EventsPresenter implements EventsContract.Presenter {
             @Override
             public void onCompleted() {
                 pageId ++;
+
                 mEventsView.loadSuccess();
+                loading = false;
             }
 
             @Override
             public void onError(Throwable e) {
                 e.printStackTrace();
                 mEventsView.loadFail();
+                loading = false;
             }
 
             @Override
@@ -102,6 +107,9 @@ public class EventsPresenter implements EventsContract.Presenter {
                 mEventsView.loadEvents(eventsBeen);
             }
         };
-        activityMethod.getReceivedEvents(mEventsSubscriber, auth, username, pageId);
+        if (!loading) {
+            loading = true;
+            activityMethod.getReceivedEvents(mEventsSubscriber, auth, username, pageId);
+        }
     }
 }
