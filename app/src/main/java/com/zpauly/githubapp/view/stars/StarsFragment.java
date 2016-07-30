@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import com.zpauly.githubapp.adapter.ReposRecyclerViewAdapter;
 import com.zpauly.githubapp.base.BaseFragment;
 import com.zpauly.githubapp.db.ReposDao;
 import com.zpauly.githubapp.db.ReposModel;
+import com.zpauly.githubapp.entity.response.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.StarredRepositories;
 import com.zpauly.githubapp.presenter.star.StarContract;
 import com.zpauly.githubapp.presenter.star.StarPresenter;
@@ -58,6 +60,7 @@ public class StarsFragment extends BaseFragment implements StarContract.View {
         setupSwipeRefreshLayout();
 
         mStarredReposSRLayout.setRefreshing(true);
+        ReposDao.deleteRepos();
         loadStarredRepositories();
     }
 
@@ -67,6 +70,10 @@ public class StarsFragment extends BaseFragment implements StarContract.View {
         mStarredReposSRLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                ReposDao.deleteRepos();
+                mAdapter.setHasLoading(true);
+                StarPresenter presenter = (StarPresenter) mPresenter;
+                presenter.setPageId(1);
                 loadStarredRepositories();
             }
         });
@@ -77,6 +84,24 @@ public class StarsFragment extends BaseFragment implements StarContract.View {
         mStarredReposRV.setLayoutManager(new LinearLayoutManager(getContext()));
         mStarredReposRV.setAdapter(mAdapter);
         mStarredReposRV.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
+
+        final LinearLayoutManager manager = (LinearLayoutManager) mStarredReposRV.getLayoutManager();
+        mStarredReposRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
+                int firstItemPosition = manager.findFirstCompletelyVisibleItemPosition();
+                if (lastItemPosition == mAdapter.getItemCount() - 1
+                        && firstItemPosition != mAdapter.getItemCount() - 1
+                        && mAdapter.isHasMoreData()) {
+                    if (!mStarredReposSRLayout.isRefreshing()) {
+                        mAdapter.setHasLoading(true);
+                        loadStarredRepositories();
+                    }
+                }
+            }
+        });
     }
 
     private void loadStarredRepositories() {
@@ -94,10 +119,13 @@ public class StarsFragment extends BaseFragment implements StarContract.View {
     }
 
     @Override
-    public void loading(List<StarredRepositories> starredRepositories) {
-        ReposDao.deleteRepos();
-        for (StarredRepositories repo : starredRepositories) {
+    public void loading(List<RepositoriesBean> starredRepositories) {
+        for (RepositoriesBean repo : starredRepositories) {
             ReposDao.insertRepo(repo);
+        }
+        Log.i(TAG, String.valueOf(starredRepositories.size()));
+        if (starredRepositories == null || starredRepositories.size() == 0) {
+            mAdapter.setHasLoading(false);
         }
         list.clear();
         list.addAll(ReposDao.queryRepos());
@@ -110,7 +138,15 @@ public class StarsFragment extends BaseFragment implements StarContract.View {
 
     @Override
     public void loadSuccess() {
+        if (mStarredReposSRLayout.isRefreshing()) {
+            mAdapter.swapData(new ArrayList<ReposModel>());
+        }
         mAdapter.swapData(list);
         mStarredReposSRLayout.setRefreshing(false);
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
     }
 }

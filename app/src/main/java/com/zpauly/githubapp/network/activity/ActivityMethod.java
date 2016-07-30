@@ -3,6 +3,7 @@ package com.zpauly.githubapp.network.activity;
 import android.support.annotation.Nullable;
 
 import com.zpauly.githubapp.Api;
+import com.zpauly.githubapp.entity.response.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.StarredRepositories;
 import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.entity.response.events.EventsBean;
@@ -44,9 +45,17 @@ public class ActivityMethod {
         return instance;
     }
 
-    public void getStarredRepositories(Observer<List<StarredRepositories>> observer, String auth,
+    public void getStarredRepositories(Observer<List<RepositoriesBean>> observer, String auth,
                                        @Nullable String sort, @Nullable String direction, int pageId) {
         service.getStarredRepositories(auth, sort, direction, pageId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getOthersStarredRepositories(Observer<List<RepositoriesBean>> observer, String username,
+                                             int pageId) {
+        service.getOthersRepositories(username, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

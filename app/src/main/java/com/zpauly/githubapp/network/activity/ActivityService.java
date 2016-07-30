@@ -2,6 +2,7 @@ package com.zpauly.githubapp.network.activity;
 
 import android.support.annotation.Nullable;
 
+import com.zpauly.githubapp.entity.response.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.StarredRepositories;
 import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.entity.response.events.EventsBean;
@@ -34,9 +35,13 @@ public interface ActivityService {
      * @return
      */
     @GET("/user/starred")
-    Observable<List<StarredRepositories>> getStarredRepositories(@Header("Authorization") String auth
+    Observable<List<RepositoriesBean>> getStarredRepositories(@Header("Authorization") String auth
             , @Nullable @Query("sort") String sort, @Nullable @Query("direction") String direction,
                                                                  @Query("page") int pageId);
+
+    @GET("/users/{username}/starred")
+    Observable<List<RepositoriesBean>> getOthersRepositories(@Path("username") String username, @Query("page") int pageId);
+
     //----------------------------------------
     //Events
 

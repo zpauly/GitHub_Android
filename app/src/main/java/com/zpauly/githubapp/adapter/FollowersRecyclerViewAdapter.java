@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.response.FollowersBean;
-import com.zpauly.githubapp.view.others.OthersActivity;
+import com.zpauly.githubapp.view.profile.ProfileActivity;
 import com.zpauly.githubapp.view.viewholder.FollowersViewHolder;
 
 import java.util.ArrayList;
@@ -60,8 +60,8 @@ public class FollowersRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Fo
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(mContext, OthersActivity.class);
-                intent.putExtra(OthersActivity.USERNAME, bean.getLogin());
+                intent.setClass(mContext, ProfileActivity.class);
+                intent.putExtra(ProfileActivity.USERNAME, bean.getLogin());
                 mContext.startActivity(intent);
             }
         });

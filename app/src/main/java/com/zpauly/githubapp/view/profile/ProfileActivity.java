@@ -1,10 +1,9 @@
-package com.zpauly.githubapp.view.others;
+package com.zpauly.githubapp.view.profile;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -28,7 +27,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by zpauly on 16-7-27.
  */
 
-public class OthersActivity extends ToolbarActivity implements ProfileContract.View {
+public class ProfileActivity extends ToolbarActivity implements ProfileContract.View {
     private final String TAG = getClass().getName();
 
     private ProfileContract.Presenter mPresenter;
@@ -133,7 +132,7 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
                 Intent intent = new Intent();
                 intent.putExtra(FollowersActivity.FOLLOW_ID, FollowersActivity.FOLLOWERS);
                 intent.putExtra(USERNAME, username);
-                intent.setClass(OthersActivity.this, FollowersActivity.class);
+                intent.setClass(ProfileActivity.this, FollowersActivity.class);
                 startActivity(intent);
             }
         });
@@ -144,7 +143,7 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
                 Intent intent = new Intent();
                 intent.putExtra(FollowersActivity.FOLLOW_ID, FollowersActivity.FOLLOWING);
                 intent.putExtra(USERNAME, username);
-                intent.setClass(OthersActivity.this, FollowersActivity.class);
+                intent.setClass(ProfileActivity.this, FollowersActivity.class);
                 startActivity(intent);
             }
         });
@@ -155,7 +154,7 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
                 Intent intent = new Intent();
                 intent.putExtra(EventsActivity.EVENTS_ID, EventsActivity.USER_EVENTS);
                 intent.putExtra(USERNAME, username);
-                intent.setClass(OthersActivity.this, EventsActivity.class);
+                intent.setClass(ProfileActivity.this, EventsActivity.class);
                 startActivity(intent);
             }
         });
@@ -164,7 +163,7 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(OthersActivity.this, ReposActivity.class);
+                intent.setClass(ProfileActivity.this, ReposActivity.class);
                 intent.putExtra(USERNAME, username);
                 startActivity(intent);
             }

@@ -2,7 +2,7 @@ package com.zpauly.githubapp.presenter.star;
 
 import com.zpauly.githubapp.base.BasePresenter;
 import com.zpauly.githubapp.base.BaseView;
-import com.zpauly.githubapp.entity.response.StarredRepositories;
+import com.zpauly.githubapp.entity.response.RepositoriesBean;
 
 import java.util.List;
 
@@ -16,10 +16,12 @@ public class StarContract {
     }
 
     public interface View extends BaseView<Presenter> {
-        void loading(List<StarredRepositories> starredRepositories);
+        void loading(List<RepositoriesBean> starredRepositories);
 
         void loadFail();
 
         void loadSuccess();
+
+        String getUsername();
     }
 }

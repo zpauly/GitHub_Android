@@ -197,12 +197,6 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     public void loadInfoSuccess() {
         mSwipeRefreshLayout.setRefreshing(false);
         Log.i(TAG, "load success");
-        if (UserDao.queryUser() == null) {
-            Log.i(TAG, "data save fail");
-        } else {
-            userInfo = UserDao.queryUser();
-            setUserInfo();
-        }
     }
 
     @Override
@@ -214,6 +208,12 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     public void loadInfo(AuthenticatedUserBean user) {
         UserDao.deleteUser();
         UserDao.insertUser(user);
+        if (UserDao.queryUser() == null) {
+            Log.i(TAG, "data save fail");
+        } else {
+            userInfo = UserDao.queryUser();
+            setUserInfo();
+        }
     }
 
     @Override

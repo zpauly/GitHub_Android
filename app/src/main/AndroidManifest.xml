@@ -23,7 +23,7 @@
         <activity android:name=".view.repositories.ReposActivity" />
         <activity android:name=".view.events.EventsActivity" />
         <activity android:name=".view.followers.FollowersActivity"/>
-        <activity android:name=".view.others.OthersActivity" />
+        <activity android:name=".view.profile.ProfileActivity" />
     </application>
 
 </manifest>

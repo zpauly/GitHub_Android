@@ -2,15 +2,13 @@ package com.zpauly.githubapp.view.events;
 
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.view.ToolbarActivity;
-import com.zpauly.githubapp.view.others.OthersActivity;
+import com.zpauly.githubapp.view.profile.ProfileActivity;
 
 /**
  * Created by zpauly on 16-7-20.
@@ -65,7 +63,7 @@ public class EventsActivity extends ToolbarActivity {
                 EventsFragment userFragment = new EventsFragment();
                 Bundle bundle = new Bundle();
                 bundle.putInt(EVENTS_ID, USER_EVENTS);
-                bundle.putString(OthersActivity.USERNAME, username);
+                bundle.putString(ProfileActivity.USERNAME, username);
                 userFragment.setArguments(bundle);
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.events_content, userFragment);
