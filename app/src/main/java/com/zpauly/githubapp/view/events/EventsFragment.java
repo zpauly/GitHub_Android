@@ -81,7 +81,6 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
     private void setupRecyclerView() {
         mAdapter = new EventsRecyclerViewAdapter(getContext());
         mEventsRV.setLayoutManager(new LinearLayoutManager(getContext()));
-        mEventsRV.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         mEventsRV.setAdapter(mAdapter);
 
         final LinearLayoutManager manager = (LinearLayoutManager) mEventsRV.getLayoutManager();

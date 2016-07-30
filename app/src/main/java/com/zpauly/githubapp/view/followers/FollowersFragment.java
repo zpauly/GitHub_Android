@@ -80,7 +80,6 @@ public class FollowersFragment extends BaseFragment implements FollowContract.Vi
         mRVAdapter = new FollowersRecyclerViewAdapter(getContext());
 
         mContentRV.setLayoutManager(new LinearLayoutManager(getContext()));
-        mContentRV.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         mContentRV.setAdapter(mRVAdapter);
 
         final LinearLayoutManager manager = (LinearLayoutManager) mContentRV.getLayoutManager();

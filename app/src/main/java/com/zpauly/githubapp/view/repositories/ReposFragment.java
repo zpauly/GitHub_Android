@@ -50,7 +50,6 @@ public class ReposFragment extends BaseFragment {
         mReposRVAdapter = new ReposRecyclerViewAdapter(getContext());
         mReposRV.setLayoutManager(new LinearLayoutManager(getContext()));
         mReposRV.setAdapter(mReposRVAdapter);
-        mReposRV.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         mReposRVAdapter.setHasLoading(false);
 
         loadData();

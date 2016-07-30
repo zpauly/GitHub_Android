@@ -12,6 +12,10 @@
             android:id="@+id/navigation_stars"
             android:icon="@mipmap/ic_star"
             android:title="@string/starred"/>
+        <item
+            android:id="@+id/navigation_explore"
+            android:icon="@drawable/ic_explore"
+            android:title="@string/explore"/>
     </group>
     <group android:id="@+id/grp2"
         android:checkableBehavior="single">

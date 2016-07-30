@@ -2,6 +2,7 @@
     <dimen name="activity_margin">16dp</dimen>
     <dimen name="components_margin">12dp</dimen>
     <dimen name="components_padding">12dp</dimen>
+    <dimen name="card_margin">6dp</dimen>
 
     <dimen name="nav_header_margin">16dp</dimen>
     <dimen name="nav_header_image_size">56dp</dimen>
