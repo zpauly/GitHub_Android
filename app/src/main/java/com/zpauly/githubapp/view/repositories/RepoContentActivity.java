@@ -7,6 +7,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -19,10 +20,10 @@ import com.zpauly.githubapp.entity.response.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.RepositoryContentBean;
 import com.zpauly.githubapp.presenter.repos.RepoContentContract;
 import com.zpauly.githubapp.presenter.repos.RepoContentPresenter;
+import com.zpauly.githubapp.utils.HtmlImageGetter;
 import com.zpauly.githubapp.view.ToolbarActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import us.feras.mdv.MarkdownView;
 
 /**
  * Created by zpauly on 16-7-31.
@@ -56,7 +57,7 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
     private AppCompatTextView mWatchersTV;
     private AppCompatTextView mStargazersTV;
     private AppCompatTextView mForksTV;
-    private MarkdownView mReadMeMV;
+    private AppCompatTextView mReadMeTV;
     private AppCompatTextView mLoadAgainTV;
     private AppCompatTextView mViewFilesTV;
     private ProgressBar mReadMePB;
@@ -81,7 +82,7 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
         mWatchersTV = (AppCompatTextView) findViewById(R.id.repo_content_watchers_TV);
         mStargazersTV = (AppCompatTextView) findViewById(R.id.repo_content_stargazers_TV);
         mForksTV = (AppCompatTextView) findViewById(R.id.repo_content_forks_TV);
-        mReadMeMV = (MarkdownView) findViewById(R.id.repo_content_readme_MV);
+        mReadMeTV = (AppCompatTextView) findViewById(R.id.repo_content_readme_TV);
         mViewFilesTV = (AppCompatTextView) findViewById(R.id.repo_content_view_files_TV);
         mLoadAgainTV = (AppCompatTextView) findViewById(R.id.repo_content_readme_load_again_TV);
         mReadMePB = (ProgressBar) findViewById(R.id.repo_content_readme_PB);
@@ -175,8 +176,9 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
     @Override
     public void loadReadMeSuccess() {
         mReadMePB.setVisibility(View.GONE);
-        mReadMeMV.setVisibility(View.VISIBLE);
-        mReadMeMV.loadMarkdown(content);
+        mReadMeTV.setVisibility(View.VISIBLE);
+        HtmlImageGetter imageGetter = new HtmlImageGetter(mReadMeTV, this);
+        Spanned htmlSpann = Html.fromHtml(content, imageGetter, null);
     }
 
     @Override
