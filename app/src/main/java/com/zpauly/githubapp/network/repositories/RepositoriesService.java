@@ -55,8 +55,11 @@ public interface RepositoriesService {
             , @Nullable @Query("affiliation") List<String> affiliation
             , @Nullable @Query("sort") String sort, @Query("page") int pageId);
 
-    //contents
+    //repo
+    @GET("/repos/{username}/{repo}")
+    Observable<RepositoriesBean> getRepository(@Path("username") String username, @Path("repo") String repo);
 
+    //contents
     /**
      * Get contents
      * This method returns the contents of a file or directory in a repository.
@@ -68,4 +71,15 @@ public interface RepositoriesService {
     @GET("/repos/{owner}/{repo}/contents/{path}")
     Observable<List<RepositoryContentBean>> getRepositoryContent(@Path("owner") String owner
             , @Path("repo") String repo, @Path("path") String path);
+
+    /**
+     * Get the README
+     * This method returns the preferred README for a repository.
+     * @param owner
+     * @param repo
+     * @return
+     */
+    @GET("/repos/{owner}/{repo}/readme")
+    Observable<String> getReadMe(@Header("Accept") String accept,
+                                                @Path("owner") String owner, @Path("repo") String repo);
 }

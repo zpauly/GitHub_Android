@@ -26,6 +26,7 @@
     <string name="forks">Forks</string>
     <string name="readme">README</string>
     <string name="view_repo_content">View The Files</string>
+    <string name="click_load_again">Click To Load Again</string>
 
     <string name="language_setting">LANGUAEG SETTING</string>
     <string name="simplified_chinese">中文</string>

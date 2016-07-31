@@ -20,6 +20,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -213,6 +217,7 @@
 
                         <android.support.v7.widget.AppCompatTextView
                             android:text="@string/readme"
+                            android:layout_marginLeft="@dimen/components_margin"
                             style="@style/TextAppearance.AppCompat.Subhead"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
@@ -220,6 +225,25 @@
                     </LinearLayout>
 
                     <android.support.v7.widget.AppCompatTextView
+                        android:visibility="visible"
+                        android:text="@string/click_load_again"
+                        style="@style/Base.TextAppearance.AppCompat.Body2"
+                        android:id="@+id/repo_content_readme_load_again_TV"
+                        android:padding="@dimen/components_padding"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <ProgressBar
+                        android:layout_margin="@dimen/activity_margin"
+                        android:layout_gravity="center"
+                        android:id="@+id/repo_content_readme_PB"
+                        style="@style/Widget.AppCompat.ProgressBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:visibility="gone"
                         android:id="@+id/repo_content_readme_content_TV"
                         android:padding="@dimen/components_padding"
                         android:clickable="true"
@@ -232,6 +256,8 @@
             </android.support.v7.widget.CardView>
 
         </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

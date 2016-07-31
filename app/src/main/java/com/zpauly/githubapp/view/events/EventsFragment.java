@@ -4,7 +4,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +11,9 @@ import android.view.ViewGroup;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.EventsRecyclerViewAdapter;
 import com.zpauly.githubapp.base.BaseFragment;
-import com.zpauly.githubapp.db.ReposDao;
 import com.zpauly.githubapp.entity.response.events.EventsBean;
 import com.zpauly.githubapp.presenter.events.EventsContract;
 import com.zpauly.githubapp.presenter.events.EventsPresenter;
-import com.zpauly.githubapp.ui.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,15 +123,6 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
 
     @Override
     public void loadEvents(List<EventsBean> eventsBeanList) {
-        int count = 0;
-        ReposDao.deleteRepos();
-        for (EventsBean bean : eventsBeanList) {
-            if (bean == null) {
-                Log.i(TAG, "null position = " + count);
-            }
-            count ++;
-//            ReposDao.insertRepo(bean.getPayload().getRepository());
-        }
         list.clear();
         list.addAll(eventsBeanList);
     }

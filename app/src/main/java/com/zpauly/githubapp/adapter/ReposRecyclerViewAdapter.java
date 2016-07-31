@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.db.ReposModel;
+import com.zpauly.githubapp.presenter.repos.RepoContentPresenter;
 import com.zpauly.githubapp.view.repositories.RepoContentActivity;
 import com.zpauly.githubapp.view.viewholder.ReposViewHolder;
 
@@ -61,12 +62,8 @@ public class ReposRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<ReposV
         holder.mLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(RepoContentActivity.REPO, repo);
-                intent.putExtra(RepoContentActivity.REPO, bundle);
-                intent.setClass(mContext, RepoContentActivity.class);
-                mContext.startActivity(intent);
+                RepoContentActivity.launchActivity(mContext, repo.getFull_name(), repo.getName(),
+                        repo.getUrl(), repo.getLogin());
             }
         });
     }

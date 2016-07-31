@@ -77,13 +77,13 @@ public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Event
         holder.mLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ReposModel model = ReposDao.queryRepos("full_name", data.getPayload().getRepository().getFull_name()).get(0);
-                Intent intent = new Intent();
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(RepoContentActivity.REPO, model);
-                intent.putExtra(RepoContentActivity.REPO, bundle);
-                intent.setClass(mContext, RepoContentActivity.class);
-                mContext.startActivity(intent);
+                String full_name = data.getRepo().getName();
+                String[] strs1 = full_name.split("/");
+                String name = strs1[strs1.length - 1];
+                String repo_url = data.getRepo().getUrl();
+                String[] strs2 = data.getRepo().getUrl().split("/");
+                String login = strs2[strs2.length - 2];
+                RepoContentActivity.launchActivity(mContext, full_name, name, repo_url, login);
             }
         });
     }

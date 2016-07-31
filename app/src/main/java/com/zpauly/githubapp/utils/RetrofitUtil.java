@@ -5,6 +5,8 @@ import com.zpauly.githubapp.Constants;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
+import retrofit2.CallAdapter;
+import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -21,6 +23,21 @@ public class RetrofitUtil {
                 .client(builder.build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .baseUrl(baseUrl)
+                .build();
+
+        return retrofit;
+    }
+
+    public static Retrofit initCustomRetrofit(String baseUrl, Converter.Factory converter,
+                                              CallAdapter.Factory callAdapter) {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.connectTimeout(Constants.DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(builder.build())
+                .addConverterFactory(converter)
+                .addCallAdapterFactory(callAdapter)
                 .baseUrl(baseUrl)
                 .build();
 

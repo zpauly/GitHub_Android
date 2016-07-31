@@ -1,20 +1,24 @@
 package com.zpauly.githubapp.view.repositories;
 
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zpauly.githubapp.R;
-import com.zpauly.githubapp.db.ReposModel;
+import com.zpauly.githubapp.entity.response.RepositoriesBean;
+import com.zpauly.githubapp.entity.response.RepositoryContentBean;
 import com.zpauly.githubapp.presenter.repos.RepoContentContract;
 import com.zpauly.githubapp.presenter.repos.RepoContentPresenter;
+import com.zpauly.githubapp.utils.HtmlUtil;
 import com.zpauly.githubapp.view.ToolbarActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -30,6 +34,17 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
 
     public static final String REPO = "REPO";
 
+    public static final String FULL_NAME = "FULL_NAME";
+    public static final String NAME = "NAME";
+    public static final String REPO_URL = "REPO_URL";
+    public static final String LOGIN = "LOGIN";
+
+    private String full_name;
+    private String name;
+    private String login;
+    private String avatar_url;
+    private String repo_url;
+
     private AppBarLayout mABLayout;
     private SwipeRefreshLayout mSRLayout;
     private LinearLayout mTitleLayout;
@@ -41,17 +56,17 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
     private AppCompatTextView mStargazersTV;
     private AppCompatTextView mForksTV;
     private AppCompatTextView mReadMeContentTV;
+    private AppCompatTextView mLoadAgainTV;
     private AppCompatTextView mViewFilesTV;
+    private ProgressBar mReadMePB;
 
-    private ReposModel reposModel;
+    private RepositoryContentBean contentBean;
+    private String content;
+    private RepositoriesBean repoBean;
 
     @Override
     public void initViews() {
-        Bundle bundle = getIntent().getBundleExtra(REPO);
-        reposModel = bundle.getParcelable(REPO);
-        if (reposModel == null) {
-            Log.i(TAG, "model = null");
-        }
+        getAttrs();
 
         new RepoContentPresenter(this, this);
 
@@ -67,9 +82,22 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
         mForksTV = (AppCompatTextView) findViewById(R.id.repo_content_forks_TV);
         mReadMeContentTV = (AppCompatTextView) findViewById(R.id.repo_content_readme_content_TV);
         mViewFilesTV = (AppCompatTextView) findViewById(R.id.repo_content_view_files_TV);
+        mLoadAgainTV = (AppCompatTextView) findViewById(R.id.repo_content_readme_load_again_TV);
+        mReadMePB = (ProgressBar) findViewById(R.id.repo_content_readme_PB);
 
         setupSwipeRefreshLayout();
-//        setupViews();
+        setupViews();
+        mSRLayout.setRefreshing(true);
+        loadRepo();
+        loadReadMe();
+    }
+
+    private void getAttrs() {
+        Intent intent = getIntent();
+        full_name = intent.getStringExtra(FULL_NAME);
+        name = intent.getStringExtra(NAME);
+        repo_url = intent.getStringExtra(REPO_URL);
+        login = intent.getStringExtra(LOGIN);
     }
 
     private void setupSwipeRefreshLayout() {
@@ -78,27 +106,42 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
         mSRLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                loadReadMe();
+                loadRepo();
             }
         });
     }
 
     private void setupViews() {
-        mTitleTV.setText(reposModel.getFull_name());
-        Glide.with(this)
-                .load(Uri.parse(reposModel.getAvatar_url()))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .crossFade()
-                .centerCrop()
-                .into(mAvatarIV);
-        mDescTV.setText(reposModel.getDescription());
-        mWatchersTV.setText(String.valueOf(reposModel.getWatchers_count()));
-        mStargazersTV.setText(String.valueOf(reposModel.getStargazers_count()));
-        mForksTV.setText(String.valueOf(reposModel.getForks_count()));
+        mTitleTV.setText(full_name);
+
+        mLoadAgainTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadReadMe();
+            }
+        });
+    }
+
+    @Override
+    protected void setToolbar() {
+        super.setToolbar();
+        setToolbarTitle(name);
+        setOnToolbarNavClickedListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void loadReadMe() {
+        mLoadAgainTV.setVisibility(View.GONE);
+        mReadMePB.setVisibility(View.VISIBLE);
         mPresenter.loadReadMe();
+    }
+
+    private void loadRepo() {
+        mPresenter.loadRepo();
     }
 
     @Override
@@ -111,13 +154,68 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
         mPresenter = presenter;
     }
 
-    @Override
-    public void loadFail() {
-
+    public static void launchActivity(Context context, String full_name, String name,
+                                      String repo_url, String login) {
+        Intent intent = new Intent();
+        intent.putExtra(FULL_NAME, full_name);
+        intent.putExtra(NAME, name);
+        intent.putExtra(REPO_URL, repo_url);
+        intent.putExtra(LOGIN, login);
+        intent.setClass(context, RepoContentActivity.class);
+        context.startActivity(intent);
     }
 
     @Override
-    public void loadSuccess() {
+    public void loadReadMeFail() {
+        mLoadAgainTV.setVisibility(View.VISIBLE);
+        mReadMePB.setVisibility(View.GONE);
+    }
 
+    @Override
+    public void loadReadMeSuccess() {
+        mReadMePB.setVisibility(View.GONE);
+        mReadMeContentTV.setVisibility(View.VISIBLE);
+        mReadMeContentTV.setText(content);
+    }
+
+    @Override
+    public void loadingReadMe(String string) {
+        content = HtmlUtil.format(string).toString();
+        Log.i(TAG, content);
+    }
+
+    @Override
+    public void loadRepoSuccess() {
+        mSRLayout.setRefreshing(false);
+        Glide.with(this)
+                .load(Uri.parse(repoBean.getOwner().getAvatar_url()))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .crossFade()
+                .centerCrop()
+                .into(mAvatarIV);
+        mDescTV.setText(repoBean.getDescription());
+        mWatchersTV.setText(String.valueOf(repoBean.getWatchers_count()));
+        mStargazersTV.setText(String.valueOf(repoBean.getStargazers_count()));
+        mForksTV.setText(String.valueOf(repoBean.getForks_count()));
+    }
+
+    @Override
+    public void loadRepoFail() {
+        mSRLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void loadingRepo(RepositoriesBean bean) {
+        repoBean = bean;
+    }
+
+    @Override
+    public String getUsername() {
+        return login;
+    }
+
+    @Override
+    public String getRepoName() {
+        return name;
     }
 }

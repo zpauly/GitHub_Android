@@ -6,10 +6,12 @@ import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.entity.response.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.RepositoryContentBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
+import com.zpauly.githubapp.utils.StringConverterFactory;
 
 import java.util.List;
 
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -60,6 +62,23 @@ public class RepositoriesMethod {
     public void getRepositoryContent(Observer<List<RepositoryContentBean>> observer, String owner,
                                      String repo, String path) {
         service.getRepositoryContent(owner, repo, path)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getRepository(Observer<RepositoriesBean> observer, String username, String repo) {
+        service.getRepository(username, repo)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getReadMe(Observer<String> observer, String username, String repo) {
+        Retrofit retrofit = RetrofitUtil.initCustomRetrofit(Api.GitHubApi, StringConverterFactory.create(),
+                RxJavaCallAdapterFactory.create());
+        RepositoriesService service = retrofit.create(RepositoriesService.class);
+        service.getReadMe("application/vnd.github.VERSION.html", username, repo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
