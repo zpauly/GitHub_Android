@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -18,7 +19,6 @@ import com.zpauly.githubapp.entity.response.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.RepositoryContentBean;
 import com.zpauly.githubapp.presenter.repos.RepoContentContract;
 import com.zpauly.githubapp.presenter.repos.RepoContentPresenter;
-import com.zpauly.githubapp.utils.HtmlUtil;
 import com.zpauly.githubapp.view.ToolbarActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -180,7 +180,7 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
 
     @Override
     public void loadingReadMe(String string) {
-        content = HtmlUtil.format(string).toString();
+        content = Html.fromHtml(string).toString();
         Log.i(TAG, content);
     }
 
