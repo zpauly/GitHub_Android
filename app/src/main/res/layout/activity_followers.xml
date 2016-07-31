@@ -9,12 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <include layout="@layout/toolbar"
-            app:layout_scrollFlags="scroll|enterAlways|snap" />
+        <include layout="@layout/toolbar" />
 
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
+        android:orientation="vertical"
         android:id="@+id/followers_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"

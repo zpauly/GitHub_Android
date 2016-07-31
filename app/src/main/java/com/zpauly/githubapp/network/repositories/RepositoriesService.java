@@ -3,6 +3,7 @@ package com.zpauly.githubapp.network.repositories;
 import android.support.annotation.Nullable;
 
 import com.zpauly.githubapp.entity.response.RepositoriesBean;
+import com.zpauly.githubapp.entity.response.RepositoryContentBean;
 
 import java.util.List;
 
@@ -53,4 +54,18 @@ public interface RepositoriesService {
     Observable<List<RepositoriesBean>> getRepositories(@Path("username") String username
             , @Nullable @Query("affiliation") List<String> affiliation
             , @Nullable @Query("sort") String sort, @Query("page") int pageId);
+
+    //contents
+
+    /**
+     * Get contents
+     * This method returns the contents of a file or directory in a repository.
+     * @param owner
+     * @param repo
+     * @param path
+     * @return
+     */
+    @GET("/repos/{owner}/{repo}/contents/{path}")
+    Observable<List<RepositoryContentBean>> getRepositoryContent(@Path("owner") String owner
+            , @Path("repo") String repo, @Path("path") String path);
 }

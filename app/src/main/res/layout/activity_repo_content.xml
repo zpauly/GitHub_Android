@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/repo_content_ABLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include
+            layout="@layout/toolbar" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/repo_content_SRLayout"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.CardView
+                android:layout_margin="@dimen/card_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/repo_content_title_layout"
+                        android:clickable="true"
+                        android:background="?attr/selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/components_padding"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/repo_content_avatar_IV"
+                            android:layout_width="@dimen/list_item_avatar_size"
+                            android:layout_height="@dimen/list_item_avatar_size" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/repo_content_title_TV"
+                            android:layout_marginLeft="@dimen/activity_margin"
+                            style="@style/TextAppearance.AppCompat.Title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/repo_content_desc_layout"
+                        android:clickable="true"
+                        android:background="?attr/selectableItemBackground"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/components_padding"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/repo_content_desc_TV"
+                            style="@style/TextAppearance.AppCompat.Body1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:id="@+id/repo_content_watchers_layout"
+                            android:clickable="true"
+                            android:background="?attr/selectableItemBackground"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:padding="@dimen/components_padding"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/repo_content_watchers_TV"
+                                android:text="0"
+                                android:textColor="@color/colorPrimaryDark"
+                                style="@style/TextAppearance.AppCompat.Title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:text="@string/watchers"
+                                style="@style/TextAppearance.AppCompat.Body1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/repo_content_stargazers_layout"
+                            android:clickable="true"
+                            android:background="?attr/selectableItemBackground"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:padding="@dimen/components_padding"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/repo_content_stargazers_TV"
+                                android:text="0"
+                                android:textColor="@color/colorPrimaryDark"
+                                style="@style/TextAppearance.AppCompat.Title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:text="@string/forks"
+                                style="@style/TextAppearance.AppCompat.Body1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/repo_content_forks_layout"
+                            android:clickable="true"
+                            android:background="?attr/selectableItemBackground"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:padding="@dimen/components_padding"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/repo_content_forks_TV"
+                                android:text="0"
+                                android:textColor="@color/colorPrimaryDark"
+                                style="@style/TextAppearance.AppCompat.Title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:text="@string/forks"
+                                style="@style/TextAppearance.AppCompat.Body1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_margin="@dimen/card_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/repo_content_view_files_TV"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:clickable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:text="@string/view_repo_content"
+                    android:padding="@dimen/components_padding"
+                    style="@style/Base.TextAppearance.AppCompat.Title"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_margin="@dimen/card_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/repo_content_readme_title_layout"
+                        android:clickable="true"
+                        android:background="?attr/selectableItemBackground"
+                        android:padding="@dimen/components_padding"
+                        android:gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:src="@mipmap/ic_readme"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:text="@string/readme"
+                            style="@style/TextAppearance.AppCompat.Subhead"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/repo_content_readme_content_TV"
+                        android:padding="@dimen/components_padding"
+                        android:clickable="true"
+                        android:background="?attr/selectableItemBackground"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</android.support.design.widget.CoordinatorLayout>

@@ -3,8 +3,6 @@ package com.zpauly.githubapp.network.activity;
 import android.support.annotation.Nullable;
 
 import com.zpauly.githubapp.entity.response.RepositoriesBean;
-import com.zpauly.githubapp.entity.response.StarredRepositories;
-import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.entity.response.events.EventsBean;
 
 import java.util.List;

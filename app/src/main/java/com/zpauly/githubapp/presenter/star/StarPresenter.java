@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.entity.response.RepositoriesBean;
-import com.zpauly.githubapp.entity.response.StarredRepositories;
 import com.zpauly.githubapp.network.activity.ActivityMethod;
 import com.zpauly.githubapp.utils.SPUtil;
 

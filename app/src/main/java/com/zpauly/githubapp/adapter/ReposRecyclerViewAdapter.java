@@ -1,12 +1,15 @@
 package com.zpauly.githubapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.db.ReposModel;
+import com.zpauly.githubapp.view.repositories.RepoContentActivity;
 import com.zpauly.githubapp.view.viewholder.ReposViewHolder;
 
 import java.util.ArrayList;
@@ -49,12 +52,23 @@ public class ReposRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<ReposV
 
     @Override
     public void bindContentViewHolder(ReposViewHolder holder, int position) {
-        ReposModel repo = mData.get(position);
+        final ReposModel repo = mData.get(position);
         holder.mReposForksTV.setText(String.valueOf(repo.getForks_count()));
         holder.mReposStarsTV.setText(String.valueOf(repo.getStargazers_count()));
         holder.mReposTechLanguageTV.setText(repo.getLanguage());
         holder.mReposTitleTV.setText(repo.getFull_name());
         holder.mReposUpdateTimeTV.setText(repo.getUpdated_at());
+        holder.mLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(RepoContentActivity.REPO, repo);
+                intent.putExtra(RepoContentActivity.REPO, bundle);
+                intent.setClass(mContext, RepoContentActivity.class);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override

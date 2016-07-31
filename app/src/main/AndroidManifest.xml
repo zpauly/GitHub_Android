@@ -25,6 +25,7 @@
         <activity android:name=".view.followers.FollowersActivity"/>
         <activity android:name=".view.profile.OthersActivity" />
         <activity android:name=".view.profile.ProfileActivity" />
+        <activity android:name=".view.repositories.RepoContentActivity" />
     </application>
 
 </manifest>

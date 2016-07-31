@@ -1,5 +1,8 @@
 package com.zpauly.githubapp.db;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import org.litepal.crud.DataSupport;
@@ -8,7 +11,7 @@ import org.litepal.crud.DataSupport;
  * Created by zpauly on 16-7-18.
  */
 
-public class ReposModel extends DataSupport {
+public class ReposModel extends DataSupport implements Parcelable {
     private String name;
     private String full_name;
     private String description;
@@ -31,6 +34,8 @@ public class ReposModel extends DataSupport {
     private String tags_url;
     private String teams_url;
     private String language;
+    private String login;
+    private String avatar_url;
     private int forks_count;
     private int stargazers_count;
     private int watchers_count;
@@ -44,6 +49,22 @@ public class ReposModel extends DataSupport {
     private String pushed_at;
     private String created_at;
     private String updated_at;
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setAvatar_url(String avatar_url) {
+        this.avatar_url = avatar_url;
+    }
+
+    public String getAvatar_url() {
+        return avatar_url;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -316,4 +337,103 @@ public class ReposModel extends DataSupport {
     public boolean isHas_wiki() {
         return has_wiki;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.name);
+        dest.writeString(this.full_name);
+        dest.writeString(this.description);
+        dest.writeByte(this.privateX ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.fork ? (byte) 1 : (byte) 0);
+        dest.writeString(this.url);
+        dest.writeString(this.html_url);
+        dest.writeString(this.contributors_url);
+        dest.writeString(this.deployments_url);
+        dest.writeString(this.downloads_url);
+        dest.writeString(this.events_url);
+        dest.writeString(this.forks_url);
+        dest.writeString(this.hooks_url);
+        dest.writeString(this.lanauages_url);
+        dest.writeString(this.merges_url);
+        dest.writeString(this.stargazers_url);
+        dest.writeString(this.subscribers_url);
+        dest.writeString(this.subscription_url);
+        dest.writeString(this.tags_url);
+        dest.writeString(this.teams_url);
+        dest.writeString(this.language);
+        dest.writeString(this.login);
+        dest.writeString(this.avatar_url);
+        dest.writeInt(this.forks_count);
+        dest.writeInt(this.stargazers_count);
+        dest.writeInt(this.watchers_count);
+        dest.writeInt(this.size);
+        dest.writeString(this.default_branch);
+        dest.writeInt(this.open_issue_count);
+        dest.writeByte(this.has_issues ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.has_wiki ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.has_pages ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.has_downloads ? (byte) 1 : (byte) 0);
+        dest.writeString(this.pushed_at);
+        dest.writeString(this.created_at);
+        dest.writeString(this.updated_at);
+    }
+
+    public ReposModel() {
+    }
+
+    protected ReposModel(Parcel in) {
+        this.name = in.readString();
+        this.full_name = in.readString();
+        this.description = in.readString();
+        this.privateX = in.readByte() != 0;
+        this.fork = in.readByte() != 0;
+        this.url = in.readString();
+        this.html_url = in.readString();
+        this.contributors_url = in.readString();
+        this.deployments_url = in.readString();
+        this.downloads_url = in.readString();
+        this.events_url = in.readString();
+        this.forks_url = in.readString();
+        this.hooks_url = in.readString();
+        this.lanauages_url = in.readString();
+        this.merges_url = in.readString();
+        this.stargazers_url = in.readString();
+        this.subscribers_url = in.readString();
+        this.subscription_url = in.readString();
+        this.tags_url = in.readString();
+        this.teams_url = in.readString();
+        this.language = in.readString();
+        this.login = in.readString();
+        this.avatar_url = in.readString();
+        this.forks_count = in.readInt();
+        this.stargazers_count = in.readInt();
+        this.watchers_count = in.readInt();
+        this.size = in.readInt();
+        this.default_branch = in.readString();
+        this.open_issue_count = in.readInt();
+        this.has_issues = in.readByte() != 0;
+        this.has_wiki = in.readByte() != 0;
+        this.has_pages = in.readByte() != 0;
+        this.has_downloads = in.readByte() != 0;
+        this.pushed_at = in.readString();
+        this.created_at = in.readString();
+        this.updated_at = in.readString();
+    }
+
+    public static final Parcelable.Creator<ReposModel> CREATOR = new Parcelable.Creator<ReposModel>() {
+        @Override
+        public ReposModel createFromParcel(Parcel source) {
+            return new ReposModel(source);
+        }
+
+        @Override
+        public ReposModel[] newArray(int size) {
+            return new ReposModel[size];
+        }
+    };
 }

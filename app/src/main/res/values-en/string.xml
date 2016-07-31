@@ -21,6 +21,11 @@
     <string name="starred_by_people_you_follow">Starred by people you follow</string>
     <string name="load_more">Loading</string>
     <string name="no_more">No More</string>
+    <string name="watchers">Watchers</string>
+    <string name="stargazers">Stargazers</string>
+    <string name="forks">Forks</string>
+    <string name="readme">README</string>
+    <string name="view_repo_content">View The Files</string>
 
     <string name="language_setting">LANGUAEG SETTING</string>
     <string name="simplified_chinese">中文</string>

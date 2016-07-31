@@ -1,6 +1,8 @@
 package com.zpauly.githubapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,8 +12,12 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zpauly.githubapp.R;
+import com.zpauly.githubapp.db.ReposDao;
+import com.zpauly.githubapp.db.ReposModel;
+import com.zpauly.githubapp.entity.response.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.events.EventsBean;
 import com.zpauly.githubapp.entity.response.events.Payload;
+import com.zpauly.githubapp.view.repositories.RepoContentActivity;
 import com.zpauly.githubapp.view.viewholder.EventsViewHolder;
 
 import java.util.ArrayList;
@@ -51,7 +57,7 @@ public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Event
 
     @Override
     public void bindContentViewHolder(EventsViewHolder holder, int position) {
-        EventsBean data = mData.get(position);
+        final EventsBean data = mData.get(position);
         Glide.with(mContext)
                 .load(data.getActor().getAvatar_url())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -67,6 +73,19 @@ public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Event
         holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
         holder.mCommitsRV.setAdapter(mAdapter);
         setAction(data.getType(), data.getPayload(), holder, position);
+
+        holder.mLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ReposModel model = ReposDao.queryRepos("full_name", data.getPayload().getRepository().getFull_name()).get(0);
+                Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(RepoContentActivity.REPO, model);
+                intent.putExtra(RepoContentActivity.REPO, bundle);
+                intent.setClass(mContext, RepoContentActivity.class);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override

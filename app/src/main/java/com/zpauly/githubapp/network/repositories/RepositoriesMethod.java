@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 
 import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.entity.response.RepositoriesBean;
+import com.zpauly.githubapp.entity.response.RepositoryContentBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
 
 import java.util.List;
@@ -51,6 +52,14 @@ public class RepositoriesMethod {
     public void getRepositories(Observer<List<RepositoriesBean>> observer, String username,
                                 @Nullable List<String> affiliation, @Nullable String sort, int pageId) {
         service.getRepositories(username, affiliation, sort, pageId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getRepositoryContent(Observer<List<RepositoryContentBean>> observer, String owner,
+                                     String repo, String path) {
+        service.getRepositoryContent(owner, repo, path)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

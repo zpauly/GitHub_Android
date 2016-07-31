@@ -15,10 +15,8 @@ import com.zpauly.githubapp.base.BaseFragment;
 import com.zpauly.githubapp.db.ReposDao;
 import com.zpauly.githubapp.db.ReposModel;
 import com.zpauly.githubapp.entity.response.RepositoriesBean;
-import com.zpauly.githubapp.entity.response.StarredRepositories;
 import com.zpauly.githubapp.presenter.star.StarContract;
 import com.zpauly.githubapp.presenter.star.StarPresenter;
-import com.zpauly.githubapp.ui.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
