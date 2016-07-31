@@ -22,6 +22,7 @@ import com.zpauly.githubapp.presenter.repos.RepoContentPresenter;
 import com.zpauly.githubapp.view.ToolbarActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import us.feras.mdv.MarkdownView;
 
 /**
  * Created by zpauly on 16-7-31.
@@ -55,7 +56,7 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
     private AppCompatTextView mWatchersTV;
     private AppCompatTextView mStargazersTV;
     private AppCompatTextView mForksTV;
-    private AppCompatTextView mReadMeContentTV;
+    private MarkdownView mReadMeMV;
     private AppCompatTextView mLoadAgainTV;
     private AppCompatTextView mViewFilesTV;
     private ProgressBar mReadMePB;
@@ -80,7 +81,7 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
         mWatchersTV = (AppCompatTextView) findViewById(R.id.repo_content_watchers_TV);
         mStargazersTV = (AppCompatTextView) findViewById(R.id.repo_content_stargazers_TV);
         mForksTV = (AppCompatTextView) findViewById(R.id.repo_content_forks_TV);
-        mReadMeContentTV = (AppCompatTextView) findViewById(R.id.repo_content_readme_content_TV);
+        mReadMeMV = (MarkdownView) findViewById(R.id.repo_content_readme_MV);
         mViewFilesTV = (AppCompatTextView) findViewById(R.id.repo_content_view_files_TV);
         mLoadAgainTV = (AppCompatTextView) findViewById(R.id.repo_content_readme_load_again_TV);
         mReadMePB = (ProgressBar) findViewById(R.id.repo_content_readme_PB);
@@ -174,13 +175,13 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
     @Override
     public void loadReadMeSuccess() {
         mReadMePB.setVisibility(View.GONE);
-        mReadMeContentTV.setVisibility(View.VISIBLE);
-        mReadMeContentTV.setText(content);
+        mReadMeMV.setVisibility(View.VISIBLE);
+        mReadMeMV.loadMarkdown(content);
     }
 
     @Override
     public void loadingReadMe(String string) {
-        content = Html.fromHtml(string).toString();
+        content = string;
         Log.i(TAG, content);
     }
 

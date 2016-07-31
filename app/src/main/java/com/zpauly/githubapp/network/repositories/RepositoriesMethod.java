@@ -78,7 +78,7 @@ public class RepositoriesMethod {
         Retrofit retrofit = RetrofitUtil.initCustomRetrofit(Api.GitHubApi, StringConverterFactory.create(),
                 RxJavaCallAdapterFactory.create());
         RepositoriesService service = retrofit.create(RepositoriesService.class);
-        service.getReadMe("application/vnd.github.VERSION.html", username, repo)
+        service.getReadMe("application/vnd.github.VERSION.raw", username, repo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

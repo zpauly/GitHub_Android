@@ -242,14 +242,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                    <android.support.v7.widget.AppCompatTextView
+                    <us.feras.mdv.MarkdownView
                         android:visibility="gone"
-                        android:id="@+id/repo_content_readme_content_TV"
                         android:padding="@dimen/components_padding"
-                        android:clickable="true"
                         android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:id="@+id/repo_content_readme_MV"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="wrap_content"/>
 
                 </LinearLayout>
 
