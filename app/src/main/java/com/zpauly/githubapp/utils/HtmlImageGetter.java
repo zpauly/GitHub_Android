@@ -2,7 +2,6 @@ package com.zpauly.githubapp.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -21,6 +20,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
+
+import pl.droidsonroids.gif.GifDrawable;
 
 /**
  * Created by root on 16-7-31.
@@ -97,8 +98,7 @@ public class HtmlImageGetter implements Html.ImageGetter {
             if (result != null) {
                 Log.i(getClass().getName(), "width = " + result.getIntrinsicWidth());
                 // set the correct bound according to the result from HTTP call
-                urlDrawable.setBounds(0, 0, 0 + result.getIntrinsicWidth(), 0
-                        + result.getIntrinsicHeight());
+                urlDrawable.setBounds(0, 0, result.getIntrinsicWidth(), result.getIntrinsicHeight());
 
                 // change the reference of the current drawable to the result
                 // from the HTTP call
@@ -122,6 +122,7 @@ public class HtmlImageGetter implements Html.ImageGetter {
          * @return
          */
         public Drawable fetchDrawable(String urlString) {
+            File imageFile;
             String url;
             if (urlString.startsWith("/")) {
                 url = baseUrl + urlString;
@@ -134,18 +135,18 @@ public class HtmlImageGetter implements Html.ImageGetter {
                 final URLConnection conn = aURL.openConnection();
                 conn.connect();
                 final BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
-                Bitmap bm = ImageUtil.getBitmap(bis, width, height);
-                if (bm == null) {
-                    Log.i(TAG, "bm = null");
+                imageFile = File.createTempFile("image", ".tmp", fileDir);
+                FileUtil.save(imageFile, bis);
+                if (conn.getContentType().equals("image/gif")) {
+                    GifDrawable gifDrawable = new GifDrawable(imageFile);
+                    gifDrawable.setBounds(0, 0, gifDrawable.getIntrinsicWidth(), gifDrawable.getIntrinsicHeight());
+                    return gifDrawable;
+                } else {
+                    Bitmap bm = ImageUtil.getBitmap(imageFile, width, height);
+                    Drawable drawable = new BitmapDrawable(context.getResources(), bm);
+                    drawable.setBounds(0, 0, bm.getWidth(), bm.getHeight());
+                    return drawable;
                 }
-                /*Bitmap bitmap = BitmapFactory.decodeStream(bis);
-                if (bitmap == null) {
-                    Log.i(TAG, "bitmap = null");
-                }*/
-                Drawable drawable = new BitmapDrawable(bm);
-                drawable.setBounds(0, 0, 0 + drawable.getIntrinsicWidth(), 0
-                        + drawable.getIntrinsicHeight());
-                return drawable;
             } catch (IOException e) {
                 e.printStackTrace();
                 return null;

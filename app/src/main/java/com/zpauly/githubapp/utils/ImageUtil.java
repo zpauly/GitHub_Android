@@ -30,21 +30,15 @@ import java.io.OutputStream;
 import java.io.RandomAccessFile;
 
 /**
- * Image utilities
+ * Created by zpauly on 16-8-1.
  */
 public class ImageUtil {
 
     private static final String TAG = "ImageUtils";
 
-    /**
-     * Get a bitmap from the image path
-     *
-     * @param imagePath
-     * @param sampleSize
-     * @return bitmap or null if read fails
-     */
     public static Bitmap getBitmap(final String imagePath, int sampleSize) {
         final Options options = new Options();
+        options.inJustDecodeBounds = false;
         options.inDither = false;
         options.inSampleSize = sampleSize;
 
@@ -66,12 +60,6 @@ public class ImageUtil {
         }
     }
 
-    /**
-     * Get size of image
-     *
-     * @param imagePath
-     * @return size
-     */
     public static Point getSize(final String imagePath) {
         final Options options = new Options();
         options.inJustDecodeBounds = true;
@@ -94,14 +82,6 @@ public class ImageUtil {
         }
     }
 
-    /**
-     * Get bitmap with maximum height or width
-     *
-     * @param image
-     * @param width
-     * @param height
-     * @return image
-     */
     public static Bitmap getBitmap(final File image, int width, int height) {
         String imagePath = image.getAbsolutePath();
         Point size = getSize(imagePath);
@@ -120,28 +100,5 @@ public class ImageUtil {
         }
 
         return getBitmap(imagePath, scale);
-    }
-
-    public static Bitmap getBitmap(final BufferedInputStream inputStream, int width, int height) throws IOException {
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeStream(inputStream, null, options);
-
-        int currWidth = options.outWidth;
-        int currHeight = options.outHeight;
-
-        int scale = 1;
-        while (currWidth >= width || currHeight >= height) {
-            currWidth /= 2;
-            currHeight /= 2;
-            scale *= 2;
-        }
-
-        options.inSampleSize = scale;
-        options.inJustDecodeBounds = false;
-        inputStream.mark(inputStream.available());
-        inputStream.reset();
-        final Bitmap bm = BitmapFactory.decodeStream(inputStream, null, options);
-        return bm;
     }
 }
