@@ -17,6 +17,7 @@
     <string name="gists">Gists</string>
     <string name="orgs">Organizations</string>
     <string name="explore">Explore</string>
+    <string name="files">Files</string>
     <string name="trend_repositories">Trending repositories</string>
     <string name="starred_by_people_you_follow">Starred by people you follow</string>
     <string name="load_more">Loading</string>

@@ -24,6 +24,7 @@ import com.zpauly.githubapp.presenter.repos.RepoContentPresenter;
 import com.zpauly.githubapp.utils.HtmlImageGetter;
 import com.zpauly.githubapp.utils.HtmlUtil;
 import com.zpauly.githubapp.view.ToolbarActivity;
+import com.zpauly.githubapp.view.files.FilesActivity;
 import com.zpauly.githubapp.view.profile.OthersActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -133,7 +134,7 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
         mViewFilesTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                FilesActivity.launchActivity(RepoContentActivity.this, login, name);
             }
         });
         mAvatarIV.setOnClickListener(new View.OnClickListener() {

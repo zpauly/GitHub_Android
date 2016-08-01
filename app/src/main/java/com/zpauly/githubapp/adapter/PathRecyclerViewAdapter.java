@@ -29,6 +29,13 @@ public class PathRecyclerViewAdapter extends RecyclerView.Adapter<PathViewHolder
         this.mOnItemClickListener = listener;
     }
 
+    public void swapData(List<String> list) {
+        mData.clear();
+        mData.add("root system");
+        mData.addAll(list);
+        notifyDataSetChanged();
+    }
+
     public PathRecyclerViewAdapter(Context context) {
         this.mContext = context;
         mData.add("root system");
@@ -41,7 +48,9 @@ public class PathRecyclerViewAdapter extends RecyclerView.Adapter<PathViewHolder
 
     @Override
     public void onBindViewHolder(PathViewHolder holder, int position) {
-        holder.mPathTV.setText(mData.get(position));
+        String[] strs = mData.get(position).split("/");
+        String file = strs[strs.length - 1];
+        holder.mPathTV.setText(file);
         holder.mLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
