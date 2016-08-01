@@ -80,6 +80,6 @@ public interface RepositoriesService {
      * @return
      */
     @GET("/repos/{owner}/{repo}/readme")
-    Observable<String> getReadMe(@Header("Accept") String accept,
+    Observable<String> getReadMe(@Header("Accept") String acc,
                                                 @Path("owner") String owner, @Path("repo") String repo);
 }

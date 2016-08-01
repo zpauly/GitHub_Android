@@ -1,5 +1,6 @@
 package com.zpauly.githubapp.view.repositories;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -21,6 +22,7 @@ import com.zpauly.githubapp.entity.response.RepositoryContentBean;
 import com.zpauly.githubapp.presenter.repos.RepoContentContract;
 import com.zpauly.githubapp.presenter.repos.RepoContentPresenter;
 import com.zpauly.githubapp.utils.HtmlImageGetter;
+import com.zpauly.githubapp.utils.HtmlUtil;
 import com.zpauly.githubapp.view.ToolbarActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -91,7 +93,6 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
         setupViews();
         mSRLayout.setRefreshing(true);
         loadRepo();
-        loadReadMe();
     }
 
     private void getAttrs() {
@@ -115,7 +116,7 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
 
     private void setupViews() {
         mTitleTV.setText(full_name);
-
+        mLoadAgainTV.setVisibility(View.GONE);
         mLoadAgainTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,6 +166,7 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
         intent.putExtra(LOGIN, login);
         intent.setClass(context, RepoContentActivity.class);
         context.startActivity(intent);
+//        ((Activity) context).finish();
     }
 
     @Override
@@ -177,18 +179,21 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
     public void loadReadMeSuccess() {
         mReadMePB.setVisibility(View.GONE);
         mReadMeTV.setVisibility(View.VISIBLE);
-        HtmlImageGetter imageGetter = new HtmlImageGetter(mReadMeTV, this);
+        HtmlImageGetter imageGetter = new HtmlImageGetter(mReadMeTV, this,
+                repoBean.getHtml_url() + "/raw/" + repoBean.getDefault_branch());
         Spanned htmlSpann = Html.fromHtml(content, imageGetter, null);
+        mReadMeTV.setText(htmlSpann);
     }
 
     @Override
     public void loadingReadMe(String string) {
-        content = string;
+        content = HtmlUtil.format(string).toString();
         Log.i(TAG, content);
     }
 
     @Override
     public void loadRepoSuccess() {
+        loadReadMe();
         mSRLayout.setRefreshing(false);
         Glide.with(this)
                 .load(Uri.parse(repoBean.getOwner().getAvatar_url()))

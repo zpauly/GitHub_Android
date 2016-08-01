@@ -27,7 +27,8 @@ public final class StringConverterFactory extends Converter.Factory {
         @Override
         public String convert(ResponseBody value) throws IOException {
             try {
-                return value.string();
+                String string = value.string();
+                return string;
             } finally {
                  value.close();
             }
