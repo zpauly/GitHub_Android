@@ -188,7 +188,7 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
         intent.putExtra(LOGIN, login);
         intent.setClass(context, RepoContentActivity.class);
         context.startActivity(intent);
-        ((Activity) context).finish();
+//        ((Activity) context).finish();
     }
 
     @Override

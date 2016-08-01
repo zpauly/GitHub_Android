@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.db.FileDirModel;
+import com.zpauly.githubapp.listener.OnDirItemClickListener;
+import com.zpauly.githubapp.listener.OnItemClickListener;
 import com.zpauly.githubapp.view.viewholder.FileDirViewHolder;
 
 import java.util.ArrayList;
@@ -24,6 +26,8 @@ public class FileDirRecyclerViewAdapter extends RecyclerView.Adapter<FileDirView
 
     private List<FileDirModel> mData;
 
+    private OnDirItemClickListener mOnDirItemClickListener;
+
     public FileDirRecyclerViewAdapter(Context context) {
         this.mContext = context;
         mData = new ArrayList<>();
@@ -32,6 +36,16 @@ public class FileDirRecyclerViewAdapter extends RecyclerView.Adapter<FileDirView
     public void addData(List<FileDirModel> list) {
         mData.addAll(list);
         notifyDataSetChanged();
+    }
+
+    public void swapData(List<FileDirModel> list) {
+        mData.clear();
+        mData.addAll(list);
+        notifyDataSetChanged();
+    }
+
+    public void setOnItemClickListener(OnDirItemClickListener listener) {
+        mOnDirItemClickListener = listener;
     }
 
     @Override
@@ -43,7 +57,7 @@ public class FileDirRecyclerViewAdapter extends RecyclerView.Adapter<FileDirView
 
     @Override
     public void onBindViewHolder(FileDirViewHolder holder, int position) {
-        FileDirModel data = mData.get(position);
+        final FileDirModel data = mData.get(position);
         String[] strs = data.getPath().split("/");
         holder.mFileNameTV.setText(strs[strs.length - 1]);
         Log.i(TAG, data.getType());
@@ -52,6 +66,14 @@ public class FileDirRecyclerViewAdapter extends RecyclerView.Adapter<FileDirView
         } else if (data.getType().equals("file") || data.getType().equals("symlink")) {
             holder.mTypeIV.setImageResource(R.mipmap.ic_file);
         }
+        holder.mLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnDirItemClickListener != null) {
+                    mOnDirItemClickListener.onClick(v, data.getPath());
+                }
+            }
+        });
     }
 
     @Override

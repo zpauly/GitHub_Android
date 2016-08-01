@@ -16,6 +16,7 @@ import com.zpauly.githubapp.adapter.PathRecyclerViewAdapter;
 import com.zpauly.githubapp.db.FileDirDao;
 import com.zpauly.githubapp.db.FileDirModel;
 import com.zpauly.githubapp.entity.response.RepositoryContentBean;
+import com.zpauly.githubapp.listener.OnDirItemClickListener;
 import com.zpauly.githubapp.presenter.files.FilesContract;
 import com.zpauly.githubapp.presenter.files.FilesPresenter;
 import com.zpauly.githubapp.ui.DividerItemDecoration;
@@ -96,6 +97,14 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         mContentRV.setLayoutManager(new LinearLayoutManager(this));
         mContentRV.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
         mContentRV.setAdapter(mDirAdapter);
+        mDirAdapter.setOnItemClickListener(new OnDirItemClickListener() {
+            @Override
+            public void onClick(View v, String p) {
+                path = p;
+                mSRLayout.setRefreshing(true);
+                getContents(path);
+            }
+        });
     }
 
     private void getAttrs() {
@@ -108,14 +117,13 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         if (list == null || list.size() == 0) {
             mPresenter.loadContent(owner, repo, path);
         } else {
-            path = list.get(0).getPath();
-            String[] strs = path.split("/");
+            String[] strs = list.get(0).getPath().split("/");
             List<String> paths = new ArrayList<>();
             for (int i = 0; i < strs.length - 1; i ++) {
                 paths.add(strs[i]);
             }
             mPathAdapter.swapData(paths);
-            mDirAdapter.addData(list);
+            mDirAdapter.swapData(list);
             mSRLayout.setRefreshing(false);
         }
     }
@@ -147,7 +155,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         intent.putExtra(OWNER, owner);
         intent.setClass(context, FilesActivity.class);
         context.startActivity(intent);
-        ((Activity) context).finish();
+//        ((Activity) context).finish();
     }
 
     @Override
