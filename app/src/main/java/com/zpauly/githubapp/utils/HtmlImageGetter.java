@@ -2,6 +2,7 @@ package com.zpauly.githubapp.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -14,6 +15,7 @@ import android.view.Display;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.ui.URLDrawable;
 
 import java.io.BufferedInputStream;
@@ -112,7 +114,7 @@ public class HtmlImageGetter implements Html.ImageGetter {
                 // redraw the image by invalidating the container
                 HtmlImageGetter.this.container.invalidate();
 
-                HtmlImageGetter.this.container.setHeight((HtmlImageGetter.this.container.getHeight()
+                HtmlImageGetter.this.container.setHeight((HtmlImageGetter.this.container.getMeasuredHeight()
                         + result.getIntrinsicHeight()));
 
                 HtmlImageGetter.this.container.setEllipsize(null);
@@ -153,10 +155,16 @@ public class HtmlImageGetter implements Html.ImageGetter {
                 }
                 if (url.endsWith("gif")) {
                     GifDrawable gifDrawable = new GifDrawable(imageFile);
+                    if (gifDrawable == null) {
+                        return returnErrorDrawable();
+                    }
                     gifDrawable.setBounds(0, 0, gifDrawable.getIntrinsicWidth(), gifDrawable.getIntrinsicHeight());
                     return gifDrawable;
                 } else {
                     Bitmap bm = ImageUtil.getBitmap(imageFile, width, height);
+                    if (bm == null) {
+                        return returnErrorDrawable();
+                    }
                     Drawable drawable = new BitmapDrawable(context.getResources(), bm);
                     drawable.setBounds(0, 0, bm.getWidth(), bm.getHeight());
                     return drawable;
@@ -165,6 +173,13 @@ public class HtmlImageGetter implements Html.ImageGetter {
                 e.printStackTrace();
                 return null;
             }
+        }
+
+        private Drawable returnErrorDrawable() {
+            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_image_error);
+            BitmapDrawable bd = new BitmapDrawable(bitmap);
+            bd.setBounds(0, 0, bitmap.getWidth(), bitmap.getHeight());
+            return bd;
         }
     }
 }
