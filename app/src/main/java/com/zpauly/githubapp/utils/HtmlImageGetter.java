@@ -21,6 +21,7 @@ import com.zpauly.githubapp.ui.URLDrawable;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -138,11 +139,14 @@ public class HtmlImageGetter implements Html.ImageGetter {
             File imageFile;
             try {
                 Log.i(getClass().getName(), url);
+                URL aURL = new URL(url);
+                final URLConnection conn = aURL.openConnection();
                 if ((imageFile = cache.get(url)) == null) {
-                    URL aURL = new URL(url);
-                    final URLConnection conn = aURL.openConnection();
                     conn.connect();
                     final BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
+                    if (conn.getContentType().startsWith("image/svg")) {
+
+                    }
                     imageFile = File.createTempFile("image", ".tmp", fileDir);
                     FileUtil.save(imageFile, bis);
                     cache.put(url, imageFile);
@@ -153,7 +157,17 @@ public class HtmlImageGetter implements Html.ImageGetter {
                 } else {
                     Log.i(TAG, "load from cache");
                 }
-                if (url.endsWith("gif")) {
+                if (conn.getContentType().startsWith("image/svg")) {
+                    Bitmap bitmap = ImageUtil.renderSvgToBitmap(context.getResources(),
+                            new FileInputStream(imageFile), width, height);
+                    if (bitmap == null) {
+                        return returnErrorDrawable();
+                    }
+                    Drawable drawable = new BitmapDrawable(context.getResources(), bitmap);
+                    drawable.setBounds(0, 0, bitmap.getWidth(), bitmap.getHeight());
+                    return drawable;
+                }
+                if (conn.getContentType().startsWith("image/gif")) {
                     GifDrawable gifDrawable = new GifDrawable(imageFile);
                     if (gifDrawable == null) {
                         return returnErrorDrawable();

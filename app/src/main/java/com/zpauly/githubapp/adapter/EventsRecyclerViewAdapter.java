@@ -17,6 +17,7 @@ import com.zpauly.githubapp.db.ReposModel;
 import com.zpauly.githubapp.entity.response.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.events.EventsBean;
 import com.zpauly.githubapp.entity.response.events.Payload;
+import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.repositories.RepoContentActivity;
 import com.zpauly.githubapp.view.viewholder.EventsViewHolder;
 
@@ -67,7 +68,7 @@ public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Event
         holder.mRepoTV.setText(data.getRepo().getName());
         holder.mUsernameTV.setText(data.getActor().getLogin());
 //        holder.mUsernameTV.setText(String.valueOf(position));
-        holder.mTimeTV.setText(data.getCreated_at());
+        holder.mTimeTV.setText(TextUtil.timeConverter(data.getCreated_at()));
         holder.mCommentTV.setVisibility(View.GONE);
         mAdapter = new EventsCommitsRecyclerViewAdapter(mContext);
         holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));

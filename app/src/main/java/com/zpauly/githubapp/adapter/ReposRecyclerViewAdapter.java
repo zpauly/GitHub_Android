@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.db.ReposModel;
 import com.zpauly.githubapp.presenter.repos.RepoContentPresenter;
+import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.repositories.RepoContentActivity;
 import com.zpauly.githubapp.view.viewholder.ReposViewHolder;
 
@@ -58,7 +59,7 @@ public class ReposRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<ReposV
         holder.mReposStarsTV.setText(String.valueOf(repo.getStargazers_count()));
         holder.mReposTechLanguageTV.setText(repo.getLanguage());
         holder.mReposTitleTV.setText(repo.getFull_name());
-        holder.mReposUpdateTimeTV.setText(repo.getUpdated_at());
+        holder.mReposUpdateTimeTV.setText(TextUtil.timeConverter(repo.getUpdated_at()));
         holder.mLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
