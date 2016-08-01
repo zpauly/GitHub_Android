@@ -1,5 +1,6 @@
 package com.zpauly.githubapp.view.profile;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.AppBarLayout;
@@ -16,9 +17,10 @@ import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.presenter.profile.ProfileContract;
 import com.zpauly.githubapp.presenter.profile.ProfilePresenter;
+import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.ToolbarActivity;
 import com.zpauly.githubapp.view.events.EventsActivity;
-import com.zpauly.githubapp.view.followers.FollowersActivity;
+import com.zpauly.githubapp.view.followers.UsersActivity;
 import com.zpauly.githubapp.view.repositories.ReposActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -92,7 +94,6 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
         mGistsLayout = (RelativeLayout) findViewById(R.id.profile_gists_layout);
 
         setupSwipeRefreshLayout();
-        setupListener();
 
         mSWLayout.setRefreshing(true);
         loadData();
@@ -134,22 +135,14 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
         mFollowersLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.putExtra(FollowersActivity.FOLLOW_ID, FollowersActivity.FOLLOWERS);
-                intent.putExtra(USERNAME, username);
-                intent.setClass(OthersActivity.this, FollowersActivity.class);
-                startActivity(intent);
+                UsersActivity.launchActivity(OthersActivity.this, username, UsersActivity.FOLLOWERS);
             }
         });
 
         mFollowingLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.putExtra(FollowersActivity.FOLLOW_ID, FollowersActivity.FOLLOWING);
-                intent.putExtra(USERNAME, username);
-                intent.setClass(OthersActivity.this, FollowersActivity.class);
-                startActivity(intent);
+                UsersActivity.launchActivity(OthersActivity.this, username, UsersActivity.FOLLOWING);
             }
         });
 
@@ -207,11 +200,19 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
             mBioTV.setText(user.getBio());
             mLocationTV.setText(user.getLocation());
             mEmailTV.setText(user.getEmail());
-            mTimeTV.setText(user.getCreated_at());
+            mTimeTV.setText(TextUtil.timeConverter(user.getCreated_at()));
             mFollowersTV.setText(String.valueOf(user.getFollowers()));
             mFollowingTV.setText(String.valueOf(user.getFollowing()));
         }
         mSWLayout.setRefreshing(false);
+        setupListener();
+    }
+
+    public static void lanuchActivity(Context context, String username) {
+        Intent intent = new Intent();
+        intent.putExtra(USERNAME, username);
+        intent.setClass(context, OthersActivity.class);
+        context.startActivity(intent);
     }
 
     @Override

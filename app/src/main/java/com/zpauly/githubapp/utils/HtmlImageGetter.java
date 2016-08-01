@@ -133,29 +133,25 @@ public class HtmlImageGetter implements Html.ImageGetter {
             String url;
             if (urlString.startsWith("/")) {
                 url = baseUrl + urlString;
+            } else if (urlString.startsWith("./") || urlString.startsWith("*/")) {
+                url = baseUrl + urlString.substring(1);
             } else {
                 url = urlString;
             }
             File imageFile;
             try {
-                Log.i(getClass().getName(), url);
                 URL aURL = new URL(url);
                 final URLConnection conn = aURL.openConnection();
-                if ((imageFile = cache.get(url)) == null) {
+                if ((imageFile = cache.get(url)) == null || cache.get(url).length() == 0) {
                     conn.connect();
-                    final BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
-                    if (conn.getContentType().startsWith("image/svg")) {
-
-                    }
+                    BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
                     imageFile = File.createTempFile("image", ".tmp", fileDir);
                     FileUtil.save(imageFile, bis);
                     cache.put(url, imageFile);
                     if (cache.get(url) == null) {
                         Log.i(TAG, "cache failed");
                     }
-                    Log.i(TAG, "load from http");
                 } else {
-                    Log.i(TAG, "load from cache");
                 }
                 if (conn.getContentType().startsWith("image/svg")) {
                     Bitmap bitmap = ImageUtil.renderSvgToBitmap(context.getResources(),

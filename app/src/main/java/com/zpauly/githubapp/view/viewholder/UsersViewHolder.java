@@ -13,14 +13,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by zpauly on 16-6-15.
  */
-public class FollowersViewHolder extends RecyclerView.ViewHolder {
+public class UsersViewHolder extends RecyclerView.ViewHolder {
     public final CircleImageView mAvatarIV;
 
     public final AppCompatTextView mUsernameTV;
 
     public final LinearLayout mLayout;
 
-    public FollowersViewHolder(View itemView) {
+    public UsersViewHolder(View itemView) {
         super(itemView);
 
         mLayout = (LinearLayout) itemView.findViewById(R.id.followers_layout);

@@ -21,8 +21,9 @@ import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.presenter.profile.ProfileContract;
 import com.zpauly.githubapp.presenter.profile.ProfilePresenter;
+import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.events.EventsActivity;
-import com.zpauly.githubapp.view.followers.FollowersActivity;
+import com.zpauly.githubapp.view.followers.UsersActivity;
 import com.zpauly.githubapp.view.repositories.ReposActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -85,8 +86,6 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
         setupSwpieRefreshLayout();
 
-        setClickListener();
-
         mSwipeRefreshLayout.setRefreshing(true);
         loadUserInfo();
     }
@@ -107,7 +106,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         mBioTV.setText(userInfo.getBio());
         mLocationTV.setText(userInfo.getLocation());
         mEmailTV.setText(userInfo.getEmail());
-        mJoinTimeTV.setText(userInfo.getCreated_at());
+        mJoinTimeTV.setText(TextUtil.timeConverter(userInfo.getCreated_at()));
     }
 
     @Override
@@ -138,20 +137,14 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         mFollowersLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.putExtra(FollowersActivity.FOLLOW_ID, FollowersActivity.FOLLOWERS);
-                intent.setClass(getContext(), FollowersActivity.class);
-                startActivity(intent);
+                UsersActivity.launchActivity(getContext(), null, UsersActivity.FOLLOWERS);
             }
         });
 
         mFollowingLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.putExtra(FollowersActivity.FOLLOW_ID, FollowersActivity.FOLLOWING);
-                intent.setClass(getContext(), FollowersActivity.class);
-                startActivity(intent);
+                UsersActivity.launchActivity(getContext(), null, UsersActivity.FOLLOWING);
             }
         });
 
@@ -196,7 +189,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     @Override
     public void loadInfoSuccess() {
         mSwipeRefreshLayout.setRefreshing(false);
-        Log.i(TAG, "load success");
+        setClickListener();
     }
 
     @Override

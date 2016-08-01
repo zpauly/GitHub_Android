@@ -1,7 +1,6 @@
 package com.zpauly.githubapp.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,7 +11,7 @@ import com.bumptech.glide.Glide;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.response.FollowersBean;
 import com.zpauly.githubapp.view.profile.OthersActivity;
-import com.zpauly.githubapp.view.viewholder.FollowersViewHolder;
+import com.zpauly.githubapp.view.viewholder.UsersViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +19,14 @@ import java.util.List;
 /**
  * Created by zpauly on 16-6-15.
  */
-public class FollowersRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<FollowersViewHolder> {
+public class UsersRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<UsersViewHolder> {
     private final String TAG = getClass().getName();
 
     private View mView;
 
     private List<FollowersBean> mData;
 
-    public FollowersRecyclerViewAdapter(Context context) {
+    public UsersRecyclerViewAdapter(Context context) {
         super(context);
         mData = new ArrayList<>();
     }
@@ -44,22 +43,19 @@ public class FollowersRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Fo
     }
 
     @Override
-    public FollowersViewHolder createContentViewHolder(ViewGroup parent, int viewType) {
-        mView = LayoutInflater.from(mContext).inflate(R.layout.item_recyclerview_followers, parent, false);
-        FollowersViewHolder viewHolder = new FollowersViewHolder(mView);
+    public UsersViewHolder createContentViewHolder(ViewGroup parent, int viewType) {
+        mView = LayoutInflater.from(mContext).inflate(R.layout.item_recyclerview_users, parent, false);
+        UsersViewHolder viewHolder = new UsersViewHolder(mView);
         return viewHolder;
     }
 
     @Override
-    public void bindContentViewHolder(FollowersViewHolder holder, int position) {
+    public void bindContentViewHolder(UsersViewHolder holder, int position) {
         final FollowersBean bean = mData.get(position);
         holder.mLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(mContext, OthersActivity.class);
-                intent.putExtra(OthersActivity.USERNAME, bean.getLogin());
-                mContext.startActivity(intent);
+                OthersActivity.lanuchActivity(mContext, bean.getLogin());
             }
         });
         holder.mUsernameTV.setText(bean.getLogin());

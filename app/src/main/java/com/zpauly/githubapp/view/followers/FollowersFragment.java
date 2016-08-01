@@ -4,18 +4,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.zpauly.githubapp.R;
-import com.zpauly.githubapp.adapter.FollowersRecyclerViewAdapter;
+import com.zpauly.githubapp.adapter.UsersRecyclerViewAdapter;
 import com.zpauly.githubapp.base.BaseFragment;
 import com.zpauly.githubapp.entity.response.FollowersBean;
 import com.zpauly.githubapp.presenter.follow.FollowContract;
 import com.zpauly.githubapp.presenter.follow.FollowPresenter;
-import com.zpauly.githubapp.ui.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +27,12 @@ public class FollowersFragment extends BaseFragment implements FollowContract.Vi
 
     private FollowContract.Presenter mPresenter;
     private List<FollowersBean> list = new ArrayList<>();
-    private FollowersRecyclerViewAdapter mRVAdapter;
+    private UsersRecyclerViewAdapter mRVAdapter;
 
     private SwipeRefreshLayout mSWLayout;
     private RecyclerView mContentRV;
 
-    private int followId = 0;
+    private int userId = 0;
 
     @Override
     public void onStop() {
@@ -48,7 +46,7 @@ public class FollowersFragment extends BaseFragment implements FollowContract.Vi
     protected void initViews(View view) {
         new FollowPresenter(getContext(), this);
 
-        followId = getArguments().getInt(FollowersActivity.FOLLOW_ID);
+        userId = getArguments().getInt(UsersActivity.USERS_ID);
 
         mSWLayout = (SwipeRefreshLayout) view.findViewById(R.id.followers_SWLayout);
         mContentRV = (RecyclerView) view.findViewById(R.id.followers_content_RV);
@@ -77,7 +75,7 @@ public class FollowersFragment extends BaseFragment implements FollowContract.Vi
     }
 
     private void setupRecyclerView() {
-        mRVAdapter = new FollowersRecyclerViewAdapter(getContext());
+        mRVAdapter = new UsersRecyclerViewAdapter(getContext());
 
         mContentRV.setLayoutManager(new LinearLayoutManager(getContext()));
         mContentRV.setAdapter(mRVAdapter);
@@ -106,11 +104,11 @@ public class FollowersFragment extends BaseFragment implements FollowContract.Vi
     }
 
     private void loadFollow() {
-        switch (followId) {
-            case FollowersActivity.FOLLOWERS:
+        switch (userId) {
+            case UsersActivity.FOLLOWERS:
                 mPresenter.getFollowers();
                 break;
-            case FollowersActivity.FOLLOWING:
+            case UsersActivity.FOLLOWING:
                 mPresenter.getFollowing();
                 break;
             default:

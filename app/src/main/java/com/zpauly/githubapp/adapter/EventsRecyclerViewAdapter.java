@@ -18,6 +18,7 @@ import com.zpauly.githubapp.entity.response.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.events.EventsBean;
 import com.zpauly.githubapp.entity.response.events.Payload;
 import com.zpauly.githubapp.utils.TextUtil;
+import com.zpauly.githubapp.view.profile.OthersActivity;
 import com.zpauly.githubapp.view.repositories.RepoContentActivity;
 import com.zpauly.githubapp.view.viewholder.EventsViewHolder;
 
@@ -74,6 +75,13 @@ public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Event
         holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
         holder.mCommitsRV.setAdapter(mAdapter);
         setAction(data.getType(), data.getPayload(), holder, position);
+
+        holder.mUserAvatarIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OthersActivity.lanuchActivity(mContext, data.getActor().getLogin());
+            }
+        });
 
         holder.mLayout.setOnClickListener(new View.OnClickListener() {
             @Override

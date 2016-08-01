@@ -1,5 +1,7 @@
 package com.zpauly.githubapp.view.followers;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
@@ -14,14 +16,14 @@ import com.zpauly.githubapp.view.profile.OthersActivity;
 /**
  * Created by zpauly on 16-6-15.
  */
-public class FollowersActivity extends ToolbarActivity {
+public class UsersActivity extends ToolbarActivity {
     private final String TAG = getClass().getName();
 
-    public static final String FOLLOW_ID = "FOLLOW_ID";
+    public static final String USERS_ID = "USERS_ID";
     public static final int FOLLOWERS = 0;
     public static final int FOLLOWING = 1;
 
-    private int followId;
+    private int userId;
 
     private AppBarLayout mABLayout;
 
@@ -30,7 +32,7 @@ public class FollowersActivity extends ToolbarActivity {
 
     @Override
     public void initViews() {
-        followId = getIntent().getIntExtra(FOLLOW_ID, -1);
+        userId = getIntent().getIntExtra(USERS_ID, -1);
 
         mABLayout = (AppBarLayout) findViewById(R.id.followers_ABLayout);
         setFragment();
@@ -40,7 +42,7 @@ public class FollowersActivity extends ToolbarActivity {
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
         Bundle bundle = new Bundle();
-        bundle.putInt(FOLLOW_ID, followId);
+        bundle.putInt(USERS_ID, userId);
         bundle.putString(OthersActivity.USERNAME, username);
         Fragment fragment = new FollowersFragment();
         fragment.setArguments(bundle);
@@ -56,9 +58,9 @@ public class FollowersActivity extends ToolbarActivity {
     @Override
     protected void setToolbar() {
         super.setToolbar();
-        if (followId == FOLLOWERS) {
+        if (userId == FOLLOWERS) {
             setToolbarTitle(R.string.followers);
-        } else if (followId == FOLLOWING) {
+        } else if (userId == FOLLOWING) {
             setToolbarTitle(R.string.following);
         }
         setOnToolbarNavClickedListener(new View.OnClickListener() {
@@ -67,5 +69,13 @@ public class FollowersActivity extends ToolbarActivity {
                 onBackPressed();
             }
         });
+    }
+
+    public static void launchActivity(Context context, String username, int userId) {
+        Intent intent = new Intent();
+        intent.putExtra(OthersActivity.USERNAME, username);
+        intent.putExtra(USERS_ID, userId);
+        intent.setClass(context, UsersActivity.class);
+        context.startActivity(intent);
     }
 }
