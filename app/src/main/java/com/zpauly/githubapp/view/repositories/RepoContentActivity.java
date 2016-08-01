@@ -64,9 +64,15 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
     private AppCompatTextView mViewFilesTV;
     private ProgressBar mReadMePB;
 
-    private RepositoryContentBean contentBean;
     private String content;
     private RepositoriesBean repoBean;
+
+    @Override
+    protected void onStop() {
+        mPresenter.stop();
+        Glide.clear(mAvatarIV);
+        super.onStop();
+    }
 
     @Override
     public void initViews() {
@@ -123,6 +129,12 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
                 loadReadMe();
             }
         });
+        mViewFilesTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override
@@ -140,6 +152,8 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
     private void loadReadMe() {
         mLoadAgainTV.setVisibility(View.GONE);
         mReadMePB.setVisibility(View.VISIBLE);
+        mReadMeTV.setText(null);
+        mReadMeTV.setVisibility(View.GONE);
         mPresenter.loadReadMe();
     }
 
@@ -166,7 +180,6 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
         intent.putExtra(LOGIN, login);
         intent.setClass(context, RepoContentActivity.class);
         context.startActivity(intent);
-//        ((Activity) context).finish();
     }
 
     @Override
@@ -188,14 +201,13 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
     @Override
     public void loadingReadMe(String string) {
         content = HtmlUtil.format(string).toString();
-        Log.i(TAG, content);
     }
 
     @Override
     public void loadRepoSuccess() {
         loadReadMe();
         mSRLayout.setRefreshing(false);
-        Glide.with(this)
+        Glide.with(getApplicationContext())
                 .load(Uri.parse(repoBean.getOwner().getAvatar_url()))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .crossFade()

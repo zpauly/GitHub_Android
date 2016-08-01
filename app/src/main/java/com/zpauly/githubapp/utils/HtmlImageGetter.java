@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.text.Html;
 import android.util.Log;
+import android.util.LruCache;
 import android.view.Display;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.zpauly.githubapp.ui.URLDrawable;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -38,6 +40,14 @@ public class HtmlImageGetter implements Html.ImageGetter {
     private int width;
     private int height;
 
+    public static final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+    private static final LruCache<String, File> cache = new LruCache<String, File>(maxMemory / 8) {
+        @Override
+        protected int sizeOf(String key, File value) {
+            return (int) (value.length() / 1024);
+        }
+    };
+
     /***
      * Construct the URLImageParser which will execute AsyncTask and refresh the container
      * @param t
@@ -58,7 +68,6 @@ public class HtmlImageGetter implements Html.ImageGetter {
             wm.getDefaultDisplay().getSize(p);
             size = p;
         }
-
         fileDir = context.getCacheDir();
         width = size.x;
         height = size.y;
@@ -66,16 +75,13 @@ public class HtmlImageGetter implements Html.ImageGetter {
 
     @Override
     public Drawable getDrawable(String source) {
-        URLDrawable urlDrawable = new URLDrawable();
+        final URLDrawable urlDrawable = new URLDrawable();
 
-        // get the actual source
         ImageGetterAsyncTask asyncTask =
                 new ImageGetterAsyncTask(urlDrawable);
 
         asyncTask.execute(source);
 
-        // return reference to URLDrawable where I will change with actual image from
-        // the src tag
         return urlDrawable;
     }
 
@@ -96,7 +102,6 @@ public class HtmlImageGetter implements Html.ImageGetter {
         @Override
         protected void onPostExecute(Drawable result) {
             if (result != null) {
-                Log.i(getClass().getName(), "width = " + result.getIntrinsicWidth());
                 // set the correct bound according to the result from HTTP call
                 urlDrawable.setBounds(0, 0, result.getIntrinsicWidth(), result.getIntrinsicHeight());
 
@@ -122,22 +127,31 @@ public class HtmlImageGetter implements Html.ImageGetter {
          * @return
          */
         public Drawable fetchDrawable(String urlString) {
-            File imageFile;
             String url;
             if (urlString.startsWith("/")) {
                 url = baseUrl + urlString;
             } else {
                 url = urlString;
             }
+            File imageFile;
             try {
                 Log.i(getClass().getName(), url);
-                URL aURL = new URL(url);
-                final URLConnection conn = aURL.openConnection();
-                conn.connect();
-                final BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
-                imageFile = File.createTempFile("image", ".tmp", fileDir);
-                FileUtil.save(imageFile, bis);
-                if (conn.getContentType().equals("image/gif")) {
+                if ((imageFile = cache.get(url)) == null) {
+                    URL aURL = new URL(url);
+                    final URLConnection conn = aURL.openConnection();
+                    conn.connect();
+                    final BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
+                    imageFile = File.createTempFile("image", ".tmp", fileDir);
+                    FileUtil.save(imageFile, bis);
+                    cache.put(url, imageFile);
+                    if (cache.get(url) == null) {
+                        Log.i(TAG, "cache failed");
+                    }
+                    Log.i(TAG, "load from http");
+                } else {
+                    Log.i(TAG, "load from cache");
+                }
+                if (url.endsWith("gif")) {
                     GifDrawable gifDrawable = new GifDrawable(imageFile);
                     gifDrawable.setBounds(0, 0, gifDrawable.getIntrinsicWidth(), gifDrawable.getIntrinsicHeight());
                     return gifDrawable;
