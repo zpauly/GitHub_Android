@@ -3,18 +3,22 @@ package com.zpauly.githubapp.utils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.text.Html;
 import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.zpauly.githubapp.ui.URLDrawable;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -23,9 +27,15 @@ import java.net.URLConnection;
  */
 
 public class HtmlImageGetter implements Html.ImageGetter {
-    private Context c;
+    private final String TAG = getClass().getName();
+
+    private Context context;
     private TextView container;
     private String baseUrl;
+
+    private File fileDir;
+    private int width;
+    private int height;
 
     /***
      * Construct the URLImageParser which will execute AsyncTask and refresh the container
@@ -33,9 +43,24 @@ public class HtmlImageGetter implements Html.ImageGetter {
      * @param c
      */
     public HtmlImageGetter(TextView t, Context c, String baseUrl) {
-        this.c = c;
+        this.context = c;
         this.container = t;
         this.baseUrl = baseUrl;
+
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        final Point size;
+        if (Build.VERSION.SDK_INT < 13) {
+            Display display = wm.getDefaultDisplay();
+            size = new Point(display.getWidth(), display.getHeight());
+        } else {
+            Point p = new Point();
+            wm.getDefaultDisplay().getSize(p);
+            size = p;
+        }
+
+        fileDir = context.getCacheDir();
+        width = size.x;
+        height = size.y;
     }
 
     @Override
@@ -109,7 +134,14 @@ public class HtmlImageGetter implements Html.ImageGetter {
                 final URLConnection conn = aURL.openConnection();
                 conn.connect();
                 final BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
-                final Bitmap bm = BitmapFactory.decodeStream(bis);
+                Bitmap bm = ImageUtil.getBitmap(bis, width, height);
+                if (bm == null) {
+                    Log.i(TAG, "bm = null");
+                }
+                /*Bitmap bitmap = BitmapFactory.decodeStream(bis);
+                if (bitmap == null) {
+                    Log.i(TAG, "bitmap = null");
+                }*/
                 Drawable drawable = new BitmapDrawable(bm);
                 drawable.setBounds(0, 0, 0 + drawable.getIntrinsicWidth(), 0
                         + drawable.getIntrinsicHeight());
