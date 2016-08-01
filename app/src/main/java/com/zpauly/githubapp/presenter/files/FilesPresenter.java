@@ -43,6 +43,7 @@ public class FilesPresenter implements FilesContract.Presenter {
 
     @Override
     public void stop() {
+        FileDirDao.delete();
         if (contentSubscriber != null) {
             if (contentSubscriber.isUnsubscribed()) {
                 contentSubscriber.unsubscribe();
@@ -95,6 +96,7 @@ public class FilesPresenter implements FilesContract.Presenter {
             @Override
             public void call(Subscriber<? super List<FileDirModel>> subscriber) {
                 subscriber.onNext(FileDirDao.query("parentPath", path));
+                subscriber.onCompleted();
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

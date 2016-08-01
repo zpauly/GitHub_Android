@@ -1,5 +1,6 @@
 package com.zpauly.githubapp.view.files;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.AppBarLayout;
@@ -16,6 +17,7 @@ import com.zpauly.githubapp.db.FileDirDao;
 import com.zpauly.githubapp.db.FileDirModel;
 import com.zpauly.githubapp.entity.response.RepositoryContentBean;
 import com.zpauly.githubapp.presenter.files.FilesContract;
+import com.zpauly.githubapp.presenter.files.FilesPresenter;
 import com.zpauly.githubapp.ui.DividerItemDecoration;
 import com.zpauly.githubapp.view.ToolbarActivity;
 
@@ -57,6 +59,8 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
 
     @Override
     public void initViews() {
+        new FilesPresenter(this, this);
+
         getAttrs();
 
         mABLayout = (AppBarLayout) findViewById(R.id.files_ABLayout);
@@ -66,6 +70,9 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
 
         setupRecyclerView();
         setupSwipeRefreshLayout();
+
+        mSRLayout.setRefreshing(true);
+        getContents(path);
     }
 
     private void setupSwipeRefreshLayout() {
@@ -83,17 +90,18 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         mDirAdapter = new FileDirRecyclerViewAdapter(this);
         mPathAdapter = new PathRecyclerViewAdapter(this);
 
-        mPathRV.setAdapter(mPathAdapter);
         mPathRV.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        mPathRV.setAdapter(mPathAdapter);
 
-        mContentRV.setAdapter(mDirAdapter);
         mContentRV.setLayoutManager(new LinearLayoutManager(this));
         mContentRV.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
+        mContentRV.setAdapter(mDirAdapter);
     }
 
     private void getAttrs() {
         repo = getIntent().getStringExtra(REPO);
         owner = getIntent().getStringExtra(OWNER);
+        path = "";
     }
 
     private void loadContents() {
@@ -101,7 +109,11 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
             mPresenter.loadContent(owner, repo, path);
         } else {
             path = list.get(0).getPath();
-            List<String> paths = Arrays.asList(path.split("/"));
+            String[] strs = path.split("/");
+            List<String> paths = new ArrayList<>();
+            for (int i = 0; i < strs.length - 1; i ++) {
+                paths.add(strs[i]);
+            }
             mPathAdapter.swapData(paths);
             mDirAdapter.addData(list);
             mSRLayout.setRefreshing(false);
@@ -135,6 +147,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         intent.putExtra(OWNER, owner);
         intent.setClass(context, FilesActivity.class);
         context.startActivity(intent);
+        ((Activity) context).finish();
     }
 
     @Override

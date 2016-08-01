@@ -2,6 +2,7 @@ package com.zpauly.githubapp.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import java.util.List;
  */
 
 public class FileDirRecyclerViewAdapter extends RecyclerView.Adapter<FileDirViewHolder> {
+    private final String TAG = getClass().getName();
     private Context mContext;
 
     private List<FileDirModel> mData;
@@ -44,9 +46,10 @@ public class FileDirRecyclerViewAdapter extends RecyclerView.Adapter<FileDirView
         FileDirModel data = mData.get(position);
         String[] strs = data.getPath().split("/");
         holder.mFileNameTV.setText(strs[strs.length - 1]);
-        if (data.getType().equals("file")) {
+        Log.i(TAG, data.getType());
+        if (data.getType().equals("dir")) {
             holder.mTypeIV.setImageResource(R.mipmap.ic_dir);
-        } else if (data.getType().equals("dir")) {
+        } else if (data.getType().equals("file") || data.getType().equals("symlink")) {
             holder.mTypeIV.setImageResource(R.mipmap.ic_file);
         }
     }

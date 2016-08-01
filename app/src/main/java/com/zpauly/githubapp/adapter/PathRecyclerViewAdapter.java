@@ -2,9 +2,11 @@ package com.zpauly.githubapp.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.listener.OnItemClickListener;
 import com.zpauly.githubapp.presenter.follow.FollowContract;
 import com.zpauly.githubapp.view.viewholder.PathViewHolder;
@@ -43,7 +45,9 @@ public class PathRecyclerViewAdapter extends RecyclerView.Adapter<PathViewHolder
 
     @Override
     public PathViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        View mView = LayoutInflater.from(mContext).inflate(R.layout.item_recyclerview_dirpath, parent, false);
+        PathViewHolder viewHolder = new PathViewHolder(mView);
+        return viewHolder;
     }
 
     @Override
