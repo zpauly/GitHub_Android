@@ -1,6 +1,5 @@
 package com.zpauly.githubapp.view.repositories;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -9,7 +8,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Html;
 import android.text.Spanned;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -18,11 +16,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.response.RepositoriesBean;
-import com.zpauly.githubapp.entity.response.RepositoryContentBean;
 import com.zpauly.githubapp.presenter.repos.RepoContentContract;
 import com.zpauly.githubapp.presenter.repos.RepoContentPresenter;
 import com.zpauly.githubapp.utils.HtmlImageGetter;
-import com.zpauly.githubapp.utils.HtmlUtil;
 import com.zpauly.githubapp.view.ToolbarActivity;
 import com.zpauly.githubapp.view.files.FilesActivity;
 import com.zpauly.githubapp.view.profile.OthersActivity;
@@ -74,6 +70,13 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
         mPresenter.stop();
         Glide.clear(mAvatarIV);
         super.onStop();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSRLayout.setRefreshing(true);
+        loadRepo();
     }
 
     @Override
@@ -131,12 +134,7 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
                 loadReadMe();
             }
         });
-        mViewFilesTV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FilesActivity.launchActivity(RepoContentActivity.this, login, name);
-            }
-        });
+        mViewFilesTV.setEnabled(false);
         mAvatarIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -209,7 +207,8 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
 
     @Override
     public void loadingReadMe(String string) {
-        content = HtmlUtil.format(string).toString();
+//        content = HtmlUtil.format(string).toString();
+        content = string;
     }
 
     @Override
@@ -226,6 +225,14 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
         mWatchersTV.setText(String.valueOf(repoBean.getWatchers_count()));
         mStargazersTV.setText(String.valueOf(repoBean.getStargazers_count()));
         mForksTV.setText(String.valueOf(repoBean.getForks_count()));
+        mViewFilesTV.setEnabled(true);
+        mViewFilesTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FilesActivity.launchActivity(RepoContentActivity.this, login, name,
+                        repoBean.getDefault_branch(), repoBean.getHtml_url());
+            }
+        });
     }
 
     @Override

@@ -16,6 +16,8 @@ public class FilesContract {
         void loadContent(String owner, String repo, String path);
 
         void getContentFromCache(String path);
+
+        void loadFile(String owner, String repo, String path);
     }
 
     public interface View extends BaseView<Presenter> {
@@ -30,5 +32,11 @@ public class FilesContract {
         void getContentFail();
 
         void gettingContent(List<FileDirModel> list);
+
+        void loadFileSuccess();
+
+        void loadFileFail();
+
+        void loadingFile(String file);
     }
 }

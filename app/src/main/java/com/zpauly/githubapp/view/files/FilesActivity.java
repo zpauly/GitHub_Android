@@ -3,9 +3,13 @@ package com.zpauly.githubapp.view.files;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 
@@ -19,6 +23,7 @@ import com.zpauly.githubapp.listener.OnDirItemClickListener;
 import com.zpauly.githubapp.presenter.files.FilesContract;
 import com.zpauly.githubapp.presenter.files.FilesPresenter;
 import com.zpauly.githubapp.ui.DividerItemDecoration;
+import com.zpauly.githubapp.utils.HtmlImageGetter;
 import com.zpauly.githubapp.view.ToolbarActivity;
 
 import java.util.ArrayList;
@@ -35,20 +40,29 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
 
     public static final String REPO = "REPO";
     public static final String OWNER = "OWNER";
+    public static final String BRANCH = "BRANCH";
+    public static final String URL = "URL";
 
     private AppBarLayout mABLayout;
     private SwipeRefreshLayout mSRLayout;
     private RecyclerView mPathRV;
     private RecyclerView mContentRV;
+    private NestedScrollView mFileContentLayout;
+    private AppCompatTextView mFileContentTV;
 
     private String repo;
     private String owner;
+    private String branch;
+    private String url;
     private String path;
 
     private FileDirRecyclerViewAdapter mDirAdapter;
     private PathRecyclerViewAdapter mPathAdapter;
 
     private List<FileDirModel> list;
+    private String fileContent;
+
+    private boolean isFileLoading = false;
 
     @Override
     protected void onStop() {
@@ -66,12 +80,14 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         mSRLayout = (SwipeRefreshLayout) findViewById(R.id.files_SRLayout);
         mPathRV = (RecyclerView) findViewById(R.id.files_path_RV);
         mContentRV = (RecyclerView) findViewById(R.id.files_content_RV);
+        mFileContentLayout = (NestedScrollView) findViewById(R.id.files_file_content_layout);
+        mFileContentTV = (AppCompatTextView) findViewById(R.id.files_file_content_TV);
 
         setupRecyclerView();
         setupSwipeRefreshLayout();
 
         mSRLayout.setRefreshing(true);
-        getContents(path);
+        getContents();
     }
 
     private void setupSwipeRefreshLayout() {
@@ -80,7 +96,11 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         mSRLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getContents(path);
+                if (isFileLoading) {
+                    getContents();
+                } else {
+                    loadFile();
+                }
             }
         });
     }
@@ -97,18 +117,48 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         mContentRV.setAdapter(mDirAdapter);
         mPathAdapter.setOnItemClickListener(new OnDirItemClickListener() {
             @Override
-            public void onClick(View v, String p) {
+            public void onClick(View v, String p, String type) {
+                if (p.equals(path)) {
+                    return;
+                }
+                isFileLoading = false;
+                mFileContentLayout.setVisibility(View.GONE);
                 path = p;
                 mSRLayout.setRefreshing(true);
-                getContents(p);
+                getContents();
             }
         });
         mDirAdapter.setOnItemClickListener(new OnDirItemClickListener() {
             @Override
-            public void onClick(View v, String p) {
+            public void onClick(View v, String p, String type) {
+                String[] strs = p.split("/");
+                if (p.equals("root system/" + path + "/" + strs[strs.length - 1])) {
+                    return;
+                }
                 path = p;
-                mSRLayout.setRefreshing(true);
-                getContents(path);
+                Log.i(TAG, p);
+                if (type != null ) {
+                    mSRLayout.setRefreshing(true);
+                    if (type.equals("dir")) {
+                        isFileLoading = false;
+                        getContents();
+                    } else if (type.equals("file")) {
+                        isFileLoading = true;
+                        loadFile();
+                        String[] s = p.split("/");
+                        List<String> paths = new ArrayList<>();
+                        for (int i = 0; i < s.length; i ++) {
+                            paths.add(s[i]);
+                        }
+                        mPathAdapter.swapData(paths);
+                        mContentRV.setVisibility(View.GONE);
+                        mFileContentTV.setText("");
+                        mFileContentLayout.setVisibility(View.VISIBLE);
+                    } else {
+                        isFileLoading = false;
+                        mSRLayout.setRefreshing(false);
+                    }
+                }
             }
         });
     }
@@ -116,6 +166,8 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
     private void getAttrs() {
         repo = getIntent().getStringExtra(REPO);
         owner = getIntent().getStringExtra(OWNER);
+        branch = getIntent().getStringExtra(BRANCH);
+        url = getIntent().getStringExtra(URL);
         path = "";
     }
 
@@ -128,14 +180,19 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
             for (int i = 0; i < strs.length - 1; i ++) {
                 paths.add(strs[i]);
             }
+            mContentRV.setVisibility(View.VISIBLE);
             mPathAdapter.swapData(paths);
             mDirAdapter.swapData(list);
             mSRLayout.setRefreshing(false);
         }
     }
 
-    private void getContents(String path) {
+    private void getContents() {
         mPresenter.getContentFromCache("root system/" + path);
+    }
+
+    private void loadFile() {
+        mPresenter.loadFile(owner, repo, path);
     }
 
     @Override
@@ -155,10 +212,12 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         setContentView(R.layout.activity_files);
     }
 
-    public static void launchActivity(Context context, String owner, String repo) {
+    public static void launchActivity(Context context, String owner, String repo, String branch, String url) {
         Intent intent = new Intent();
         intent.putExtra(REPO, repo);
         intent.putExtra(OWNER, owner);
+        intent.putExtra(BRANCH, branch);
+        intent.putExtra(URL, url);
         intent.setClass(context, FilesActivity.class);
         context.startActivity(intent);
 //        ((Activity) context).finish();
@@ -171,7 +230,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
 
     @Override
     public void loadContentSuccess() {
-        getContents(path);
+        getContents();
     }
 
     @Override
@@ -199,5 +258,25 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
     @Override
     public void gettingContent(List<FileDirModel> list) {
         this.list = list;
+    }
+
+    @Override
+    public void loadFileSuccess() {
+        HtmlImageGetter imageGetter = new HtmlImageGetter(mFileContentTV, this,
+                url + "/raw/" + branch);
+        Spanned htmlSpann = Html.fromHtml(fileContent, imageGetter, null);
+        mFileContentTV.setText(htmlSpann);
+        mSRLayout.setRefreshing(false);
+        Log.i(TAG, fileContent);
+    }
+
+    @Override
+    public void loadFileFail() {
+        mSRLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void loadingFile(String file) {
+        fileContent = file;
     }
 }

@@ -68,7 +68,7 @@ public class FileDirRecyclerViewAdapter extends RecyclerView.Adapter<FileDirView
             @Override
             public void onClick(View v) {
                 if (mOnDirItemClickListener != null) {
-                    mOnDirItemClickListener.onClick(v, data.getPath());
+                    mOnDirItemClickListener.onClick(v, data.getPath(), data.getType());
                 }
             }
         });

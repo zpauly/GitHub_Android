@@ -25,6 +25,7 @@ public class FilesPresenter implements FilesContract.Presenter {
     private FilesContract.View mFilesView;
 
     private Subscriber<List<RepositoryContentBean>> contentSubscriber;
+    private Subscriber<String> fileSubscriber;
     private Observer<List<FileDirModel>> observer;
 
     private RepositoriesMethod method;
@@ -70,7 +71,7 @@ public class FilesPresenter implements FilesContract.Presenter {
                 mFilesView.loadingContent(beanList);
             }
         };
-        method.getRepositoryContent(contentSubscriber, owner, repo, path);
+        method.getRepositoryContent(contentSubscriber, null, owner, repo, path);
     }
 
     @Override
@@ -101,5 +102,28 @@ public class FilesPresenter implements FilesContract.Presenter {
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
+    }
+
+    @Override
+    public void loadFile(String owner, String repo, String path) {
+        fileSubscriber = new Subscriber<String>() {
+            @Override
+            public void onCompleted() {
+                mFilesView.loadFileSuccess();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                mFilesView.loadFileFail();
+            }
+
+            @Override
+            public void onNext(String s) {
+                mFilesView.loadingFile(s);
+            }
+        };
+        method.getFileContent(fileSubscriber, "application/vnd.github.VERSION.raw",
+                owner, repo, path);
     }
 }

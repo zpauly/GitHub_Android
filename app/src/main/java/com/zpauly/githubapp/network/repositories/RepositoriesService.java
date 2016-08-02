@@ -69,8 +69,14 @@ public interface RepositoriesService {
      * @return
      */
     @GET("/repos/{owner}/{repo}/contents/{path}")
-    Observable<List<RepositoryContentBean>> getRepositoryContent(@Path("owner") String owner
-            , @Path("repo") String repo, @Path("path") String path);
+    Observable<List<RepositoryContentBean>> getRepositoryContent(@Nullable @Header("Accept") String acc,
+                                                                 @Path("owner") String owner,
+                                                                 @Path("repo") String repo, @Path("path") String path);
+
+    @GET("/repos/{owner}/{repo}/contents/{path}")
+    Observable<String> getFileContent(@Nullable @Header("Accept") String acc,
+                                                                 @Path("owner") String owner,
+                                                                 @Path("repo") String repo, @Path("path") String path);
 
     /**
      * Get the README

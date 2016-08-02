@@ -12,6 +12,7 @@ import java.util.List;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -59,9 +60,20 @@ public class RepositoriesMethod {
                 .subscribe(observer);
     }
 
-    public void getRepositoryContent(Observer<List<RepositoryContentBean>> observer, String owner,
-                                     String repo, String path) {
-        service.getRepositoryContent(owner, repo, path)
+    public void getRepositoryContent(Observer<List<RepositoryContentBean>> observer, String acc,
+                                     String owner, String repo, String path) {
+        service.getRepositoryContent(acc, owner, repo, path)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getFileContent(Observer<String> observer, String acc,
+                               String owner, String repo, String path) {
+        Retrofit retrofit = RetrofitUtil.initCustomRetrofit(Api.GitHubApi, StringConverterFactory.create(),
+                RxJavaCallAdapterFactory.create());
+        RepositoriesService service = retrofit.create(RepositoriesService.class);
+        service.getFileContent(acc, owner, repo, path)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

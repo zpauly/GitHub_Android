@@ -151,7 +151,6 @@ public class HtmlImageGetter implements Html.ImageGetter {
                     if (cache.get(url) == null) {
                         Log.i(TAG, "cache failed");
                     }
-                } else {
                 }
                 if (conn.getContentType().startsWith("image/svg")) {
                     Bitmap bitmap = ImageUtil.renderSvgToBitmap(context.getResources(),

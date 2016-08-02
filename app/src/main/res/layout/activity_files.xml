@@ -42,6 +42,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/files_file_content_layout"
+                android:visibility="gone"
+                android:padding="@dimen/components_padding"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/files_file_content_TV"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </android.support.v4.widget.NestedScrollView>
+
         </LinearLayout>
 
     </android.support.v4.widget.SwipeRefreshLayout>
