@@ -15,3 +15,7 @@ A simple client for GitHub.
 <img src="https://github.com/zpauly/GitHub_Android/blob/master/images/pic7.png" width = "25%" height = "25%" align=center />
 <img src="https://github.com/zpauly/GitHub_Android/blob/master/images/pic8.png" width = "25%" height = "25%" align=center />
 <img src="https://github.com/zpauly/GitHub_Android/blob/master/images/pic9.png" width = "25%" height = "25%" align=center />
+<br/>
+<br/>
+<img src="https://github.com/zpauly/GitHub_Android/blob/master/images/pic10.png" width = "25%" height = "25%" align=center />
+<img src="https://github.com/zpauly/GitHub_Android/blob/master/images/pic11.png" width = "25%" height = "25%" align=center />

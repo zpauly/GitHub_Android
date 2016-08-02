@@ -292,7 +292,6 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
                 .setLang(language)
                 .into(mFileContentWB);
         mSRLayout.setRefreshing(false);
-        Log.i(TAG, fileContent);
     }
 
     @Override
@@ -302,6 +301,6 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
 
     @Override
     public void loadingFile(String file) {
-        fileContent = file + "\n" + "\n" + "\n" + "\n" + "\n";
+        fileContent = file + "\n" + "\n" + "\n" + "\n";
     }
 }
