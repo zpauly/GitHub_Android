@@ -39,7 +39,8 @@ public interface UserService {
                                                  @Query("page") int pageId);
 
     @GET("/users/{username}/followers")
-    Observable<List<FollowersBean>> getUserFollowers(@Path("username") String username,
+    Observable<List<FollowersBean>> getUserFollowers(@Header("Authorization") String auth,
+                                                     @Path("username") String username,
                                                      @Query("page") int pageId);
 
     /**
@@ -52,6 +53,7 @@ public interface UserService {
                                                  @Query("page") int pageId);
 
     @GET("/users/{username}/following")
-    Observable<List<FollowersBean>> getUserFollowing(@Path("username") String username,
+    Observable<List<FollowersBean>> getUserFollowing(@Header("Authorization") String auth,
+                                                     @Path("username") String username,
                                                      @Query("page") int pageId);
 }

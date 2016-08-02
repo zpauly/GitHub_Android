@@ -1,11 +1,14 @@
 package com.zpauly.githubapp.presenter.repos;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.entity.response.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.RepositoryContentBean;
 import com.zpauly.githubapp.network.repositories.RepositoriesMethod;
 import com.zpauly.githubapp.presenter.repos.RepoContentContract.Presenter;
+import com.zpauly.githubapp.utils.SPUtil;
 
 import java.util.List;
 
@@ -21,6 +24,7 @@ public class RepoContentPresenter implements Presenter {
     private Context mContext;
     private RepoContentContract.View mRepoContentView;
 
+    private String auth;
     private RepositoriesMethod method;
 
     private Subscriber<String> repoContentSubscriber;
@@ -35,6 +39,7 @@ public class RepoContentPresenter implements Presenter {
 
     @Override
     public void start() {
+        auth = SPUtil.getString(mContext, Constants.USER_INFO, Constants.USER_AUTH, null);
         method = RepositoriesMethod.getInstance();
     }
 
@@ -71,7 +76,8 @@ public class RepoContentPresenter implements Presenter {
                 mRepoContentView.loadingReadMe(string);
             }
         };
-        method.getReadMe(repoContentSubscriber, mRepoContentView.getUsername(),
+        Log.i(TAG, auth);
+        method.getReadMe(repoContentSubscriber, auth, mRepoContentView.getUsername(),
                 mRepoContentView.getRepoName());
     }
 
@@ -94,6 +100,7 @@ public class RepoContentPresenter implements Presenter {
                 mRepoContentView.loadingRepo(repositoriesBean);
             }
         };
-        method.getRepository(repoSubscriber, mRepoContentView.getUsername(), mRepoContentView.getRepoName());
+        Log.i(TAG, auth);
+        method.getRepository(repoSubscriber, auth, mRepoContentView.getUsername(), mRepoContentView.getRepoName());
     }
 }

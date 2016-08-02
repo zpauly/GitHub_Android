@@ -51,13 +51,17 @@ public interface RepositoriesService {
             , @Nullable @Query("sort") String sort, @Query("page") int pageId);
 
     @GET("/users/{username}/repos")
-    Observable<List<RepositoriesBean>> getRepositories(@Path("username") String username
-            , @Nullable @Query("affiliation") List<String> affiliation
-            , @Nullable @Query("sort") String sort, @Query("page") int pageId);
+    Observable<List<RepositoriesBean>> getRepositories(@Header("Authorization") String auth,
+                                                       @Path("username") String username,
+                                                       @Nullable @Query("affiliation") List<String> affiliation,
+                                                       @Nullable @Query("sort") String sort,
+                                                       @Query("page") int pageId);
 
     //repo
     @GET("/repos/{username}/{repo}")
-    Observable<RepositoriesBean> getRepository(@Path("username") String username, @Path("repo") String repo);
+    Observable<RepositoriesBean> getRepository(@Header("Authorization") String auth,
+                                               @Path("username") String username,
+                                               @Path("repo") String repo);
 
     //contents
     /**
@@ -70,13 +74,15 @@ public interface RepositoriesService {
      */
     @GET("/repos/{owner}/{repo}/contents/{path}")
     Observable<List<RepositoryContentBean>> getRepositoryContent(@Nullable @Header("Accept") String acc,
+                                                                 @Header("Authorization") String auth,
                                                                  @Path("owner") String owner,
                                                                  @Path("repo") String repo, @Path("path") String path);
 
     @GET("/repos/{owner}/{repo}/contents/{path}")
     Observable<String> getFileContent(@Nullable @Header("Accept") String acc,
-                                                                 @Path("owner") String owner,
-                                                                 @Path("repo") String repo, @Path("path") String path);
+                                      @Header("Authorization") String auth,
+                                      @Path("owner") String owner,
+                                      @Path("repo") String repo, @Path("path") String path);
 
     /**
      * Get the README
@@ -86,6 +92,7 @@ public interface RepositoriesService {
      * @return
      */
     @GET("/repos/{owner}/{repo}/readme")
-    Observable<String> getReadMe(@Header("Accept") String acc,
-                                                @Path("owner") String owner, @Path("repo") String repo);
+    Observable<String> getReadMe(@Header("Authorization") String auth,
+                                 @Header("Accept") String acc,
+                                 @Path("owner") String owner, @Path("repo") String repo);
 }

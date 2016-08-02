@@ -1,11 +1,14 @@
 package com.zpauly.githubapp.presenter.files;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.db.FileDirDao;
 import com.zpauly.githubapp.db.FileDirModel;
 import com.zpauly.githubapp.entity.response.RepositoryContentBean;
 import com.zpauly.githubapp.network.repositories.RepositoriesMethod;
+import com.zpauly.githubapp.utils.SPUtil;
 
 import java.util.List;
 
@@ -20,6 +23,8 @@ import rx.schedulers.Schedulers;
  */
 
 public class FilesPresenter implements FilesContract.Presenter {
+    private final String TAG = getClass().getName();
+
     private Context mContext;
 
     private FilesContract.View mFilesView;
@@ -28,6 +33,7 @@ public class FilesPresenter implements FilesContract.Presenter {
     private Subscriber<String> fileSubscriber;
     private Observer<List<FileDirModel>> observer;
 
+    private String auth;
     private RepositoriesMethod method;
 
     public FilesPresenter(Context context, FilesContract.View view) {
@@ -39,6 +45,7 @@ public class FilesPresenter implements FilesContract.Presenter {
 
     @Override
     public void start() {
+        auth = SPUtil.getString(mContext, Constants.USER_INFO, Constants.USER_AUTH, null);
         method = RepositoriesMethod.getInstance();
     }
 
@@ -71,7 +78,8 @@ public class FilesPresenter implements FilesContract.Presenter {
                 mFilesView.loadingContent(beanList);
             }
         };
-        method.getRepositoryContent(contentSubscriber, null, owner, repo, path);
+        Log.i(TAG, auth);
+        method.getRepositoryContent(contentSubscriber, auth, null, owner, repo, path);
     }
 
     @Override
@@ -123,7 +131,8 @@ public class FilesPresenter implements FilesContract.Presenter {
                 mFilesView.loadingFile(s);
             }
         };
-        method.getFileContent(fileSubscriber, "application/vnd.github.VERSION.raw",
+        Log.i(TAG, auth);
+        method.getFileContent(fileSubscriber, auth, "application/vnd.github.VERSION.raw",
                 owner, repo, path);
     }
 }

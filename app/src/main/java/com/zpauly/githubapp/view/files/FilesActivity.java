@@ -12,7 +12,10 @@ import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 
+import com.protectsoft.webviewcode.Codeview;
+import com.protectsoft.webviewcode.Settings;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.FileDirRecyclerViewAdapter;
 import com.zpauly.githubapp.adapter.PathRecyclerViewAdapter;
@@ -47,8 +50,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
     private SwipeRefreshLayout mSRLayout;
     private RecyclerView mPathRV;
     private RecyclerView mContentRV;
-    private NestedScrollView mFileContentLayout;
-    private AppCompatTextView mFileContentTV;
+    private WebView mFileContentWB;
 
     private String repo;
     private String owner;
@@ -61,7 +63,6 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
 
     private List<FileDirModel> list;
     private String fileContent;
-
     private boolean isFileLoading = false;
 
     @Override
@@ -80,8 +81,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         mSRLayout = (SwipeRefreshLayout) findViewById(R.id.files_SRLayout);
         mPathRV = (RecyclerView) findViewById(R.id.files_path_RV);
         mContentRV = (RecyclerView) findViewById(R.id.files_content_RV);
-        mFileContentLayout = (NestedScrollView) findViewById(R.id.files_file_content_layout);
-        mFileContentTV = (AppCompatTextView) findViewById(R.id.files_file_content_TV);
+        mFileContentWB = (WebView) findViewById(R.id.files_file_content_WB);
 
         setupRecyclerView();
         setupSwipeRefreshLayout();
@@ -121,8 +121,9 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
                 if (p.equals(path)) {
                     return;
                 }
+                mSRLayout.setEnabled(false);
                 isFileLoading = false;
-                mFileContentLayout.setVisibility(View.GONE);
+                mFileContentWB.setVisibility(View.GONE);
                 path = p;
                 mSRLayout.setRefreshing(true);
                 getContents();
@@ -152,8 +153,12 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
                         }
                         mPathAdapter.swapData(paths);
                         mContentRV.setVisibility(View.GONE);
-                        mFileContentTV.setText("");
-                        mFileContentLayout.setVisibility(View.VISIBLE);
+                        mFileContentWB.setVisibility(View.VISIBLE);
+                        Codeview.with(getApplicationContext())
+                                .withCode("")
+                                .setStyle(Settings.WithStyle.DARKULA)
+                                .setLang(Settings.Lang.JAVA)
+                                .into(mFileContentWB);
                     } else {
                         isFileLoading = false;
                         mSRLayout.setRefreshing(false);
@@ -262,10 +267,30 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
 
     @Override
     public void loadFileSuccess() {
-        HtmlImageGetter imageGetter = new HtmlImageGetter(mFileContentTV, this,
-                url + "/raw/" + branch);
-        Spanned htmlSpann = Html.fromHtml(fileContent, imageGetter, null);
-        mFileContentTV.setText(htmlSpann);
+        mSRLayout.setEnabled(false);
+        String language = null;
+        if (path.endsWith(".java")) {
+            language = Settings.Lang.JAVA;
+        } else if (path.endsWith(".c") || path.endsWith(".cpp")) {
+            language = Settings.Lang.CPLUSPLUS;
+        } else if (path.endsWith(".cs")) {
+            language = Settings.Lang.CSHARP;
+        } else if (path.endsWith(".js")) {
+            language = Settings.Lang.JAVASCRIPT;
+        } else if (path.endsWith(".py")) {
+            language = Settings.Lang.PYTHON;
+        } else if (path.endsWith(".rb")) {
+            language = Settings.Lang.RUBY;
+        } else if (path.endsWith(".php")) {
+            language = Settings.Lang.PHP;
+        } else if (path.endsWith(".md")){
+
+        }
+        Codeview.with(getApplicationContext())
+                .withCode(fileContent)
+                .setStyle(Settings.WithStyle.DARKULA)
+                .setLang(language)
+                .into(mFileContentWB);
         mSRLayout.setRefreshing(false);
         Log.i(TAG, fileContent);
     }
@@ -277,6 +302,6 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
 
     @Override
     public void loadingFile(String file) {
-        fileContent = file;
+        fileContent = file + "\n" + "\n" + "\n" + "\n" + "\n";
     }
 }

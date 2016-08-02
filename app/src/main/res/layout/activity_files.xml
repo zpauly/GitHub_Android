@@ -21,6 +21,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -42,19 +43,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
-            <android.support.v4.widget.NestedScrollView
-                android:id="@+id/files_file_content_layout"
+            <WebView
+                android:id="@+id/files_file_content_WB"
                 android:visibility="gone"
-                android:padding="@dimen/components_padding"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/files_file_content_TV"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-            </android.support.v4.widget.NestedScrollView>
+                android:layout_height="match_parent" />
 
         </LinearLayout>
 

@@ -82,7 +82,7 @@ public class ReposPresenter implements ReposContract.Presenter {
         List<String> affiliation = new ArrayList<>();
         affiliation.add(RepositoriesService.AFFILIATION_OWNER);
         if (mReposView.getUsername() != null) {
-            mReposMethod.getRepositories(mReposSubscriber, mReposView.getUsername(), affiliation, RepositoriesService.SORT_ALL, pageId);
+            mReposMethod.getRepositories(mReposSubscriber, auth, mReposView.getUsername(), affiliation, RepositoriesService.SORT_ALL, pageId);
         } else {
             mReposMethod.getOwendRepositories(mReposSubscriber, auth, affiliation, RepositoriesService.SORT_ALL, pageId);
         }

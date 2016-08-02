@@ -79,7 +79,7 @@ public class FollowPresenter implements FollowContract.Presenter {
         };
         if (mFollowView.getUsername() != null && !loading) {
             loading = true;
-            method.getUserFollowers(mFollowersSubscriber, mFollowView.getUsername(), loadPageId);
+            method.getUserFollowers(mFollowersSubscriber, auth, mFollowView.getUsername(), loadPageId);
         } else {
             loading = true;
             method.getFollowers(mFollowersSubscriber, auth, loadPageId);
@@ -110,7 +110,7 @@ public class FollowPresenter implements FollowContract.Presenter {
         };
         if (mFollowView.getUsername() != null && !loading) {
             loading = true;
-            method.getUserFollowing(mFollowingSubscriber, mFollowView.getUsername(), loadPageId);
+            method.getUserFollowing(mFollowingSubscriber, auth, mFollowView.getUsername(), loadPageId);
         } else {
             loading = true;
             method.getFollowing(mFollowingSubscriber, auth, loadPageId);
