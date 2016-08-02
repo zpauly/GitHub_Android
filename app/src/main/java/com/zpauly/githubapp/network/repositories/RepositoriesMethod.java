@@ -68,8 +68,7 @@ public class RepositoriesMethod {
                 .subscribe(observer);
     }
 
-    public void
-    getFileContent(Observer<String> observer, String auth, String acc,
+    public void getFileContent(Observer<String> observer, String auth, String acc,
                                String owner, String repo, String path) {
         Retrofit retrofit = RetrofitUtil.initCustomRetrofit(Api.GitHubApi, StringConverterFactory.create(),
                 RxJavaCallAdapterFactory.create());

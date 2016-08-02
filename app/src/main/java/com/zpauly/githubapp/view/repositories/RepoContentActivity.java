@@ -73,13 +73,6 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        mSRLayout.setRefreshing(true);
-        loadRepo();
-    }
-
-    @Override
     public void initViews() {
         getAttrs();
 

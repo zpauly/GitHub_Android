@@ -79,8 +79,8 @@ public interface RepositoriesService {
                                                                  @Path("repo") String repo, @Path("path") String path);
 
     @GET("/repos/{owner}/{repo}/contents/{path}")
-    Observable<String> getFileContent(@Nullable @Header("Accept") String acc,
-                                      @Header("Authorization") String auth,
+    Observable<String> getFileContent(@Header("Authorization") String auth,
+                                      @Nullable @Header("Accept") String acc,
                                       @Path("owner") String owner,
                                       @Path("repo") String repo, @Path("path") String path);
 
