@@ -13,6 +13,8 @@ import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.protectsoft.webviewcode.Codeview;
 import com.protectsoft.webviewcode.Settings;
@@ -50,7 +52,11 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
     private SwipeRefreshLayout mSRLayout;
     private RecyclerView mPathRV;
     private RecyclerView mContentRV;
-    private WebView mFileContentWB;
+    private WebView mCodeWB;
+    private LinearLayout mContentLayout;
+    private NestedScrollView mFileLayout;
+    private AppCompatTextView mFileTV;
+    private ImageView mFileImageIV;
 
     private String repo;
     private String owner;
@@ -81,7 +87,11 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         mSRLayout = (SwipeRefreshLayout) findViewById(R.id.files_SRLayout);
         mPathRV = (RecyclerView) findViewById(R.id.files_path_RV);
         mContentRV = (RecyclerView) findViewById(R.id.files_content_RV);
-        mFileContentWB = (WebView) findViewById(R.id.files_file_content_WB);
+        mCodeWB = (WebView) findViewById(R.id.files_code_WB);
+        mContentLayout = (LinearLayout) findViewById(R.id.files_file_content_layout);
+        mFileLayout = (NestedScrollView) findViewById(R.id.files_file_NSV);
+        mFileTV = (AppCompatTextView) findViewById(R.id.files_file_TV);
+        mFileImageIV = (ImageView) findViewById(R.id.files_file_image_IV);
 
         setupRecyclerView();
         setupSwipeRefreshLayout();
@@ -123,7 +133,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
                 }
                 mSRLayout.setEnabled(false);
                 isFileLoading = false;
-                mFileContentWB.setVisibility(View.GONE);
+                mContentLayout.setVisibility(View.GONE);
                 path = p;
                 mSRLayout.setRefreshing(true);
                 getContents();
@@ -153,12 +163,12 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
                         }
                         mPathAdapter.swapData(paths);
                         mContentRV.setVisibility(View.GONE);
-                        mFileContentWB.setVisibility(View.VISIBLE);
+                        mContentLayout.setVisibility(View.VISIBLE);
                         Codeview.with(getApplicationContext())
                                 .withCode("")
-                                .setStyle(Settings.WithStyle.DARKULA)
+                                .setStyle(Settings.WithStyle.GITHUB)
                                 .setLang(Settings.Lang.JAVA)
-                                .into(mFileContentWB);
+                                .into(mCodeWB);
                     } else {
                         isFileLoading = false;
                         mSRLayout.setRefreshing(false);
@@ -262,12 +272,48 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
 
     @Override
     public void gettingContent(List<FileDirModel> list) {
-        this.list = list;
+        this.list = arrangeList(list);
     }
 
     @Override
     public void loadFileSuccess() {
         mSRLayout.setEnabled(false);
+        setFileContent();
+        mSRLayout.setRefreshing(false);
+        Log.i(TAG, fileContent);
+    }
+
+    @Override
+    public void loadFileFail() {
+        mSRLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void loadingFile(String file) {
+        fileContent = file + "\n" + "\n" + "\n" + "\n";
+    }
+
+    private List<FileDirModel> arrangeList(List<FileDirModel> list) {
+        List<FileDirModel> dirs = new ArrayList<>();
+        List<FileDirModel> files = new ArrayList<>();
+        List<FileDirModel> symlinks = new ArrayList<>();
+        for (FileDirModel model : list) {
+            if (model.getType().equals("dir")) {
+                dirs.add(model);
+            } else if (model.getType().equals("file")) {
+                files.add(model);
+            } else if (model.getType().equals("symlinks")) {
+                symlinks.add(model);
+            }
+        }
+        List<FileDirModel> newList = new ArrayList<>();
+        newList.addAll(dirs);
+        newList.addAll(files);
+        newList.addAll(symlinks);
+        return newList;
+    }
+
+    private void setFileContent() {
         String language = null;
         if (path.endsWith(".java")) {
             language = Settings.Lang.JAVA;
@@ -283,24 +329,15 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
             language = Settings.Lang.RUBY;
         } else if (path.endsWith(".php")) {
             language = Settings.Lang.PHP;
-        } else if (path.endsWith(".md")){
-
+        } else if (path.endsWith(".jpg") || path.endsWith(".JPG")
+                || path.endsWith(".GIF") || path.endsWith(".gif")
+                || path.endsWith(".png") || path.endsWith(".PNG")){
+            return;
         }
         Codeview.with(getApplicationContext())
                 .withCode(fileContent)
-                .setStyle(Settings.WithStyle.DARKULA)
+                .setStyle(Settings.WithStyle.GITHUB)
                 .setLang(language)
-                .into(mFileContentWB);
-        mSRLayout.setRefreshing(false);
-    }
-
-    @Override
-    public void loadFileFail() {
-        mSRLayout.setRefreshing(false);
-    }
-
-    @Override
-    public void loadingFile(String file) {
-        fileContent = file + "\n" + "\n" + "\n" + "\n";
+                .into(mCodeWB);
     }
 }

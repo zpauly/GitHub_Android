@@ -43,11 +43,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
-            <WebView
-                android:id="@+id/files_file_content_WB"
-                android:visibility="gone"
+            <LinearLayout
+                android:id="@+id/files_file_content_layout"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent">
+
+                <WebView
+                    android:id="@+id/files_code_WB"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <android.support.v4.widget.NestedScrollView
+                    android:id="@+id/files_file_NSV"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/files_file_TV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:id="@+id/files_file_image_IV"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </android.support.v4.widget.NestedScrollView>
+
+            </LinearLayout>
 
         </LinearLayout>
 
