@@ -9,8 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <include
-            layout="@layout/toolbar" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                layout="@layout/toolbar" />
+
+        </LinearLayout>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -57,8 +63,18 @@
 
                 <android.support.v4.widget.NestedScrollView
                     android:id="@+id/files_file_NSV"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:padding="@dimen/components_padding"
+                        android:id="@+id/files_file_image_layout"
+                        android:orientation="vertical"
+                        android:clickable="true"
+                        android:background="?attr/selectableItemBackground"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/files_file_TV"
@@ -69,6 +85,8 @@
                         android:id="@+id/files_file_image_IV"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
+
+                    </LinearLayout>
 
                 </android.support.v4.widget.NestedScrollView>
 

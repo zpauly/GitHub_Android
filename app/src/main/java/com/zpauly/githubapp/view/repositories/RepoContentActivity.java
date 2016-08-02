@@ -1,5 +1,6 @@
 package com.zpauly.githubapp.view.repositories;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -179,7 +180,7 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
         intent.putExtra(LOGIN, login);
         intent.setClass(context, RepoContentActivity.class);
         context.startActivity(intent);
-//        ((Activity) context).finish();
+        ((Activity) context).finish();
     }
 
     @Override
@@ -200,7 +201,6 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
 
     @Override
     public void loadingReadMe(String string) {
-//        content = HtmlUtil.format(string).toString();
         content = string;
     }
 

@@ -132,7 +132,7 @@ public class FilesPresenter implements FilesContract.Presenter {
             }
         };
         Log.i(TAG, auth);
-        method.getFileContent(fileSubscriber, auth, "application/vnd.github.VERSION.raw",
+        method.getFileContent(fileSubscriber, auth, "application/vnd.github.VERSION.html",
                 owner, repo, path);
     }
 }

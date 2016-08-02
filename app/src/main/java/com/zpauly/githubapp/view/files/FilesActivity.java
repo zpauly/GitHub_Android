@@ -1,5 +1,6 @@
 package com.zpauly.githubapp.view.files;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.AppBarLayout;
@@ -16,6 +17,8 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.protectsoft.webviewcode.Codeview;
 import com.protectsoft.webviewcode.Settings;
 import com.zpauly.githubapp.R;
@@ -131,7 +134,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
                 if (p.equals(path)) {
                     return;
                 }
-                mSRLayout.setEnabled(false);
+                mSRLayout.setEnabled(true);
                 isFileLoading = false;
                 mContentLayout.setVisibility(View.GONE);
                 path = p;
@@ -142,6 +145,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         mDirAdapter.setOnItemClickListener(new OnDirItemClickListener() {
             @Override
             public void onClick(View v, String p, String type) {
+                mSRLayout.setEnabled(true);
                 String[] strs = p.split("/");
                 if (p.equals("root system/" + path + "/" + strs[strs.length - 1])) {
                     return;
@@ -163,12 +167,12 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
                         }
                         mPathAdapter.swapData(paths);
                         mContentRV.setVisibility(View.GONE);
-                        mContentLayout.setVisibility(View.VISIBLE);
                         Codeview.with(getApplicationContext())
                                 .withCode("")
                                 .setStyle(Settings.WithStyle.GITHUB)
                                 .setLang(Settings.Lang.JAVA)
                                 .into(mCodeWB);
+                        mFileTV.setText("");
                     } else {
                         isFileLoading = false;
                         mSRLayout.setRefreshing(false);
@@ -199,6 +203,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
             mPathAdapter.swapData(paths);
             mDirAdapter.swapData(list);
             mSRLayout.setRefreshing(false);
+            mSRLayout.setEnabled(false);
         }
     }
 
@@ -235,7 +240,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         intent.putExtra(URL, url);
         intent.setClass(context, FilesActivity.class);
         context.startActivity(intent);
-//        ((Activity) context).finish();
+        ((Activity) context).finish();
     }
 
     @Override
@@ -278,6 +283,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
     @Override
     public void loadFileSuccess() {
         mSRLayout.setEnabled(false);
+        mContentLayout.setVisibility(View.VISIBLE);
         setFileContent();
         mSRLayout.setRefreshing(false);
         Log.i(TAG, fileContent);
@@ -329,15 +335,63 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
             language = Settings.Lang.RUBY;
         } else if (path.endsWith(".php")) {
             language = Settings.Lang.PHP;
-        } else if (path.endsWith(".jpg") || path.endsWith(".JPG")
+        }  else if (path.endsWith(".jpg") || path.endsWith(".JPG")
                 || path.endsWith(".GIF") || path.endsWith(".gif")
                 || path.endsWith(".png") || path.endsWith(".PNG")){
+            setImageOrFile(true);
             return;
+        } else if (path.endsWith(".md")){
+            setImageOrFile(false);
+            return;
+        } else {
+            language = Settings.MimeType.TEXT_HTML;
         }
+        setCode(language);
+    }
+
+    private void setImageOrFile(boolean isImage) {
+        mCodeWB.setVisibility(View.GONE);
+        mFileLayout.setVisibility(View.VISIBLE);
+        if (isImage) {
+            mFileTV.setVisibility(View.GONE);
+            mFileImageIV.setVisibility(View.VISIBLE);
+            setGifOrBitmap();
+        } else {
+            mFileTV.setVisibility(View.VISIBLE);
+            mFileImageIV.setVisibility(View.GONE);
+            HtmlImageGetter imageGetter = new HtmlImageGetter(mFileTV, this,
+                    url + "/raw/" + branch);
+            Spanned htmlSpann = Html.fromHtml(fileContent, imageGetter, null);
+            mFileTV.setText(htmlSpann);
+        }
+    }
+
+    private void setGifOrBitmap() {
+        if (path.endsWith(".GIF") || path.endsWith(".gif")) {
+            Glide.with(getApplicationContext())
+                    .load(url + "/raw/" + branch + "/" + path)
+                    .asGif()
+                    .centerCrop()
+                    .crossFade()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(mFileImageIV);
+        } else {
+            Glide.with(getApplicationContext())
+                    .load(url + "/raw/" + branch + "/" + path)
+                    .centerCrop()
+                    .crossFade()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(mFileImageIV);
+        }
+    }
+
+    private void setCode(String lang) {
+        mCodeWB.setVisibility(View.VISIBLE);
+        mFileLayout.setVisibility(View.GONE);
         Codeview.with(getApplicationContext())
                 .withCode(fileContent)
                 .setStyle(Settings.WithStyle.GITHUB)
-                .setLang(language)
+                .setLang(lang)
                 .into(mCodeWB);
     }
 }
