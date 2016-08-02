@@ -1,6 +1,5 @@
 package com.zpauly.githubapp.view.files;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.AppBarLayout;
@@ -14,11 +13,8 @@ import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.protectsoft.webviewcode.Codeview;
 import com.protectsoft.webviewcode.Settings;
 import com.zpauly.githubapp.R;
@@ -59,7 +55,6 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
     private LinearLayout mContentLayout;
     private NestedScrollView mFileLayout;
     private AppCompatTextView mFileTV;
-    private ImageView mFileImageIV;
 
     private String repo;
     private String owner;
@@ -94,7 +89,6 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         mContentLayout = (LinearLayout) findViewById(R.id.files_file_content_layout);
         mFileLayout = (NestedScrollView) findViewById(R.id.files_file_NSV);
         mFileTV = (AppCompatTextView) findViewById(R.id.files_file_TV);
-        mFileImageIV = (ImageView) findViewById(R.id.files_file_image_IV);
 
         setupRecyclerView();
         setupSwipeRefreshLayout();
@@ -240,7 +234,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         intent.putExtra(URL, url);
         intent.setClass(context, FilesActivity.class);
         context.startActivity(intent);
-        ((Activity) context).finish();
+//        ((Activity) context).finish();
     }
 
     @Override
@@ -353,35 +347,17 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         mCodeWB.setVisibility(View.GONE);
         mFileLayout.setVisibility(View.VISIBLE);
         if (isImage) {
-            mFileTV.setVisibility(View.GONE);
-            mFileImageIV.setVisibility(View.VISIBLE);
-            setGifOrBitmap();
+            String s = "<a href=\"" + url + "/raw/" + branch + "/" + path + "\">";
+            Log.i(TAG, s);
+            HtmlImageGetter imageGetter = new HtmlImageGetter(mFileTV, this,
+                    url + "/raw/" + branch);
+            Spanned htmlSpann = Html.fromHtml(s, imageGetter, null);
+            mFileTV.setText(htmlSpann);
         } else {
-            mFileTV.setVisibility(View.VISIBLE);
-            mFileImageIV.setVisibility(View.GONE);
             HtmlImageGetter imageGetter = new HtmlImageGetter(mFileTV, this,
                     url + "/raw/" + branch);
             Spanned htmlSpann = Html.fromHtml(fileContent, imageGetter, null);
             mFileTV.setText(htmlSpann);
-        }
-    }
-
-    private void setGifOrBitmap() {
-        if (path.endsWith(".GIF") || path.endsWith(".gif")) {
-            Glide.with(getApplicationContext())
-                    .load(url + "/raw/" + branch + "/" + path)
-                    .asGif()
-                    .centerCrop()
-                    .crossFade()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(mFileImageIV);
-        } else {
-            Glide.with(getApplicationContext())
-                    .load(url + "/raw/" + branch + "/" + path)
-                    .centerCrop()
-                    .crossFade()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(mFileImageIV);
         }
     }
 
