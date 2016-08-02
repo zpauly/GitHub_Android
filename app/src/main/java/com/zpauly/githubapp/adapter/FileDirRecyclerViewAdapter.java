@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.db.FileDirModel;
 import com.zpauly.githubapp.listener.OnDirItemClickListener;
-import com.zpauly.githubapp.listener.OnItemClickListener;
 import com.zpauly.githubapp.view.viewholder.FileDirViewHolder;
 
 import java.util.ArrayList;
@@ -60,7 +59,6 @@ public class FileDirRecyclerViewAdapter extends RecyclerView.Adapter<FileDirView
         final FileDirModel data = mData.get(position);
         String[] strs = data.getPath().split("/");
         holder.mFileNameTV.setText(strs[strs.length - 1]);
-        Log.i(TAG, data.getType());
         if (data.getType().equals("dir")) {
             holder.mTypeIV.setImageResource(R.mipmap.ic_dir);
         } else if (data.getType().equals("file") || data.getType().equals("symlink")) {

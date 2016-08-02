@@ -1,13 +1,12 @@
 package com.zpauly.githubapp.view.files;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.zpauly.githubapp.R;
@@ -23,7 +22,6 @@ import com.zpauly.githubapp.ui.DividerItemDecoration;
 import com.zpauly.githubapp.view.ToolbarActivity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -97,6 +95,14 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         mContentRV.setLayoutManager(new LinearLayoutManager(this));
         mContentRV.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
         mContentRV.setAdapter(mDirAdapter);
+        mPathAdapter.setOnItemClickListener(new OnDirItemClickListener() {
+            @Override
+            public void onClick(View v, String p) {
+                path = p;
+                mSRLayout.setRefreshing(true);
+                getContents(p);
+            }
+        });
         mDirAdapter.setOnItemClickListener(new OnDirItemClickListener() {
             @Override
             public void onClick(View v, String p) {
