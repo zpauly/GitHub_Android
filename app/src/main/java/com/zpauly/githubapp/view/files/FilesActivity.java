@@ -363,7 +363,12 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
                 mCodeWB.loadData("<image src=\"" + url + "/raw/" + branch + "/" + path + "\" width=\"100%\"/>",
                         "image/png", null);
             }*/
-            mCodeWB.loadUrl(url + "/raw/" + branch + "/" + path);
+            mCodeWB.loadDataWithBaseURL(null,
+                    "<html><head></head><body><table style=\"width:100%; height:100%;\"><tr><td style=\"vertical-align:middle;\"><img src=\""
+                            + url + "/raw/" + branch + "/" + path + "\"></td></tr></table></body></html>",
+                    "html/css",
+                    "utf-8",
+                    null);
             /*String s = "<image src='" + url + "/raw/" + branch + "/" + path + "'/>";
             Log.i(TAG, s);
             HtmlImageGetter imageGetter = new HtmlImageGetter(mFileTV, this,
