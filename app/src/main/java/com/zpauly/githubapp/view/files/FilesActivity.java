@@ -174,6 +174,12 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
                 }
             }
         });
+        mFileTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "textview clicked");
+            }
+        });
     }
 
     private void getAttrs() {
@@ -280,7 +286,6 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         mContentLayout.setVisibility(View.VISIBLE);
         setFileContent();
         mSRLayout.setRefreshing(false);
-        Log.i(TAG, fileContent);
     }
 
     @Override
@@ -344,16 +349,30 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
     }
 
     private void setImageOrFile(boolean isImage) {
-        mCodeWB.setVisibility(View.GONE);
-        mFileLayout.setVisibility(View.VISIBLE);
         if (isImage) {
-            String s = "<div><p><a href=\"/gif/demo.gif\" target=\"_blank\"><image src=\"" + url + "/raw/" + branch + "/" + path + "\"></a></p></div>";
+            mCodeWB.setVisibility(View.VISIBLE);
+            mFileLayout.setVisibility(View.GONE);
+            /*Log.i(TAG, "load image");
+            if (path.endsWith(".jpg") || path.endsWith(".JPG") || path.endsWith("ipeg")) {
+                mCodeWB.loadData("<image src=\"" + url + "/raw/" + branch + "/" + path + "\" width=\"100%\"/>",
+                        "image/jpeg", null);
+            } else if (path.endsWith(".GIF") || path.endsWith(".gif")) {
+                mCodeWB.loadData("<image src=\"" + url + "/raw/" + branch + "/" + path + "\" width=\"100%\"/>",
+                        "image/gif", null);
+            } else if (path.endsWith(".png") || path.endsWith(".PNG")) {
+                mCodeWB.loadData("<image src=\"" + url + "/raw/" + branch + "/" + path + "\" width=\"100%\"/>",
+                        "image/png", null);
+            }*/
+            mCodeWB.loadUrl(url + "/raw/" + branch + "/" + path);
+            /*String s = "<image src='" + url + "/raw/" + branch + "/" + path + "'/>";
             Log.i(TAG, s);
             HtmlImageGetter imageGetter = new HtmlImageGetter(mFileTV, this,
                     null);
             Spanned htmlSpann = Html.fromHtml(s, imageGetter, null);
-            mFileTV.setText(htmlSpann);
+            mFileTV.setText(htmlSpann);*/
         } else {
+            mCodeWB.setVisibility(View.GONE);
+            mFileLayout.setVisibility(View.VISIBLE);
             HtmlImageGetter imageGetter = new HtmlImageGetter(mFileTV, this,
                     url + "/raw/" + branch);
             Spanned htmlSpann = Html.fromHtml(fileContent, imageGetter, null);

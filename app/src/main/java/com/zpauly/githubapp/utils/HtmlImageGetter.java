@@ -99,11 +99,6 @@ public class HtmlImageGetter implements Html.ImageGetter {
         protected Drawable doInBackground(String... params) {
             String source = params[0];
             Drawable drawable = fetchDrawable(source);
-            if (drawable == null) {
-                Log.i(TAG, "null");
-            } else {
-                Log.i(TAG, "not null");
-            }
             return drawable;
         }
 
