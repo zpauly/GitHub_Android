@@ -345,6 +345,10 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         } else if (path.endsWith(".md")){
             setImageOrFile(false);
             return;
+        } else if (path.endsWith(".xml")) {
+            fileContent = fileContent.replaceAll("<", "&lt;");
+            fileContent = fileContent.replaceAll(">", "&gt;");
+            fileContent = "<div class=\"plain\"><pre>" + fileContent + "</pre></div>";
         } else {
             language = Settings.MimeType.TEXT_HTML;
         }
@@ -374,6 +378,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
     private void setCode(String lang) {
         mCodeWB.setVisibility(View.VISIBLE);
         mFileLayout.setVisibility(View.GONE);
+        Log.i(TAG, fileContent);
         Codeview.with(getApplicationContext())
                 .withCode(fileContent)
                 .setStyle(Settings.WithStyle.GITHUB)
