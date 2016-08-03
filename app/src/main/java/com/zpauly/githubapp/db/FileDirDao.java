@@ -16,6 +16,7 @@ public class FileDirDao {
         model.setParentPath("root system/" + parentPath);
         model.setPath(bean.getPath());
         model.setType(bean.getType());
+        model.setSha(bean.getSha());
         return model.save();
     }
 

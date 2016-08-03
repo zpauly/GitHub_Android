@@ -7,6 +7,7 @@ import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.db.FileDirDao;
 import com.zpauly.githubapp.db.FileDirModel;
 import com.zpauly.githubapp.entity.response.RepositoryContentBean;
+import com.zpauly.githubapp.network.gitdata.GitDataMethod;
 import com.zpauly.githubapp.network.repositories.RepositoriesMethod;
 import com.zpauly.githubapp.utils.SPUtil;
 
@@ -113,7 +114,7 @@ public class FilesPresenter implements FilesContract.Presenter {
     }
 
     @Override
-    public void loadFile(String owner, String repo, String path) {
+    public void loadFile(String owner, String repo, String path, String sha) {
         fileSubscriber = new Subscriber<String>() {
             @Override
             public void onCompleted() {
@@ -132,7 +133,11 @@ public class FilesPresenter implements FilesContract.Presenter {
             }
         };
         Log.i(TAG, auth);
-        method.getFileContent(fileSubscriber, auth, "application/vnd.github.VERSION.html",
-                owner, repo, path);
+        if (path.endsWith(".md")) {
+            method.getFileContent(fileSubscriber, auth, "application/vnd.github.VERSION.html",
+                    owner, repo, path);
+        } else {
+            GitDataMethod.getInstance().getAblob(fileSubscriber, auth, owner, repo, sha);
+        }
     }
 }

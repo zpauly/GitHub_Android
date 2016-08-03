@@ -19,3 +19,4 @@ A simple client for GitHub.
 <br/>
 <img src="https://github.com/zpauly/GitHub_Android/blob/master/images/pic10.png" width = "25%" height = "25%" align=center />
 <img src="https://github.com/zpauly/GitHub_Android/blob/master/images/pic11.png" width = "25%" height = "25%" align=center />
+<img src="https://github.com/zpauly/GitHub_Android/blob/master/images/pic12.png" width = "25%" height = "25%" align=center />

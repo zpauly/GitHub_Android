@@ -62,6 +62,8 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
     private String url;
     private String path;
 
+    private String sha;
+
     private FileDirRecyclerViewAdapter mDirAdapter;
     private PathRecyclerViewAdapter mPathAdapter;
 
@@ -124,7 +126,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         mContentRV.setAdapter(mDirAdapter);
         mPathAdapter.setOnItemClickListener(new OnDirItemClickListener() {
             @Override
-            public void onClick(View v, String p, String type) {
+            public void onClick(View v, String p, String type, String sha) {
                 if (p.equals(path)) {
                     return;
                 }
@@ -138,7 +140,8 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         });
         mDirAdapter.setOnItemClickListener(new OnDirItemClickListener() {
             @Override
-            public void onClick(View v, String p, String type) {
+            public void onClick(View v, String p, String type, String sha) {
+                FilesActivity.this.sha = sha;
                 mSRLayout.setEnabled(true);
                 String[] strs = p.split("/");
                 if (p.equals("root system/" + path + "/" + strs[strs.length - 1])) {
@@ -212,7 +215,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
     }
 
     private void loadFile() {
-        mPresenter.loadFile(owner, repo, path);
+        mPresenter.loadFile(owner, repo, path, sha);
     }
 
     @Override
@@ -352,29 +355,12 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         if (isImage) {
             mCodeWB.setVisibility(View.VISIBLE);
             mFileLayout.setVisibility(View.GONE);
-            /*Log.i(TAG, "load image");
-            if (path.endsWith(".jpg") || path.endsWith(".JPG") || path.endsWith("ipeg")) {
-                mCodeWB.loadData("<image src=\"" + url + "/raw/" + branch + "/" + path + "\" width=\"100%\"/>",
-                        "image/jpeg", null);
-            } else if (path.endsWith(".GIF") || path.endsWith(".gif")) {
-                mCodeWB.loadData("<image src=\"" + url + "/raw/" + branch + "/" + path + "\" width=\"100%\"/>",
-                        "image/gif", null);
-            } else if (path.endsWith(".png") || path.endsWith(".PNG")) {
-                mCodeWB.loadData("<image src=\"" + url + "/raw/" + branch + "/" + path + "\" width=\"100%\"/>",
-                        "image/png", null);
-            }*/
             mCodeWB.loadDataWithBaseURL(null,
                     "<html><head></head><body><table style=\"width:100%; height:100%;\"><tr><td style=\"vertical-align:middle;\"><img src=\""
                             + url + "/raw/" + branch + "/" + path + "\"></td></tr></table></body></html>",
                     "html/css",
                     "utf-8",
                     null);
-            /*String s = "<image src='" + url + "/raw/" + branch + "/" + path + "'/>";
-            Log.i(TAG, s);
-            HtmlImageGetter imageGetter = new HtmlImageGetter(mFileTV, this,
-                    null);
-            Spanned htmlSpann = Html.fromHtml(s, imageGetter, null);
-            mFileTV.setText(htmlSpann);*/
         } else {
             mCodeWB.setVisibility(View.GONE);
             mFileLayout.setVisibility(View.VISIBLE);

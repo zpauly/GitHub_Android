@@ -7,5 +7,5 @@ import android.view.View;
  */
 
 public interface OnDirItemClickListener {
-    void onClick(View v, String p, String type);
+    void onClick(View v, String p, String type, String sha);
 }

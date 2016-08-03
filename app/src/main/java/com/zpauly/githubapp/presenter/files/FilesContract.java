@@ -17,7 +17,7 @@ public class FilesContract {
 
         void getContentFromCache(String path);
 
-        void loadFile(String owner, String repo, String path);
+        void loadFile(String owner, String repo, String path, String sha);
     }
 
     public interface View extends BaseView<Presenter> {

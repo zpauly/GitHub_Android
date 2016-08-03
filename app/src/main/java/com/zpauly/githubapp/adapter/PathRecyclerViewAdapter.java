@@ -68,7 +68,7 @@ public class PathRecyclerViewAdapter extends RecyclerView.Adapter<PathViewHolder
             @Override
             public void onClick(View v) {
                 if (mOnDirItemClickListener != null) {
-                    mOnDirItemClickListener.onClick(v, path.toString(), null);
+                    mOnDirItemClickListener.onClick(v, path.toString(), null, null);
                 }
             }
         });

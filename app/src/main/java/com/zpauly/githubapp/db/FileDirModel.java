@@ -10,6 +10,15 @@ public class FileDirModel extends DataSupport {
     private String parentPath;
     private String type;
     private String path;
+    private String sha;
+
+    public void setSha(String sha) {
+        this.sha = sha;
+    }
+
+    public String getSha() {
+        return sha;
+    }
 
     public void setParentPath(String parentPath) {
         this.parentPath = parentPath;
