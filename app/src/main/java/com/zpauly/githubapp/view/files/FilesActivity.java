@@ -347,10 +347,10 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         mCodeWB.setVisibility(View.GONE);
         mFileLayout.setVisibility(View.VISIBLE);
         if (isImage) {
-            String s = "<a href=\"" + url + "/raw/" + branch + "/" + path + "\">";
+            String s = "<div><p><a href=\"/gif/demo.gif\" target=\"_blank\"><image src=\"" + url + "/raw/" + branch + "/" + path + "\"></a></p></div>";
             Log.i(TAG, s);
             HtmlImageGetter imageGetter = new HtmlImageGetter(mFileTV, this,
-                    url + "/raw/" + branch);
+                    null);
             Spanned htmlSpann = Html.fromHtml(s, imageGetter, null);
             mFileTV.setText(htmlSpann);
         } else {

@@ -100,7 +100,9 @@ public class HtmlImageGetter implements Html.ImageGetter {
             String source = params[0];
             Drawable drawable = fetchDrawable(source);
             if (drawable == null) {
-                Log.i(TAG, null);
+                Log.i(TAG, "null");
+            } else {
+                Log.i(TAG, "not null");
             }
             return drawable;
         }
