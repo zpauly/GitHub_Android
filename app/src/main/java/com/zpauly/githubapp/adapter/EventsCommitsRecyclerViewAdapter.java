@@ -25,14 +25,14 @@ public class EventsCommitsRecyclerViewAdapter extends BaseAdapter<Payload.Commit
 
     @Override
     public EventsCommitsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View mView = LayoutInflater.from(mContext).inflate(R.layout.item_recyclerview_event_commits, parent, false);
+        View mView = LayoutInflater.from(getContext()).inflate(R.layout.item_recyclerview_event_commits, parent, false);
         EventsCommitsViewHolder viewHolder = new EventsCommitsViewHolder(mView);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(EventsCommitsViewHolder holder, int position) {
-        Payload.CommitsBean bean = mData.get(position);
+        Payload.CommitsBean bean = getData().get(position);
         holder.mShaTV.setText(bean.getSha().substring(0, 7));
         holder.mMessageTV.setText(bean.getMessage());
     }

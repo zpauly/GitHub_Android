@@ -45,6 +45,14 @@ public abstract class BaseAdapter<D, VH extends RecyclerView.ViewHolder> extends
         return addAllData(list);
     }
 
+    protected Context getContext() {
+        return mContext;
+    }
+
+    protected List<D> getData() {
+        return mData;
+    }
+
     @Override
     public int getItemCount() {
         return getDataCount();

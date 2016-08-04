@@ -170,7 +170,7 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
         mOrgsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                UsersActivity.launchActivity(OthersActivity.this, username, UsersActivity.ORGS);
             }
         });
 

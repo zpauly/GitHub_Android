@@ -63,6 +63,7 @@ public class HomeActivity extends DrawerActivity {
                 Intent intent = new Intent();
                 intent.setClass(HomeActivity.this, ProfileActivity.class);
                 startActivity(intent);
+//                finish();
             }
         });
         setOnNavItemClickListener(new OnNavItemClickListener() {

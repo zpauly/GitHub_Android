@@ -30,18 +30,18 @@ public class UsersRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Follow
 
     @Override
     public UsersViewHolder createContentViewHolder(ViewGroup parent, int viewType) {
-        mView = LayoutInflater.from(mContext).inflate(R.layout.item_recyclerview_users, parent, false);
+        mView = LayoutInflater.from(getContext()).inflate(R.layout.item_recyclerview_users, parent, false);
         UsersViewHolder viewHolder = new UsersViewHolder(mView);
         return viewHolder;
     }
 
     @Override
     public void bindContentViewHolder(UsersViewHolder holder, int position) {
-        final FollowersBean bean = mData.get(position);
+        final FollowersBean bean = getData().get(position);
         holder.mLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OthersActivity.lanuchActivity(mContext, bean.getLogin());
+                OthersActivity.lanuchActivity(getContext(), bean.getLogin());
             }
         });
         holder.mUsernameTV.setText(bean.getLogin());

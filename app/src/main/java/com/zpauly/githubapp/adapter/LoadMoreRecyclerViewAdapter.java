@@ -32,7 +32,7 @@ public abstract class LoadMoreRecyclerViewAdapter<D, VH extends RecyclerView.Vie
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == LOAD_MORE_VIEW_TYPE) {
-            View view = LayoutInflater.from(mContext).inflate(R.layout.item_loadmore, parent, false);
+            View view = LayoutInflater.from(getContext()).inflate(R.layout.item_loadmore, parent, false);
             return new LoadMoreViewHolder(view);
         } else {
             return createContentViewHolder(parent, viewType);

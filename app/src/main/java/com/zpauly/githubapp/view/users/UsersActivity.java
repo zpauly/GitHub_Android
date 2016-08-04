@@ -1,5 +1,6 @@
 package com.zpauly.githubapp.view.users;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -80,5 +81,6 @@ public class UsersActivity extends ToolbarActivity {
         intent.putExtra(USERS_ID, userId);
         intent.setClass(context, UsersActivity.class);
         context.startActivity(intent);
+//        ((Activity) context).finish();
     }
 }

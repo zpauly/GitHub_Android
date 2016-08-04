@@ -27,14 +27,14 @@ public class ReposRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<ReposM
     }
     @Override
     public ReposViewHolder createContentViewHolder(ViewGroup parent, int viewType) {
-        View mView = LayoutInflater.from(mContext).inflate(R.layout.item_recyclerview_repositories, parent, false);
+        View mView = LayoutInflater.from(getContext()).inflate(R.layout.item_recyclerview_repositories, parent, false);
         ReposViewHolder holder = new ReposViewHolder(mView);
         return holder;
     }
 
     @Override
     public void bindContentViewHolder(ReposViewHolder holder, int position) {
-        final ReposModel repo = mData.get(position);
+        final ReposModel repo = getData().get(position);
         holder.mReposForksTV.setText(String.valueOf(repo.getForks_count()));
         holder.mReposStarsTV.setText(String.valueOf(repo.getStargazers_count()));
         holder.mReposTechLanguageTV.setText(repo.getLanguage());
@@ -43,7 +43,7 @@ public class ReposRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<ReposM
         holder.mLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RepoContentActivity.launchActivity(mContext, repo.getFull_name(), repo.getName(),
+                RepoContentActivity.launchActivity(getContext(), repo.getFull_name(), repo.getName(),
                         repo.getUrl(), repo.getLogin());
             }
         });

@@ -32,14 +32,14 @@ public class PathRecyclerViewAdapter extends BaseAdapter<String, PathViewHolder>
 
     @Override
     public PathViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View mView = LayoutInflater.from(mContext).inflate(R.layout.item_recyclerview_dirpath, parent, false);
+        View mView = LayoutInflater.from(getContext()).inflate(R.layout.item_recyclerview_dirpath, parent, false);
         PathViewHolder viewHolder = new PathViewHolder(mView);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(PathViewHolder holder, int position) {
-        String file = mData.get(position);
+        String file = getData().get(position);
         holder.mPathTV.setText(file);
         final StringBuffer path = new StringBuffer();
         if (mData.size() > 1) {

@@ -44,4 +44,11 @@ public class OrganizationsMethod {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
+
+    public void getUserOrgs(Observer<List<OrganizationBean>> observer, String auth, String username) {
+        service.getUserOrgs(auth, username)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
 }

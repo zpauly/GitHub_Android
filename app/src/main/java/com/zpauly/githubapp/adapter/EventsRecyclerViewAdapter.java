@@ -39,15 +39,15 @@ public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Event
 
     @Override
     public EventsViewHolder createContentViewHolder(ViewGroup parent, int viewType) {
-        View mView = LayoutInflater.from(mContext).inflate(R.layout.item_recylcleview_events, parent, false);
+        View mView = LayoutInflater.from(getContext()).inflate(R.layout.item_recylcleview_events, parent, false);
         EventsViewHolder holder = new EventsViewHolder(mView);
         return holder;
     }
 
     @Override
     public void bindContentViewHolder(EventsViewHolder holder, int position) {
-        final EventsBean data = mData.get(position);
-        Glide.with(mContext)
+        final EventsBean data = getData().get(position);
+        Glide.with(getContext())
                 .load(data.getActor().getAvatar_url())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
@@ -66,7 +66,7 @@ public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Event
         holder.mUserAvatarIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OthersActivity.lanuchActivity(mContext, data.getActor().getLogin());
+                OthersActivity.lanuchActivity(getContext(), data.getActor().getLogin());
             }
         });
 
@@ -79,7 +79,7 @@ public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Event
                 String repo_url = data.getRepo().getUrl();
                 String[] strs2 = data.getRepo().getUrl().split("/");
                 String login = strs2[strs2.length - 2];
-                RepoContentActivity.launchActivity(mContext, full_name, name, repo_url, login);
+                RepoContentActivity.launchActivity(getContext(), full_name, name, repo_url, login);
             }
         });
     }

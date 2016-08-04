@@ -33,14 +33,14 @@ public class FileDirRecyclerViewAdapter extends BaseAdapter<FileDirModel, FileDi
 
     @Override
     public FileDirViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View mView = LayoutInflater.from(mContext).inflate(R.layout.item_recyclerview_filedir, parent, false);
+        View mView = LayoutInflater.from(getContext()).inflate(R.layout.item_recyclerview_filedir, parent, false);
         FileDirViewHolder viewHolder = new FileDirViewHolder(mView);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(FileDirViewHolder holder, int position) {
-        final FileDirModel data = mData.get(position);
+        final FileDirModel data = getData().get(position);
         String[] strs = data.getPath().split("/");
         holder.mFileNameTV.setText(strs[strs.length - 1]);
         if (data.getType().equals("dir")) {

@@ -1,9 +1,13 @@
 package com.zpauly.githubapp.presenter.follow;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.entity.response.FollowersBean;
+import com.zpauly.githubapp.entity.response.OrganizationBean;
+import com.zpauly.githubapp.entity.response.events.Payload;
+import com.zpauly.githubapp.network.organizations.OrganizationsMethod;
 import com.zpauly.githubapp.network.user.UserMethod;
 import com.zpauly.githubapp.utils.SPUtil;
 
@@ -16,14 +20,18 @@ import rx.Subscriber;
  */
 
 public class FollowPresenter implements FollowContract.Presenter {
+    private final String TAG = getClass().getName();
+
     private Context mContext;
     private FollowContract.View mFollowView;
 
     private String auth;
     private UserMethod method;
+    private OrganizationsMethod orgMethod;
 
     private Subscriber<List<FollowersBean>> mFollowersSubscriber;
     private Subscriber<List<FollowersBean>> mFollowingSubscriber;
+    private Subscriber<List<OrganizationBean>> mOrgsSubscriber;
 
     private int loadPageId = 1;
     private boolean loading = false;
@@ -39,6 +47,7 @@ public class FollowPresenter implements FollowContract.Presenter {
     public void start() {
         auth = SPUtil.getString(mContext, Constants.USER_INFO, Constants.USER_AUTH, null);
         method = UserMethod.getInstance();
+        orgMethod = OrganizationsMethod.getInstance();
     }
 
     @Override
@@ -51,6 +60,11 @@ public class FollowPresenter implements FollowContract.Presenter {
         if (mFollowingSubscriber != null) {
             if (mFollowingSubscriber.isUnsubscribed()) {
                 mFollowingSubscriber.unsubscribe();
+            }
+        }
+        if (mOrgsSubscriber != null) {
+            if (mOrgsSubscriber.isUnsubscribed()) {
+                mOrgsSubscriber.unsubscribe();
             }
         }
     }
@@ -114,6 +128,36 @@ public class FollowPresenter implements FollowContract.Presenter {
         } else {
             loading = true;
             method.getFollowing(mFollowingSubscriber, auth, loadPageId);
+        }
+    }
+
+    @Override
+    public void getOrgs() {
+        mOrgsSubscriber = new Subscriber<List<OrganizationBean>>() {
+            @Override
+            public void onCompleted() {
+                mFollowView.loadSuccess();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mFollowView.loadFail();
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(List<OrganizationBean> organizationBeen) {
+                mFollowView.loadingOrgs(organizationBeen);
+            }
+        };
+        if (!loading) {
+            if (mFollowView.getUsername() == null) {
+                Log.i(TAG, "user orgs");
+                orgMethod.getUserOrgs(mOrgsSubscriber, auth);
+            } else {
+                Log.i(TAG, "others orgs");
+                orgMethod.getUserOrgs(mOrgsSubscriber, auth, mFollowView.getUsername());
+            }
         }
     }
 }

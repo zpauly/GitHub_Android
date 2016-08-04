@@ -6,6 +6,7 @@ import java.util.List;
 
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Path;
 import rx.Observable;
 
 /**
@@ -13,6 +14,15 @@ import rx.Observable;
  */
 
 public interface OrganizationsService {
-    @GET("/users/orgs")
+    /**
+     * List your organizations
+     * @param auth
+     * @return
+     */
+    @GET("/user/orgs")
     Observable<List<OrganizationBean>> getUserOrgs(@Header("Authorization") String auth);
+
+    @GET("/users/{username}/orgs")
+    Observable<List<OrganizationBean>> getUserOrgs(@Header("Authorization") String auth,
+                                                 @Path("username") String username);
 }

@@ -9,9 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zpauly.githubapp.R;
+import com.zpauly.githubapp.adapter.LoadMoreRecyclerViewAdapter;
+import com.zpauly.githubapp.adapter.OrgsRecyclerViewAdapter;
 import com.zpauly.githubapp.adapter.UsersRecyclerViewAdapter;
 import com.zpauly.githubapp.base.BaseFragment;
 import com.zpauly.githubapp.entity.response.FollowersBean;
+import com.zpauly.githubapp.entity.response.OrganizationBean;
 import com.zpauly.githubapp.presenter.follow.FollowContract;
 import com.zpauly.githubapp.presenter.follow.FollowPresenter;
 
@@ -27,7 +30,8 @@ public class UsersFragment extends BaseFragment implements FollowContract.View {
 
     private FollowContract.Presenter mPresenter;
     private List<FollowersBean> list = new ArrayList<>();
-    private UsersRecyclerViewAdapter mRVAdapter;
+    private List<OrganizationBean> orgsList = new ArrayList<>();
+    private LoadMoreRecyclerViewAdapter mRVAdapter;
 
     private SwipeRefreshLayout mSWLayout;
     private RecyclerView mContentRV;
@@ -75,6 +79,9 @@ public class UsersFragment extends BaseFragment implements FollowContract.View {
     }
 
     private void setupRecyclerView() {
+        if (userId == UsersActivity.ORGS) {
+            mRVAdapter = new OrgsRecyclerViewAdapter(getContext());
+        }
         mRVAdapter = new UsersRecyclerViewAdapter(getContext());
 
         mContentRV.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -111,6 +118,8 @@ public class UsersFragment extends BaseFragment implements FollowContract.View {
             case UsersActivity.FOLLOWING:
                 mPresenter.getFollowing();
                 break;
+            case UsersActivity.ORGS:
+                mPresenter.getOrgs();
             default:
                 break;
         }
@@ -120,6 +129,19 @@ public class UsersFragment extends BaseFragment implements FollowContract.View {
     public void loading(List<FollowersBean> list) {
         this.list.clear();
         this.list.addAll(list);
+    }
+
+    @Override
+    public void loadingOrgs(List<OrganizationBean> list) {
+        this.orgsList.clear();
+        this.orgsList.addAll(list);
+    }
+
+    @Override
+    public void loadOrgsSuccess() {
+        mSWLayout.setRefreshing(false);
+        mRVAdapter.addAllData(orgsList);
+        mRVAdapter.setHasLoading(false);
     }
 
     @Override
