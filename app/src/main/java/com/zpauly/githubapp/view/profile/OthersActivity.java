@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -76,7 +77,7 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
         mLoginTV.setText("");
         mNameTV = (TextView) findViewById(R.id.profile_name_TV);
         mNameTV.setText("");
-        mBioTV = (TextView) findViewById(R.id.profile_name_TV);
+        mBioTV = (TextView) findViewById(R.id.profile_bio_TV);
         mBioTV.setText("");
         mLocationTV = (TextView) findViewById(R.id.profile_location_TV);
         mLocationTV.setText("");
@@ -195,8 +196,8 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
                     .crossFade()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(mAvatarIV);
-            mLoginTV.setText(user.getLogin());
             mNameTV.setText(user.getName());
+            mLoginTV.setText(user.getLogin());
             mBioTV.setText(user.getBio());
             mLocationTV.setText(user.getLocation());
             mEmailTV.setText(user.getEmail());

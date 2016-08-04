@@ -45,7 +45,7 @@ public class UsersRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Follow
             }
         });
         holder.mUsernameTV.setText(bean.getLogin());
-        Glide.with(mContext)
+        Glide.with(getContext())
                 .load(Uri.parse(bean.getAvatar_url()))
                 .centerCrop()
                 .crossFade()

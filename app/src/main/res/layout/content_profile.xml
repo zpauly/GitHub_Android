@@ -36,7 +36,7 @@
 
                     <TextView
                         style="@style/TextAppearance.AppCompat.Subhead.Inverse"
-                        android:id="@+id/profile_login_TV"
+                        android:id="@+id/profile_name_TV"
                         android:layout_marginTop="@dimen/components_margin"
                         android:text="zpauly"
                         android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
 
                     <TextView
                         style="@style/TextAppearance.AppCompat.Small.Inverse"
-                        android:id="@+id/profile_name_TV"
+                        android:id="@+id/profile_login_TV"
                         android:text="zpauly"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
