@@ -1,6 +1,7 @@
 package com.zpauly.githubapp.entity.response.events;
 
 import com.google.gson.annotations.SerializedName;
+import com.zpauly.githubapp.entity.response.OrganizationBean;
 import com.zpauly.githubapp.entity.response.RepositoriesBean;
 
 import java.util.List;
@@ -1371,81 +1372,6 @@ public class Payload {
             public void setColor(String color) {
                 this.color = color;
             }
-        }
-    }
-
-    public static class OrganizationBean {
-        private String login;
-        private int id;
-        private String url;
-        private String repos_url;
-        private String events_url;
-        private String members_url;
-        private String public_members_url;
-        private String avatar_url;
-
-        public String getLogin() {
-            return login;
-        }
-
-        public void setLogin(String login) {
-            this.login = login;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
-        public String getRepos_url() {
-            return repos_url;
-        }
-
-        public void setRepos_url(String repos_url) {
-            this.repos_url = repos_url;
-        }
-
-        public String getEvents_url() {
-            return events_url;
-        }
-
-        public void setEvents_url(String events_url) {
-            this.events_url = events_url;
-        }
-
-        public String getMembers_url() {
-            return members_url;
-        }
-
-        public void setMembers_url(String members_url) {
-            this.members_url = members_url;
-        }
-
-        public String getPublic_members_url() {
-            return public_members_url;
-        }
-
-        public void setPublic_members_url(String public_members_url) {
-            this.public_members_url = public_members_url;
-        }
-
-        public String getAvatar_url() {
-            return avatar_url;
-        }
-
-        public void setAvatar_url(String avatar_url) {
-            this.avatar_url = avatar_url;
         }
     }
 

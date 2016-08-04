@@ -1,5 +1,7 @@
 package com.zpauly.githubapp.view.repositories;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
@@ -99,6 +101,12 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
         fragment.setArguments(bundle);
         mFragmentList.add(fragment);
         return fragment;
+    }
+
+    public static void launchActivity(Context context) {
+        Intent intent = new Intent();
+        intent.setClass(context, ReposActivity.class);
+        context.startActivity(intent);
     }
 
     private void setupTabLayout() {

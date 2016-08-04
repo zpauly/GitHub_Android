@@ -1,4 +1,4 @@
-package com.zpauly.githubapp.view.followers;
+package com.zpauly.githubapp.view.users;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +22,7 @@ public class UsersActivity extends ToolbarActivity {
     public static final String USERS_ID = "USERS_ID";
     public static final int FOLLOWERS = 0;
     public static final int FOLLOWING = 1;
+    public static final int ORGS = 2;
 
     private int userId;
 
@@ -44,7 +45,7 @@ public class UsersActivity extends ToolbarActivity {
         Bundle bundle = new Bundle();
         bundle.putInt(USERS_ID, userId);
         bundle.putString(OthersActivity.USERNAME, username);
-        Fragment fragment = new FollowersFragment();
+        Fragment fragment = new UsersFragment();
         fragment.setArguments(bundle);
         mFragmentTransaction.replace(R.id.followers_content, fragment);
         mFragmentTransaction.commit();

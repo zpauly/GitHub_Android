@@ -23,7 +23,7 @@ import com.zpauly.githubapp.presenter.profile.ProfileContract;
 import com.zpauly.githubapp.presenter.profile.ProfilePresenter;
 import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.events.EventsActivity;
-import com.zpauly.githubapp.view.followers.UsersActivity;
+import com.zpauly.githubapp.view.users.UsersActivity;
 import com.zpauly.githubapp.view.repositories.ReposActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -151,26 +151,21 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         mEventsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.putExtra(EventsActivity.EVENTS_ID, EventsActivity.USER_EVENTS);
-                intent.setClass(getContext(), EventsActivity.class);
-                startActivity(intent);
+                EventsActivity.launchActivity(getContext(), EventsActivity.USER_EVENTS);
             }
         });
 
         mReposLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(getContext(), ReposActivity.class);
-                startActivity(intent);
+                ReposActivity.launchActivity(getContext());
             }
         });
 
         mOrgsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                UsersActivity.launchActivity(getContext(), null, UsersActivity.ORGS);
             }
         });
 

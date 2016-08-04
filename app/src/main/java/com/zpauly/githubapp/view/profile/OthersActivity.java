@@ -20,7 +20,7 @@ import com.zpauly.githubapp.presenter.profile.ProfilePresenter;
 import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.ToolbarActivity;
 import com.zpauly.githubapp.view.events.EventsActivity;
-import com.zpauly.githubapp.view.followers.UsersActivity;
+import com.zpauly.githubapp.view.users.UsersActivity;
 import com.zpauly.githubapp.view.repositories.ReposActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;

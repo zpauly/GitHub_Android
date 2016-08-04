@@ -1,5 +1,7 @@
 package com.zpauly.githubapp.view.events;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.FragmentManager;
@@ -46,6 +48,13 @@ public class EventsActivity extends ToolbarActivity {
                 onBackPressed();
             }
         });
+    }
+
+    public static void launchActivity(Context context, int eventsId) {
+        Intent intent = new Intent();
+        intent.putExtra(EVENTS_ID, eventsId);
+        intent.setClass(context, EventsActivity.class);
+        context.startActivity(intent);
     }
 
     @Override

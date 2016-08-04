@@ -1,4 +1,4 @@
-package com.zpauly.githubapp.view.followers;
+package com.zpauly.githubapp.view.users;
 
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -22,7 +22,7 @@ import java.util.List;
  * Created by zpauly on 16-7-25.
  */
 
-public class FollowersFragment extends BaseFragment implements FollowContract.View {
+public class UsersFragment extends BaseFragment implements FollowContract.View {
     private final String TAG = getClass().getName();
 
     private FollowContract.Presenter mPresenter;
