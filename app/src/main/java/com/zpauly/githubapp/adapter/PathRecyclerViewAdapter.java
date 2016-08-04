@@ -28,18 +28,28 @@ public class PathRecyclerViewAdapter extends BaseAdapter<String, PathViewHolder>
 
     public PathRecyclerViewAdapter(Context context) {
         super(context);
+        getData().add("root system");
+    }
+
+    @Override
+    public boolean swapAllData(List<String> list) {
+        getData().clear();
+        boolean result1 = getData().add("root system");
+        boolean result2 = getData().addAll(list);
+        notifyDataSetChanged();
+        return result1 && result2;
     }
 
     @Override
     public PathViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View mView = LayoutInflater.from(getContext()).inflate(R.layout.item_recyclerview_dirpath, parent, false);
+        View mView = LayoutInflater.from(mContext).inflate(R.layout.item_recyclerview_dirpath, parent, false);
         PathViewHolder viewHolder = new PathViewHolder(mView);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(PathViewHolder holder, int position) {
-        String file = getData().get(position);
+        String file = mData.get(position);
         holder.mPathTV.setText(file);
         final StringBuffer path = new StringBuffer();
         if (mData.size() > 1) {
@@ -58,5 +68,10 @@ public class PathRecyclerViewAdapter extends BaseAdapter<String, PathViewHolder>
                 }
             }
         });
+    }
+
+    @Override
+    public int getItemCount() {
+        return mData.size();
     }
 }
