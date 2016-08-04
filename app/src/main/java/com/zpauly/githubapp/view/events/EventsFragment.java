@@ -71,7 +71,7 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
                 presenter.setPageId(1);
                 mAdapter.setHasLoading(true);
                 loadData();
-                mAdapter.swapData(new ArrayList<EventsBean>());
+                mAdapter.swapAllData(new ArrayList<EventsBean>());
             }
         });
     }

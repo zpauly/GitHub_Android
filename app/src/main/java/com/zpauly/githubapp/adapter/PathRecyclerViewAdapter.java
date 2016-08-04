@@ -1,18 +1,15 @@
 package com.zpauly.githubapp.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.zpauly.githubapp.R;
+import com.zpauly.githubapp.base.BaseAdapter;
 import com.zpauly.githubapp.listener.OnDirItemClickListener;
 import com.zpauly.githubapp.view.viewholder.PathViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,11 +17,8 @@ import java.util.List;
  * Created by zpauly on 16-8-1.
  */
 
-public class PathRecyclerViewAdapter extends RecyclerView.Adapter<PathViewHolder> {
+public class PathRecyclerViewAdapter extends BaseAdapter<String, PathViewHolder> {
     private final String TAG = getClass().getName();
-
-    private Context mContext;
-    private List<String> mData = new ArrayList<>();
 
     private OnDirItemClickListener mOnDirItemClickListener;
 
@@ -32,16 +26,8 @@ public class PathRecyclerViewAdapter extends RecyclerView.Adapter<PathViewHolder
         this.mOnDirItemClickListener = listener;
     }
 
-    public void swapData(List<String> list) {
-        mData.clear();
-        mData.add("root system");
-        mData.addAll(list);
-        notifyDataSetChanged();
-    }
-
     public PathRecyclerViewAdapter(Context context) {
-        this.mContext = context;
-        mData.add("root system");
+        super(context);
     }
 
     @Override
@@ -72,10 +58,5 @@ public class PathRecyclerViewAdapter extends RecyclerView.Adapter<PathViewHolder
                 }
             }
         });
-    }
-
-    @Override
-    public int getItemCount() {
-        return mData.size();
     }
 }

@@ -28,26 +28,13 @@ import java.util.List;
 /**
  * Created by zpauly on 16-6-14.
  */
-public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<EventsViewHolder> {
+public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<EventsBean, EventsViewHolder> {
     private final String TAG = getClass().getName();
-    private List<EventsBean> mData;
 
     private EventsCommitsRecyclerViewAdapter mAdapter;
 
     public EventsRecyclerViewAdapter(Context context) {
         super(context);
-        mData = new ArrayList<>();
-    }
-
-    public void addAllData(List<EventsBean> list) {
-        mData.addAll(list);
-        notifyDataSetChanged();
-    }
-
-    public void swapData(List<EventsBean> list) {
-        mData.clear();
-        mData.addAll(list);
-        notifyDataSetChanged();
     }
 
     @Override
@@ -121,7 +108,7 @@ public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Event
             String branch = str[str.length - 1];
             holder.mActionTV.setText("pushed to " + branch + " at ");
             holder.mTypeIV.setImageResource(R.mipmap.ic_commit);
-            mAdapter.swapData(payloadBean.getCommits());
+            mAdapter.swapAllData(payloadBean.getCommits());
         } else if ("ForkEvent".equals(type)) {
             holder.mActionTV.setText("forked");
             holder.mTypeIV.setImageResource(R.mipmap.ic_fork);
@@ -139,7 +126,7 @@ public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Event
             bean.setSha(payloadBean.getComment().getCommit_id());
             bean.setMessage(payloadBean.getComment().getBody());
             list.add(bean);
-            mAdapter.swapData(list);
+            mAdapter.swapAllData(list);
         } else if ("MemberEvent".equals(type)) {
             holder.mActionTV.setText(payloadBean.getAction() + " " + payloadBean.getMember().getLogin() + "to ");
         } else if ("IssueCommentEvent".equals(type)) {

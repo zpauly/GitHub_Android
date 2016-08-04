@@ -63,6 +63,8 @@ public class UsersActivity extends ToolbarActivity {
             setToolbarTitle(R.string.followers);
         } else if (userId == FOLLOWING) {
             setToolbarTitle(R.string.following);
+        } else if (userId == ORGS) {
+            setToolbarTitle(R.string.orgs);
         }
         setOnToolbarNavClickedListener(new View.OnClickListener() {
             @Override

@@ -21,30 +21,10 @@ import java.util.List;
  * Created by zpauly on 16-7-15.
  */
 
-public class ReposRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<ReposViewHolder> {
-    private List<ReposModel> mData;
-
+public class ReposRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<ReposModel, ReposViewHolder> {
     public ReposRecyclerViewAdapter(Context context) {
         super(context);
-        mData = new ArrayList<>();
     }
-
-    public void addData(ReposModel data) {
-        mData.add(data);
-        notifyDataSetChanged();
-    }
-
-    public void addAllData(List<ReposModel> list) {
-        mData.addAll(list);
-        notifyDataSetChanged();
-    }
-
-    public void swapData(List<ReposModel> list) {
-        mData.clear();
-        mData.addAll(list);
-        notifyDataSetChanged();
-    }
-
     @Override
     public ReposViewHolder createContentViewHolder(ViewGroup parent, int viewType) {
         View mView = LayoutInflater.from(mContext).inflate(R.layout.item_recyclerview_repositories, parent, false);
@@ -67,10 +47,5 @@ public class ReposRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<ReposV
                         repo.getUrl(), repo.getLogin());
             }
         });
-    }
-
-    @Override
-    public int getItemCount() {
-        return mData.size() + 1;
     }
 }

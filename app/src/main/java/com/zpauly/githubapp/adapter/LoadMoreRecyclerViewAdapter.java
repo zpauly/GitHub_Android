@@ -7,14 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zpauly.githubapp.R;
+import com.zpauly.githubapp.base.BaseAdapter;
 import com.zpauly.githubapp.view.viewholder.LoadMoreViewHolder;
 
 /**
  * Created by zpauly on 16-7-28.
  */
 
-public abstract class LoadMoreRecyclerViewAdapter<VH extends RecyclerView.ViewHolder>
-        extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public abstract class LoadMoreRecyclerViewAdapter<D, VH extends RecyclerView.ViewHolder>
+        extends BaseAdapter<D, RecyclerView.ViewHolder> {
     private final String TAG = getClass().getName();
 
     public static final int LOAD_MORE_VIEW_TYPE = 10000;
@@ -25,7 +26,7 @@ public abstract class LoadMoreRecyclerViewAdapter<VH extends RecyclerView.ViewHo
     private boolean flag = false;
 
     protected LoadMoreRecyclerViewAdapter(Context context) {
-        this.mContext = context;
+        super(context);
     }
 
     @Override
@@ -71,6 +72,11 @@ public abstract class LoadMoreRecyclerViewAdapter<VH extends RecyclerView.ViewHo
             return LOAD_MORE_VIEW_TYPE;
         }
         return super.getItemViewType(position);
+    }
+
+    @Override
+    public int getItemCount() {
+        return super.getItemCount() + 1;
     }
 
     public void setHasLoading(boolean hasMoreData) {

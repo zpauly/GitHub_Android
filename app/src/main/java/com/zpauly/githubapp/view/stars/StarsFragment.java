@@ -136,9 +136,9 @@ public class StarsFragment extends BaseFragment implements StarContract.View {
     @Override
     public void loadSuccess() {
         if (mStarredReposSRLayout.isRefreshing()) {
-            mAdapter.swapData(new ArrayList<ReposModel>());
+            mAdapter.swapAllData(new ArrayList<ReposModel>());
         }
-        mAdapter.swapData(list);
+        mAdapter.swapAllData(list);
         mStarredReposSRLayout.setRefreshing(false);
     }
 

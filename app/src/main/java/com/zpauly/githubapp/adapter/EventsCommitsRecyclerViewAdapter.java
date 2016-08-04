@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zpauly.githubapp.R;
+import com.zpauly.githubapp.base.BaseAdapter;
 import com.zpauly.githubapp.entity.response.events.Payload;
 import com.zpauly.githubapp.view.viewholder.EventsCommitsViewHolder;
 
@@ -17,27 +18,10 @@ import java.util.List;
  * Created by zpauly on 16-7-24.
  */
 
-public class EventsCommitsRecyclerViewAdapter extends RecyclerView.Adapter<EventsCommitsViewHolder> {
-    private List<Payload.CommitsBean> mData;
-    private Context mContext;
-
+public class EventsCommitsRecyclerViewAdapter extends BaseAdapter<Payload.CommitsBean, EventsCommitsViewHolder> {
     public EventsCommitsRecyclerViewAdapter(Context context) {
-        this.mContext = context;
-        mData = new ArrayList<>();
+        super(context);
     }
-
-    public void swapData(List<Payload.CommitsBean> list) {
-        mData.clear();
-        this.mData.addAll(list);
-        notifyDataSetChanged();
-    }
-
-    public void clearData() {
-        mData.clear();
-        notifyDataSetChanged();
-    }
-
-
 
     @Override
     public EventsCommitsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -51,10 +35,5 @@ public class EventsCommitsRecyclerViewAdapter extends RecyclerView.Adapter<Event
         Payload.CommitsBean bean = mData.get(position);
         holder.mShaTV.setText(bean.getSha().substring(0, 7));
         holder.mMessageTV.setText(bean.getMessage());
-    }
-
-    @Override
-    public int getItemCount() {
-        return mData.size();
     }
 }

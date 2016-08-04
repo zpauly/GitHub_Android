@@ -19,27 +19,13 @@ import java.util.List;
 /**
  * Created by zpauly on 16-6-15.
  */
-public class UsersRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<UsersViewHolder> {
+public class UsersRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<FollowersBean, UsersViewHolder> {
     private final String TAG = getClass().getName();
 
     private View mView;
 
-    private List<FollowersBean> mData;
-
     public UsersRecyclerViewAdapter(Context context) {
         super(context);
-        mData = new ArrayList<>();
-    }
-
-    public void swapData(List<FollowersBean> list) {
-        mData.clear();
-        mData.addAll(list);
-        notifyDataSetChanged();
-    }
-
-    public void addData(List<FollowersBean> list) {
-        mData.addAll(list);
-        notifyDataSetChanged();
     }
 
     @Override
@@ -65,10 +51,5 @@ public class UsersRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<UsersV
                 .crossFade()
                 .into(holder.mAvatarIV);
         Log.i(TAG, "item" + position);
-    }
-
-    @Override
-    public int getItemCount() {
-        return mData.size() + 1;
     }
 }

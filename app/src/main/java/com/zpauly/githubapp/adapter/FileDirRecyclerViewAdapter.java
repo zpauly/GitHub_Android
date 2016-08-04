@@ -1,13 +1,12 @@
 package com.zpauly.githubapp.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.zpauly.githubapp.R;
+import com.zpauly.githubapp.base.BaseAdapter;
 import com.zpauly.githubapp.db.FileDirModel;
 import com.zpauly.githubapp.listener.OnDirItemClickListener;
 import com.zpauly.githubapp.view.viewholder.FileDirViewHolder;
@@ -19,28 +18,13 @@ import java.util.List;
  * Created by root on 16-8-1.
  */
 
-public class FileDirRecyclerViewAdapter extends RecyclerView.Adapter<FileDirViewHolder> {
+public class FileDirRecyclerViewAdapter extends BaseAdapter<FileDirModel, FileDirViewHolder> {
     private final String TAG = getClass().getName();
-    private Context mContext;
-
-    private List<FileDirModel> mData;
 
     private OnDirItemClickListener mOnDirItemClickListener;
 
     public FileDirRecyclerViewAdapter(Context context) {
-        this.mContext = context;
-        mData = new ArrayList<>();
-    }
-
-    public void addData(List<FileDirModel> list) {
-        mData.addAll(list);
-        notifyDataSetChanged();
-    }
-
-    public void swapData(List<FileDirModel> list) {
-        mData.clear();
-        mData.addAll(list);
-        notifyDataSetChanged();
+        super(context);
     }
 
     public void setOnItemClickListener(OnDirItemClickListener listener) {
@@ -72,10 +56,5 @@ public class FileDirRecyclerViewAdapter extends RecyclerView.Adapter<FileDirView
                 }
             }
         });
-    }
-
-    @Override
-    public int getItemCount() {
-        return mData.size();
     }
 }

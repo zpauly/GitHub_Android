@@ -129,7 +129,7 @@ public class UsersFragment extends BaseFragment implements FollowContract.View {
 
     @Override
     public void loadSuccess() {
-        mRVAdapter.addData(list);
+        mRVAdapter.addAllData(list);
         mSWLayout.setRefreshing(false);
         if (list == null || list.size() == 0) {
             mRVAdapter.setHasLoading(false);

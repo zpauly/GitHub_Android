@@ -162,7 +162,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
                         for (int i = 0; i < s.length; i ++) {
                             paths.add(s[i]);
                         }
-                        mPathAdapter.swapData(paths);
+                        mPathAdapter.swapAllData(paths);
                         mContentRV.setVisibility(View.GONE);
                         Codeview.with(getApplicationContext())
                                 .withCode("")
@@ -203,8 +203,8 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
                 paths.add(strs[i]);
             }
             mContentRV.setVisibility(View.VISIBLE);
-            mPathAdapter.swapData(paths);
-            mDirAdapter.swapData(list);
+            mPathAdapter.swapAllData(paths);
+            mDirAdapter.swapAllData(list);
             mSRLayout.setRefreshing(false);
             mSRLayout.setEnabled(false);
         }
