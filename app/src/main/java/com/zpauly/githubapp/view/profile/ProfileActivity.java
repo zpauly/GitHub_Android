@@ -1,8 +1,7 @@
 package com.zpauly.githubapp.view.profile;
 
-import android.support.design.widget.AppBarLayout;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 
 import com.zpauly.githubapp.R;
@@ -14,19 +13,9 @@ import com.zpauly.githubapp.view.ToolbarActivity;
 
 public class ProfileActivity extends ToolbarActivity {
 
-    private AppBarLayout mABLayout;
-
-    private FragmentManager manager;
-    private FragmentTransaction transaction;
-
     @Override
     public void initViews() {
-        mABLayout = (AppBarLayout) findViewById(R.id.profile_ABLayout);
-
-        manager = getSupportFragmentManager();
-        transaction = manager.beginTransaction();
-        transaction.replace(R.id.profile_content, new ProfileFragment());
-        transaction.commit();
+        setContent(new ProfileFragment());
     }
 
     @Override
@@ -41,8 +30,9 @@ public class ProfileActivity extends ToolbarActivity {
         });
     }
 
-    @Override
-    public void initContent() {
-        setContentView(R.layout.activity_profile);
+    public static void launchActivity(Context context) {
+        Intent intent = new Intent();
+        intent.setClass(context, ProfileActivity.class);
+        context.startActivity(intent);
     }
 }

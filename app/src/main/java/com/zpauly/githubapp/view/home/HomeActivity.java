@@ -62,9 +62,7 @@ public class HomeActivity extends DrawerActivity {
         setOnNavHeaderAvatarClickListener(new OnNavHeaderAvatarClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(HomeActivity.this, ProfileActivity.class);
-                startActivity(intent);
+                ProfileActivity.launchActivity(HomeActivity.this);
 //                finish();
             }
         });

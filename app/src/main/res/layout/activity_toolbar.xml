@@ -5,19 +5,19 @@
     android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/events_ABLayout"
+        android:id="@+id/ABLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <include layout="@layout/toolbar"/>
+        <include
+            layout="@layout/toolbar" />
 
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/toolbar_layout_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:id="@+id/events_content"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </android.support.design.widget.CoordinatorLayout>

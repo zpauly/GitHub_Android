@@ -1,28 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/repo_content_SRLayout"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/repo_content_ABLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <include
-            layout="@layout/toolbar" />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/repo_content_SRLayout"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <android.support.v4.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
         <LinearLayout
             android:orientation="vertical"
@@ -257,8 +244,6 @@
 
         </LinearLayout>
 
-        </android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
-    </android.support.v4.widget.SwipeRefreshLayout>
-
-</android.support.design.widget.CoordinatorLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

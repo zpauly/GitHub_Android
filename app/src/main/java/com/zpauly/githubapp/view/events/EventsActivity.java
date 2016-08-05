@@ -25,15 +25,9 @@ public class EventsActivity extends ToolbarActivity {
 
     private int eventsId;
 
-    private AppBarLayout mEventsABLayout;
-
-    private FragmentManager fragmentManager;
-    private FragmentTransaction fragmentTransaction;
-
     @Override
     public void initViews() {
         eventsId = getIntent().getIntExtra(EVENTS_ID, -1);
-        fragmentManager = getSupportFragmentManager();
 
         setFragment();
     }
@@ -57,11 +51,6 @@ public class EventsActivity extends ToolbarActivity {
         context.startActivity(intent);
     }
 
-    @Override
-    public void initContent() {
-        setContentView(R.layout.activity_events);
-    }
-
     private void setFragment() {
         switch (eventsId) {
             case -1:
@@ -74,9 +63,7 @@ public class EventsActivity extends ToolbarActivity {
                 bundle.putInt(EVENTS_ID, USER_EVENTS);
                 bundle.putString(OthersActivity.USERNAME, username);
                 userFragment.setArguments(bundle);
-                fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.events_content, userFragment);
-                fragmentTransaction.commit();
+                setContent(userFragment);
                 break;
             default:
                 break;

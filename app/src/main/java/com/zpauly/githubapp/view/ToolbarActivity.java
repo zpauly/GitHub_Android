@@ -1,11 +1,12 @@
 package com.zpauly.githubapp.view;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 
 import com.zpauly.githubapp.R;
@@ -50,4 +51,16 @@ public abstract class ToolbarActivity extends BaseActivity {
     }
 
     protected void setToolbar() {}
+
+    @Override
+    public void initContent() {
+        setContentView(R.layout.activity_toolbar);
+    }
+
+    protected void setContent(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.toolbar_layout_content, fragment);
+        fragmentTransaction.commit();
+    }
 }

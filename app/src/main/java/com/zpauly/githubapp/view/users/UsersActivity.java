@@ -27,34 +27,20 @@ public class UsersActivity extends ToolbarActivity {
 
     private int userId;
 
-    private AppBarLayout mABLayout;
-
-    private FragmentManager mFragmentManager;
-    private FragmentTransaction mFragmentTransaction;
-
     @Override
     public void initViews() {
         userId = getIntent().getIntExtra(USERS_ID, -1);
 
-        mABLayout = (AppBarLayout) findViewById(R.id.followers_ABLayout);
         setFragment();
     }
 
     private void setFragment() {
-        mFragmentManager = getSupportFragmentManager();
-        mFragmentTransaction = mFragmentManager.beginTransaction();
         Bundle bundle = new Bundle();
         bundle.putInt(USERS_ID, userId);
         bundle.putString(OthersActivity.USERNAME, username);
         Fragment fragment = new UsersFragment();
         fragment.setArguments(bundle);
-        mFragmentTransaction.replace(R.id.followers_content, fragment);
-        mFragmentTransaction.commit();
-    }
-
-    @Override
-    public void initContent() {
-        setContentView(R.layout.activity_followers);
+        setContent(fragment);
     }
 
     @Override
