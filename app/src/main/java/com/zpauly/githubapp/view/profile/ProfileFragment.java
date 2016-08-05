@@ -52,7 +52,6 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     private RelativeLayout mEventsLayout;
     private RelativeLayout mReposLayout;
     private RelativeLayout mOrgsLayout;
-    private RelativeLayout mGistsLayout;
 
     @Override
     protected void initViews(View view) {
@@ -80,7 +79,6 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         mEventsLayout = (RelativeLayout) view.findViewById(R.id.profile_events_layout);
         mReposLayout = (RelativeLayout) view.findViewById(R.id.profile_repos_layout);
         mOrgsLayout = (RelativeLayout) view.findViewById(R.id.profile_orgs_layout);
-        mGistsLayout = (RelativeLayout) view.findViewById(R.id.profile_gists_layout);
 
         setUserInfo();
 
@@ -166,13 +164,6 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
             @Override
             public void onClick(View v) {
                 UsersActivity.launchActivity(getContext(), null, UsersActivity.ORGS);
-            }
-        });
-
-        mGistsLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                
             }
         });
     }

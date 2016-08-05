@@ -16,6 +16,10 @@
             android:id="@+id/navigation_explore"
             android:icon="@drawable/ic_explore"
             android:title="@string/explore"/>
+        <item
+            android:id="@+id/navigation_gists"
+            android:icon="@drawable/ic_code"
+            android:title="@string/gists"/>
     </group>
     <group android:id="@+id/grp2"
         android:checkableBehavior="single">

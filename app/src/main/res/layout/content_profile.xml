@@ -323,43 +323,6 @@
 
                 </RelativeLayout>
 
-                <ImageView
-                    android:background="@drawable/divider"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp" />
-
-                <RelativeLayout
-                    android:clickable="true"
-                    android:background="?attr/selectableItemBackground"
-                    android:id="@+id/profile_gists_layout"
-                    android:padding="@dimen/components_padding"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/profile_gists_IV"
-                        android:layout_alignParentLeft="true"
-                        android:src="@mipmap/ic_gists"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp" />
-
-                    <TextView
-                        style="@style/TextAppearance.AppCompat.Body1"
-                        android:layout_marginLeft="@dimen/components_margin"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/profile_gists_IV"
-                        android:text="@string/gists"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <ImageView
-                        android:layout_alignParentRight="true"
-                        android:src="@drawable/ic_chevron_right_grey_700_24dp"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp" />
-
-                </RelativeLayout>
-
             </LinearLayout>
 
         </android.support.v7.widget.CardView>

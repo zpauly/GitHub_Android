@@ -32,6 +32,8 @@ public class HomeActivity extends DrawerActivity {
 
     private static final int EVENTS = 0;
     private static final int STARS = 1;
+    private static final int EXPLORE = 2;
+    private static final int GISTS = 3;
 
     private int currentFragmentID = EVENTS;
 
@@ -84,6 +86,22 @@ public class HomeActivity extends DrawerActivity {
                             item.setChecked(true);
                             changeFragment(EVENTS);
                             setToolbarTitle(R.string.events);
+                        }
+                        break;
+                    case R.id.navigation_explore:
+                        if (currentFragmentID == EXPLORE) {
+
+                        } else {
+                            item.setChecked(true);
+                            currentFragmentID = EXPLORE;
+                        }
+                        break;
+                    case R.id.navigation_gists:
+                        if (currentFragmentID == GISTS) {
+
+                        } else {
+                            item.setChecked(true);
+                            currentFragmentID = GISTS;
                         }
                         break;
                     case R.id.navigation_settings:

@@ -54,7 +54,6 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
     private RelativeLayout mEventsLayout;
     private RelativeLayout mReposLayout;
     private RelativeLayout mOrgsLayout;
-    private RelativeLayout mGistsLayout;
 
     private UserBean user;
 
@@ -92,7 +91,6 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
         mEventsLayout = (RelativeLayout) findViewById(R.id.profile_events_layout);
         mReposLayout = (RelativeLayout) findViewById(R.id.profile_repos_layout);
         mOrgsLayout = (RelativeLayout) findViewById(R.id.profile_orgs_layout);
-        mGistsLayout = (RelativeLayout) findViewById(R.id.profile_gists_layout);
 
         setupSwipeRefreshLayout();
 
@@ -172,13 +170,6 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
             @Override
             public void onClick(View v) {
                 UsersActivity.launchActivity(OthersActivity.this, username, UsersActivity.ORGS);
-            }
-        });
-
-        mGistsLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
             }
         });
     }

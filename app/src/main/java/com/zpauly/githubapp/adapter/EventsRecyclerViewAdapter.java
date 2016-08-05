@@ -58,8 +58,8 @@ public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Event
 //        holder.mUsernameTV.setText(String.valueOf(position));
         holder.mTimeTV.setText(TextUtil.timeConverter(data.getCreated_at()));
         holder.mCommentTV.setVisibility(View.GONE);
-        mAdapter = new EventsCommitsRecyclerViewAdapter(mContext);
-        holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(mContext));
+        mAdapter = new EventsCommitsRecyclerViewAdapter(getContext());
+        holder.mCommitsRV.setLayoutManager(new LinearLayoutManager(getContext()));
         holder.mCommitsRV.setAdapter(mAdapter);
         setAction(data.getType(), data.getPayload(), holder, position);
 
