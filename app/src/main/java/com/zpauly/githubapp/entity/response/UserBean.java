@@ -1,10 +1,13 @@
 package com.zpauly.githubapp.entity.response;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by zpauly on 16-7-26.
  */
 
-public class UserBean {
+public class UserBean implements Parcelable {
     /**
      * login : octocat
      * id : 1
@@ -308,4 +311,91 @@ public class UserBean {
     public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.login);
+        dest.writeInt(this.id);
+        dest.writeString(this.avatar_url);
+        dest.writeString(this.gravatar_id);
+        dest.writeString(this.url);
+        dest.writeString(this.html_url);
+        dest.writeString(this.followers_url);
+        dest.writeString(this.following_url);
+        dest.writeString(this.gists_url);
+        dest.writeString(this.starred_url);
+        dest.writeString(this.subscriptions_url);
+        dest.writeString(this.organizations_url);
+        dest.writeString(this.repos_url);
+        dest.writeString(this.events_url);
+        dest.writeString(this.received_events_url);
+        dest.writeString(this.type);
+        dest.writeByte(this.site_admin ? (byte) 1 : (byte) 0);
+        dest.writeString(this.name);
+        dest.writeString(this.company);
+        dest.writeString(this.blog);
+        dest.writeString(this.location);
+        dest.writeString(this.email);
+        dest.writeByte(this.hireable ? (byte) 1 : (byte) 0);
+        dest.writeString(this.bio);
+        dest.writeInt(this.public_repos);
+        dest.writeInt(this.public_gists);
+        dest.writeInt(this.followers);
+        dest.writeInt(this.following);
+        dest.writeString(this.created_at);
+        dest.writeString(this.updated_at);
+    }
+
+    public UserBean() {
+    }
+
+    protected UserBean(Parcel in) {
+        this.login = in.readString();
+        this.id = in.readInt();
+        this.avatar_url = in.readString();
+        this.gravatar_id = in.readString();
+        this.url = in.readString();
+        this.html_url = in.readString();
+        this.followers_url = in.readString();
+        this.following_url = in.readString();
+        this.gists_url = in.readString();
+        this.starred_url = in.readString();
+        this.subscriptions_url = in.readString();
+        this.organizations_url = in.readString();
+        this.repos_url = in.readString();
+        this.events_url = in.readString();
+        this.received_events_url = in.readString();
+        this.type = in.readString();
+        this.site_admin = in.readByte() != 0;
+        this.name = in.readString();
+        this.company = in.readString();
+        this.blog = in.readString();
+        this.location = in.readString();
+        this.email = in.readString();
+        this.hireable = in.readByte() != 0;
+        this.bio = in.readString();
+        this.public_repos = in.readInt();
+        this.public_gists = in.readInt();
+        this.followers = in.readInt();
+        this.following = in.readInt();
+        this.created_at = in.readString();
+        this.updated_at = in.readString();
+    }
+
+    public static final Creator<UserBean> CREATOR = new Creator<UserBean>() {
+        @Override
+        public UserBean createFromParcel(Parcel source) {
+            return new UserBean(source);
+        }
+
+        @Override
+        public UserBean[] newArray(int size) {
+            return new UserBean[size];
+        }
+    };
 }

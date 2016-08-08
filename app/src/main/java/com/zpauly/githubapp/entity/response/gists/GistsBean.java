@@ -1,5 +1,8 @@
 package com.zpauly.githubapp.entity.response.gists;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 import com.zpauly.githubapp.entity.response.UserBean;
 
@@ -7,7 +10,7 @@ import com.zpauly.githubapp.entity.response.UserBean;
  * Created by zpauly on 16-8-5.
  */
 
-public class GistsBean {
+public class GistsBean implements Parcelable {
 
     /**
      * url : https://api.github.com/gists/aa5a315d61ae9438b18d
@@ -56,7 +59,7 @@ public class GistsBean {
      */
 
     private UserBean owner;
-    private Object user;
+    private UserBean user;
     private boolean truncated;
     private int comments;
     private String comments_url;
@@ -131,11 +134,11 @@ public class GistsBean {
         this.owner = owner;
     }
 
-    public Object getUser() {
+    public UserBean getUser() {
         return user;
     }
 
-    public void setUser(Object user) {
+    public void setUser(UserBean user) {
         this.user = user;
     }
 
@@ -202,4 +205,65 @@ public class GistsBean {
     public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.url);
+        dest.writeString(this.forks_url);
+        dest.writeString(this.commits_url);
+        dest.writeString(this.id);
+        dest.writeString(this.description);
+        dest.writeByte(this.publicX ? (byte) 1 : (byte) 0);
+        dest.writeParcelable(this.owner, flags);
+        dest.writeParcelable(this.user, flags);
+        dest.writeByte(this.truncated ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.comments);
+        dest.writeString(this.comments_url);
+        dest.writeString(this.html_url);
+        dest.writeString(this.git_pull_url);
+        dest.writeString(this.git_push_url);
+        dest.writeString(this.created_at);
+        dest.writeString(this.updated_at);
+        dest.writeParcelable(this.files, flags);
+    }
+
+    public GistsBean() {
+    }
+
+    protected GistsBean(Parcel in) {
+        this.url = in.readString();
+        this.forks_url = in.readString();
+        this.commits_url = in.readString();
+        this.id = in.readString();
+        this.description = in.readString();
+        this.publicX = in.readByte() != 0;
+        this.owner = in.readParcelable(UserBean.class.getClassLoader());
+        this.user = in.readParcelable(Object.class.getClassLoader());
+        this.truncated = in.readByte() != 0;
+        this.comments = in.readInt();
+        this.comments_url = in.readString();
+        this.html_url = in.readString();
+        this.git_pull_url = in.readString();
+        this.git_push_url = in.readString();
+        this.created_at = in.readString();
+        this.updated_at = in.readString();
+        this.files = in.readParcelable(GistFileMapBean.class.getClassLoader());
+    }
+
+    public static final Creator<GistsBean> CREATOR = new Creator<GistsBean>() {
+        @Override
+        public GistsBean createFromParcel(Parcel source) {
+            return new GistsBean(source);
+        }
+
+        @Override
+        public GistsBean[] newArray(int size) {
+            return new GistsBean[size];
+        }
+    };
 }
