@@ -13,7 +13,12 @@ import com.zpauly.githubapp.entity.response.gists.GistFileBean;
 import com.zpauly.githubapp.entity.response.gists.GistFileMapBean;
 import com.zpauly.githubapp.entity.response.gists.GistsBean;
 import com.zpauly.githubapp.utils.TextUtil;
+import com.zpauly.githubapp.view.gists.GistContentActivity;
 import com.zpauly.githubapp.view.viewholder.GistViewHolder;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zpauly on 16-8-5.
@@ -33,10 +38,13 @@ public class GistsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<GistsB
 
     @Override
     public void bindContentViewHolder(GistViewHolder holder, int position) {
-        GistsBean data = getData().get(position);
-        GistFileMapBean map = data.getFiles();
-        GistFileBean file = new GistFileBean();
-        holder.mTitleTV.setText(data.getOwner().getLogin() + "/" + file.getFilename());
+        final GistsBean data = getData().get(position);
+        final GistFileMapBean map = data.getFiles();
+        final ArrayList<GistFileBean> list = new ArrayList<>();
+        for (String s : map.keySet()) {
+            list.add(map.get(s));
+        }
+        holder.mTitleTV.setText(data.getOwner().getLogin() + "/" + list.get(0).getFilename());
         holder.mDescTV.setText(data.getDescription());
         holder.mTimeTV.setText(TextUtil.timeConverter(data.getUpdated_at()));
         Glide.with(getContext())
@@ -45,5 +53,11 @@ public class GistsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<GistsB
                 .crossFade()
                 .centerCrop()
                 .into(holder.mAvatarIV);
+        holder.mLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GistContentActivity.launchActivity(getContext(), data, list);
+            }
+        });
     }
 }

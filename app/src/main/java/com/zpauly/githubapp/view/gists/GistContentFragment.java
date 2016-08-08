@@ -77,6 +77,7 @@ public class GistContentFragment extends BaseFragment {
         mDescTV.setText(bean.getDescription());
 
         mFileAdapter.addAllData(list);
+        mFileAdapter.setId(bean.getId());
     }
 
     private void getAttrs() {

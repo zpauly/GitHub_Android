@@ -34,12 +34,12 @@ public class GistFileActivity extends ToolbarActivity {
     }
 
     private void setFragment() {
-        /*Bundle bundle = new Bundle();
+        Bundle bundle = new Bundle();
         bundle.putString(FILE_NAME, fileName);
         bundle.putString(FILE_ID, id);
         GistFileFragment fragment = new GistFileFragment();
         fragment.setArguments(bundle);
-        setContent(fragment);*/
+        setContent(fragment);
     }
 
     @Override
