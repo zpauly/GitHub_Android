@@ -68,7 +68,6 @@ public class RepoContentFragment extends BaseFragment implements RepoContentCont
 
         new RepoContentPresenter(getContext(), this);
 
-        mABLayout = (AppBarLayout) view.findViewById(R.id.repo_content_ABLayout);
         mSRLayout = (SwipeRefreshLayout) view.findViewById(R.id.repo_content_SRLayout);
         mTitleLayout = (LinearLayout) view.findViewById(R.id.repo_content_title_layout);
         mAvatarIV = (CircleImageView) view.findViewById(R.id.repo_content_avatar_IV);
