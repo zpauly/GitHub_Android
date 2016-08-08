@@ -18,6 +18,7 @@ import com.zpauly.githubapp.utils.SPUtil;
 import com.zpauly.githubapp.view.DrawerActivity;
 import com.zpauly.githubapp.view.events.EventsActivity;
 import com.zpauly.githubapp.view.events.EventsFragment;
+import com.zpauly.githubapp.view.gists.GistsFragment;
 import com.zpauly.githubapp.view.login.LoginActivity;
 import com.zpauly.githubapp.view.profile.ProfileActivity;
 import com.zpauly.githubapp.view.stars.StarsFragment;
@@ -34,6 +35,8 @@ public class HomeActivity extends DrawerActivity {
     private static final int STARS = 1;
     private static final int EXPLORE = 2;
     private static final int GISTS = 3;
+    private static final int All_GISTS = 4;
+    private static final int STARRED_GISTS = 5;
 
     private int currentFragmentID = EVENTS;
 
@@ -45,10 +48,24 @@ public class HomeActivity extends DrawerActivity {
 
     @Override
     public void initViews() {
-        fragments = new BaseFragment[]{ new EventsFragment(), new StarsFragment()};
+        fragments = new BaseFragment[]{ new EventsFragment(), new StarsFragment()
+                , null, new GistsFragment(), new GistsFragment(), new GistsFragment()};
+
         Bundle eventsBundle = new Bundle();
         eventsBundle.putInt(EventsActivity.EVENTS_ID, EventsActivity.RECEIVED_EVENTS);
         fragments[0].setArguments(eventsBundle);
+
+        Bundle gistsBundle = new Bundle();
+        gistsBundle.putInt(GistsFragment.GISTS_ID, GistsFragment.GISTS);
+        fragments[3].setArguments(gistsBundle);
+
+        Bundle publicGistsBundle = new Bundle();
+        publicGistsBundle.putInt(GistsFragment.GISTS_ID, GistsFragment.PUBLIC_GISTS);
+        fragments[4].setArguments(publicGistsBundle);
+
+        Bundle starredGistsBundle = new Bundle();
+        starredGistsBundle.putInt(GistsFragment.GISTS_ID, GistsFragment.STARRED_GISTS);
+        fragments[5].setArguments(starredGistsBundle);
 
         setListener();
         mFragmentManager = getSupportFragmentManager();
@@ -99,7 +116,26 @@ public class HomeActivity extends DrawerActivity {
 
                         } else {
                             item.setChecked(true);
-                            currentFragmentID = GISTS;
+                            changeFragment(GISTS);
+                            setToolbarTitle(R.string.gists);
+                        }
+                        break;
+                    case R.id.navigation_all_gists:
+                        if (currentFragmentID == All_GISTS) {
+
+                        } else {
+                            item.setChecked(true);
+                            changeFragment(All_GISTS);
+                            setToolbarTitle(R.string.all_gists);
+                        }
+                        break;
+                    case R.id.navigation_starred_gists:
+                        if (currentFragmentID == STARRED_GISTS) {
+
+                        } else {
+                            item.setChecked(true);
+                            changeFragment(STARRED_GISTS);
+                            setToolbarTitle(R.string.starred_gists);
                         }
                         break;
                     case R.id.navigation_settings:

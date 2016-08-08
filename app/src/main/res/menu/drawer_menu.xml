@@ -16,12 +16,24 @@
             android:id="@+id/navigation_explore"
             android:icon="@drawable/ic_explore"
             android:title="@string/explore"/>
+    </group>
+    <group
+        android:id="@+id/grp2"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/navigation_gists"
             android:icon="@drawable/ic_code"
             android:title="@string/gists"/>
+        <item
+            android:id="@+id/navigation_all_gists"
+            android:icon="@drawable/ic_public"
+            android:title="@string/all_gists"/>
+        <item
+            android:id="@+id/navigation_starred_gists"
+            android:icon="@mipmap/ic_star"
+            android:title="@string/starred_gists"/>
     </group>
-    <group android:id="@+id/grp2"
+    <group android:id="@+id/grp3"
         android:checkableBehavior="single">
         <item
             android:id="@+id/navigation_settings"

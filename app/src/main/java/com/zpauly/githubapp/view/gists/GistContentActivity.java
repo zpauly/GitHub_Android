@@ -65,13 +65,6 @@ public class GistContentActivity extends ToolbarActivity {
         intent.putExtra(GIST_BUNDLE, bean);
         intent.setClass(context, GistContentActivity.class);
         context.startActivity(intent);
-<<<<<<< HEAD
-<<<<<<< HEAD
-//        ((Activity) context).finish();
-=======
->>>>>>> parent of 502b4dc... complete gist file
-=======
-        ((Activity) context).finish();
->>>>>>> parent of 9b3c48f... Updated ReadMe.md
+
     }
 }
