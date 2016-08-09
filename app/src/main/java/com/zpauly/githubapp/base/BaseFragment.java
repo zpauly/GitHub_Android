@@ -33,6 +33,12 @@ public abstract class BaseFragment extends Fragment {
         return mView;
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
     protected abstract void initViews(View view);
 
     protected abstract View setContentView(LayoutInflater inflater, @Nullable ViewGroup container);

@@ -18,6 +18,7 @@ import com.zpauly.githubapp.utils.SPUtil;
 import com.zpauly.githubapp.view.DrawerActivity;
 import com.zpauly.githubapp.view.events.EventsActivity;
 import com.zpauly.githubapp.view.events.EventsFragment;
+import com.zpauly.githubapp.view.explore.ExploreFragment;
 import com.zpauly.githubapp.view.gists.GistsFragment;
 import com.zpauly.githubapp.view.login.LoginActivity;
 import com.zpauly.githubapp.view.profile.ProfileActivity;
@@ -49,7 +50,7 @@ public class HomeActivity extends DrawerActivity {
     @Override
     public void initViews() {
         fragments = new BaseFragment[]{ new EventsFragment(), new StarsFragment()
-                , null, new GistsFragment(), new GistsFragment(), new GistsFragment()};
+                , new ExploreFragment(), new GistsFragment(), new GistsFragment(), new GistsFragment()};
 
         Bundle eventsBundle = new Bundle();
         eventsBundle.putInt(EventsActivity.EVENTS_ID, EventsActivity.RECEIVED_EVENTS);
@@ -108,7 +109,8 @@ public class HomeActivity extends DrawerActivity {
 
                         } else {
                             item.setChecked(true);
-                            currentFragmentID = EXPLORE;
+                            changeFragment(EXPLORE);
+                            setToolbarTitle(R.string.explore);
                         }
                         break;
                     case R.id.navigation_gists:

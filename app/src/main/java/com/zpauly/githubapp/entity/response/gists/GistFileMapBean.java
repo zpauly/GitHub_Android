@@ -3,13 +3,14 @@ package com.zpauly.githubapp.entity.response.gists;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.LinkedHashMap;
 import java.util.TreeMap;
 
 /**
  * Created by zpauly on 16-8-5.
  */
 
-public class GistFileMapBean extends TreeMap<String, GistFileBean> implements Parcelable {
+public class GistFileMapBean extends LinkedHashMap<String, GistFileBean> implements Parcelable {
 
     @Override
     public int describeContents() {
