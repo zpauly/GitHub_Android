@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/explore_search"
+        android:title="@string/search"
+        android:icon="@drawable/abc_ic_search_api_mtrl_alpha"
+        app:showAsAction="always"
+        app:actionViewClass="android.support.v7.widget.SearchView" />
+    <item android:id="@+id/explore_sort"
+        android:title="@string/sort"
+        android:icon="@drawable/ic_sort_white_24dp"
+        app:showAsAction="always">
+        <menu>
+            <group android:checkableBehavior="single"
+                android:id="@+id/explore_sort_grp">
+                <item
+                    android:checked="true"
+                    android:id="@+id/explore_sort_best_match"
+                    android:title="@string/best_match" />
+                <item
+                    android:id="@+id/explore_sort_most_stars"
+                    android:title="@string/most_stars" />
+                <item
+                    android:id="@+id/explore_sort_fewest_stars"
+                    android:title="@string/fewest_stars" />
+                <item
+                    android:id="@+id/explore_sort_most_forks"
+                    android:title="@string/most_forks" />
+                <item
+                    android:id="@+id/explore_sort_fewest_forks"
+                    android:title="@string/fewest_forks" />
+                <item
+                    android:id="@+id/explore_sort_recently_updated"
+                    android:title="@string/recently_updated" />
+                <item
+                    android:id="@+id/explore_sort_least_recently_updated"
+                    android:title="@string/least_recently_updated" />
+            </group>
+        </menu>
+    </item>
+</menu>

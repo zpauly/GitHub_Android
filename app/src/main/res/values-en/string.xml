@@ -32,6 +32,15 @@
     <string name="click_load_again">Click To Load Again</string>
     <string name="search">Search</string>
     <string name="search_hint">Search...</string>
+    <string name="sort">Sort By</string>
+    
+    <string name="best_match">Best match</string>
+    <string name="most_stars">Most stars</string>
+    <string name="fewest_stars">Fewest stars</string>
+    <string name="most_forks">Most forks</string>
+    <string name="fewest_forks">Fewest forks</string>
+    <string name="recently_updated">Recently updated</string>
+    <string name="least_recently_updated">Least Recently Updated</string>
 
     <string name="language_setting">LANGUAEG SETTING</string>
     <string name="simplified_chinese">中文</string>

@@ -1,11 +1,14 @@
 package com.zpauly.githubapp.entity.response;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by zpauly on 16-6-11.
  */
-public class RepositoriesBean {
+public class RepositoriesBean implements Parcelable {
 
     /**
      * id : 1296269
@@ -97,7 +100,7 @@ public class RepositoriesBean {
      * site_admin : false
      */
 
-    private OwnerBean owner;
+    private UserBean owner;
     private String name;
     private String full_name;
     private String description;
@@ -178,11 +181,11 @@ public class RepositoriesBean {
         this.id = id;
     }
 
-    public OwnerBean getOwner() {
+    public UserBean getOwner() {
         return owner;
     }
 
-    public void setOwner(OwnerBean owner) {
+    public void setOwner(UserBean owner) {
         this.owner = owner;
     }
 
@@ -698,189 +701,162 @@ public class RepositoriesBean {
         this.permissions = permissions;
     }
 
-    public static class OwnerBean {
-        private String login;
-        private int id;
-        private String avatar_url;
-        private String gravatar_id;
-        private String url;
-        private String html_url;
-        private String followers_url;
-        private String following_url;
-        private String gists_url;
-        private String starred_url;
-        private String subscriptions_url;
-        private String organizations_url;
-        private String repos_url;
-        private String events_url;
-        private String received_events_url;
-        private String type;
-        private boolean site_admin;
-
-        public String getLogin() {
-            return login;
-        }
-
-        public void setLogin(String login) {
-            this.login = login;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getAvatar_url() {
-            return avatar_url;
-        }
-
-        public void setAvatar_url(String avatar_url) {
-            this.avatar_url = avatar_url;
-        }
-
-        public String getGravatar_id() {
-            return gravatar_id;
-        }
-
-        public void setGravatar_id(String gravatar_id) {
-            this.gravatar_id = gravatar_id;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
-        public String getHtml_url() {
-            return html_url;
-        }
-
-        public void setHtml_url(String html_url) {
-            this.html_url = html_url;
-        }
-
-        public String getFollowers_url() {
-            return followers_url;
-        }
-
-        public void setFollowers_url(String followers_url) {
-            this.followers_url = followers_url;
-        }
-
-        public String getFollowing_url() {
-            return following_url;
-        }
-
-        public void setFollowing_url(String following_url) {
-            this.following_url = following_url;
-        }
-
-        public String getGists_url() {
-            return gists_url;
-        }
-
-        public void setGists_url(String gists_url) {
-            this.gists_url = gists_url;
-        }
-
-        public String getStarred_url() {
-            return starred_url;
-        }
-
-        public void setStarred_url(String starred_url) {
-            this.starred_url = starred_url;
-        }
-
-        public String getSubscriptions_url() {
-            return subscriptions_url;
-        }
-
-        public void setSubscriptions_url(String subscriptions_url) {
-            this.subscriptions_url = subscriptions_url;
-        }
-
-        public String getOrganizations_url() {
-            return organizations_url;
-        }
-
-        public void setOrganizations_url(String organizations_url) {
-            this.organizations_url = organizations_url;
-        }
-
-        public String getRepos_url() {
-            return repos_url;
-        }
-
-        public void setRepos_url(String repos_url) {
-            this.repos_url = repos_url;
-        }
-
-        public String getEvents_url() {
-            return events_url;
-        }
-
-        public void setEvents_url(String events_url) {
-            this.events_url = events_url;
-        }
-
-        public String getReceived_events_url() {
-            return received_events_url;
-        }
-
-        public void setReceived_events_url(String received_events_url) {
-            this.received_events_url = received_events_url;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        public boolean isSite_admin() {
-            return site_admin;
-        }
-
-        public void setSite_admin(boolean site_admin) {
-            this.site_admin = site_admin;
-        }
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public static class PermissionsBean {
-        private boolean admin;
-        private boolean push;
-        private boolean pull;
-
-        public boolean isAdmin() {
-            return admin;
-        }
-
-        public void setAdmin(boolean admin) {
-            this.admin = admin;
-        }
-
-        public boolean isPush() {
-            return push;
-        }
-
-        public void setPush(boolean push) {
-            this.push = push;
-        }
-
-        public boolean isPull() {
-            return pull;
-        }
-
-        public void setPull(boolean pull) {
-            this.pull = pull;
-        }
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeParcelable(this.owner, flags);
+        dest.writeString(this.name);
+        dest.writeString(this.full_name);
+        dest.writeString(this.description);
+        dest.writeByte(this.privateX ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.fork ? (byte) 1 : (byte) 0);
+        dest.writeString(this.url);
+        dest.writeString(this.html_url);
+        dest.writeString(this.archive_url);
+        dest.writeString(this.assignees_url);
+        dest.writeString(this.blobs_url);
+        dest.writeString(this.branches_url);
+        dest.writeString(this.clone_url);
+        dest.writeString(this.collaborators_url);
+        dest.writeString(this.comments_url);
+        dest.writeString(this.commits_url);
+        dest.writeString(this.compare_url);
+        dest.writeString(this.contents_url);
+        dest.writeString(this.contributors_url);
+        dest.writeString(this.deployments_url);
+        dest.writeString(this.downloads_url);
+        dest.writeString(this.events_url);
+        dest.writeString(this.forks_url);
+        dest.writeString(this.git_commits_url);
+        dest.writeString(this.git_refs_url);
+        dest.writeString(this.git_tags_url);
+        dest.writeString(this.git_url);
+        dest.writeString(this.hooks_url);
+        dest.writeString(this.issue_comment_url);
+        dest.writeString(this.issue_events_url);
+        dest.writeString(this.issues_url);
+        dest.writeString(this.keys_url);
+        dest.writeString(this.labels_url);
+        dest.writeString(this.languages_url);
+        dest.writeString(this.merges_url);
+        dest.writeString(this.milestones_url);
+        dest.writeString(this.mirror_url);
+        dest.writeString(this.notifications_url);
+        dest.writeString(this.pulls_url);
+        dest.writeString(this.releases_url);
+        dest.writeString(this.ssh_url);
+        dest.writeString(this.stargazers_url);
+        dest.writeString(this.statuses_url);
+        dest.writeString(this.subscribers_url);
+        dest.writeString(this.subscription_url);
+        dest.writeString(this.svn_url);
+        dest.writeString(this.tags_url);
+        dest.writeString(this.teams_url);
+        dest.writeString(this.trees_url);
+        dest.writeString(this.homepage);
+        dest.writeString(this.language);
+        dest.writeInt(this.forks_count);
+        dest.writeInt(this.stargazers_count);
+        dest.writeInt(this.watchers_count);
+        dest.writeInt(this.size);
+        dest.writeString(this.default_branch);
+        dest.writeInt(this.open_issues_count);
+        dest.writeByte(this.has_issues ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.has_wiki ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.has_pages ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.has_downloads ? (byte) 1 : (byte) 0);
+        dest.writeString(this.pushed_at);
+        dest.writeString(this.created_at);
+        dest.writeString(this.updated_at);
+        dest.writeParcelable(this.permissions, flags);
     }
+
+    public RepositoriesBean() {
+    }
+
+    protected RepositoriesBean(Parcel in) {
+        this.id = in.readInt();
+        this.owner = in.readParcelable(UserBean.class.getClassLoader());
+        this.name = in.readString();
+        this.full_name = in.readString();
+        this.description = in.readString();
+        this.privateX = in.readByte() != 0;
+        this.fork = in.readByte() != 0;
+        this.url = in.readString();
+        this.html_url = in.readString();
+        this.archive_url = in.readString();
+        this.assignees_url = in.readString();
+        this.blobs_url = in.readString();
+        this.branches_url = in.readString();
+        this.clone_url = in.readString();
+        this.collaborators_url = in.readString();
+        this.comments_url = in.readString();
+        this.commits_url = in.readString();
+        this.compare_url = in.readString();
+        this.contents_url = in.readString();
+        this.contributors_url = in.readString();
+        this.deployments_url = in.readString();
+        this.downloads_url = in.readString();
+        this.events_url = in.readString();
+        this.forks_url = in.readString();
+        this.git_commits_url = in.readString();
+        this.git_refs_url = in.readString();
+        this.git_tags_url = in.readString();
+        this.git_url = in.readString();
+        this.hooks_url = in.readString();
+        this.issue_comment_url = in.readString();
+        this.issue_events_url = in.readString();
+        this.issues_url = in.readString();
+        this.keys_url = in.readString();
+        this.labels_url = in.readString();
+        this.languages_url = in.readString();
+        this.merges_url = in.readString();
+        this.milestones_url = in.readString();
+        this.mirror_url = in.readString();
+        this.notifications_url = in.readString();
+        this.pulls_url = in.readString();
+        this.releases_url = in.readString();
+        this.ssh_url = in.readString();
+        this.stargazers_url = in.readString();
+        this.statuses_url = in.readString();
+        this.subscribers_url = in.readString();
+        this.subscription_url = in.readString();
+        this.svn_url = in.readString();
+        this.tags_url = in.readString();
+        this.teams_url = in.readString();
+        this.trees_url = in.readString();
+        this.homepage = in.readString();
+        this.language = in.readString();
+        this.forks_count = in.readInt();
+        this.stargazers_count = in.readInt();
+        this.watchers_count = in.readInt();
+        this.size = in.readInt();
+        this.default_branch = in.readString();
+        this.open_issues_count = in.readInt();
+        this.has_issues = in.readByte() != 0;
+        this.has_wiki = in.readByte() != 0;
+        this.has_pages = in.readByte() != 0;
+        this.has_downloads = in.readByte() != 0;
+        this.pushed_at = in.readString();
+        this.created_at = in.readString();
+        this.updated_at = in.readString();
+        this.permissions = in.readParcelable(PermissionsBean.class.getClassLoader());
+    }
+
+    public static final Creator<RepositoriesBean> CREATOR = new Creator<RepositoriesBean>() {
+        @Override
+        public RepositoriesBean createFromParcel(Parcel source) {
+            return new RepositoriesBean(source);
+        }
+
+        @Override
+        public RepositoriesBean[] newArray(int size) {
+            return new RepositoriesBean[size];
+        }
+    };
 }
