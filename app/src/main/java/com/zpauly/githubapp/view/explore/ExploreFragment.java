@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.ReposRecyclerViewAdapter;
 import com.zpauly.githubapp.base.BaseFragment;
+import com.zpauly.githubapp.network.search.SearchService;
 
 /**
  * Created by zpauly on 16-8-9.
@@ -29,6 +30,13 @@ public class ExploreFragment extends BaseFragment {
     private RecyclerView mExploreRV;
 
     private ReposRecyclerViewAdapter mReposAdapter;
+
+    private String repos_sort;
+    private String repos_order;
+    private String code_sort;
+    private String code_order;
+    private String users_sort;
+    private String users_order;
 
     private String query;
 
@@ -76,16 +84,28 @@ public class ExploreFragment extends BaseFragment {
             case R.id.explore_repos_sort_best_match:
                 break;
             case R.id.explore_repos_sort_most_stars:
+                repos_sort = SearchService.SORT_STARS;
+                repos_order = SearchService.ORDER_DESC;
                 break;
             case R.id.explore_repos_sort_fewest_stars:
+                repos_sort = SearchService.SORT_STARS;
+                repos_order = SearchService.ORDER_ASC;
                 break;
             case R.id.explore_repos_sort_most_forks:
+                repos_sort = SearchService.SORT_FORKS;
+                repos_order = SearchService.ORDER_DESC;
                 break;
             case R.id.explore_repos_sort_fewest_forks:
+                repos_sort = SearchService.SORT_FORKS;
+                repos_order = SearchService.ORDER_ASC;
                 break;
             case R.id.explore_repos_sort_recently_updated:
+                repos_sort = SearchService.SORT_UPDATED;
+                repos_order = SearchService.ORDER_DESC;
                 break;
             case R.id.explore_repos_sort_least_recently_updated:
+                repos_sort = SearchService.SORT_UPDATED;
+                repos_order = SearchService.ORDER_ASC;
                 break;
             //---------------------------------------------------
             case R.id.explore_code:

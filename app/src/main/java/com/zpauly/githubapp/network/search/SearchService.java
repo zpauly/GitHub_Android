@@ -2,9 +2,9 @@ package com.zpauly.githubapp.network.search;
 
 import android.support.annotation.Nullable;
 
-import com.zpauly.githubapp.entity.response.SearchReposBean;
-
-import java.util.List;
+import com.zpauly.githubapp.entity.search.SearchCodeBean;
+import com.zpauly.githubapp.entity.search.SearchReposBean;
+import com.zpauly.githubapp.entity.search.SearchUsersBean;
 
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -38,4 +38,30 @@ public interface SearchService {
     Observable<SearchReposBean> getSearchRepos(@Header("Authorization") String auth,
                                                      @Nullable @Query("sort") String sort,
                                                      @Nullable @Query("order") String order);
+
+    /**
+     * Search code
+     * Find file contents via various criteria. (This method returns up to 100 results per page.)
+     * @param auth
+     * @param sort
+     * @param order
+     * @return
+     */
+    @GET("/search/code")
+    Observable<SearchCodeBean> getSearchCode(@Header("Authorization") String auth,
+                                             @Nullable @Query("sort") String sort,
+                                             @Nullable @Query("order") String order);
+
+    /**
+     * Search users
+     *
+     * @param auth
+     * @param sort
+     * @param order
+     * @return
+     */
+    @GET("/search/users")
+    Observable<SearchUsersBean> getSearchUsers(@Header("Authorization") String auth,
+                                               @Nullable @Query("sort") String sort,
+                                               @Nullable @Query("order") String order);
 }

@@ -3,11 +3,9 @@ package com.zpauly.githubapp.presenter.explore;
 import android.content.Context;
 
 import com.zpauly.githubapp.Constants;
-import com.zpauly.githubapp.entity.response.SearchReposBean;
+import com.zpauly.githubapp.entity.search.SearchReposBean;
 import com.zpauly.githubapp.network.search.SearchMethod;
 import com.zpauly.githubapp.utils.SPUtil;
-
-import java.util.List;
 
 import rx.Subscriber;
 
