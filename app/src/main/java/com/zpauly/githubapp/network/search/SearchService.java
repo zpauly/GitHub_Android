@@ -35,7 +35,7 @@ public interface SearchService {
      * @return
      */
     @GET("/search/repositories")
-    Observable<List<SearchReposBean>> getSearchRepos(@Header("Authorization") String auth,
+    Observable<SearchReposBean> getSearchRepos(@Header("Authorization") String auth,
                                                      @Nullable @Query("sort") String sort,
                                                      @Nullable @Query("order") String order);
 }

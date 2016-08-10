@@ -69,30 +69,49 @@ public class ExploreFragment extends BaseFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        item.setChecked(true);
         switch (item.getItemId()) {
-            case R.id.explore_sort_best_match:
-                Log.i(TAG, "explore_sort_best_match");
-                item.setChecked(true);
+            case R.id.explore_repos:
                 break;
-            case R.id.explore_sort_most_stars:
-                Log.i(TAG, "explore_sort_most_stars");
-                item.setChecked(true);
+            case R.id.explore_repos_sort_best_match:
                 break;
-            case R.id.explore_sort_fewest_stars:
-                item.setChecked(true);
+            case R.id.explore_repos_sort_most_stars:
                 break;
-            case R.id.explore_sort_most_forks:
-                item.setChecked(true);
+            case R.id.explore_repos_sort_fewest_stars:
                 break;
-            case R.id.explore_sort_fewest_forks:
-                item.setChecked(true);
+            case R.id.explore_repos_sort_most_forks:
                 break;
-            case R.id.explore_sort_recently_updated:
-                item.setChecked(true);
+            case R.id.explore_repos_sort_fewest_forks:
                 break;
-            case R.id.explore_sort_least_recently_updated:
-                Log.i(TAG, "explore_sort_least_recently_updated");
-                item.setChecked(true);
+            case R.id.explore_repos_sort_recently_updated:
+                break;
+            case R.id.explore_repos_sort_least_recently_updated:
+                break;
+            //---------------------------------------------------
+            case R.id.explore_code:
+                break;
+            case R.id.explore_code_sort_best_match:
+                break;
+            case R.id.explore_code_sort_recently_indexed:
+                break;
+            case R.id.explore_code_sort_least_recently_indexed:
+                break;
+            //---------------------------------------------------
+            case R.id.explore_users:
+                break;
+            case R.id.explore_users_sort_best_match:
+                break;
+            case R.id.explore_users_sort_most_followers:
+                break;
+            case R.id.explore_users_sort_fewest_followers:
+                break;
+            case R.id.explore_users_sort_most_recently_joined:
+                break;
+            case R.id.explore_users_sort_least_recently_joined:
+                break;
+            case R.id.explore_users_sort_most_repositories:
+                break;
+            case R.id.explore_users_sort_fewest_repositories:
                 break;
             default:
                 break;

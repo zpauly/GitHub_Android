@@ -27,7 +27,7 @@ public class SearchMethod {
         service = retrofit.create(SearchService.class);
     }
 
-    private static SearchMethod getInstance() {
+    public static SearchMethod getInstance() {
         if (instance == null) {
             synchronized (SearchMethod.class) {
                 if (instance == null) {
@@ -38,7 +38,7 @@ public class SearchMethod {
         return instance;
     }
 
-    public void getSearchRepos(Observer<List<SearchReposBean>> observer, String auth,
+    public void getSearchRepos(Observer<SearchReposBean> observer, String auth,
                                String sort, String order) {
         service.getSearchRepos(auth, sort, order)
                 .subscribeOn(Schedulers.io())

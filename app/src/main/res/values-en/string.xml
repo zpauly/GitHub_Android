@@ -11,6 +11,16 @@
     <string name="starred">Starred</string>
     <string name="following">Following</string>
     <string name="repos">Repositorites</string>
+    <string name="code">Code</string>
+    <string name="recently_indexed">Recently indexed</string>
+    <string name="least_recently_indexed">Least recently indexed</string>
+    <string name="most_followers">Most Followers</string>
+    <string name="fewest_followers">Fewest followers</string>
+    <string name="most_recently_joined">Most recently joined</string>
+    <string name="least_recently_joined">Least recently joined</string>
+    <string name="most_repositories">Most repositories</string>
+    <string name="fewest_repositories">Fewest repositories</string>
+    <string name="users">Users</string>
     <string name="events">Events</string>
     <string name="settings">Settings</string>
     <string name="public_events">Public Events</string>

@@ -12,29 +12,92 @@
         app:showAsAction="always">
         <menu>
             <group android:checkableBehavior="single"
-                android:id="@+id/explore_sort_grp">
+                android:id="@+id/explore_repos_grp">
                 <item
                     android:checked="true"
-                    android:id="@+id/explore_sort_best_match"
-                    android:title="@string/best_match" />
+                    android:icon="@mipmap/ic_repos"
+                    android:title="@string/repos"
+                    android:id="@+id/explore_repos">
+                    <menu>
+                        <group android:checkableBehavior="single"
+                            android:id="@+id/explore_repos_sort_grp">
+                            <item
+                                android:checked="true"
+                                android:id="@+id/explore_repos_sort_best_match"
+                                android:title="@string/best_match" />
+                            <item
+                                android:id="@+id/explore_repos_sort_most_stars"
+                                android:title="@string/most_stars" />
+                            <item
+                                android:id="@+id/explore_repos_sort_fewest_stars"
+                                android:title="@string/fewest_stars" />
+                            <item
+                                android:id="@+id/explore_repos_sort_most_forks"
+                                android:title="@string/most_forks" />
+                            <item
+                                android:id="@+id/explore_repos_sort_fewest_forks"
+                                android:title="@string/fewest_forks" />
+                            <item
+                                android:id="@+id/explore_repos_sort_recently_updated"
+                                android:title="@string/recently_updated" />
+                            <item
+                                android:id="@+id/explore_repos_sort_least_recently_updated"
+                                android:title="@string/least_recently_updated" />
+                        </group>
+                    </menu>
+                </item>
                 <item
-                    android:id="@+id/explore_sort_most_stars"
-                    android:title="@string/most_stars" />
+                    android:id="@+id/explore_code"
+                    android:title="@string/code"
+                    android:icon="@mipmap/ic_code">
+                    <menu>
+                        <group android:id="@+id/explore_code_sort_grp"
+                            android:checkableBehavior="single">
+                            <item
+                                android:id="@+id/explore_code_sort_best_match"
+                                android:checked="true"
+                                android:title="@string/best_match" />
+                            <item
+                                android:id="@+id/explore_code_sort_recently_indexed"
+                                android:title="@string/recently_indexed" />
+                            <item
+                                android:id="@+id/explore_code_sort_least_recently_indexed"
+                                android:title="@string/least_recently_updated" />
+                        </group>
+                    </menu>
+                </item>
                 <item
-                    android:id="@+id/explore_sort_fewest_stars"
-                    android:title="@string/fewest_stars" />
-                <item
-                    android:id="@+id/explore_sort_most_forks"
-                    android:title="@string/most_forks" />
-                <item
-                    android:id="@+id/explore_sort_fewest_forks"
-                    android:title="@string/fewest_forks" />
-                <item
-                    android:id="@+id/explore_sort_recently_updated"
-                    android:title="@string/recently_updated" />
-                <item
-                    android:id="@+id/explore_sort_least_recently_updated"
-                    android:title="@string/least_recently_updated" />
+                    android:id="@+id/explore_users"
+                    android:title="@string/users"
+                    android:icon="@drawable/ic_people">
+                    <menu>
+                        <group android:id="@+id/explore_users_sort_grp"
+                            android:checkableBehavior="single">
+                            <item
+                                android:id="@+id/explore_users_sort_best_match"
+                                android:checked="true"
+                                android:title="@string/best_match" />
+                            <item
+                                android:id="@+id/explore_users_sort_most_followers"
+                                android:title="@string/most_followers" />
+                            <item
+                                android:id="@+id/explore_users_sort_fewest_followers"
+                                android:title="@string/fewest_followers" />
+                            <item
+                                android:id="@+id/explore_users_sort_most_recently_joined"
+                                android:title="@string/most_recently_joined" />
+                            <item
+                                android:id="@+id/explore_users_sort_least_recently_joined"
+                                android:title="@string/least_recently_joined" />
+                            <item
+                                android:id="@+id/explore_users_sort_most_repositories"
+                                android:title="@string/most_repositories" />
+                            <item
+                                android:id="@+id/explore_users_sort_fewest_repositories"
+                                android:title="@string/fewest_repositories" />
+                        </group>
+                    </menu>
+                </item>
             </group>
         </menu>
     </item>
