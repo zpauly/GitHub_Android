@@ -15,7 +15,7 @@ public abstract class BaseAdapter<D, VH extends RecyclerView.ViewHolder> extends
     protected Context mContext;
     protected List<D> mData;
 
-    protected BaseAdapter(Context context) {
+    public BaseAdapter(Context context) {
         mContext = context;
         mData = new ArrayList<>();
     }

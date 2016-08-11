@@ -3,7 +3,6 @@ package com.zpauly.githubapp.db;
 import android.content.ContentValues;
 
 import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
-import com.zpauly.githubapp.entity.response.FollowersBean;
 import com.zpauly.githubapp.entity.response.UserBean;
 
 import org.litepal.crud.DataSupport;
@@ -36,29 +35,7 @@ public class UserDao {
         return userModel.save();
     }
 
-    public static boolean insert(UserBean bean) {
-        UserModel userModel = new UserModel();
-        userModel.setLogin(bean.getLogin());
-        userModel.setName(bean.getName());
-        userModel.setLocation(bean.getLocation());
-        userModel.setAvatar_url(bean.getAvatar_url());
-        userModel.setBio(bean.getBio());
-        userModel.setBlog(bean.getBlog());
-        userModel.setEmail(bean.getEmail());
-        userModel.setCompany(bean.getCompany());
-        userModel.setHirable(bean.isHireable());
-        userModel.setFollowing(bean.getFollowing());
-        userModel.setFollowers(bean.getFollowers());
-        userModel.setCreated_at(bean.getCreated_at());
-        userModel.setUpdated_at(bean.getUpdated_at());
-        userModel.setPublic_gists(bean.getPublic_gists());
-        userModel.setPublic_repos(bean.getPublic_repos());
-        userModel.setType(bean.getType());
-        userModel.setUser(false);
-        return userModel.save();
-    }
-
-    public static boolean insertUser(FollowersBean other) {
+    public static boolean insertUser(UserBean other) {
         UserModel userModel = new UserModel();
         userModel.setLogin(other.getLogin());
         userModel.setUser(true);

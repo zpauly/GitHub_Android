@@ -2,7 +2,6 @@ package com.zpauly.githubapp.network.user;
 
 import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
-import com.zpauly.githubapp.entity.response.FollowersBean;
 import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
 
@@ -46,28 +45,28 @@ public class UserMethod {
                 .subscribe(observer);
     }
 
-    public void getFollowers(Observer<List<FollowersBean>> observer, String auth, int pageId) {
+    public void getFollowers(Observer<List<UserBean>> observer, String auth, int pageId) {
         service.getFollowers(auth, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 
-    public void getUserFollowers(Observer<List<FollowersBean>> observer, String auth, String username, int pageId) {
+    public void getUserFollowers(Observer<List<UserBean>> observer, String auth, String username, int pageId) {
         service.getUserFollowers(auth, username, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 
-    public void getFollowing(Observer<List<FollowersBean>> observer, String auth, int pageId) {
+    public void getFollowing(Observer<List<UserBean>> observer, String auth, int pageId) {
         service.getFollowing(auth, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 
-    public void getUserFollowing(Observer<List<FollowersBean>> observer, String auth, String username, int pageId) {
+    public void getUserFollowing(Observer<List<UserBean>> observer, String auth, String username, int pageId) {
         service.getUserFollowing(auth, username, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

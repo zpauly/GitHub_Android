@@ -13,8 +13,8 @@ import com.zpauly.githubapp.adapter.LoadMoreRecyclerViewAdapter;
 import com.zpauly.githubapp.adapter.OrgsRecyclerViewAdapter;
 import com.zpauly.githubapp.adapter.UsersRecyclerViewAdapter;
 import com.zpauly.githubapp.base.BaseFragment;
-import com.zpauly.githubapp.entity.response.FollowersBean;
 import com.zpauly.githubapp.entity.response.OrganizationBean;
+import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.presenter.follow.FollowContract;
 import com.zpauly.githubapp.presenter.follow.FollowPresenter;
 
@@ -29,7 +29,7 @@ public class UsersFragment extends BaseFragment implements FollowContract.View {
     private final String TAG = getClass().getName();
 
     private FollowContract.Presenter mPresenter;
-    private List<FollowersBean> list = new ArrayList<>();
+    private List<UserBean> list = new ArrayList<>();
     private List<OrganizationBean> orgsList = new ArrayList<>();
     private LoadMoreRecyclerViewAdapter mRVAdapter;
 
@@ -126,7 +126,7 @@ public class UsersFragment extends BaseFragment implements FollowContract.View {
     }
 
     @Override
-    public void loading(List<FollowersBean> list) {
+    public void loading(List<UserBean> list) {
         this.list.clear();
         this.list.addAll(list);
     }

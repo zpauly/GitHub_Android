@@ -36,8 +36,12 @@ public interface SearchService {
      */
     @GET("/search/repositories")
     Observable<SearchReposBean> getSearchRepos(@Header("Authorization") String auth,
-                                                     @Nullable @Query("sort") String sort,
-                                                     @Nullable @Query("order") String order);
+                                               @Query("q") String query,
+                                               @Nullable @Query("sort") String sort,
+                                               @Nullable @Query("order") String order);
+
+
+    String SORT_INDEXED = "indexed";
 
     /**
      * Search code
@@ -49,8 +53,16 @@ public interface SearchService {
      */
     @GET("/search/code")
     Observable<SearchCodeBean> getSearchCode(@Header("Authorization") String auth,
+                                             @Query("q") String query,
                                              @Nullable @Query("sort") String sort,
                                              @Nullable @Query("order") String order);
+
+
+    String SORT_REPOSITORIES = "repositories";
+
+    String SORT_FOLLOWERS = "followers";
+
+    String SORT_JOINED = "joined";
 
     /**
      * Search users
@@ -62,6 +74,7 @@ public interface SearchService {
      */
     @GET("/search/users")
     Observable<SearchUsersBean> getSearchUsers(@Header("Authorization") String auth,
+                                               @Query("q") String query,
                                                @Nullable @Query("sort") String sort,
                                                @Nullable @Query("order") String order);
 }

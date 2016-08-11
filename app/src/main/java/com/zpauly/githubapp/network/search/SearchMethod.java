@@ -38,25 +38,25 @@ public class SearchMethod {
         return instance;
     }
 
-    public void getSearchRepos(Observer<SearchReposBean> observer, String auth,
+    public void getSearchRepos(Observer<SearchReposBean> observer, String auth, String query,
                                String sort, String order) {
-        service.getSearchRepos(auth, sort, order)
+        service.getSearchRepos(auth, query, sort, order)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 
-    public void getSearchCode(Observer<SearchCodeBean> observer, String auth,
+    public void getSearchCode(Observer<SearchCodeBean> observer, String auth, String query,
                               String sort, String order) {
-        service.getSearchCode(auth, sort, order)
+        service.getSearchCode(auth, query, sort, order)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 
-    public void getSearchUsers(Observer<SearchUsersBean> observer, String auth,
+    public void getSearchUsers(Observer<SearchUsersBean> observer, String auth, String query,
                                String sort, String order) {
-        service.getSearchUsers(auth, sort, order)
+        service.getSearchUsers(auth, query, sort, order)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

@@ -2,8 +2,8 @@ package com.zpauly.githubapp.presenter.follow;
 
 import com.zpauly.githubapp.base.BasePresenter;
 import com.zpauly.githubapp.base.BaseView;
-import com.zpauly.githubapp.entity.response.FollowersBean;
 import com.zpauly.githubapp.entity.response.OrganizationBean;
+import com.zpauly.githubapp.entity.response.UserBean;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class FollowContract {
     }
 
     public interface View extends BaseView<Presenter> {
-        void loading(List<FollowersBean> list);
+        void loading(List<UserBean> list);
 
         void loadingOrgs(List<OrganizationBean> list);
 

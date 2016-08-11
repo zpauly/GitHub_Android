@@ -4,9 +4,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.zpauly.githubapp.Constants;
-import com.zpauly.githubapp.entity.response.FollowersBean;
 import com.zpauly.githubapp.entity.response.OrganizationBean;
-import com.zpauly.githubapp.entity.response.events.Payload;
+import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.network.organizations.OrganizationsMethod;
 import com.zpauly.githubapp.network.user.UserMethod;
 import com.zpauly.githubapp.utils.SPUtil;
@@ -29,8 +28,8 @@ public class FollowPresenter implements FollowContract.Presenter {
     private UserMethod method;
     private OrganizationsMethod orgMethod;
 
-    private Subscriber<List<FollowersBean>> mFollowersSubscriber;
-    private Subscriber<List<FollowersBean>> mFollowingSubscriber;
+    private Subscriber<List<UserBean>> mFollowersSubscriber;
+    private Subscriber<List<UserBean>> mFollowingSubscriber;
     private Subscriber<List<OrganizationBean>> mOrgsSubscriber;
 
     private int loadPageId = 1;
@@ -71,7 +70,7 @@ public class FollowPresenter implements FollowContract.Presenter {
 
     @Override
     public void getFollowers() {
-        mFollowersSubscriber = new Subscriber<List<FollowersBean>>() {
+        mFollowersSubscriber = new Subscriber<List<UserBean>>() {
             @Override
             public void onCompleted() {
                 mFollowView.loadSuccess();
@@ -87,7 +86,7 @@ public class FollowPresenter implements FollowContract.Presenter {
             }
 
             @Override
-            public void onNext(List<FollowersBean> followersBean) {
+            public void onNext(List<UserBean> followersBean) {
                 mFollowView.loading(followersBean);
             }
         };
@@ -102,7 +101,7 @@ public class FollowPresenter implements FollowContract.Presenter {
 
     @Override
     public void getFollowing() {
-        mFollowingSubscriber = new Subscriber<List<FollowersBean>>() {
+        mFollowingSubscriber = new Subscriber<List<UserBean>>() {
             @Override
             public void onCompleted() {
                 mFollowView.loadSuccess();
@@ -118,7 +117,7 @@ public class FollowPresenter implements FollowContract.Presenter {
             }
 
             @Override
-            public void onNext(List<FollowersBean> followersBean) {
+            public void onNext(List<UserBean> followersBean) {
                 mFollowView.loading(followersBean);
             }
         };

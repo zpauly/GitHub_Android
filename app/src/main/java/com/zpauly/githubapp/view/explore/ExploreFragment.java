@@ -16,32 +16,53 @@ import android.view.ViewGroup;
 
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.ReposRecyclerViewAdapter;
+import com.zpauly.githubapp.adapter.RepositoriesRecyclerViewAdapter;
+import com.zpauly.githubapp.adapter.UsersRecyclerViewAdapter;
 import com.zpauly.githubapp.base.BaseFragment;
+import com.zpauly.githubapp.entity.response.RepositoriesBean;
+import com.zpauly.githubapp.entity.response.UserBean;
+import com.zpauly.githubapp.entity.search.SearchCodeBean;
+import com.zpauly.githubapp.entity.search.SearchReposBean;
+import com.zpauly.githubapp.entity.search.SearchUsersBean;
 import com.zpauly.githubapp.network.search.SearchService;
+import com.zpauly.githubapp.presenter.explore.ExploreContract;
+import com.zpauly.githubapp.presenter.explore.ExplorePresenter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zpauly on 16-8-9.
  */
 
-public class ExploreFragment extends BaseFragment {
+public class ExploreFragment extends BaseFragment implements ExploreContract.View {
     private final String TAG = getClass().getName();
+
+    private static final int TYPE_REPOS = 0;
+    private static final int TYPE_CODE = 1;
+    private static final int TYPE_USERS = 2;
+
+    private ExploreContract.Presenter mPresenter;
 
     private SwipeRefreshLayout mExploreSRLayout;
     private RecyclerView mExploreRV;
 
-    private ReposRecyclerViewAdapter mReposAdapter;
+    private RepositoriesRecyclerViewAdapter mReposAdapter;
+    private UsersRecyclerViewAdapter mUsersAdapter;
 
-    private String repos_sort;
-    private String repos_order;
-    private String code_sort;
-    private String code_order;
-    private String users_sort;
-    private String users_order;
+    private List<RepositoriesBean> reposList = new ArrayList<>();
+    private List<UserBean> usersList = new ArrayList<>();
+
+    private String sort;
+    private String order;
+    private int typeTag = TYPE_REPOS;
 
     private String query;
 
     @Override
     protected void initViews(View view) {
+        new ExplorePresenter(getContext(), this);
+
         mExploreSRLayout = (SwipeRefreshLayout) view.findViewById(R.id.explore_SRLayout);
         mExploreRV = (RecyclerView) view.findViewById(R.id.explore_RV);
 
@@ -55,19 +76,36 @@ public class ExploreFragment extends BaseFragment {
         mExploreSRLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                if (query == null) {
+                    mExploreSRLayout.setRefreshing(false);
+                } else {
+                    searchRepos();
+                }
             }
         });
     }
 
     private void setupRecyclerView() {
-        mReposAdapter = new ReposRecyclerViewAdapter(getContext());
+        mReposAdapter = new RepositoriesRecyclerViewAdapter(getContext());
+        mUsersAdapter = new UsersRecyclerViewAdapter(getContext());
         mExploreRV.setLayoutManager(new LinearLayoutManager(getContext()));
         mExploreRV.setAdapter(mReposAdapter);
     }
 
     private void searchRepos() {
-
+        switch (typeTag) {
+            case TYPE_REPOS:
+                mPresenter.getSearchRepos();
+                break;
+            case TYPE_CODE:
+                mPresenter.getSearchCode();
+                break;
+            case TYPE_USERS:
+                mPresenter.getSearchUsers();
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -80,58 +118,85 @@ public class ExploreFragment extends BaseFragment {
         item.setChecked(true);
         switch (item.getItemId()) {
             case R.id.explore_repos:
+                typeTag = TYPE_REPOS;
+                mExploreRV.setAdapter(mReposAdapter);
                 break;
             case R.id.explore_repos_sort_best_match:
+                sort = null;
+                order = null;
                 break;
             case R.id.explore_repos_sort_most_stars:
-                repos_sort = SearchService.SORT_STARS;
-                repos_order = SearchService.ORDER_DESC;
+                sort = SearchService.SORT_STARS;
+                order = SearchService.ORDER_DESC;
                 break;
             case R.id.explore_repos_sort_fewest_stars:
-                repos_sort = SearchService.SORT_STARS;
-                repos_order = SearchService.ORDER_ASC;
+                sort = SearchService.SORT_STARS;
+                order = SearchService.ORDER_ASC;
                 break;
             case R.id.explore_repos_sort_most_forks:
-                repos_sort = SearchService.SORT_FORKS;
-                repos_order = SearchService.ORDER_DESC;
+                sort = SearchService.SORT_FORKS;
+                order = SearchService.ORDER_DESC;
                 break;
             case R.id.explore_repos_sort_fewest_forks:
-                repos_sort = SearchService.SORT_FORKS;
-                repos_order = SearchService.ORDER_ASC;
+                sort = SearchService.SORT_FORKS;
+                order = SearchService.ORDER_ASC;
                 break;
             case R.id.explore_repos_sort_recently_updated:
-                repos_sort = SearchService.SORT_UPDATED;
-                repos_order = SearchService.ORDER_DESC;
+                sort = SearchService.SORT_UPDATED;
+                order = SearchService.ORDER_DESC;
                 break;
             case R.id.explore_repos_sort_least_recently_updated:
-                repos_sort = SearchService.SORT_UPDATED;
-                repos_order = SearchService.ORDER_ASC;
+                sort = SearchService.SORT_UPDATED;
+                order = SearchService.ORDER_ASC;
                 break;
             //---------------------------------------------------
             case R.id.explore_code:
+                typeTag = TYPE_CODE;
                 break;
             case R.id.explore_code_sort_best_match:
+                sort = null;
+                order = null;
                 break;
             case R.id.explore_code_sort_recently_indexed:
+                sort = SearchService.SORT_INDEXED;
+                order = SearchService.ORDER_DESC;
                 break;
             case R.id.explore_code_sort_least_recently_indexed:
+                sort = SearchService.SORT_INDEXED;
+                order = SearchService.ORDER_ASC;
                 break;
             //---------------------------------------------------
             case R.id.explore_users:
+                typeTag = TYPE_USERS;
+                mExploreRV.setAdapter(mUsersAdapter);
                 break;
             case R.id.explore_users_sort_best_match:
+                sort = null;
+                order = null;
                 break;
             case R.id.explore_users_sort_most_followers:
+                sort = SearchService.SORT_FOLLOWERS;
+                order = SearchService.ORDER_DESC;
                 break;
             case R.id.explore_users_sort_fewest_followers:
+                sort = SearchService.SORT_FOLLOWERS;
+                order = SearchService.ORDER_ASC;
                 break;
             case R.id.explore_users_sort_most_recently_joined:
+                sort = SearchService.SORT_JOINED;
+                order = SearchService.ORDER_DESC;
                 break;
             case R.id.explore_users_sort_least_recently_joined:
+                sort = SearchService.SORT_JOINED;
+                order = SearchService.ORDER_ASC;
                 break;
             case R.id.explore_users_sort_most_repositories:
+                sort = SearchService.SORT_REPOSITORIES;
+                order = SearchService.ORDER_DESC;
                 break;
             case R.id.explore_users_sort_fewest_repositories:
+                sort = SearchService.SORT_REPOSITORIES;
+                order = SearchService.ORDER_ASC;
                 break;
             default:
                 break;
@@ -151,6 +216,17 @@ public class ExploreFragment extends BaseFragment {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 ExploreFragment.this.query = query;
+                mExploreSRLayout.setRefreshing(true);
+                switch (typeTag) {
+                    case TYPE_REPOS:
+                        break;
+                    case TYPE_CODE:
+                        break;
+                    case TYPE_USERS:
+                        break;
+                    default:
+                        break;
+                }
                 searchRepos();
                 return false;
             }
@@ -160,5 +236,64 @@ public class ExploreFragment extends BaseFragment {
                 return false;
             }
         });
+    }
+
+    @Override
+    public String getSort() {
+        return sort;
+    }
+
+    @Override
+    public String getOrder() {
+        return order;
+    }
+
+    @Override
+    public String getQuery() {
+        return query;
+    }
+
+    @Override
+    public void searchingUsers(SearchUsersBean bean) {
+        Log.i(TAG, String.valueOf(bean.getItems().size()));
+        usersList.addAll(bean.getItems());
+    }
+
+    @Override
+    public void searchingCode(SearchCodeBean bean) {
+        Log.i(TAG, String.valueOf(bean.getItems().size()));
+    }
+
+    @Override
+    public void searchingRepos(SearchReposBean bean) {
+        Log.i(TAG, String.valueOf(bean.getItems().size()));
+        reposList.addAll(bean.getItems());
+    }
+
+    @Override
+    public void searchSuccess() {
+        mExploreSRLayout.setRefreshing(false);
+        switch (typeTag) {
+            case TYPE_REPOS:
+                mReposAdapter.swapAllData(reposList);
+                break;
+            case TYPE_CODE:
+                break;
+            case TYPE_USERS:
+                mUsersAdapter.swapAllData(usersList);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void searchFail() {
+        mExploreSRLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void setPresenter(ExploreContract.Presenter presenter) {
+        mPresenter = presenter;
     }
 }

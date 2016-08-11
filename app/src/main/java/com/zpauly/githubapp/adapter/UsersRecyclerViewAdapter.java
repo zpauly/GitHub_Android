@@ -2,24 +2,20 @@ package com.zpauly.githubapp.adapter;
 
 import android.content.Context;
 import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.zpauly.githubapp.R;
-import com.zpauly.githubapp.entity.response.FollowersBean;
+import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.view.profile.OthersActivity;
 import com.zpauly.githubapp.view.viewholder.UsersViewHolder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by zpauly on 16-6-15.
  */
-public class UsersRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<FollowersBean, UsersViewHolder> {
+public class UsersRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<UserBean, UsersViewHolder> {
     private final String TAG = getClass().getName();
 
     private View mView;
@@ -37,7 +33,7 @@ public class UsersRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Follow
 
     @Override
     public void bindContentViewHolder(UsersViewHolder holder, int position) {
-        final FollowersBean bean = getData().get(position);
+        final UserBean bean = getData().get(position);
         holder.mLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,6 +46,5 @@ public class UsersRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Follow
                 .centerCrop()
                 .crossFade()
                 .into(holder.mAvatarIV);
-        Log.i(TAG, "item" + position);
     }
 }

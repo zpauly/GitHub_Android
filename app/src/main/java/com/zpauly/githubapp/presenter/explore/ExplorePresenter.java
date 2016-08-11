@@ -3,7 +3,9 @@ package com.zpauly.githubapp.presenter.explore;
 import android.content.Context;
 
 import com.zpauly.githubapp.Constants;
+import com.zpauly.githubapp.entity.search.SearchCodeBean;
 import com.zpauly.githubapp.entity.search.SearchReposBean;
+import com.zpauly.githubapp.entity.search.SearchUsersBean;
 import com.zpauly.githubapp.network.search.SearchMethod;
 import com.zpauly.githubapp.utils.SPUtil;
 
@@ -23,6 +25,8 @@ public class ExplorePresenter implements ExploreContract.Presenter {
     private SearchMethod method;
 
     private Subscriber<SearchReposBean> searchReposSubscriber;
+    private Subscriber<SearchCodeBean> searchCodeSubscriber;
+    private Subscriber<SearchUsersBean> searchUsersSubscriber;
 
     public ExplorePresenter(Context context, ExploreContract.View view) {
         this.mContext = context;
@@ -42,6 +46,16 @@ public class ExplorePresenter implements ExploreContract.Presenter {
         if (searchReposSubscriber != null) {
             if (searchReposSubscriber.isUnsubscribed()) {
                 searchReposSubscriber.unsubscribe();
+            }
+        }
+        if (searchCodeSubscriber != null) {
+            if (searchCodeSubscriber.isUnsubscribed()) {
+                searchCodeSubscriber.unsubscribe();
+            }
+        }
+        if (searchUsersSubscriber != null) {
+            if (searchUsersSubscriber.isUnsubscribed()) {
+                searchUsersSubscriber.unsubscribe();
             }
         }
     }
@@ -65,11 +79,53 @@ public class ExplorePresenter implements ExploreContract.Presenter {
                 mExploreView.searchingRepos(searchReposBean);
             }
         };
-        if (mExploreView.getSort() != null) {
-            method.getSearchRepos(searchReposSubscriber, auth,
-                    mExploreView.getSort(), mExploreView.getOrder());
-        } else {
-            method.getSearchRepos(searchReposSubscriber, auth, null, null);
-        }
+        method.getSearchRepos(searchReposSubscriber, auth, mExploreView.getQuery(),
+                mExploreView.getSort(), mExploreView.getOrder());
+    }
+
+    @Override
+    public void getSearchCode() {
+        searchCodeSubscriber = new Subscriber<SearchCodeBean>() {
+            @Override
+            public void onCompleted() {
+                mExploreView.searchSuccess();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                mExploreView.searchFail();
+            }
+
+            @Override
+            public void onNext(SearchCodeBean searchCodeBean) {
+                mExploreView.searchingCode(searchCodeBean);
+            }
+        };
+        method.getSearchCode(searchCodeSubscriber, auth, mExploreView.getQuery(),
+                mExploreView.getSort(), mExploreView.getOrder());
+    }
+
+    @Override
+    public void getSearchUsers() {
+        searchUsersSubscriber = new Subscriber<SearchUsersBean>() {
+            @Override
+            public void onCompleted() {
+                mExploreView.searchSuccess();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                mExploreView.searchFail();
+            }
+
+            @Override
+            public void onNext(SearchUsersBean searchUsersBean) {
+                mExploreView.searchingUsers(searchUsersBean);
+            }
+        };
+        method.getSearchUsers(searchUsersSubscriber, auth, mExploreView.getQuery(),
+                mExploreView.getSort(), mExploreView.getOrder());
     }
 }

@@ -1,7 +1,6 @@
 package com.zpauly.githubapp.network.user;
 
 import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
-import com.zpauly.githubapp.entity.response.FollowersBean;
 import com.zpauly.githubapp.entity.response.UserBean;
 
 import java.util.List;
@@ -35,11 +34,11 @@ public interface UserService {
      * @return
      */
     @GET("/user/followers")
-    Observable<List<FollowersBean>> getFollowers(@Header("Authorization") String auth,
+    Observable<List<UserBean>> getFollowers(@Header("Authorization") String auth,
                                                  @Query("page") int pageId);
 
     @GET("/users/{username}/followers")
-    Observable<List<FollowersBean>> getUserFollowers(@Header("Authorization") String auth,
+    Observable<List<UserBean>> getUserFollowers(@Header("Authorization") String auth,
                                                      @Path("username") String username,
                                                      @Query("page") int pageId);
 
@@ -49,11 +48,11 @@ public interface UserService {
      * @return
      */
     @GET("/user/following")
-    Observable<List<FollowersBean>> getFollowing(@Header("Authorization") String auth,
+    Observable<List<UserBean>> getFollowing(@Header("Authorization") String auth,
                                                  @Query("page") int pageId);
 
     @GET("/users/{username}/following")
-    Observable<List<FollowersBean>> getUserFollowing(@Header("Authorization") String auth,
+    Observable<List<UserBean>> getUserFollowing(@Header("Authorization") String auth,
                                                      @Path("username") String username,
                                                      @Query("page") int pageId);
 }
