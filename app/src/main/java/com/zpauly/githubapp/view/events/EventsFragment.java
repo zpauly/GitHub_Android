@@ -65,20 +65,17 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
         mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
             @Override
             public void beforeRefreshing() {
-                Log.i(TAG, "start refresh");
                 loadData();
             }
 
             @Override
             public void onRefreshSuccess() {
-                Log.i(TAG, "refresh success");
                 mRefreshView.setVisibility(View.GONE);
                 mEventsSRLayout.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onRefreshFail() {
-                Log.i(TAG, "refresh fail");
                 mRefreshView.setVisibility(View.VISIBLE);
                 mEventsSRLayout.setVisibility(View.GONE);
             }
