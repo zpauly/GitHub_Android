@@ -17,6 +17,7 @@ import com.zpauly.githubapp.db.ReposDao;
 import com.zpauly.githubapp.entity.response.RepositoriesBean;
 import com.zpauly.githubapp.presenter.repos.ReposContract;
 import com.zpauly.githubapp.presenter.repos.ReposPresenter;
+import com.zpauly.githubapp.ui.RefreshView;
 import com.zpauly.githubapp.view.ToolbarActivity;
 
 import java.util.ArrayList;
@@ -36,6 +37,8 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
     private TabLayout mReposTBLayout;
     private ViewPager mReposVP;
 
+    private RefreshView mRefreshView;
+
     private ViewPagerAdapter adapter;
 
     private List<ReposFragment> mFragmentList = new ArrayList<>();
@@ -52,6 +55,7 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
     public void initViews() {
         new ReposPresenter(this, this);
 
+        mRefreshView = (RefreshView) findViewById(R.id.repos_RefreshView);
         mReposABLayout = (AppBarLayout) findViewById(R.id.repos_ABLayout);
         mReposSwLayout = (SwipeRefreshLayout) findViewById(R.id.repos_SWLayout);
         mReposTBLayout = (TabLayout) findViewById(R.id.repos_TBLayout);
@@ -62,8 +66,25 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
         setupViewPager();
         setupTabLayout();
 
-        mReposSwLayout.setRefreshing(true);
-        loadOwnerRepos();
+        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
+            @Override
+            public void beforeRefreshing() {
+                loadOwnerRepos();
+            }
+
+            @Override
+            public void onRefreshSuccess() {
+                mRefreshView.setVisibility(View.GONE);
+                mReposSwLayout.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onRefreshFail() {
+                mRefreshView.setVisibility(View.VISIBLE);
+                mReposSwLayout.setVisibility(View.GONE);
+            }
+        });
+        mRefreshView.startRefresh();
     }
 
     @Override
@@ -149,6 +170,7 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
     @Override
     public void loadFail() {
         mReposSwLayout.setRefreshing(false);
+        mRefreshView.refreshFail();
     }
 
     @Override
@@ -156,6 +178,9 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
         mReposSwLayout.setRefreshing(false);
         mReposSwLayout.setEnabled(false);
         addPagers();
+        if (!mRefreshView.isRefreshSuccess()) {
+            mRefreshView.refreshSuccess();
+        }
     }
 
     @Override
