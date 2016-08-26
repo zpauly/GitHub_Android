@@ -15,6 +15,7 @@ import com.zpauly.githubapp.base.BaseFragment;
 import com.zpauly.githubapp.entity.response.gists.GistsBean;
 import com.zpauly.githubapp.presenter.gists.GistsContract;
 import com.zpauly.githubapp.presenter.gists.GistsPresenter;
+import com.zpauly.githubapp.ui.RefreshView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -35,8 +36,9 @@ public class GistsFragment extends BaseFragment implements GistsContract.View {
     private GistsContract.Presenter mPresenter;
 
     private SwipeRefreshLayout mSRLayout;
-
     private RecyclerView mGistsRV;
+
+    private RefreshView mRefreshView;
 
     private GistsRecyclerViewAdapter mGistsRVAdapter;
 
@@ -56,15 +58,34 @@ public class GistsFragment extends BaseFragment implements GistsContract.View {
 
         new GistsPresenter(getContext(), this);
 
+        mRefreshView = (RefreshView) view.findViewById(R.id.gists_RefreshView);
+
         mSRLayout = (SwipeRefreshLayout) view.findViewById(R.id.gists_SRLayout);
         mGistsRV = (RecyclerView) view.findViewById(R.id.gists_RV);
 
         setupRecyclerView();
         setupSwipeRefreshLayout();
 
-        mSRLayout.setRefreshing(true);
-        list.clear();
-        loadGists();
+        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
+            @Override
+            public void beforeRefreshing() {
+                list.clear();
+                loadGists();
+            }
+
+            @Override
+            public void onRefreshSuccess() {
+                mRefreshView.setVisibility(View.GONE);
+                mSRLayout.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onRefreshFail() {
+                mRefreshView.setVisibility(View.VISIBLE);
+                mSRLayout.setVisibility(View.GONE);
+            }
+        });
+        mRefreshView.startRefresh();
     }
 
     private void getAttrs() {
@@ -137,12 +158,16 @@ public class GistsFragment extends BaseFragment implements GistsContract.View {
     @Override
     public void loadFail() {
         mSRLayout.setRefreshing(false);
+        mRefreshView.refreshFail();
     }
 
     @Override
     public void loadSuccess() {
         mSRLayout.setRefreshing(false);
         mGistsRVAdapter.swapAllData(list);
+        if (!mRefreshView.isRefreshSuccess()) {
+            mRefreshView.refreshSuccess();
+        }
     }
 
     @Override

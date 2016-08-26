@@ -62,13 +62,12 @@ public class RefreshView extends LinearLayout {
                 new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
         mRefreshPB = (ProgressBar) view.findViewById(R.id.refresh_PB);
+        view.setClickable(true);
         mRefreshTV = (AppCompatTextView) view.findViewById(R.id.refresh_TV);
         view.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!isRefreshing) {
-                    mRefreshPB.setVisibility(View.VISIBLE);
-                    mRefreshTV.setVisibility(View.GONE);
                     startRefresh();
                 }
             }
@@ -87,6 +86,7 @@ public class RefreshView extends LinearLayout {
 
     public void refreshSuccess() {
         isRefreshSuccess = true;
+        isRefreshing = false;
         this.setVisibility(GONE);
         if (mOnRefreshStateListener != null) {
             mOnRefreshStateListener.onRefreshSuccess();
@@ -95,6 +95,7 @@ public class RefreshView extends LinearLayout {
 
     public void refreshFail() {
         isRefreshSuccess = false;
+        isRefreshing = false;
         mRefreshPB.setVisibility(GONE);
         mRefreshTV.setVisibility(VISIBLE);
         if (mOnRefreshStateListener != null) {

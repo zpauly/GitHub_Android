@@ -60,6 +60,6 @@ public class GistFileActivity extends ToolbarActivity {
         intent.putExtra(FILE_ID, id);
         intent.setClass(context, GistFileActivity.class);
         context.startActivity(intent);
-        ((Activity) context).finish();
+//        ((Activity) context).finish();
     }
 }

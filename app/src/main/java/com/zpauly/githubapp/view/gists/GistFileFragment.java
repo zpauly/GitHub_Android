@@ -17,6 +17,7 @@ import com.zpauly.githubapp.entity.response.gists.GistFileBean;
 import com.zpauly.githubapp.entity.response.gists.GistFileMapBean;
 import com.zpauly.githubapp.entity.response.gists.GistsBean;
 import com.zpauly.githubapp.network.gists.GistsMethod;
+import com.zpauly.githubapp.ui.RefreshView;
 import com.zpauly.githubapp.utils.SPUtil;
 
 import rx.Subscriber;
@@ -28,11 +29,11 @@ import rx.Subscriber;
 public class GistFileFragment extends BaseFragment {
     private final String TAG = getClass().getName();
 
-    private SwipeRefreshLayout mSRLayout;
-
     private WebView mWB;
 
-    private Subscriber<GistsBean> gistFileSUbscriber;
+    private RefreshView mRefreshView;
+
+    private Subscriber<GistsBean> gistFileSubscriber;
 
     private String auth;
     private GistsMethod method;
@@ -44,9 +45,9 @@ public class GistFileFragment extends BaseFragment {
 
     @Override
     public void onStop() {
-        if (gistFileSUbscriber != null) {
-            if (gistFileSUbscriber.isUnsubscribed()) {
-                gistFileSUbscriber.unsubscribe();
+        if (gistFileSubscriber != null) {
+            if (gistFileSubscriber.isUnsubscribed()) {
+                gistFileSubscriber.unsubscribe();
             }
         }
         super.onStop();
@@ -59,35 +60,42 @@ public class GistFileFragment extends BaseFragment {
         auth = SPUtil.getString(getContext(), Constants.USER_INFO, Constants.USER_AUTH, null);
         method = GistsMethod.getInstance();
 
-        mSRLayout = (SwipeRefreshLayout) view.findViewById(R.id.gist_file_SRLayout);
+        mRefreshView = (RefreshView) view.findViewById(R.id.gist_file_RefreshView);
         mWB = (WebView) view.findViewById(R.id.gist_file_WB);
 
-        mSRLayout.setColorSchemeResources(R.color.colorAccent);
-        mSRLayout.measure(View.MEASURED_SIZE_MASK, View.MEASURED_HEIGHT_STATE_SHIFT);
-        mSRLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
             @Override
-            public void onRefresh() {
+            public void beforeRefreshing() {
                 loadFile();
             }
-        });
 
-        mSRLayout.setRefreshing(true);
-        loadFile();
+            @Override
+            public void onRefreshSuccess() {
+                mRefreshView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onRefreshFail() {
+                mRefreshView.setVisibility(View.VISIBLE);
+            }
+        });
+        mRefreshView.startRefresh();
     }
 
     private void loadFile() {
-        gistFileSUbscriber = new Subscriber<GistsBean>() {
+        gistFileSubscriber = new Subscriber<GistsBean>() {
             @Override
             public void onCompleted() {
-                mSRLayout.setRefreshing(false);
-                mSRLayout.setEnabled(false);
                 setContent();
+                if (!mRefreshView.isRefreshSuccess()) {
+                    mRefreshView.refreshSuccess();
+                }
             }
 
             @Override
             public void onError(Throwable e) {
                 e.printStackTrace();
-                mSRLayout.setRefreshing(false);
+                mRefreshView.refreshFail();
             }
 
             @Override
@@ -99,7 +107,7 @@ public class GistFileFragment extends BaseFragment {
                 }
             }
         };
-        method.getASingleGIst(gistFileSUbscriber, auth, id);
+        method.getASingleGIst(gistFileSubscriber, auth, id);
     }
 
     private void setContent() {
