@@ -1,8 +1,5 @@
 package com.zpauly.githubapp.view.repositories;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -10,19 +7,19 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Html;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.base.BaseFragment;
 import com.zpauly.githubapp.entity.response.RepositoriesBean;
 import com.zpauly.githubapp.presenter.repos.RepoContentContract;
 import com.zpauly.githubapp.presenter.repos.RepoContentPresenter;
+import com.zpauly.githubapp.ui.RefreshView;
 import com.zpauly.githubapp.utils.HtmlImageGetter;
 import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.view.files.FilesActivity;
@@ -60,6 +57,8 @@ public class RepoContentFragment extends BaseFragment implements RepoContentCont
     private AppCompatTextView mViewFilesTV;
     private ProgressBar mReadMePB;
 
+    private RefreshView mRefreshView;
+
     private String content;
     private RepositoriesBean repoBean;
 
@@ -83,10 +82,31 @@ public class RepoContentFragment extends BaseFragment implements RepoContentCont
         mLoadAgainTV = (AppCompatTextView) view.findViewById(R.id.repo_content_readme_load_again_TV);
         mReadMePB = (ProgressBar) view.findViewById(R.id.repo_content_readme_PB);
 
+        mRefreshView = (RefreshView) view.findViewById(R.id.repo_content_RefreshView);
+
         setupSwipeRefreshLayout();
         setupViews();
-        mSRLayout.setRefreshing(true);
-        loadRepo();
+
+        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
+            @Override
+            public void beforeRefreshing() {
+                loadRepo();
+            }
+
+            @Override
+            public void onRefreshSuccess() {
+                mRefreshView.setVisibility(View.GONE);
+                mSRLayout.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onRefreshFail() {
+                Log.i(TAG, "load fail");
+                mRefreshView.setVisibility(View.VISIBLE);
+                mSRLayout.setVisibility(View.GONE);
+            }
+        });
+        mRefreshView.startRefresh();
     }
 
     private void getAttrs() {
@@ -152,6 +172,7 @@ public class RepoContentFragment extends BaseFragment implements RepoContentCont
     public void loadReadMeFail() {
         mLoadAgainTV.setVisibility(View.VISIBLE);
         mReadMePB.setVisibility(View.GONE);
+        mRefreshView.refreshFail();
     }
 
     @Override
@@ -162,6 +183,9 @@ public class RepoContentFragment extends BaseFragment implements RepoContentCont
                 repoBean.getHtml_url() + "/raw/" + repoBean.getDefault_branch());
         Spanned htmlSpann = Html.fromHtml(content, imageGetter, null);
         mReadMeTV.setText(htmlSpann);
+        if (!mRefreshView.isRefreshSuccess()) {
+            mRefreshView.refreshSuccess();
+        }
     }
 
     @Override
