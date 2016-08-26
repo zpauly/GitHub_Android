@@ -1,5 +1,7 @@
 package com.zpauly.githubapp.base;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,6 +22,7 @@ public abstract class BaseFragment extends Fragment {
     protected UserModel userInfo;
     protected String username;
 
+    private Context context;
 
     @Nullable
     @Override
@@ -37,6 +40,17 @@ public abstract class BaseFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public Context getContext() {
+        return context == null ? BaseApplication.getInstance() : context;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
     }
 
     protected abstract void initViews(View view);

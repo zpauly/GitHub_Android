@@ -17,6 +17,7 @@ import com.zpauly.githubapp.adapter.GistFileRecyclerViewAdapter;
 import com.zpauly.githubapp.base.BaseFragment;
 import com.zpauly.githubapp.entity.response.gists.GistFileBean;
 import com.zpauly.githubapp.entity.response.gists.GistsBean;
+import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.TextUtil;
 
 import java.util.List;
@@ -65,12 +66,7 @@ public class GistContentFragment extends BaseFragment {
     }
 
     private void setViews() {
-        Glide.with(this)
-                .load(Uri.parse(bean.getOwner().getAvatar_url()))
-                .centerCrop()
-                .crossFade()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(mAvatarIV);
+        ImageUtil.loadAvatarImageFromUrl(getContext(), bean.getOwner().getAvatar_url(), mAvatarIV);
         mLoginTV.setText(bean.getOwner().getLogin());
         mUpdatedTV.setText(TextUtil.timeConverter(bean.getUpdated_at()));
         mCreatedTV.setText(TextUtil.timeConverter(bean.getCreated_at()));

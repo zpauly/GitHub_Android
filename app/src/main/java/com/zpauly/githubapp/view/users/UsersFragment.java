@@ -64,7 +64,7 @@ public class UsersFragment extends BaseFragment implements FollowContract.View {
 
     @Override
     protected View setContentView(LayoutInflater inflater, @Nullable ViewGroup container) {
-        return LayoutInflater.from(getContext()).inflate(R.layout.fragment_followers, container, false);
+        return inflater.inflate(R.layout.fragment_followers, container, false);
     }
 
     private void setupSwipeRefreshLayout() {

@@ -22,6 +22,7 @@ import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.presenter.profile.ProfileContract;
 import com.zpauly.githubapp.presenter.profile.ProfilePresenter;
 import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.events.EventsActivity;
 import com.zpauly.githubapp.view.users.UsersActivity;
@@ -112,12 +113,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     private void setUserInfo() {
         if (userInfo == null)
             return;
-        Glide.with(this)
-                .load(Uri.parse(userInfo.getAvatar_url()))
-                .centerCrop()
-                .crossFade()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(mAvatarIV);
+        ImageUtil.loadAvatarImageFromUrl(getContext(), userInfo.getAvatar_url(), mAvatarIV);
         mFollowersTV.setText(String.valueOf(userInfo.getFollowers()));
         mFollowingTV.setText(String.valueOf(userInfo.getFollowing()));
         mLoginTV.setText(userInfo.getLogin());

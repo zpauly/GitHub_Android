@@ -19,7 +19,6 @@ import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.ui.URLDrawable;
 
 import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -51,11 +50,6 @@ public class HtmlImageGetter implements Html.ImageGetter {
         }
     };
 
-    /***
-     * Construct the URLImageParser which will execute AsyncTask and refresh the container
-     * @param t
-     * @param c
-     */
     public HtmlImageGetter(TextView t, Context c, String baseUrl) {
         this.context = c;
         this.container = t;
@@ -124,11 +118,6 @@ public class HtmlImageGetter implements Html.ImageGetter {
             }
         }
 
-        /***
-         * Get the Drawable from URL
-         * @param urlString
-         * @return
-         */
         public Drawable fetchDrawable(String urlString) {
             String url;
             if (urlString.startsWith("/")) {

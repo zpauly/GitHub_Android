@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.response.UserBean;
+import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.view.profile.OthersActivity;
 import com.zpauly.githubapp.view.viewholder.UsersViewHolder;
 
@@ -41,10 +42,6 @@ public class UsersRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<UserBe
             }
         });
         holder.mUsernameTV.setText(bean.getLogin());
-        Glide.with(getContext())
-                .load(Uri.parse(bean.getAvatar_url()))
-                .centerCrop()
-                .crossFade()
-                .into(holder.mAvatarIV);
+        ImageUtil.loadAvatarImageFromUrl(getContext(), bean.getAvatar_url(), holder.mAvatarIV);
     }
 }

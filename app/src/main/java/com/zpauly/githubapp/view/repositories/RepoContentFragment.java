@@ -7,7 +7,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Html;
 import android.text.Spanned;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,7 +100,7 @@ public class RepoContentFragment extends BaseFragment implements RepoContentCont
 
             @Override
             public void onRefreshFail() {
-                Log.i(TAG, "load fail");
+
                 mRefreshView.setVisibility(View.VISIBLE);
                 mSRLayout.setVisibility(View.GONE);
             }

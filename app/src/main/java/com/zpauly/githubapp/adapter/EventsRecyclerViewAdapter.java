@@ -17,6 +17,7 @@ import com.zpauly.githubapp.db.ReposModel;
 import com.zpauly.githubapp.entity.response.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.events.EventsBean;
 import com.zpauly.githubapp.entity.response.events.Payload;
+import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.profile.OthersActivity;
 import com.zpauly.githubapp.view.repositories.RepoContentActivity;
@@ -47,12 +48,7 @@ public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Event
     @Override
     public void bindContentViewHolder(EventsViewHolder holder, int position) {
         final EventsBean data = getData().get(position);
-        Glide.with(getContext())
-                .load(data.getActor().getAvatar_url())
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
-                .crossFade()
-                .into(holder.mUserAvatarIV);
+        ImageUtil.loadAvatarImageFromUrl(getContext(), data.getActor().getAvatar_url(), holder.mUserAvatarIV);
         holder.mRepoTV.setText(data.getRepo().getName());
         holder.mUsernameTV.setText(data.getActor().getLogin());
 //        holder.mUsernameTV.setText(String.valueOf(position));

@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.response.OrganizationBean;
+import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.view.viewholder.UsersViewHolder;
 
 /**
@@ -30,12 +31,7 @@ public class OrgsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Organiz
     @Override
     public void bindContentViewHolder(UsersViewHolder holder, int position) {
         OrganizationBean data = getData().get(position);
-        Glide.with(getContext())
-                .load(data.getAvatar_url())
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
-                .crossFade()
-                .into(holder.mAvatarIV);
+        ImageUtil.loadAvatarImageFromUrl(getContext(), data.getAvatar_url(), holder.mAvatarIV);
         holder.mUsernameTV.setText(data.getLogin());
         holder.mLayout.setOnClickListener(new View.OnClickListener() {
             @Override

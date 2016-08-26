@@ -12,13 +12,12 @@ import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.response.gists.GistFileBean;
 import com.zpauly.githubapp.entity.response.gists.GistFileMapBean;
 import com.zpauly.githubapp.entity.response.gists.GistsBean;
+import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.gists.GistContentActivity;
 import com.zpauly.githubapp.view.viewholder.GistViewHolder;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by zpauly on 16-8-5.
@@ -47,12 +46,8 @@ public class GistsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<GistsB
         holder.mTitleTV.setText(data.getOwner().getLogin() + "/" + list.get(0).getFilename());
         holder.mDescTV.setText(data.getDescription());
         holder.mTimeTV.setText(TextUtil.timeConverter(data.getUpdated_at()));
-        Glide.with(getContext())
-                .load(Uri.parse(data.getOwner().getAvatar_url()))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .crossFade()
-                .centerCrop()
-                .into(holder.mAvatarIV);
+        ImageUtil.loadAvatarImageFromUrl(getContext(), data.getOwner().getAvatar_url(),
+                holder.mAvatarIV);
         holder.mLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

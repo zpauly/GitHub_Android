@@ -14,11 +14,22 @@ import org.litepal.LitePalApplication;
  * Created by zpauly on 16-6-10.
  */
 public class BaseApplication extends LitePalApplication {
+    private static BaseApplication instance;
+
     @Override
     public void onCreate() {
         super.onCreate();
 
         getLocalLanguageSetting();
+    }
+
+    public static BaseApplication getInstance() {
+        if (instance == null) {
+            synchronized (BaseApplication.class) {
+                instance = new BaseApplication();
+            }
+        }
+        return instance;
     }
 
     private void getLocalLanguageSetting() {

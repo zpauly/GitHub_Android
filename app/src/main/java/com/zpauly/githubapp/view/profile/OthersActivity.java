@@ -19,6 +19,7 @@ import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.presenter.profile.ProfileContract;
 import com.zpauly.githubapp.presenter.profile.ProfilePresenter;
 import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.ToolbarActivity;
 import com.zpauly.githubapp.view.events.EventsActivity;
@@ -202,12 +203,7 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
     @Override
     public void loadInfoSuccess() {
         if (user != null) {
-            Glide.with(this)
-                    .load(Uri.parse(user.getAvatar_url()))
-                    .centerCrop()
-                    .crossFade()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(mAvatarIV);
+            ImageUtil.loadAvatarImageFromUrl(this, user.getAvatar_url(), mAvatarIV);
             mNameTV.setText(user.getName());
             mLoginTV.setText(user.getLogin());
             mBioTV.setText(user.getBio());

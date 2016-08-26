@@ -125,14 +125,14 @@ public class FilesFragment extends BaseFragment implements FilesContract.View {
     }
 
     private void setupRecyclerView() {
-        mDirAdapter = new FileDirRecyclerViewAdapter(getContext());
-        mPathAdapter = new PathRecyclerViewAdapter(getContext());
+        mDirAdapter = new FileDirRecyclerViewAdapter(getActivity());
+        mPathAdapter = new PathRecyclerViewAdapter(getActivity());
 
-        mPathRV.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        mPathRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         mPathRV.setAdapter(mPathAdapter);
 
-        mContentRV.setLayoutManager(new LinearLayoutManager(getContext()));
-        mContentRV.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
+        mContentRV.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mContentRV.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         mContentRV.setAdapter(mDirAdapter);
         mPathAdapter.setOnItemClickListener(new OnDirItemClickListener() {
             @Override

@@ -16,6 +16,7 @@
 package com.zpauly.githubapp.utils;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -25,6 +26,7 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Build;
+import android.support.v4.app.Fragment;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -175,6 +177,30 @@ public class ImageUtil {
     }
 
     public static void loadAvatarImageFromUrl(Context context, String url, ImageView imageView) {
+        if (context == null) {
+            return;
+        }
+        Glide.with(context)
+                .load(Uri.parse(url))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .crossFade()
+                .centerCrop()
+                .into(imageView);
+    }
+
+    public static void loadAvatarImageFromUrl(Fragment context, String url, ImageView imageView) {
+        if (context == null) {
+            return;
+        }
+        Glide.with(context)
+                .load(Uri.parse(url))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .crossFade()
+                .centerCrop()
+                .into(imageView);
+    }
+
+    public static void loadAvatarImageFromUrl(Activity context, String url, ImageView imageView) {
         if (context == null) {
             return;
         }
