@@ -16,15 +16,28 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/others_SWLayout"
+    <LinearLayout
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include
-            layout="@layout/content_profile" />
+        <com.zpauly.githubapp.ui.RefreshView
+            android:id="@+id/others_RefreshView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:visibility="gone"
+            android:id="@+id/others_SWLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include
+                layout="@layout/content_profile" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

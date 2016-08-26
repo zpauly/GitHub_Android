@@ -21,6 +21,7 @@ import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.presenter.profile.ProfileContract;
 import com.zpauly.githubapp.presenter.profile.ProfilePresenter;
+import com.zpauly.githubapp.ui.RefreshView;
 import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.events.EventsActivity;
 import com.zpauly.githubapp.view.users.UsersActivity;
@@ -53,10 +54,13 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     private RelativeLayout mReposLayout;
     private RelativeLayout mOrgsLayout;
 
+    private RefreshView mRefreshView;
+
     @Override
     protected void initViews(View view) {
         new ProfilePresenter(this, getContext());
 
+        mRefreshView = (RefreshView) view.findViewById(R.id.profile_RefreshView);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.profile_SRLayout);
 
         mAvatarIV = (CircleImageView) view.findViewById(R.id.profile_avatar);
@@ -84,8 +88,25 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
         setupSwpieRefreshLayout();
 
-        mSwipeRefreshLayout.setRefreshing(true);
-        loadUserInfo();
+        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
+            @Override
+            public void beforeRefreshing() {
+                loadUserInfo();
+            }
+
+            @Override
+            public void onRefreshSuccess() {
+                mRefreshView.setVisibility(View.GONE);
+                mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onRefreshFail() {
+                mRefreshView.setVisibility(View.VISIBLE);
+                mSwipeRefreshLayout.setVisibility(View.GONE);
+            }
+        });
+        mRefreshView.startRefresh();
     }
 
     private void setUserInfo() {
@@ -176,11 +197,15 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     public void loadInfoSuccess() {
         mSwipeRefreshLayout.setRefreshing(false);
         setClickListener();
+        if (!mRefreshView.isRefreshSuccess()) {
+            mRefreshView.refreshSuccess();
+        }
     }
 
     @Override
     public void loadInfoFail() {
         mSwipeRefreshLayout.setRefreshing(false);
+        mRefreshView.refreshFail();
     }
 
     @Override

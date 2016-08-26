@@ -18,6 +18,7 @@ import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.presenter.profile.ProfileContract;
 import com.zpauly.githubapp.presenter.profile.ProfilePresenter;
+import com.zpauly.githubapp.ui.RefreshView;
 import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.ToolbarActivity;
 import com.zpauly.githubapp.view.events.EventsActivity;
@@ -55,6 +56,8 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
     private RelativeLayout mReposLayout;
     private RelativeLayout mOrgsLayout;
 
+    private RefreshView mRefreshView;
+
     private UserBean user;
 
     @Override
@@ -91,11 +94,29 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
         mEventsLayout = (RelativeLayout) findViewById(R.id.profile_events_layout);
         mReposLayout = (RelativeLayout) findViewById(R.id.profile_repos_layout);
         mOrgsLayout = (RelativeLayout) findViewById(R.id.profile_orgs_layout);
+        mRefreshView = (RefreshView) findViewById(R.id.others_RefreshView);
 
         setupSwipeRefreshLayout();
 
-        mSWLayout.setRefreshing(true);
-        loadData();
+        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
+            @Override
+            public void beforeRefreshing() {
+                loadData();
+            }
+
+            @Override
+            public void onRefreshSuccess() {
+                mRefreshView.setVisibility(View.GONE);
+                mSWLayout.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onRefreshFail() {
+                mRefreshView.setVisibility(View.VISIBLE);
+                mRefreshView.setVisibility(View.GONE);
+            }
+        });
+        mRefreshView.startRefresh();
     }
 
     @Override
@@ -198,6 +219,9 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
         }
         mSWLayout.setRefreshing(false);
         setupListener();
+        if (!mRefreshView.isRefreshSuccess()) {
+            mRefreshView.refreshSuccess();
+        }
     }
 
     public static void lanuchActivity(Context context, String username) {
@@ -210,6 +234,7 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
     @Override
     public void loadInfoFail() {
         mSWLayout.setRefreshing(false);
+        mRefreshView.refreshFail();
     }
 
     @Override

@@ -4,8 +4,10 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
@@ -56,6 +58,9 @@ public class RefreshView extends LinearLayout {
 
     private void init() {
         View view = inflate(getContext(), R.layout.fragment_refresh, null);
+        LinearLayoutCompat.LayoutParams layoutParams =
+                new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
         mRefreshPB = (ProgressBar) view.findViewById(R.id.refresh_PB);
         mRefreshTV = (AppCompatTextView) view.findViewById(R.id.refresh_TV);
         view.setOnClickListener(new OnClickListener() {
@@ -68,7 +73,7 @@ public class RefreshView extends LinearLayout {
                 }
             }
         });
-        addView(view);
+        addView(view, layoutParams);
     }
 
     public void startRefresh() {
