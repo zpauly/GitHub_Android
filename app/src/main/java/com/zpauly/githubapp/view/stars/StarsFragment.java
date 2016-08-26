@@ -17,6 +17,7 @@ import com.zpauly.githubapp.db.ReposModel;
 import com.zpauly.githubapp.entity.response.RepositoriesBean;
 import com.zpauly.githubapp.presenter.star.StarContract;
 import com.zpauly.githubapp.presenter.star.StarPresenter;
+import com.zpauly.githubapp.ui.RefreshView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +32,9 @@ public class StarsFragment extends BaseFragment implements StarContract.View {
     private StarContract.Presenter mPresenter;
 
     private SwipeRefreshLayout mStarredReposSRLayout;
-
     private RecyclerView mStarredReposRV;
+
+    private RefreshView mRefreshView;
 
     private ReposRecyclerViewAdapter mAdapter;
 
@@ -51,15 +53,33 @@ public class StarsFragment extends BaseFragment implements StarContract.View {
         new StarPresenter(getContext(), this);
         mPresenter.start();
 
+        mRefreshView = (RefreshView) view.findViewById(R.id.starred_repos_RefreshView);
         mStarredReposSRLayout = (SwipeRefreshLayout) view.findViewById(R.id.starred_repos_SRLayout);
         mStarredReposRV = (RecyclerView) view.findViewById(R.id.starred_repos_RV);
 
         setupRecyclerView();
         setupSwipeRefreshLayout();
 
-        mStarredReposSRLayout.setRefreshing(true);
-        ReposDao.deleteRepos();
-        loadStarredRepositories();
+        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
+            @Override
+            public void beforeRefreshing() {
+                ReposDao.deleteRepos();
+                loadStarredRepositories();
+            }
+
+            @Override
+            public void onRefreshSuccess() {
+                mRefreshView.setVisibility(View.GONE);
+                mStarredReposSRLayout.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onRefreshFail() {
+                mRefreshView.setVisibility(View.VISIBLE);
+                mStarredReposSRLayout.setVisibility(View.GONE);
+            }
+        });
+        mRefreshView.startRefresh();
     }
 
     private void setupSwipeRefreshLayout() {
@@ -131,6 +151,7 @@ public class StarsFragment extends BaseFragment implements StarContract.View {
     @Override
     public void loadFail() {
         mStarredReposSRLayout.setRefreshing(false);
+        mRefreshView.refreshFail();
     }
 
     @Override
@@ -140,6 +161,9 @@ public class StarsFragment extends BaseFragment implements StarContract.View {
         }
         mAdapter.swapAllData(list);
         mStarredReposSRLayout.setRefreshing(false);
+        if (!mRefreshView.isRefreshSuccess()) {
+            mRefreshView.refreshSuccess();
+        }
     }
 
     @Override
