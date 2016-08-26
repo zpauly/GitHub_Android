@@ -57,13 +57,14 @@ public class RefreshView extends LinearLayout {
     private void init() {
         View view = inflate(getContext(), R.layout.fragment_refresh, null);
         mRefreshPB = (ProgressBar) view.findViewById(R.id.refresh_PB);
-        mRefreshTV = (AppCompatTextView) findViewById(R.id.refresh_TV);
+        mRefreshTV = (AppCompatTextView) view.findViewById(R.id.refresh_TV);
         view.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!isRefreshing) {
-                    mRefreshPB.setVisibility(VISIBLE);
-                    mRefreshTV.setVisibility(GONE);
+                    mRefreshPB.setVisibility(View.VISIBLE);
+                    mRefreshTV.setVisibility(View.GONE);
+                    startRefresh();
                 }
             }
         });
@@ -73,6 +74,9 @@ public class RefreshView extends LinearLayout {
     public void startRefresh() {
         mRefreshTV.setVisibility(GONE);
         mRefreshPB.setVisibility(VISIBLE);
+        if (mOnRefreshStateListener != null) {
+            mOnRefreshStateListener.beforeRefreshing();
+        }
         isRefreshing = true;
     }
 
@@ -95,5 +99,9 @@ public class RefreshView extends LinearLayout {
 
     public void setOnRefreshStateListener(OnRefreshStateListener listener) {
         this.mOnRefreshStateListener = listener;
+    }
+
+    public boolean isRefreshSuccess() {
+        return isRefreshSuccess;
     }
 }

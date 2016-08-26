@@ -16,17 +16,22 @@
 package com.zpauly.githubapp.utils;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
 import android.graphics.Canvas;
 import android.graphics.Point;
+import android.net.Uri;
 import android.os.Build;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
 
@@ -167,5 +172,17 @@ public class ImageUtil {
             // remove me when there's a 1.2.3 release
         }
         return null;
+    }
+
+    public static void loadAvatarImageFromUrl(Context context, String url, ImageView imageView) {
+        if (context == null) {
+            return;
+        }
+        Glide.with(context)
+                .load(Uri.parse(url))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .crossFade()
+                .centerCrop()
+                .into(imageView);
     }
 }

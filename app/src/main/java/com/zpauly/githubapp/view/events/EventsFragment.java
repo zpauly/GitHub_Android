@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.zpauly.githubapp.base.BaseFragment;
 import com.zpauly.githubapp.entity.response.events.EventsBean;
 import com.zpauly.githubapp.presenter.events.EventsContract;
 import com.zpauly.githubapp.presenter.events.EventsPresenter;
+import com.zpauly.githubapp.ui.RefreshView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,8 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
     private RecyclerView mEventsRV;
 
     private EventsRecyclerViewAdapter mAdapter;
+
+    private RefreshView mRefreshView;
 
     private int events_id = -1;
 
@@ -50,6 +54,7 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
 
         new EventsPresenter(getContext(), this);
 
+        mRefreshView = (RefreshView) view.findViewById(R.id.events_RefreshView);
         mEventsSRLayout = (SwipeRefreshLayout) view.findViewById(R.id.events_SRLayout);
         mEventsRV = (RecyclerView) view.findViewById(R.id.events_RV);
 
@@ -57,8 +62,28 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
         setupRecyclerView();
 
 
-        mEventsSRLayout.setRefreshing(true);
-        loadData();
+        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
+            @Override
+            public void beforeRefreshing() {
+                Log.i(TAG, "start refresh");
+                loadData();
+            }
+
+            @Override
+            public void onRefreshSuccess() {
+                Log.i(TAG, "refresh success");
+                mRefreshView.setVisibility(View.GONE);
+                mEventsSRLayout.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onRefreshFail() {
+                Log.i(TAG, "refresh fail");
+                mRefreshView.setVisibility(View.VISIBLE);
+                mEventsSRLayout.setVisibility(View.GONE);
+            }
+        });
+        mRefreshView.startRefresh();
     }
 
     private void setupSwipeRefreshLayout() {
@@ -130,6 +155,7 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
     @Override
     public void loadFail() {
         mEventsSRLayout.setRefreshing(false);
+        mRefreshView.refreshFail();
     }
 
     @Override
@@ -139,6 +165,9 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
         }
         mAdapter.addAllData(list);
         mEventsSRLayout.setRefreshing(false);
+        if (!mRefreshView.isRefreshSuccess()) {
+            mRefreshView.refreshSuccess();
+        }
     }
 
     @Override

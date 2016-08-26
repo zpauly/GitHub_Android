@@ -24,6 +24,7 @@ import com.zpauly.githubapp.entity.response.RepositoriesBean;
 import com.zpauly.githubapp.presenter.repos.RepoContentContract;
 import com.zpauly.githubapp.presenter.repos.RepoContentPresenter;
 import com.zpauly.githubapp.utils.HtmlImageGetter;
+import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.view.files.FilesActivity;
 import com.zpauly.githubapp.view.profile.OthersActivity;
 
@@ -172,12 +173,7 @@ public class RepoContentFragment extends BaseFragment implements RepoContentCont
     public void loadRepoSuccess() {
         loadReadMe();
         mSRLayout.setRefreshing(false);
-        Glide.with(getContext().getApplicationContext())
-                .load(Uri.parse(repoBean.getOwner().getAvatar_url()))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .crossFade()
-                .centerCrop()
-                .into(mAvatarIV);
+        ImageUtil.loadAvatarImageFromUrl(getContext(), repoBean.getOwner().getAvatar_url(), mAvatarIV);
         mDescTV.setText(repoBean.getDescription());
         mWatchersTV.setText(String.valueOf(repoBean.getWatchers_count()));
         mStargazersTV.setText(String.valueOf(repoBean.getStargazers_count()));
