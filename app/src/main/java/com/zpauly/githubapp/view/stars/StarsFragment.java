@@ -90,6 +90,7 @@ public class StarsFragment extends BaseFragment implements StarContract.View {
             public void onRefresh() {
                 ReposDao.deleteRepos();
                 mAdapter.setHasLoading(true);
+                mAdapter.hideLoadingView();
                 StarPresenter presenter = (StarPresenter) mPresenter;
                 presenter.setPageId(1);
                 loadStarredRepositories();

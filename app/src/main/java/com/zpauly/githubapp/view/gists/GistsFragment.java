@@ -103,6 +103,7 @@ public class GistsFragment extends BaseFragment implements GistsContract.View {
             public void onRefresh() {
                 GistsPresenter presenter = (GistsPresenter) mPresenter;
                 mGistsRVAdapter.setHasLoading(true);
+                mGistsRVAdapter.hideLoadingView();
                 list.clear();
                 presenter.setPageId(1);
                 loadGists();

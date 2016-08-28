@@ -79,6 +79,12 @@ public abstract class LoadMoreRecyclerViewAdapter<D, VH extends RecyclerView.Vie
         return super.getItemCount() + 1;
     }
 
+
+    public void hideLoadingView() {
+        flag = false;
+        notifyDataSetChanged();
+    }
+
     public void setHasLoading(boolean hasMoreData) {
         this.hasMoreData = hasMoreData;
         flag = true;

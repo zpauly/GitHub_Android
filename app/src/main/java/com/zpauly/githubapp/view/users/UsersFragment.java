@@ -17,6 +17,7 @@ import com.zpauly.githubapp.entity.response.OrganizationBean;
 import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.presenter.follow.FollowContract;
 import com.zpauly.githubapp.presenter.follow.FollowPresenter;
+import com.zpauly.githubapp.ui.RefreshView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,8 @@ public class UsersFragment extends BaseFragment implements FollowContract.View {
     private SwipeRefreshLayout mSWLayout;
     private RecyclerView mContentRV;
 
+    private RefreshView mRefreshView;
+
     private int userId = 0;
 
     @Override
@@ -52,14 +55,33 @@ public class UsersFragment extends BaseFragment implements FollowContract.View {
 
         userId = getArguments().getInt(UsersActivity.USERS_ID);
 
+        mRefreshView = (RefreshView) view.findViewById(R.id.followers_RefreshView);
+
         mSWLayout = (SwipeRefreshLayout) view.findViewById(R.id.followers_SWLayout);
         mContentRV = (RecyclerView) view.findViewById(R.id.followers_content_RV);
 
         setupSwipeRefreshLayout();
         setupRecyclerView();
 
-        mSWLayout.setRefreshing(true);
-        loadFollow();
+        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
+            @Override
+            public void beforeRefreshing() {
+                loadFollow();
+            }
+
+            @Override
+            public void onRefreshSuccess() {
+                mRefreshView.setVisibility(View.GONE);
+                mSWLayout.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onRefreshFail() {
+                mRefreshView.setVisibility(View.VISIBLE);
+                mSWLayout.setVisibility(View.GONE);
+            }
+        });
+        mRefreshView.startRefresh();
     }
 
     @Override
@@ -73,6 +95,9 @@ public class UsersFragment extends BaseFragment implements FollowContract.View {
         mSWLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                mRVAdapter.setHasLoading(true);
+                mRVAdapter.hideLoadingView();
+                mRVAdapter.addAllData(new ArrayList<UserBean>());
                 loadFollow();
             }
         });
@@ -147,6 +172,7 @@ public class UsersFragment extends BaseFragment implements FollowContract.View {
     @Override
     public void loadFail() {
         mSWLayout.setRefreshing(false);
+        mRefreshView.refreshFail();
     }
 
     @Override
@@ -155,6 +181,9 @@ public class UsersFragment extends BaseFragment implements FollowContract.View {
         mSWLayout.setRefreshing(false);
         if (list == null || list.size() == 0) {
             mRVAdapter.setHasLoading(false);
+        }
+        if (!mRefreshView.isRefreshSuccess()) {
+            mRefreshView.refreshSuccess();
         }
     }
 
