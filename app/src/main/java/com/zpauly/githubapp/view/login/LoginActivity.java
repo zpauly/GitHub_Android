@@ -178,6 +178,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
                 if (mPresenter != null) {
                     loadingDialog = new MaterialDialog.Builder(LoginActivity.this)
                             .progress(true, 0)
+                            .cancelable(false)
                             .title(R.string.please_wait)
                             .content(R.string.loading)
                             .build();
