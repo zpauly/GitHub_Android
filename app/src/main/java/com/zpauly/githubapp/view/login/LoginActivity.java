@@ -5,15 +5,11 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatCheckBox;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.base.BaseActivity;
@@ -22,21 +18,20 @@ import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 import com.zpauly.githubapp.presenter.login.LoginContract;
 import com.zpauly.githubapp.presenter.login.LoginPresenter;
 import com.zpauly.githubapp.utils.AuthUtil;
-import com.zpauly.githubapp.utils.LanguageUtil;
 import com.zpauly.githubapp.utils.SPUtil;
 import com.zpauly.githubapp.view.home.HomeActivity;
 
 public class LoginActivity extends BaseActivity implements LoginContract.View {
     private LoginContract.Presenter mPresenter;
 
-    private static final int SELECT_SIMPLIFIED_CHINESE = 0;
-    private static final int SELECT_ENGLISH = 1;
+//    private static final int SELECT_SIMPLIFIED_CHINESE = 0;
+//    private static final int SELECT_ENGLISH = 1;
 
-    private LinearLayout mLanguageLayout;
+//    private LinearLayout mLanguageLayout;
     private LinearLayout mLoginLayout;
-    private AppCompatCheckBox mSimplifiedChineseCB;
-    private AppCompatCheckBox mEnglishCB;
-    private AppCompatButton mLanguageOkBTN;
+//    private AppCompatCheckBox mSimplifiedChineseCB;
+//    private AppCompatCheckBox mEnglishCB;
+//    private AppCompatButton mLanguageOkBTN;
     private AppCompatButton mLoginBTN;
     private TextInputEditText mUsernameET;
     private TextInputEditText mPasswordET;
@@ -48,11 +43,9 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     private MaterialDialog loadingDialog;
 
-    private boolean isLanguageSetted = false;
-    private int languageChoice = -1;
-
-    private boolean isFirstUsed = false;
-
+//    private boolean isLanguageSetted = false;
+//    private int languageChoice = -1;
+//
     @Override
     protected void onStop() {
         if (mPresenter != null) {
@@ -63,37 +56,28 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     public void initViews() {
-        if (SPUtil.getString(this, Constants.USER_INFO, Constants.USER_AUTH, null) != null) {
-            Intent intent = new Intent();
-            intent.setClass(this, HomeActivity.class);
-            startActivity(intent);
-            finish();
-        }
-        isFirstUsed = SPUtil.getBoolean(this, Constants.LOCAL_CONFIGURATION, Constants.FIRST_USED, true);
-
         new LoginPresenter(this, this);
         mPresenter.start();
 
-        mLanguageLayout = (LinearLayout) findViewById(R.id.language_layout);
+//        mLanguageLayout = (LinearLayout) findViewById(R.id.language_layout);
         mLoginLayout = (LinearLayout) findViewById(R.id.login_layout);
-        mSimplifiedChineseCB = (AppCompatCheckBox) findViewById(R.id.language_simplified_chinese_cb);
-        mEnglishCB = (AppCompatCheckBox) findViewById(R.id.language_english_cb);
-        mLanguageOkBTN = (AppCompatButton) findViewById(R.id.language_ok_btn);
+//        mSimplifiedChineseCB = (AppCompatCheckBox) findViewById(R.id.language_simplified_chinese_cb);
+//        mEnglishCB = (AppCompatCheckBox) findViewById(R.id.language_english_cb);
+//        mLanguageOkBTN = (AppCompatButton) findViewById(R.id.language_ok_btn);
         mLoginBTN = (AppCompatButton) findViewById(R.id.login_sign_in_btn);
         mUsernameET = (TextInputEditText) findViewById(R.id.login_username_et);
         mPasswordET = (TextInputEditText) findViewById(R.id.login_password_et);
         mUsernameLayout = (TextInputLayout) findViewById(R.id.login_username_layout);
         mPasswordLayout = (TextInputLayout) findViewById(R.id.login_password_layout);
 
-        setupCheckBoxs();
+//        setupCheckBoxs();
+        mUsernameLayout.setHint(getString(R.string.username));
+        mPasswordLayout.setHint(getString(R.string.password));
+        mLoginBTN.setText(R.string.login);
+        mUsernameLayout.setErrorEnabled(true);
+        mUsernameLayout.setErrorEnabled(true);
 
         setupButtons();
-
-        if (!isFirstUsed) {
-            mLanguageLayout.setVisibility(View.GONE);
-            mLoginLayout.setVisibility(View.VISIBLE);
-            resetLoginView();
-        }
     }
 
     @Override
@@ -101,7 +85,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         setContentView(R.layout.activity_login);
     }
 
-    private void setupCheckBoxs() {
+    /*private void setupCheckBoxs() {
         mSimplifiedChineseCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -120,10 +104,10 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
                 languageChoice = SELECT_ENGLISH;
             }
         });
-    }
+    }*/
 
     private void setupButtons() {
-        mLanguageOkBTN.setOnClickListener(new View.OnClickListener() {
+        /*mLanguageOkBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isLanguageSetted) {
@@ -161,7 +145,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
                     }
                 }).start();
             }
-        });
+        });*/
         mLoginBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -187,14 +171,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
                 }
             }
         });
-    }
-
-    private void resetLoginView() {
-        mUsernameLayout.setHint(getString(R.string.username));
-        mPasswordLayout.setHint(getString(R.string.password));
-        mLoginBTN.setText(R.string.login);
-        mUsernameLayout.setErrorEnabled(true);
-        mUsernameLayout.setErrorEnabled(true);
     }
 
     private void loadUser() {
@@ -235,7 +211,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     @Override
     public void loadSuccess() {
         loadingDialog.dismiss();
-        SPUtil.putBoolean(this, Constants.LOCAL_CONFIGURATION, Constants.FIRST_USED, false);
+//        SPUtil.putBoolean(this, Constants.LOCAL_CONFIGURATION, Constants.FIRST_USED, false);
         Intent intent = new Intent();
         intent.setClass(this, HomeActivity.class);
         startActivity(intent);
