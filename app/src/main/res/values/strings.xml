@@ -71,6 +71,9 @@
     <string name="repos_sources">Sources</string>
     <string name="repos_forks">Forks</string>
 
+    <string name="recently_starred">Recently starred</string>
+    <string name="recently_active">Recently active</string>
+
     <string name="exit">Sign out</string>
 
     <string name="double_click_to_exit">Click Again to Exit</string>

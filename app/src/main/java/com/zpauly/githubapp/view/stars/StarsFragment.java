@@ -6,6 +6,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -15,9 +17,12 @@ import com.zpauly.githubapp.base.BaseFragment;
 import com.zpauly.githubapp.db.ReposDao;
 import com.zpauly.githubapp.db.ReposModel;
 import com.zpauly.githubapp.entity.response.RepositoriesBean;
+import com.zpauly.githubapp.listener.OnMenuItemSelectedListener;
+import com.zpauly.githubapp.network.activity.ActivityService;
 import com.zpauly.githubapp.presenter.star.StarContract;
 import com.zpauly.githubapp.presenter.star.StarPresenter;
 import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.view.ToolbarMenuFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +31,7 @@ import java.util.List;
  * Created by zpauly on 16-7-16.
  */
 
-public class StarsFragment extends BaseFragment implements StarContract.View {
+public class StarsFragment extends ToolbarMenuFragment implements StarContract.View {
     private final String TAG = getClass().getName();
 
     private StarContract.Presenter mPresenter;
@@ -39,6 +44,9 @@ public class StarsFragment extends BaseFragment implements StarContract.View {
     private ReposRecyclerViewAdapter mAdapter;
 
     private List<ReposModel> list = new ArrayList<>();
+
+    private String sort = ActivityService.SORT_CREATED;
+    private String direction = ActivityService.DIRECTION_DESC;
 
     @Override
     public void onStop() {
@@ -94,6 +102,35 @@ public class StarsFragment extends BaseFragment implements StarContract.View {
                 StarPresenter presenter = (StarPresenter) mPresenter;
                 presenter.setPageId(1);
                 loadStarredRepositories();
+            }
+        });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void inflateMenu() {
+        inflateMenu(R.menu.star_toolbar_menu);
+    }
+
+    @Override
+    public void createMenu() {
+        setOnMenuItemSelectedListener(new OnMenuItemSelectedListener() {
+            @Override
+            public void onItemSelected(int itemId) {
+                switch (itemId) {
+                    case R.id.star_sort_recently_starred:
+                        sort = ActivityService.SORT_CREATED;
+                        direction = ActivityService.DIRECTION_DESC;
+                        break;
+                    case R.id.star_sort_recently_active:
+                        sort = ActivityService.SORT_UPDATED;
+                        direction = ActivityService.DIRECTION_DESC;
+                        break;
+                }
             }
         });
     }
@@ -170,5 +207,15 @@ public class StarsFragment extends BaseFragment implements StarContract.View {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    @Override
+    public String getSort() {
+        return sort;
+    }
+
+    @Override
+    public String getDirection() {
+        return direction;
     }
 }

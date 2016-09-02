@@ -82,7 +82,7 @@ public class StarPresenter implements StarContract.Presenter {
             activityMethod.getOthersStarredRepositories(starredRepositoriesSubscriber, username, pageId);
         } else {
             loading = true;
-            activityMethod.getStarredRepositories(starredRepositoriesSubscriber, auth, null, null, pageId);
+            activityMethod.getStarredRepositories(starredRepositoriesSubscriber, auth, mStarView.getSort(), mStarView.getDirection(), pageId);
         }
     }
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/star_sort"
+        android:icon="@drawable/ic_sort_white_24dp"
+        android:title="@string/sort"
+        app:showAsAction="always">
+        <menu>
+            <group android:id="@+id/star_sort_grp"
+                android:checkableBehavior="single">
+                <item android:id="@+id/star_sort_recently_starred"
+                    android:title="@string/recently_starred"
+                    android:checked="true" />
+                <item android:id="@+id/star_sort_recently_active"
+                    android:title="@string/recently_active" />
+            </group>
+        </menu>
+    </item>
+</menu>

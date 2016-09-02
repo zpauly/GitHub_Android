@@ -18,6 +18,14 @@ import rx.Observable;
  */
 
 public interface ActivityService {
+    String SORT_CREATED = "created";//Default
+
+    String SORT_UPDATED = "updated";
+
+    String DIRECTION_ASC = "asc";//Default
+
+    String DIRECTION_DESC = "desc";
+
     //starring
     /**
      * List repositories being starred

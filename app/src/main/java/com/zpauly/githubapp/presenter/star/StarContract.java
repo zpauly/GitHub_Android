@@ -23,5 +23,9 @@ public class StarContract {
         void loadSuccess();
 
         String getUsername();
+
+        String getSort();
+
+        String getDirection();
     }
 }
