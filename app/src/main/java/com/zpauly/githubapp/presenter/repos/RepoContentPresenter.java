@@ -114,22 +114,25 @@ public class RepoContentPresenter implements Presenter {
         starSubscriber = new Subscriber<String>() {
             @Override
             public void onCompleted() {
-
+                Log.i(TAG, "checkSuccess");
+                mRepoContentView.isStarred();
             }
 
             @Override
             public void onError(Throwable e) {
                 e.printStackTrace();
+                if (e.toString().contains("404"))
+                    mRepoContentView.isUnstarred();
                 mRepoContentView.checkStarredFail();
             }
 
             @Override
             public void onNext(String s) {
-                if (s.contains("204")) {
+                /*if (s.contains("204")) {
                     mRepoContentView.isStarred();
                 } else if (s.contains("404")) {
                     mRepoContentView.isUnstarred();
-                }
+                }*/
             }
         };
         activityMethod.isRepoStarred(starSubscriber, auth, mRepoContentView.getUsername(),
@@ -141,17 +144,17 @@ public class RepoContentPresenter implements Presenter {
         starSubscriber = new Subscriber<String>() {
             @Override
             public void onCompleted() {
-
+                mRepoContentView.starSuccess();
             }
 
             @Override
             public void onError(Throwable e) {
-
+                e.printStackTrace();
+                mRepoContentView.starFail();
             }
 
             @Override
             public void onNext(String s) {
-
             }
         };
         activityMethod.starRepo(starSubscriber, auth, mRepoContentView.getUsername(),
@@ -163,17 +166,19 @@ public class RepoContentPresenter implements Presenter {
         starSubscriber = new Subscriber<String>() {
             @Override
             public void onCompleted() {
-
+                Log.i(TAG, "checkSuccess");
+                mRepoContentView.unstarSuccess();
             }
 
             @Override
             public void onError(Throwable e) {
-
+                e.printStackTrace();
+                mRepoContentView.unstarFail();
             }
 
             @Override
             public void onNext(String s) {
-                if (s.contains(""))
+
             }
         };
         activityMethod.unstarRepo(starSubscriber, auth, mRepoContentView.getUsername(),

@@ -65,6 +65,9 @@
     <string name="password">Password</string>
     <string name="login">LOGIN</string>
 
+    <string name="started">Starred</string>
+    <string name="unstarred">Unstarred</string>
+
     <string name="repos_all">All</string>
     <string name="repos_public">Public</string>
     <string name="repos_private">Private</string>

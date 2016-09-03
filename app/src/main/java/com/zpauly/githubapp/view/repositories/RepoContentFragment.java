@@ -3,6 +3,7 @@ package com.zpauly.githubapp.view.repositories;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Html;
@@ -260,6 +261,32 @@ public class RepoContentFragment extends ToolbarMenuFragment implements RepoCont
     }
 
     @Override
+    public void starSuccess() {
+        mMenuItemStar.setIcon(R.drawable.ic_star_white_24dp);
+        Snackbar.make(getView(), R.string.starred, Snackbar.LENGTH_SHORT).show();
+        isStarred = true;
+        mMenuItemStar.setEnabled(true);
+    }
+
+    @Override
+    public void starFail() {
+
+    }
+
+    @Override
+    public void unstarSuccess() {
+        mMenuItemStar.setIcon(R.drawable.ic_star_border_white_24dp);
+        Snackbar.make(getView(), R.string.unstarred, Snackbar.LENGTH_SHORT).show();
+        isStarred = false;
+        mMenuItemStar.setEnabled(true);
+    }
+
+    @Override
+    public void unstarFail() {
+
+    }
+
+    @Override
     public String getUsername() {
         return login;
     }
@@ -281,9 +308,10 @@ public class RepoContentFragment extends ToolbarMenuFragment implements RepoCont
         checkStarred();
         setOnMenuItemSelectedListener(new OnMenuItemSelectedListener() {
             @Override
-            public void onItemSelected(int itemId) {
-                switch (itemId) {
+            public void onItemSelected(MenuItem item) {
+                switch (item.getItemId()) {
                     case R.id.repo_menu_star:
+                        item.setEnabled(false);
                         if (isStarred) {
                             unstarRepo();
                         } else {

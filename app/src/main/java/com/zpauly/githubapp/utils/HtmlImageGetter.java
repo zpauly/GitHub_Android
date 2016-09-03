@@ -124,6 +124,8 @@ public class HtmlImageGetter implements Html.ImageGetter {
                 url = baseUrl + urlString;
             } else if (urlString.startsWith("./") || urlString.startsWith("*/")) {
                 url = baseUrl + urlString.substring(1);
+            } else if (!urlString.startsWith("http")) {
+                url = baseUrl + "/" + urlString;
             } else {
                 url = urlString;
             }

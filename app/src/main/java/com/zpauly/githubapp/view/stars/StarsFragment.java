@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -120,8 +121,8 @@ public class StarsFragment extends ToolbarMenuFragment implements StarContract.V
     public void createMenu(Menu menu) {
         setOnMenuItemSelectedListener(new OnMenuItemSelectedListener() {
             @Override
-            public void onItemSelected(int itemId) {
-                switch (itemId) {
+            public void onItemSelected(MenuItem item) {
+                switch (item.getItemId()) {
                     case R.id.star_sort_recently_starred:
                         sort = ActivityService.SORT_CREATED;
                         direction = ActivityService.DIRECTION_DESC;

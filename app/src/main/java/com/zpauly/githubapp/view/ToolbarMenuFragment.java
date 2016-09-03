@@ -32,7 +32,7 @@ public abstract class ToolbarMenuFragment extends BaseFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         item.setChecked(true);
         if (mOnMenuItemSelectedListener != null) {
-            mOnMenuItemSelectedListener.onItemSelected(item.getItemId());
+            mOnMenuItemSelectedListener.onItemSelected(item);
         }
         return true;
     }
