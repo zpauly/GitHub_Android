@@ -121,13 +121,40 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
+                <ImageView
+                    android:src="@drawable/ic_access_time"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp" />
+
+                <TextView
+                    android:id="@+id/profile_join_time_TV"
+                    android:layout_marginLeft="@dimen/components_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:background="@drawable/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+
+                <LinearLayout
+                    android:clickable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/components_padding"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
                     <ImageView
-                        android:src="@drawable/ic_access_time"
+                        android:src="@drawable/ic_group"
                         android:layout_width="24dp"
                         android:layout_height="24dp" />
 
                     <TextView
-                        android:id="@+id/profile_join_time_TV"
+                        android:id="@+id/profile_company_TV"
                         android:layout_marginLeft="@dimen/components_margin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />

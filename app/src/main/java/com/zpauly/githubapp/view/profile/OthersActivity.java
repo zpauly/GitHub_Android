@@ -51,6 +51,7 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
     private TextView mTimeTV;
     private TextView mFollowersTV;
     private TextView mFollowingTV;
+    private TextView mCompanyTV;
     private LinearLayout mFollowersLayout;
     private LinearLayout mFollowingLayout;
     private RelativeLayout mEventsLayout;
@@ -88,6 +89,8 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
         mEmailTV.setText("");
         mTimeTV = (TextView) findViewById(R.id.profile_join_time_TV);
         mTimeTV.setText("");
+        mCompanyTV = (TextView) findViewById(R.id.profile_company_TV);
+        mCompanyTV.setText("");
         mFollowersTV = (TextView) findViewById(R.id.profile_followers_TV);
         mFollowingTV = (TextView) findViewById(R.id.profile_following_TV);
         mFollowersLayout = (LinearLayout) findViewById(R.id.profile_followers_layout);
@@ -210,6 +213,7 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
             mLocationTV.setText(user.getLocation());
             mEmailTV.setText(user.getEmail());
             mTimeTV.setText(TextUtil.timeConverter(user.getCreated_at()));
+            mCompanyTV.setText(user.getCompany());
             mFollowersTV.setText(String.valueOf(user.getFollowers()));
             mFollowingTV.setText(String.valueOf(user.getFollowing()));
         }

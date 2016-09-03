@@ -49,6 +49,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     private TextView mJoinTimeTV;
     private TextView mFollowersTV;
     private TextView mFollowingTV;
+    private TextView mCompanyTV;
     private LinearLayout mFollowersLayout;
     private LinearLayout mFollowingLayout;
     private RelativeLayout mEventsLayout;
@@ -77,6 +78,8 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         mEmailTV.setText("");
         mJoinTimeTV = (TextView) view.findViewById(R.id.profile_join_time_TV);
         mJoinTimeTV.setText("");
+        mCompanyTV = (TextView) view.findViewById(R.id.profile_company_TV);
+        mCompanyTV.setText("");
         mFollowersTV = (TextView) view.findViewById(R.id.profile_followers_TV);
         mFollowingTV = (TextView) view.findViewById(R.id.profile_following_TV);
         mFollowersLayout = (LinearLayout) view.findViewById(R.id.profile_followers_layout);
@@ -121,6 +124,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         mBioTV.setText(userInfo.getBio());
         mLocationTV.setText(userInfo.getLocation());
         mEmailTV.setText(userInfo.getEmail());
+        mCompanyTV.setText(userInfo.getCompany());
         mJoinTimeTV.setText(TextUtil.timeConverter(userInfo.getCreated_at()));
     }
 
