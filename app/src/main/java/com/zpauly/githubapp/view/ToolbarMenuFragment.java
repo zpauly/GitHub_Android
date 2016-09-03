@@ -24,7 +24,7 @@ public abstract class ToolbarMenuFragment extends BaseFragment {
         inflateMenu();
         if (menuRes != 0) {
             inflater.inflate(menuRes, menu);
-            createMenu();
+            createMenu(menu);
         }
     }
 
@@ -39,7 +39,7 @@ public abstract class ToolbarMenuFragment extends BaseFragment {
 
     public abstract void inflateMenu();
 
-    public abstract void createMenu();
+    public abstract void createMenu(Menu menu);
 
     protected void inflateMenu(int menuRes) {
         this.menuRes = menuRes;

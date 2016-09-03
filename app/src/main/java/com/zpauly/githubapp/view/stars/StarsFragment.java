@@ -117,7 +117,7 @@ public class StarsFragment extends ToolbarMenuFragment implements StarContract.V
     }
 
     @Override
-    public void createMenu() {
+    public void createMenu(Menu menu) {
         setOnMenuItemSelectedListener(new OnMenuItemSelectedListener() {
             @Override
             public void onItemSelected(int itemId) {

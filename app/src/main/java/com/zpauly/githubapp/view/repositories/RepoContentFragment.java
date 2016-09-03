@@ -8,6 +8,8 @@ import android.support.v7.widget.AppCompatTextView;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -16,11 +18,13 @@ import android.widget.ProgressBar;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.base.BaseFragment;
 import com.zpauly.githubapp.entity.response.RepositoriesBean;
+import com.zpauly.githubapp.listener.OnMenuItemSelectedListener;
 import com.zpauly.githubapp.presenter.repos.RepoContentContract;
 import com.zpauly.githubapp.presenter.repos.RepoContentPresenter;
 import com.zpauly.githubapp.ui.RefreshView;
 import com.zpauly.githubapp.utils.HtmlImageGetter;
 import com.zpauly.githubapp.utils.ImageUtil;
+import com.zpauly.githubapp.view.ToolbarMenuFragment;
 import com.zpauly.githubapp.view.files.FilesActivity;
 import com.zpauly.githubapp.view.profile.OthersActivity;
 
@@ -30,7 +34,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by zpauly on 16-8-6.
  */
 
-public class RepoContentFragment extends BaseFragment implements RepoContentContract.View {
+public class RepoContentFragment extends ToolbarMenuFragment implements RepoContentContract.View {
     private final String TAG = getClass().getName();
 
     private RepoContentContract.Presenter mPresenter;
@@ -56,10 +60,13 @@ public class RepoContentFragment extends BaseFragment implements RepoContentCont
     private AppCompatTextView mViewFilesTV;
     private ProgressBar mReadMePB;
 
+    private MenuItem mMenuItemStar;
+
     private RefreshView mRefreshView;
 
     private String content;
     private RepositoriesBean repoBean;
+    private boolean isStarred;
 
     @Override
     protected void initViews(View view) {
@@ -162,6 +169,18 @@ public class RepoContentFragment extends BaseFragment implements RepoContentCont
         mPresenter.loadRepo();
     }
 
+    private void checkStarred() {
+        mPresenter.checkStarred();
+    }
+
+    private void starRepo() {
+        mPresenter.starRepo();
+    }
+
+    private void unstarRepo() {
+        mPresenter.unstarRepo();
+    }
+
     @Override
     public void setPresenter(RepoContentContract.Presenter presenter) {
         mPresenter = presenter;
@@ -222,6 +241,25 @@ public class RepoContentFragment extends BaseFragment implements RepoContentCont
     }
 
     @Override
+    public void checkStarredFail() {
+
+    }
+
+    @Override
+    public void isStarred() {
+        mMenuItemStar.setVisible(true);
+        mMenuItemStar.setIcon(R.drawable.ic_star_white_24dp);
+        isStarred = true;
+    }
+
+    @Override
+    public void isUnstarred() {
+        mMenuItemStar.setVisible(true);
+        mMenuItemStar.setIcon(R.drawable.ic_star_border_white_24dp);
+        isStarred = false;
+    }
+
+    @Override
     public String getUsername() {
         return login;
     }
@@ -229,5 +267,31 @@ public class RepoContentFragment extends BaseFragment implements RepoContentCont
     @Override
     public String getRepoName() {
         return name;
+    }
+
+    @Override
+    public void inflateMenu() {
+        inflateMenu(R.menu.repo_toolbar_menu);
+    }
+
+    @Override
+    public void createMenu(Menu menu) {
+        mMenuItemStar = menu.findItem(R.id.repo_menu_star);
+        mMenuItemStar.setVisible(false);
+        checkStarred();
+        setOnMenuItemSelectedListener(new OnMenuItemSelectedListener() {
+            @Override
+            public void onItemSelected(int itemId) {
+                switch (itemId) {
+                    case R.id.repo_menu_star:
+                        if (isStarred) {
+                            unstarRepo();
+                        } else {
+                            starRepo();
+                        }
+                        break;
+                }
+            }
+        });
     }
 }

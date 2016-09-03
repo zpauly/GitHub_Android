@@ -7,8 +7,10 @@ import com.zpauly.githubapp.entity.response.events.EventsBean;
 
 import java.util.List;
 
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -47,6 +49,42 @@ public interface ActivityService {
 
     @GET("/users/{username}/starred")
     Observable<List<RepositoriesBean>> getOthersRepositories(@Path("username") String username, @Query("page") int pageId);
+
+    /**
+     * Check if you are starring a repository
+     * @param auth
+     * @param owner
+     * @param repo
+     * @return
+     */
+    @GET("/user/starred/{owner}/{repo}")
+    Observable<String> isRepoStarred(@Header("Authorization") String auth,
+                                     @Path("owner") String owner,
+                                     @Path("repo") String repo);
+
+    /**
+     * Star a repository
+     * @param auth
+     * @param owner
+     * @param repo
+     * @return
+     */
+    @PUT("/user/starred/{owner}/{repo}")
+    Observable<String> starARepo(@Header("Authorization") String auth,
+                                     @Path("owner") String owner,
+                                     @Path("repo") String repo);
+
+    /**
+     * Unstar a repository
+     * @param auth
+     * @param owner
+     * @param repo
+     * @return
+     */
+    @DELETE("/user/starred/{owner}/{repo}")
+    Observable<String> unstarARepo(@Header("Authorization") String auth,
+                                   @Path("owner") String owner,
+                                   @Path("repo") String repo);
 
     //----------------------------------------
     //Events

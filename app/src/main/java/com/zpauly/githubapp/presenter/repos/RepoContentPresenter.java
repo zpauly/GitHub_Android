@@ -6,6 +6,7 @@ import android.util.Log;
 import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.entity.response.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.RepositoryContentBean;
+import com.zpauly.githubapp.network.activity.ActivityMethod;
 import com.zpauly.githubapp.network.repositories.RepositoriesMethod;
 import com.zpauly.githubapp.presenter.repos.RepoContentContract.Presenter;
 import com.zpauly.githubapp.utils.SPUtil;
@@ -26,9 +27,11 @@ public class RepoContentPresenter implements Presenter {
 
     private String auth;
     private RepositoriesMethod method;
+    private ActivityMethod activityMethod;
 
     private Subscriber<String> repoContentSubscriber;
     private Subscriber<RepositoriesBean> repoSubscriber;
+    private Subscriber<String> starSubscriber;
 
     public RepoContentPresenter(Context context, RepoContentContract.View view) {
         mContext = context;
@@ -41,20 +44,22 @@ public class RepoContentPresenter implements Presenter {
     public void start() {
         auth = SPUtil.getString(mContext, Constants.USER_INFO, Constants.USER_AUTH, null);
         method = RepositoriesMethod.getInstance();
+        activityMethod = ActivityMethod.getInstance();
+    }
+
+    private void unsubscribe(Subscriber subscriber) {
+        if (subscriber != null) {
+            if (subscriber.isUnsubscribed()) {
+                subscriber.unsubscribe();
+            }
+        }
     }
 
     @Override
     public void stop() {
-        if (repoContentSubscriber != null) {
-            if (repoContentSubscriber.isUnsubscribed()) {
-                repoContentSubscriber.unsubscribe();
-            }
-        }
-        if (repoSubscriber != null) {
-            if (repoSubscriber.isUnsubscribed()) {
-                repoSubscriber.unsubscribe();
-            }
-        }
+        unsubscribe(repoSubscriber);
+        unsubscribe(repoContentSubscriber);
+        unsubscribe(starSubscriber);
     }
 
     @Override
@@ -102,5 +107,76 @@ public class RepoContentPresenter implements Presenter {
         };
         Log.i(TAG, auth);
         method.getRepository(repoSubscriber, auth, mRepoContentView.getUsername(), mRepoContentView.getRepoName());
+    }
+
+    @Override
+    public void checkStarred() {
+        starSubscriber = new Subscriber<String>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                mRepoContentView.checkStarredFail();
+            }
+
+            @Override
+            public void onNext(String s) {
+                if (s.contains("204")) {
+                    mRepoContentView.isStarred();
+                } else if (s.contains("404")) {
+                    mRepoContentView.isUnstarred();
+                }
+            }
+        };
+        activityMethod.isRepoStarred(starSubscriber, auth, mRepoContentView.getUsername(),
+                mRepoContentView.getRepoName());
+    }
+
+    @Override
+    public void starRepo() {
+        starSubscriber = new Subscriber<String>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(String s) {
+
+            }
+        };
+        activityMethod.starRepo(starSubscriber, auth, mRepoContentView.getUsername(),
+                mRepoContentView.getRepoName());
+    }
+
+    @Override
+    public void unstarRepo() {
+        starSubscriber = new Subscriber<String>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(String s) {
+                if (s.contains(""))
+            }
+        };
+        activityMethod.unstarRepo(starSubscriber, auth, mRepoContentView.getUsername(),
+                mRepoContentView.getRepoName());
     }
 }

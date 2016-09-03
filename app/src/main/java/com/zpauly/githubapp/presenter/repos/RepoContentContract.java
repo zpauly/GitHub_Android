@@ -16,6 +16,12 @@ public class RepoContentContract {
         void loadReadMe();
 
         void loadRepo();
+
+        void checkStarred();
+
+        void starRepo();
+
+        void unstarRepo();
     }
 
     public interface View extends BaseView<Presenter> {
@@ -30,6 +36,20 @@ public class RepoContentContract {
         void loadRepoFail();
 
         void loadingRepo(RepositoriesBean bean);
+
+        void checkStarredFail();
+
+        void isStarred();
+
+        void isUnstarred();
+
+        void starSuccess();
+
+        void starFail();
+
+        void unstarSuccess();
+
+        void unstarFail();
 
         String getUsername();
 

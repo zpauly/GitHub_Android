@@ -6,10 +6,12 @@ import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.entity.response.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.events.EventsBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
+import com.zpauly.githubapp.utils.StringConverterFactory;
 
 import java.util.List;
 
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -67,6 +69,36 @@ public class ActivityMethod {
 
     public void getReceivedEvents(Observer<List<EventsBean>> observer, String auth, String username, int pageId) {
         service.getReceivedEvents(auth, username, pageId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void isRepoStarred(Observer<String> observer, String auth, String owner, String repo) {
+        Retrofit retrofit = RetrofitUtil.initCustomRetrofit(Api.GitHubApi, StringConverterFactory.create(),
+                RxJavaCallAdapterFactory.create());
+        ActivityService service = retrofit.create(ActivityService.class);
+        service.isRepoStarred(auth, owner, repo)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void starRepo(Observer<String> observer, String auth, String owner, String repo) {
+        Retrofit retrofit = RetrofitUtil.initCustomRetrofit(Api.GitHubApi, StringConverterFactory.create(),
+                RxJavaCallAdapterFactory.create());
+        ActivityService service = retrofit.create(ActivityService.class);
+        service.starARepo(auth, owner, repo)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void unstarRepo(Observer<String> observer, String auth, String owner, String repo) {
+        Retrofit retrofit = RetrofitUtil.initCustomRetrofit(Api.GitHubApi, StringConverterFactory.create(),
+                RxJavaCallAdapterFactory.create());
+        ActivityService service = retrofit.create(ActivityService.class);
+        service.unstarARepo(auth, owner, repo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
