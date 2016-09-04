@@ -16,7 +16,6 @@
         android:padding="@dimen/components_padding">
 
         <android.support.v7.widget.AppCompatTextView
-            android:text="jxnugo_Android"
             android:id="@+id/repos_title_TV"
             android:textColor="@color/colorPrimaryDark"
             style="@style/TextAppearance.AppCompat.Title"

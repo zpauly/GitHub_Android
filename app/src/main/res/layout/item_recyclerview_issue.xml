@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/issue_item_layout"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/issue_item_avatar_num_layout"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:padding="@dimen/components_padding"
+        android:clickable="true"
+        android:background="?attr/selectableItemBackground">
+
+        <android.support.v4.widget.CircleImageView
+            android:id="@+id/issue_item_avatar"
+            app:civ_border_color="@color/md_divider_white"
+            app:civ_border_width="2dp"
+            android:layout_width="@dimen/list_item_avatar_size"
+            android:layout_height="@dimen/list_item_avatar_size" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/issue_item_num"
+            style="@style/Base.TextAppearance.AppCompat.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/issue_item_body_layout"
+            android:layout_alignParentLeft="true"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="@dimen/components_padding"
+            android:paddingBottom="@dimen/components_padding"
+            android:paddingRight="@dimen/components_padding"
+            android:clickable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/issue_item_username"
+                style="@style/Base.TextAppearance.AppCompat.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/issue_item_title"
+                style="@style/Base.TextAppearance.AppCompat.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/issue_item_time"
+                style="@style/Base.TextAppearance.AppCompat.Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/issue_item_comment_layout"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:background="?attr/selectableItemBackground"
+            android:padding="@dimen/components_padding">
+
+            <ImageView
+                android:src="@mipmap/ic_comment"
+                android:layout_width="18dp"
+                android:layout_height="18dp" />
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/Base.TextAppearance.AppCompat.Body2"
+                android:id="@+id/issue_item_comment_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -52,6 +52,10 @@
     <string name="fewest_forks">Fewest forks</string>
     <string name="recently_updated">Recently updated</string>
     <string name="least_recently_updated">Least Recently Updated</string>
+    
+    <string name="created">Created</string>
+    <string name="assigned">Assigned</string>
+    <string name="mentioned">Mentioned</string>
 
     <string name="language_setting">LANGUAEG SETTING</string>
     <string name="simplified_chinese">中文</string>
