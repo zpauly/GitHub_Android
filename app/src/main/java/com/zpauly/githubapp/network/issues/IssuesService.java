@@ -3,6 +3,7 @@ package com.zpauly.githubapp.network.issues;
 
 import android.support.annotation.Nullable;
 
+import com.zpauly.githubapp.entity.response.CommentBean;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
 
 import java.util.List;
@@ -43,6 +44,17 @@ public interface IssuesService {
 
     String DIRECTION_DESC = "desc";//Default
 
+    /**
+     * List all issues assigned to the authenticated user across all visible repositories including owned repositories, member repositories, and organization repositories:
+     * @param auth
+     * @param filter
+     * @param state
+     * @param labels
+     * @param sort
+     * @param dir
+     * @param since
+     * @return
+     */
     @GET("/issues")
     Observable<List<IssueBean>> getIssues(@Header("Authorization") String auth,
                                           @Nullable @Query("filter") String filter,
@@ -52,6 +64,17 @@ public interface IssuesService {
                                           @Nullable @Query("direction") String dir,
                                           @Nullable @Query("since") String since);
 
+    /**
+     * List all issues across owned and member repositories assigned to the authenticated user:
+     * @param auth
+     * @param filter
+     * @param state
+     * @param labels
+     * @param sort
+     * @param dir
+     * @param since
+     * @return
+     */
     @GET("/user/issues")
     Observable<List<IssueBean>> getUserIssues(@Header("Authorization") String auth,
                                               @Nullable @Query("filter") String filter,
@@ -61,6 +84,18 @@ public interface IssuesService {
                                               @Nullable @Query("direction") String dir,
                                               @Nullable @Query("since") String since);
 
+    /**
+     * List all issues for a given organization assigned to the authenticated user:
+     * @param auth
+     * @param org
+     * @param filter
+     * @param state
+     * @param labels
+     * @param sort
+     * @param dir
+     * @param since
+     * @return
+     */
     @GET("/orgs/{org}/issues")
     Observable<List<IssueBean>> getOrgIssues(@Header("Authorization") String auth,
                                              @Path("org") String org,
@@ -70,4 +105,64 @@ public interface IssuesService {
                                              @Nullable @Query("sort") String sort,
                                              @Nullable @Query("direction") String dir,
                                              @Nullable @Query("since") String since);
+
+    /**
+     * List issues for a repository
+     * @param auth
+     * @param owner
+     * @param repo
+     * @param milestone
+     * @param state DEFAULT:open
+     * @param assignee
+     * @param creator
+     * @param mentioned
+     * @param sort DEFAULT:created
+     * @param direction DEFAULT:desc
+     * @param since
+     * @param labels
+     * @return
+     */
+    @GET("/repos/{owner}/{repo}/issues")
+    Observable<List<IssueBean>> getARepoIssues(@Header("Authorization") String auth,
+                                               @Path("owner") String owner,
+                                               @Path("repo") String repo,
+                                               @Nullable @Query("milestone") String milestone,
+                                               @Nullable @Query("state") String state,
+                                               @Nullable @Query("assignee") String assignee,
+                                               @Nullable @Query("creator") String creator,
+                                               @Nullable @Query("mentioned") String mentioned,
+                                               @Nullable @Query("sort") String sort,
+                                               @Nullable @Query("direction") String direction,
+                                               @Nullable @Query("since") String since,
+                                               @Nullable @Query("labels") String[] labels);
+
+    /**
+     * Get a single issue
+     * @param auth
+     * @param owner
+     * @param repo
+     * @param number
+     * @return
+     */
+    @GET("/repos/{owner}/{repo}/issues/{number}")
+    Observable<IssueBean> getASingleIssue(@Header("Authorization") String auth,
+                                          @Path("owner") String owner,
+                                          @Path("repo") String repo,
+                                          @Path("number") int number);
+
+    /**
+     * List comments on an issue
+     * @param auth
+     * @param owner
+     * @param repo
+     * @param number
+     * @param since
+     * @return
+     */
+    @GET("/repos/{owner}/{repo}/issues/{number}/comments")
+    Observable<List<CommentBean>> getAnIssueComments(@Header("Authorization") String auth,
+                                                     @Path("owner") String owner,
+                                                     @Path("repo") String repo,
+                                                     @Path("number") int number,
+                                                     @Nullable @Query("since") String since);
 }

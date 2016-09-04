@@ -7,8 +7,8 @@
         app:showAsAction="always"
         app:actionViewClass="android.support.v7.widget.SearchView" />
     <item android:id="@+id/explore_sort"
-        android:title="@string/sort"
-        android:icon="@drawable/ic_sort_white_24dp"
+        android:title="@string/filter"
+        android:icon="@drawable/ic_filter_list"
         app:showAsAction="always">
         <menu>
             <group android:checkableBehavior="single"
@@ -16,7 +16,7 @@
                 <item
                     android:checked="true"
                     android:icon="@mipmap/ic_repos"
-                    android:title="@string/repos"
+                    android:title="@string/sort"
                     android:id="@+id/explore_repos">
                     <menu>
                         <group android:checkableBehavior="single"
@@ -48,7 +48,7 @@
                 </item>
                 <item
                     android:id="@+id/explore_code"
-                    android:title="@string/code"
+                    android:title="@string/sort"
                     android:icon="@mipmap/ic_code">
                     <menu>
                         <group android:id="@+id/explore_code_sort_grp"
@@ -68,7 +68,7 @@
                 </item>
                 <item
                     android:id="@+id/explore_users"
-                    android:title="@string/users"
+                    android:title="@string/sort"
                     android:icon="@drawable/ic_people">
                     <menu>
                         <group android:id="@+id/explore_users_sort_grp"

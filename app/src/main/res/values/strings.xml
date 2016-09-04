@@ -77,6 +77,8 @@
     <string name="recently_starred">Recently starred</string>
     <string name="recently_active">Recently active</string>
 
+    <string name="filter">Filter by</string>
+
     <string name="exit">Sign out</string>
 
     <string name="double_click_to_exit">Click Again to Exit</string>

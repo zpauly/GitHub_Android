@@ -85,6 +85,7 @@ public class IssueBean {
      */
 
     private AssigneeBean assignee;
+    private List<AssigneeBean> assignees;
     /**
      * url : https://api.github.com/repos/octocat/Hello-World/milestones/1
      * html_url : https://github.com/octocat/Hello-World/milestones/v1.0
@@ -114,6 +115,7 @@ public class IssueBean {
      */
 
     private PullRequestBean pull_request;
+    private UserBean close_by;
     private Object closed_at;
     private String created_at;
     private String updated_at;
@@ -291,5 +293,21 @@ public class IssueBean {
 
     public void setLabels(List<LabelBean> labels) {
         this.labels = labels;
+    }
+
+    public void setClose_by(UserBean close_by) {
+        this.close_by = close_by;
+    }
+
+    public UserBean getClose_by() {
+        return close_by;
+    }
+
+    public void setAssignees(List<AssigneeBean> assignees) {
+        this.assignees = assignees;
+    }
+
+    public List<AssigneeBean> getAssignees() {
+        return assignees;
     }
 }

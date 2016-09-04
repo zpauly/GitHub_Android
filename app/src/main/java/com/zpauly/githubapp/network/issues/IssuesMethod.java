@@ -1,6 +1,7 @@
 package com.zpauly.githubapp.network.issues;
 
 import com.zpauly.githubapp.Api;
+import com.zpauly.githubapp.entity.response.CommentBean;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
 
@@ -82,6 +83,53 @@ public class IssuesMethod {
     public void getDefaultOrgIssues(Observer<List<IssueBean>> observer, String auth,
                                     String org) {
         service.getOrgIssues(auth, org, null, null, null, null, null, null)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getARepoIssues(Observer<List<IssueBean>> observer,
+                               String auth, String owner, String repo,
+                               String milestone, String state, String assignee,
+                               String creator, String mentioned, String sort,
+                               String direction, String since, String[] labels) {
+        service.getARepoIssues(auth, owner, repo, milestone, state, assignee, creator,
+                mentioned, sort, direction, since, labels)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getDefaultARepoIssues(Observer<List<IssueBean>> observer,
+                                      String auth, String owner, String repo) {
+        service.getARepoIssues(auth, owner, repo,
+                null, null, null, null, null, null, null, null, null)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getASingleIssue(Observer<IssueBean> observer,
+                                String auth, String owner, String repo, int number) {
+        service.getASingleIssue(auth, owner, repo, number)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getAnIssueComments(Observer<List<CommentBean>> observer,
+                                   String auth, String owner, String repo, int number,
+                                   String since) {
+        service.getAnIssueComments(auth, owner, repo, number, since)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getDefaultAnIssueComments(Observer<List<CommentBean>> observer,
+                                   String auth, String owner, String repo, int number,
+                                   String since) {
+        service.getAnIssueComments(auth, owner, repo, number, null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
