@@ -1,6 +1,7 @@
 package com.zpauly.githubapp.network.organizations;
 
 import com.zpauly.githubapp.Api;
+import com.zpauly.githubapp.base.BaseNetMethod;
 import com.zpauly.githubapp.entity.response.OrganizationBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
 
@@ -15,12 +16,14 @@ import rx.schedulers.Schedulers;
  * Created by zpauly on 16-8-4.
  */
 
-public class OrganizationsMethod {
-    private static OrganizationsMethod instance;
-
+public class OrganizationsMethod extends BaseNetMethod {
     private Retrofit retrofit;
 
     private OrganizationsService service;
+
+    private static class Nested {
+        static OrganizationsMethod instance = new OrganizationsMethod();
+    }
 
     private OrganizationsMethod() {
         retrofit = RetrofitUtil.initRetrofit(Api.GitHubApi);
@@ -28,14 +31,7 @@ public class OrganizationsMethod {
     }
 
     public static OrganizationsMethod getInstance() {
-        if (instance == null) {
-            synchronized (OrganizationsMethod.class) {
-                if (instance == null) {
-                    instance = new OrganizationsMethod();
-                }
-            }
-        }
-        return instance;
+        return Nested.instance;
     }
 
     public void getUserOrgs(Observer<List<OrganizationBean>> observer, String auth) {

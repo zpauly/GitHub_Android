@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.zpauly.githubapp.Constants;
+import com.zpauly.githubapp.base.NetPresenter;
 import com.zpauly.githubapp.db.FileDirDao;
 import com.zpauly.githubapp.db.FileDirModel;
 import com.zpauly.githubapp.entity.response.RepositoryContentBean;
@@ -23,7 +24,7 @@ import rx.schedulers.Schedulers;
  * Created by zpauly on 16-8-1.
  */
 
-public class FilesPresenter implements FilesContract.Presenter {
+public class FilesPresenter extends NetPresenter implements FilesContract.Presenter {
     private final String TAG = getClass().getName();
 
     private Context mContext;
@@ -46,18 +47,14 @@ public class FilesPresenter implements FilesContract.Presenter {
 
     @Override
     public void start() {
-        auth = SPUtil.getString(mContext, Constants.USER_INFO, Constants.USER_AUTH, null);
-        method = RepositoriesMethod.getInstance();
+        auth = getAuth(mContext);
+        method = getMethod(RepositoriesMethod.class);
     }
 
     @Override
     public void stop() {
         FileDirDao.delete();
-        if (contentSubscriber != null) {
-            if (contentSubscriber.isUnsubscribed()) {
-                contentSubscriber.unsubscribe();
-            }
-        }
+        unsubscribe(contentSubscriber, fileSubscriber);
     }
 
     @Override

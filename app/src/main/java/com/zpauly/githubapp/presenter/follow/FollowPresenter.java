@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.zpauly.githubapp.Constants;
+import com.zpauly.githubapp.base.NetPresenter;
 import com.zpauly.githubapp.entity.response.OrganizationBean;
 import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.network.organizations.OrganizationsMethod;
@@ -18,7 +19,7 @@ import rx.Subscriber;
  * Created by zpauly on 16-7-25.
  */
 
-public class FollowPresenter implements FollowContract.Presenter {
+public class FollowPresenter extends NetPresenter implements FollowContract.Presenter {
     private final String TAG = getClass().getName();
 
     private Context mContext;
@@ -44,28 +45,14 @@ public class FollowPresenter implements FollowContract.Presenter {
 
     @Override
     public void start() {
-        auth = SPUtil.getString(mContext, Constants.USER_INFO, Constants.USER_AUTH, null);
-        method = UserMethod.getInstance();
-        orgMethod = OrganizationsMethod.getInstance();
+        auth = getAuth(mContext);
+        method = getMethod(UserMethod.class);
+        orgMethod = getMethod(OrganizationsMethod.class);
     }
 
     @Override
     public void stop() {
-        if (mFollowersSubscriber != null) {
-            if (mFollowersSubscriber.isUnsubscribed()) {
-                mFollowersSubscriber.unsubscribe();
-            }
-        }
-        if (mFollowingSubscriber != null) {
-            if (mFollowingSubscriber.isUnsubscribed()) {
-                mFollowingSubscriber.unsubscribe();
-            }
-        }
-        if (mOrgsSubscriber != null) {
-            if (mOrgsSubscriber.isUnsubscribed()) {
-                mOrgsSubscriber.unsubscribe();
-            }
-        }
+        unsubscribe(mFollowersSubscriber, mFollowingSubscriber, mOrgsSubscriber);
     }
 
     @Override

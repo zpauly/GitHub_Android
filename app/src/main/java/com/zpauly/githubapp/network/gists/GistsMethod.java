@@ -1,6 +1,7 @@
 package com.zpauly.githubapp.network.gists;
 
 import com.zpauly.githubapp.Api;
+import com.zpauly.githubapp.base.BaseNetMethod;
 import com.zpauly.githubapp.entity.response.gists.GistsBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
 import com.zpauly.githubapp.utils.StringConverterFactory;
@@ -17,12 +18,14 @@ import rx.schedulers.Schedulers;
  * Created by zpauly on 16-8-5.
  */
 
-public class GistsMethod {
-    private static GistsMethod instance;
-
+public class GistsMethod extends BaseNetMethod {
     private Retrofit retrofit;
 
     private GistsService service;
+
+    private static class Nested {
+        static GistsMethod instance = new GistsMethod();
+    }
 
     private GistsMethod() {
         retrofit = RetrofitUtil.initRetrofit(Api.GitHubApi);
@@ -30,14 +33,7 @@ public class GistsMethod {
     }
 
     public static GistsMethod getInstance() {
-        if (instance == null) {
-            synchronized (GistsMethod.class) {
-                if (instance == null) {
-                    instance = new GistsMethod();
-                }
-            }
-        }
-        return instance;
+        return Nested.instance;
     }
 
     public void getUserGists(Observer<List<GistsBean>> observer, String auth, int pageId) {

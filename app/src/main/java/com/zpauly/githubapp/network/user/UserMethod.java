@@ -1,6 +1,7 @@
 package com.zpauly.githubapp.network.user;
 
 import com.zpauly.githubapp.Api;
+import com.zpauly.githubapp.base.BaseNetMethod;
 import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
@@ -15,11 +16,13 @@ import rx.schedulers.Schedulers;
 /**
  * Created by zpauly on 16-6-10.
  */
-public class UserMethod {
-    private static UserMethod instance;
-
+public class UserMethod extends BaseNetMethod {
     private Retrofit retrofit;
     private UserService service;
+
+    private static class Nested {
+        static UserMethod instance = new UserMethod();
+    }
 
     private UserMethod() {
         retrofit = RetrofitUtil.initRetrofit(Api.GitHubApi);
@@ -28,14 +31,7 @@ public class UserMethod {
     }
 
     public static UserMethod getInstance() {
-        if (instance == null) {
-            synchronized (UserMethod.class) {
-                if (instance == null) {
-                    instance = new UserMethod();
-                }
-            }
-        }
-        return instance;
+        return Nested.instance;
     }
 
     public void getAuthenticatedUser(Observer<AuthenticatedUserBean> observer, String auth) {

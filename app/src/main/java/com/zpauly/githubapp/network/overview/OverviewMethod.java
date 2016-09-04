@@ -1,6 +1,7 @@
 package com.zpauly.githubapp.network.overview;
 
 import com.zpauly.githubapp.Constants;
+import com.zpauly.githubapp.base.BaseNetMethod;
 import com.zpauly.githubapp.entity.request.AuthorizationRequest;
 import com.zpauly.githubapp.entity.response.AppAuthorizationBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
@@ -13,12 +14,14 @@ import rx.schedulers.Schedulers;
 /**
  * Created by zpauly on 16-6-9.
  */
-public class OverviewMethod {
-    private static OverviewMethod instance;
-
+public class OverviewMethod extends BaseNetMethod {
     private Retrofit retrofit;
 
     private OverviewService service;
+
+    private static class Nested {
+        static OverviewMethod instance = new OverviewMethod();
+    }
 
     private OverviewMethod() {
         retrofit = RetrofitUtil.initRetrofit(Constants.GITHUB_API_URL);
@@ -27,14 +30,7 @@ public class OverviewMethod {
     }
 
     public static OverviewMethod getInstance() {
-        if (instance == null) {
-            synchronized (OverviewMethod.class) {
-                if (instance == null) {
-                    instance = new OverviewMethod();
-                }
-            }
-        }
-        return instance;
+        return Nested.instance;
     }
 
     public void getOrCreateAuthorization(Observer<AppAuthorizationBean> observer, String auth, AuthorizationRequest requestBean) {

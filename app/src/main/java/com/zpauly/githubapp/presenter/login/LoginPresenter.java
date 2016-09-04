@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.Constants;
+import com.zpauly.githubapp.base.NetPresenter;
 import com.zpauly.githubapp.entity.request.AuthorizationRequest;
 import com.zpauly.githubapp.entity.response.AppAuthorizationBean;
 import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
@@ -19,7 +20,7 @@ import rx.Subscriber;
 /**
  * Created by zpauly on 16-6-9.
  */
-public class LoginPresenter implements Presenter {
+public class LoginPresenter extends NetPresenter implements Presenter {
     private final String TAG = getClass().getName();
 
     private Context mContext;
@@ -39,22 +40,13 @@ public class LoginPresenter implements Presenter {
 
     @Override
     public void start() {
-        overviewMethod = OverviewMethod.getInstance();
-        userMethod = UserMethod.getInstance();
+        overviewMethod = getMethod(OverviewMethod.class);
+        userMethod = getMethod(UserMethod.class);
     }
 
     @Override
     public void stop() {
-        if (mLoginSubscriber != null) {
-            if (mLoginSubscriber.isUnsubscribed()) {
-                mLoginSubscriber.unsubscribe();
-            }
-        }
-        if (mUserSubscriber != null) {
-            if (mUserSubscriber.isUnsubscribed()) {
-                mUserSubscriber.unsubscribe();
-            }
-        }
+        unsubscribe(mLoginSubscriber, mUserSubscriber);
     }
 
     @Override

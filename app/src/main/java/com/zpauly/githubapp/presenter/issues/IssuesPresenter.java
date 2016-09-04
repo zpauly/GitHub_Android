@@ -2,11 +2,9 @@ package com.zpauly.githubapp.presenter.issues;
 
 import android.content.Context;
 
-import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.base.NetPresenter;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
 import com.zpauly.githubapp.network.issues.IssuesMethod;
-import com.zpauly.githubapp.utils.SPUtil;
 
 import java.util.List;
 
@@ -36,12 +34,13 @@ public class IssuesPresenter extends NetPresenter implements IssuesContract.Pres
 
     @Override
     public void getIssues() {
-
+        auth = getAuth(mContext);
+        issuesMethod = getMethod(IssuesMethod.class);
     }
 
     @Override
     public void start() {
-        issuesMethod = IssuesMethod.getInstance();
+
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.zpauly.githubapp.network.gitdata;
 
 import com.zpauly.githubapp.Api;
+import com.zpauly.githubapp.base.BaseNetMethod;
 import com.zpauly.githubapp.entity.response.BlobBean;
 import com.zpauly.githubapp.network.repositories.RepositoriesService;
 import com.zpauly.githubapp.utils.RetrofitUtil;
@@ -16,12 +17,14 @@ import rx.schedulers.Schedulers;
  * Created by zpauly on 16-8-3.
  */
 
-public class GitDataMethod {
-    private static GitDataMethod instance;
-
+public class GitDataMethod extends BaseNetMethod {
     private Retrofit retrofit;
 
     private GitDataService service;
+
+    private static class Nested {
+        static GitDataMethod instance = new GitDataMethod();
+    }
 
     private GitDataMethod() {
         retrofit = RetrofitUtil.initRetrofit(Api.GitHubApi);
@@ -29,14 +32,7 @@ public class GitDataMethod {
     }
 
     public static GitDataMethod getInstance() {
-        if (instance == null) {
-            synchronized (GitDataMethod.class) {
-                if (instance == null) {
-                    instance = new GitDataMethod();
-                }
-            }
-        }
-        return instance;
+        return Nested.instance;
     }
 
     public void getAblob(Observer<String> observer, String auth, String owner,

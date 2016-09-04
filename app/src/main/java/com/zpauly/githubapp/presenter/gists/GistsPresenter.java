@@ -3,6 +3,7 @@ package com.zpauly.githubapp.presenter.gists;
 import android.content.Context;
 
 import com.zpauly.githubapp.Constants;
+import com.zpauly.githubapp.base.NetPresenter;
 import com.zpauly.githubapp.entity.response.gists.GistsBean;
 import com.zpauly.githubapp.network.gists.GistsMethod;
 import com.zpauly.githubapp.utils.SPUtil;
@@ -15,7 +16,7 @@ import rx.Subscriber;
  * Created by zpauly on 16-8-6.
  */
 
-public class GistsPresenter implements GistsContract.Presenter {
+public class GistsPresenter extends NetPresenter implements GistsContract.Presenter {
     private final String TAG = getClass().getName();
 
     private Context mContext;
@@ -109,16 +110,12 @@ public class GistsPresenter implements GistsContract.Presenter {
 
     @Override
     public void start() {
-        auth = SPUtil.getString(mContext, Constants.USER_INFO, Constants.USER_AUTH, null);
-        method = GistsMethod.getInstance();
+        auth = getAuth(mContext);
+        method = getMethod(GistsMethod.class);
     }
 
     @Override
     public void stop() {
-        if (gistsSubscriber != null) {
-            if (gistsSubscriber.isUnsubscribed()) {
-                gistsSubscriber.unsubscribe();
-            }
-        }
+        unsubscribe(gistsSubscriber);
     }
 }

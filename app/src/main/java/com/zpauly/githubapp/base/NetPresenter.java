@@ -1,8 +1,10 @@
 package com.zpauly.githubapp.base;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.zpauly.githubapp.Constants;
+import com.zpauly.githubapp.network.MethodFactory;
 import com.zpauly.githubapp.utils.SPUtil;
 
 import rx.Subscriber;
@@ -11,19 +13,12 @@ import rx.Subscriber;
  * Created by zpauly on 16/9/4.
  */
 public class NetPresenter {
-    private String auth;
-
-    public void getMethod() {
-
+    public <T extends BaseNetMethod> T getMethod(Class<T> clazz) {
+        return (T) MethodFactory.getMethod(clazz);
     }
 
-    private void prepare(Context context) {
-        auth = SPUtil.getString(context, Constants.USER_INFO, Constants.USER_AUTH, null);
-        getMethod();
-    }
-
-    public String getAuth() {
-        return auth;
+    public String getAuth(Context context) {
+        return SPUtil.getString(context, Constants.USER_INFO, Constants.USER_AUTH, null);
     }
 
     public void unsubscribe(Subscriber... subscribers) {

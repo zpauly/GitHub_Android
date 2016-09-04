@@ -3,6 +3,7 @@ package com.zpauly.githubapp.presenter.repos;
 import android.content.Context;
 
 import com.zpauly.githubapp.Constants;
+import com.zpauly.githubapp.base.NetPresenter;
 import com.zpauly.githubapp.db.ReposDao;
 import com.zpauly.githubapp.entity.response.RepositoriesBean;
 import com.zpauly.githubapp.network.repositories.RepositoriesMethod;
@@ -18,7 +19,7 @@ import rx.Subscriber;
  * Created by zpauly on 16-7-18.
  */
 
-public class ReposPresenter implements ReposContract.Presenter {
+public class ReposPresenter extends NetPresenter implements ReposContract.Presenter {
     private Context mContext;
     private ReposContract.View mReposView;
 
@@ -39,17 +40,13 @@ public class ReposPresenter implements ReposContract.Presenter {
 
     @Override
     public void start() {
-        auth = SPUtil.getString(mContext, Constants.USER_INFO, Constants.USER_AUTH, null);
-        mReposMethod = RepositoriesMethod.getInstance();
+        auth = getAuth(mContext);
+        mReposMethod = getMethod(RepositoriesMethod.class);
     }
 
     @Override
     public void stop() {
-        if (mReposSubscriber != null) {
-            if (mReposSubscriber.isUnsubscribed()) {
-                mReposSubscriber.unsubscribe();
-            }
-        }
+        unsubscribe(mReposSubscriber);
     }
 
     @Override

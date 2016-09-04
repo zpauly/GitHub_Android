@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.zpauly.githubapp.Constants;
+import com.zpauly.githubapp.base.NetPresenter;
 import com.zpauly.githubapp.entity.response.events.EventsBean;
 import com.zpauly.githubapp.network.activity.ActivityMethod;
 import com.zpauly.githubapp.utils.SPUtil;
@@ -16,7 +17,7 @@ import rx.Subscriber;
  * Created by zpauly on 16-7-20.
  */
 
-public class EventsPresenter implements EventsContract.Presenter {
+public class EventsPresenter extends NetPresenter implements EventsContract.Presenter {
     private final String TAG = getClass().getName();
 
     private Context mContext;
@@ -42,17 +43,13 @@ public class EventsPresenter implements EventsContract.Presenter {
 
     @Override
     public void start() {
-        auth = SPUtil.getString(mContext, Constants.USER_INFO, Constants.USER_AUTH, null);
-        activityMethod = ActivityMethod.getInstance();
+        auth = getAuth(mContext);
+        activityMethod = getMethod(ActivityMethod.class);
     }
 
     @Override
     public void stop() {
-        if (mEventsSubscriber != null) {
-            if (mEventsSubscriber.isUnsubscribed()) {
-                mEventsSubscriber.unsubscribe();
-            }
-        }
+        unsubscribe(mEventsSubscriber);
     }
 
     @Override

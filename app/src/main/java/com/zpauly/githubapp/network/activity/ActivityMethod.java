@@ -3,6 +3,7 @@ package com.zpauly.githubapp.network.activity;
 import android.support.annotation.Nullable;
 
 import com.zpauly.githubapp.Api;
+import com.zpauly.githubapp.base.BaseNetMethod;
 import com.zpauly.githubapp.entity.response.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.events.EventsBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
@@ -20,12 +21,14 @@ import rx.schedulers.Schedulers;
  * Created by zpauly on 16-7-17.
  */
 
-public class ActivityMethod {
-    private static ActivityMethod instance;
-
+public class ActivityMethod extends BaseNetMethod {
     private Retrofit retrofit;
 
     private ActivityService service;
+
+    private static class Nested {
+        static ActivityMethod instance = new ActivityMethod();
+    }
 
     private ActivityMethod() {
         retrofit = RetrofitUtil.initRetrofit(Api.GitHubApi);
@@ -34,14 +37,7 @@ public class ActivityMethod {
     }
 
     public static ActivityMethod getInstance() {
-        if (instance == null) {
-            synchronized (ActivityMethod.class) {
-                if (instance == null) {
-                    instance = new ActivityMethod();
-                }
-            }
-        }
-        return instance;
+        return Nested.instance;
     }
 
     public void getStarredRepositories(Observer<List<RepositoriesBean>> observer, String auth,

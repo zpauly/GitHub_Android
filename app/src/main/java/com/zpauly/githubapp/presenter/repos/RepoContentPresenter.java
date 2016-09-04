@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.zpauly.githubapp.Constants;
+import com.zpauly.githubapp.base.NetPresenter;
 import com.zpauly.githubapp.entity.response.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.RepositoryContentBean;
 import com.zpauly.githubapp.network.activity.ActivityMethod;
@@ -19,7 +20,7 @@ import rx.Subscriber;
  * Created by zpauly on 16-7-31.
  */
 
-public class RepoContentPresenter implements Presenter {
+public class RepoContentPresenter extends NetPresenter implements Presenter {
     private final String TAG = getClass().getName();
 
     private Context mContext;
@@ -42,17 +43,9 @@ public class RepoContentPresenter implements Presenter {
 
     @Override
     public void start() {
-        auth = SPUtil.getString(mContext, Constants.USER_INFO, Constants.USER_AUTH, null);
-        method = RepositoriesMethod.getInstance();
-        activityMethod = ActivityMethod.getInstance();
-    }
-
-    private void unsubscribe(Subscriber subscriber) {
-        if (subscriber != null) {
-            if (subscriber.isUnsubscribed()) {
-                subscriber.unsubscribe();
-            }
-        }
+        auth = getAuth(mContext);
+        method = getMethod(RepositoriesMethod.class);
+        activityMethod = getMethod(ActivityMethod.class);
     }
 
     @Override

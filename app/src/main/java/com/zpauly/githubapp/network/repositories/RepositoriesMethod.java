@@ -3,6 +3,7 @@ package com.zpauly.githubapp.network.repositories;
 import android.support.annotation.Nullable;
 
 import com.zpauly.githubapp.Api;
+import com.zpauly.githubapp.base.BaseNetMethod;
 import com.zpauly.githubapp.entity.response.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.RepositoryContentBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
@@ -12,7 +13,6 @@ import java.util.List;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -21,12 +21,14 @@ import rx.schedulers.Schedulers;
  * Created by zpauly on 16-7-14.
  */
 
-public class RepositoriesMethod {
-    private static RepositoriesMethod instance;
-
+public class RepositoriesMethod extends BaseNetMethod {
     private Retrofit retrofit;
 
     private RepositoriesService service;
+
+    private static class Nested {
+        static RepositoriesMethod instance = new RepositoriesMethod();
+    }
 
     private RepositoriesMethod() {
         retrofit = RetrofitUtil.initRetrofit(Api.GitHubApi);
@@ -34,14 +36,7 @@ public class RepositoriesMethod {
     }
 
     public static RepositoriesMethod getInstance() {
-        if (instance == null) {
-            synchronized (RepositoriesBean.class) {
-                if (instance == null) {
-                    instance = new RepositoriesMethod();
-                }
-            }
-        }
-        return instance;
+        return Nested.instance;
     }
 
     public void getOwendRepositories(Observer<List<RepositoriesBean>> observer, String auth

@@ -1,6 +1,7 @@
 package com.zpauly.githubapp.network.issues;
 
 import com.zpauly.githubapp.Api;
+import com.zpauly.githubapp.base.BaseNetMethod;
 import com.zpauly.githubapp.entity.response.CommentBean;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
@@ -15,12 +16,14 @@ import rx.schedulers.Schedulers;
 /**
  * Created by zpauly on 16/9/1.
  */
-public class IssuesMethod {
-    private static IssuesMethod instance;
-
+public class IssuesMethod extends BaseNetMethod {
     private Retrofit retrofit;
 
     private IssuesService service;
+
+    private static class Nested {
+        static IssuesMethod instance = new IssuesMethod();
+    }
 
     private IssuesMethod() {
         retrofit = RetrofitUtil.initRetrofit(Api.GitHubApi);
@@ -28,14 +31,7 @@ public class IssuesMethod {
     }
 
     public static IssuesMethod getInstance() {
-        if (instance == null) {
-            synchronized (IssuesMethod.class) {
-                if (instance == null) {
-                    instance = new IssuesMethod();
-                }
-            }
-        }
-        return instance;
+        return Nested.instance;
     }
 
     public void getIssues(Observer<List<IssueBean>> observer, String auth,

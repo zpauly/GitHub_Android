@@ -3,6 +3,7 @@ package com.zpauly.githubapp.presenter.explore;
 import android.content.Context;
 
 import com.zpauly.githubapp.Constants;
+import com.zpauly.githubapp.base.NetPresenter;
 import com.zpauly.githubapp.entity.search.SearchCodeBean;
 import com.zpauly.githubapp.entity.search.SearchReposBean;
 import com.zpauly.githubapp.entity.search.SearchUsersBean;
@@ -15,7 +16,7 @@ import rx.Subscriber;
  * Created by zpauly on 16-8-10.
  */
 
-public class ExplorePresenter implements ExploreContract.Presenter {
+public class ExplorePresenter extends NetPresenter implements ExploreContract.Presenter {
     private final String TAG = getClass().getName();
 
     private Context mContext;
@@ -37,27 +38,13 @@ public class ExplorePresenter implements ExploreContract.Presenter {
 
     @Override
     public void start() {
-        auth = SPUtil.getString(mContext, Constants.USER_INFO, Constants.USER_AUTH, null);
-        method = SearchMethod.getInstance();
+        auth = getAuth(mContext);
+        method = getMethod(SearchMethod.class);
     }
 
     @Override
     public void stop() {
-        if (searchReposSubscriber != null) {
-            if (searchReposSubscriber.isUnsubscribed()) {
-                searchReposSubscriber.unsubscribe();
-            }
-        }
-        if (searchCodeSubscriber != null) {
-            if (searchCodeSubscriber.isUnsubscribed()) {
-                searchCodeSubscriber.unsubscribe();
-            }
-        }
-        if (searchUsersSubscriber != null) {
-            if (searchUsersSubscriber.isUnsubscribed()) {
-                searchUsersSubscriber.unsubscribe();
-            }
-        }
+        unsubscribe(searchCodeSubscriber, searchReposSubscriber, searchUsersSubscriber);
     }
 
     @Override

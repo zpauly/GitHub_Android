@@ -1,6 +1,7 @@
 package com.zpauly.githubapp.network.search;
 
 import com.zpauly.githubapp.Api;
+import com.zpauly.githubapp.base.BaseNetMethod;
 import com.zpauly.githubapp.entity.search.SearchCodeBean;
 import com.zpauly.githubapp.entity.search.SearchReposBean;
 import com.zpauly.githubapp.entity.search.SearchUsersBean;
@@ -15,12 +16,14 @@ import rx.schedulers.Schedulers;
  * Created by zpauly on 16-8-9.
  */
 
-public class SearchMethod {
-    private static SearchMethod instance;
-
+public class SearchMethod extends BaseNetMethod {
     private Retrofit retrofit;
 
     private SearchService service;
+
+    private static class Nested {
+        static SearchMethod instance = new SearchMethod();
+    }
 
     private SearchMethod() {
         retrofit = RetrofitUtil.initRetrofit(Api.GitHubApi);
@@ -28,14 +31,7 @@ public class SearchMethod {
     }
 
     public static SearchMethod getInstance() {
-        if (instance == null) {
-            synchronized (SearchMethod.class) {
-                if (instance == null) {
-                    instance = new SearchMethod();
-                }
-            }
-        }
-        return instance;
+        return Nested.instance;
     }
 
     public void getSearchRepos(Observer<SearchReposBean> observer, String auth, String query,

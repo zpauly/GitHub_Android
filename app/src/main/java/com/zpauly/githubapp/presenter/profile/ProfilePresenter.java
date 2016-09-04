@@ -3,6 +3,7 @@ package com.zpauly.githubapp.presenter.profile;
 import android.content.Context;
 
 import com.zpauly.githubapp.Constants;
+import com.zpauly.githubapp.base.NetPresenter;
 import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.network.user.UserMethod;
@@ -13,7 +14,7 @@ import rx.Subscriber;
 /**
  * Created by zpauly on 16-6-10.
  */
-public class ProfilePresenter implements ProfileContract.Presenter {
+public class ProfilePresenter extends NetPresenter implements ProfileContract.Presenter {
     private ProfileContract.View mHomeView;
     private Context mContext;
 
@@ -32,22 +33,13 @@ public class ProfilePresenter implements ProfileContract.Presenter {
 
     @Override
     public void start() {
-        method = UserMethod.getInstance();
-        auth = SPUtil.getString(mContext, Constants.USER_INFO, Constants.USER_AUTH, null);
+        method = getMethod(UserMethod.class);
+        auth = getAuth(mContext);
     }
 
     @Override
     public void stop() {
-        if (authenticatedUserSubscriber != null) {
-            if (authenticatedUserSubscriber.isUnsubscribed()) {
-                authenticatedUserSubscriber.unsubscribe();
-            }
-        }
-        if (userSubscriber != null) {
-            if (userSubscriber.isUnsubscribed()) {
-                userSubscriber.unsubscribe();
-            }
-        }
+        unsubscribe(authenticatedUserSubscriber, userSubscriber);
     }
 
     @Override
