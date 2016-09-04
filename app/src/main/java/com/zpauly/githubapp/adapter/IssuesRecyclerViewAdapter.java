@@ -15,8 +15,8 @@ import com.zpauly.githubapp.view.viewholder.IssueViewHolder;
 /**
  * Created by zpauly on 16/9/4.
  */
-public class IssueRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<IssueBean, IssueViewHolder> {
-    public IssueRecyclerViewAdapter(Context context) {
+public class IssuesRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<IssueBean, IssueViewHolder> {
+    public IssuesRecyclerViewAdapter(Context context) {
         super(context);
     }
 
