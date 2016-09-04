@@ -20,6 +20,7 @@ import com.zpauly.githubapp.view.events.EventsActivity;
 import com.zpauly.githubapp.view.events.EventsFragment;
 import com.zpauly.githubapp.view.explore.ExploreFragment;
 import com.zpauly.githubapp.view.gists.GistsFragment;
+import com.zpauly.githubapp.view.issues.IssuesFragment;
 import com.zpauly.githubapp.view.login.LoginActivity;
 import com.zpauly.githubapp.view.profile.ProfileActivity;
 import com.zpauly.githubapp.view.stars.StarsFragment;
@@ -38,6 +39,7 @@ public class HomeActivity extends DrawerActivity {
     private static final int GISTS = 3;
     private static final int All_GISTS = 4;
     private static final int STARRED_GISTS = 5;
+    private static final int ISSUES = 6;
 
     private int currentFragmentID = EVENTS;
 
@@ -50,7 +52,7 @@ public class HomeActivity extends DrawerActivity {
     @Override
     public void initViews() {
         fragments = new BaseFragment[]{ new EventsFragment(), new StarsFragment()
-                , new ExploreFragment(), new GistsFragment(), new GistsFragment(), new GistsFragment()};
+                , new ExploreFragment(), new GistsFragment(), new GistsFragment(), new GistsFragment(), new IssuesFragment()};
 
         Bundle eventsBundle = new Bundle();
         eventsBundle.putInt(EventsActivity.EVENTS_ID, EventsActivity.RECEIVED_EVENTS);
@@ -138,6 +140,15 @@ public class HomeActivity extends DrawerActivity {
                             item.setChecked(true);
                             changeFragment(STARRED_GISTS);
                             setToolbarTitle(R.string.starred_gists);
+                        }
+                        break;
+                    case R.id.navigation_issue:
+                        if (currentFragmentID == ISSUES) {
+
+                        } else {
+                            item.setChecked(true);
+                            changeFragment(ISSUES);
+                            setToolbarTitle(R.string.issues);
                         }
                         break;
                     case R.id.navigation_settings:

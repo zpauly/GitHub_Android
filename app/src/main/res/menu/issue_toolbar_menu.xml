@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/issue_toolbar_state"
+        android:title="@string/state"
+        android:icon="@drawable/ic_info_outline"
+        app:showAsAction="always" />
+    <item android:id="@+id/issue_toolbar_filter"
+        android:title="@string/filter"
+        android:icon="@drawable/ic_filter_list"
+        app:showAsAction="always">
+        <menu>
+            <group android:id="@+id/issue_filter_grp"
+                android:checkableBehavior="single">
+                <item android:id="@+id/issue_filter_created"
+                    android:title="@string/created"
+                    android:checked="true"/>
+                <item android:id="@+id/issue_filter_assigned"
+                    android:title="@string/assigned"/>
+                <item android:id="@+id/issue_filter_mentioned"
+                    android:title="@string/mentioned"/>
+            </group>
+        </menu>
+    </item>
+    <item android:id="@+id/issue_toolbar_sort"
+        android:title="@string/sort"
+        android:icon="@drawable/ic_sort_white_24dp"
+        app:showAsAction="always">
+        <menu>
+            <group android:id="@+id/issue_sort_grp"
+                android:checkableBehavior="single">
+                <item android:id="@+id/issue_sort_newest"
+                    android:title="@string/newest"
+                    android:checked="true"/>
+                <item android:id="@+id/issue_sort_oldest"
+                    android:title="@string/oldest"/>
+                <item android:id="@+id/issue_sort_most_commented"
+                    android:title="@string/most_commented"/>
+                <item android:id="@+id/issue_sort_least_commented"
+                    android:title="@string/least_commented"/>
+                <item android:id="@+id/issue_sort_recently_updated"
+                    android:title="@string/recently_updated"/>
+                <item android:id="@+id/issue_sort_least_recently_updated"
+                    android:title="@string/least_recently_updated"/>
+            </group>
+        </menu>
+    </item>
+</menu>

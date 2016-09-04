@@ -16,6 +16,9 @@
             android:id="@+id/navigation_explore"
             android:icon="@drawable/ic_explore"
             android:title="@string/explore"/>
+        <item android:id="@+id/navigation_issue"
+            android:icon="@drawable/ic_info_outline_grey_700_24dp"
+            android:title="@string/issues"/>
     </group>
     <item
         android:id="@+id/navigation_gists_grp"
