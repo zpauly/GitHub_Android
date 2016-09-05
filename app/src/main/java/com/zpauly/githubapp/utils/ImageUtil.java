@@ -200,15 +200,18 @@ public class ImageUtil {
                 .into(imageView);
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static void loadAvatarImageFromUrl(Activity context, String url, ImageView imageView) {
         if (context == null) {
             return;
         }
-        Glide.with(context)
-                .load(Uri.parse(url))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .crossFade()
-                .centerCrop()
-                .into(imageView);
+        if (!context.isDestroyed()) {
+            Glide.with(context)
+                    .load(Uri.parse(url))
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .crossFade()
+                    .centerCrop()
+                    .into(imageView);
+        }
     }
 }

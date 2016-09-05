@@ -97,12 +97,7 @@ public class StarsFragment extends ToolbarMenuFragment implements StarContract.V
         mStarredReposSRLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                ReposDao.deleteRepos();
-                mAdapter.setHasLoading(true);
-                mAdapter.hideLoadingView();
-                StarPresenter presenter = (StarPresenter) mPresenter;
-                presenter.setPageId(1);
-                loadStarredRepositories();
+                setSwipeRefreshLayoutRefreshing();
             }
         });
     }
@@ -129,14 +124,27 @@ public class StarsFragment extends ToolbarMenuFragment implements StarContract.V
                     case R.id.star_sort_recently_starred:
                         sort = ActivityService.SORT_CREATED;
                         direction = ActivityService.DIRECTION_DESC;
+                        mStarredReposSRLayout.setRefreshing(true);
+                        setSwipeRefreshLayoutRefreshing();
                         break;
                     case R.id.star_sort_recently_active:
                         sort = ActivityService.SORT_UPDATED;
                         direction = ActivityService.DIRECTION_DESC;
+                        mStarredReposSRLayout.setRefreshing(true);
+                        setSwipeRefreshLayoutRefreshing();
                         break;
                 }
             }
         });
+    }
+
+    private void setSwipeRefreshLayoutRefreshing() {
+        ReposDao.deleteRepos();
+        mAdapter.setHasLoading(true);
+        mAdapter.hideLoadingView();
+        StarPresenter presenter = (StarPresenter) mPresenter;
+        presenter.setPageId(1);
+        loadStarredRepositories();
     }
 
     private void setupRecyclerView() {

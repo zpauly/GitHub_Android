@@ -31,7 +31,7 @@ public class IssuesRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Issue
         IssueBean data = getData().get(position);
         ImageUtil.loadAvatarImageFromUrl(getContext(), data.getUser().getAvatar_url(), holder.mAvatar);
         holder.mCommentCount.setText(String.valueOf(data.getComments()));
-        holder.mNum.setText("#" + String.valueOf(data.getComments()));
+        holder.mNum.setText("#" + String.valueOf(data.getNumber()));
         holder.mUsername.setText(data.getUser().getLogin());
         holder.mTitle.setText(data.getTitle());
         holder.mTime.setText(TextUtil.timeConverter(data.getCreated_at()));

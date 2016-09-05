@@ -82,48 +82,71 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
                             state = IssuesService.STATE_OPEN;
                             mState.setIcon(R.drawable.ic_info_outline);
                         }
+                        mSRLayout.setRefreshing(true);
+                        setSwipeRefrehLayoutRefreshing();
                         break;
                     case R.id.issue_filter_created:
                         filter = IssuesService.FILTER_CREATED;
+                        mSRLayout.setRefreshing(true);
+                        setSwipeRefrehLayoutRefreshing();
                         break;
                     case R.id.issue_filter_assigned:
                         filter = IssuesService.FILTER_ASSIGNED;
+                        mSRLayout.setRefreshing(true);
+                        setSwipeRefrehLayoutRefreshing();
                         break;
                     case R.id.issue_filter_mentioned:
                         filter = IssuesService.FILTER_MENTIONED;
+                        mSRLayout.setRefreshing(true);
+                        setSwipeRefrehLayoutRefreshing();
                         break;
                     case R.id.issue_sort_newest:
                         sort = IssuesService.SORT_CREATED;
                         direction = IssuesService.DIRECTION_DESC;
+                        mSRLayout.setRefreshing(true);
+                        setSwipeRefrehLayoutRefreshing();
                         break;
                     case R.id.issue_sort_oldest:
                         sort = IssuesService.SORT_CREATED;
                         direction = IssuesService.DIRECTION_ASC;
+                        mSRLayout.setRefreshing(true);
+                        setSwipeRefrehLayoutRefreshing();
                         break;
                     case R.id.issue_sort_most_commented:
                         sort = IssuesService.SORT_COMMENTS;
                         direction = IssuesService.DIRECTION_DESC;
+                        mSRLayout.setRefreshing(true);
+                        setSwipeRefrehLayoutRefreshing();
                         break;
                     case R.id.issue_sort_least_commented:
                         sort = IssuesService.SORT_COMMENTS;
                         direction = IssuesService.DIRECTION_ASC;
+                        mSRLayout.setRefreshing(true);
+                        setSwipeRefrehLayoutRefreshing();
                         break;
                     case R.id.issue_sort_recently_updated:
                         sort = IssuesService.SORT_UPDATED;
                         direction = IssuesService.DIRECTION_DESC;
+                        mSRLayout.setRefreshing(true);
+                        setSwipeRefrehLayoutRefreshing();
                         break;
                     case R.id.issue_sort_least_recently_updated:
                         sort = IssuesService.SORT_UPDATED;
                         direction = IssuesService.DIRECTION_ASC;
+                        mSRLayout.setRefreshing(true);
+                        setSwipeRefrehLayoutRefreshing();
                         break;
                     default:
                         break;
                 }
-                mSRLayout.setRefreshing(true);
-                mPresenter.setPageId(1);
-                getIssues();
+
             }
         });
+    }
+
+    private void setSwipeRefrehLayoutRefreshing() {
+        mPresenter.setPageId(1);
+        getIssues();
     }
 
     @Override
