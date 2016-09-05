@@ -17,30 +17,59 @@ public class IssuesPresenter extends NetPresenter implements IssuesContract.Pres
     private final String TAG = getClass().getName();
 
     private Context mContext;
-    private IssuesContract.View mView;
+    private IssuesContract.View mIssuesView;
 
     private String auth;
     private IssuesMethod issuesMethod;
 
     private Subscriber<List<IssueBean>> issuesSubscriber;
 
+    private int pageId = 1;
+
     public IssuesPresenter(Context context, IssuesContract.View view) {
         mContext = context;
-        mView = view;
+        mIssuesView = view;
         view.setPresenter(this);
         start();
     }
 
 
     @Override
+    public int getPageId() {
+        return pageId;
+    }
+
+    @Override
+    public void setPageId(int pageId) {
+        this.pageId = pageId;
+    }
+
+    @Override
     public void getIssues() {
-        auth = getAuth(mContext);
-        issuesMethod = getMethod(IssuesMethod.class);
+        issuesSubscriber = new Subscriber<List<IssueBean>>() {
+            @Override
+            public void onCompleted() {
+                mIssuesView.getIssueSuccess();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                mIssuesView.getIssueFail();
+            }
+
+            @Override
+            public void onNext(List<IssueBean> issueBeen) {
+                mIssuesView.gettingIssues(issueBeen);
+            }
+        };
+        issuesMethod.getIssues(issuesSubscriber, auth, mIssuesView.getFilter(), mIssuesView.getState(), null, mIssuesView.getSort(), mIssuesView.getDirection(), null, pageId++);
     }
 
     @Override
     public void start() {
-
+        auth = getAuth(mContext);
+        issuesMethod = getMethod(IssuesMethod.class);
     }
 
     @Override

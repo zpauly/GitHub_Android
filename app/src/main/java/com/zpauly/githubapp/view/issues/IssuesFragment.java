@@ -12,11 +12,16 @@ import android.view.ViewGroup;
 
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.IssuesRecyclerViewAdapter;
+import com.zpauly.githubapp.entity.response.issues.IssueBean;
 import com.zpauly.githubapp.listener.OnMenuItemSelectedListener;
 import com.zpauly.githubapp.network.issues.IssuesService;
 import com.zpauly.githubapp.presenter.issues.IssuesContract;
+import com.zpauly.githubapp.presenter.issues.IssuesPresenter;
 import com.zpauly.githubapp.ui.RefreshView;
 import com.zpauly.githubapp.view.ToolbarMenuFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zpauly on 16/9/4.
@@ -41,6 +46,8 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
 
     private IssuesRecyclerViewAdapter mIssuesAdapter;
 
+    private List<IssueBean> list = new ArrayList<>();
+
     @Override
     public void inflateMenu() {
         inflateMenu(R.menu.issue_toolbar_menu);
@@ -61,7 +68,7 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
                             state = IssuesService.STATE_CLOSED;
                             mState.setIcon(R.drawable.ic_check);
                         } else if (state.equals(IssuesService.STATE_CLOSED)) {
-                            state = IssuesService.STATE_CLOSED;
+                            state = IssuesService.STATE_OPEN;
                             mState.setIcon(R.drawable.ic_info_outline);
                         }
                         break;
@@ -101,18 +108,42 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
                     default:
                         break;
                 }
+                mSRLayout.setRefreshing(true);
+                getIssues();
             }
         });
     }
 
     @Override
     protected void initViews(View view) {
+        new IssuesPresenter(getContext(), this);
+
         mRefreshView = (RefreshView) view.findViewById(R.id.issue_RefreshView);
         mSRLayout = (SwipeRefreshLayout) view.findViewById(R.id.issue_SRLayout);
         mIssuesRV = (RecyclerView) view.findViewById(R.id.issue_RV);
 
         setupSwipeRefreshLayout();
         setupRecyclerView();
+
+        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
+            @Override
+            public void beforeRefreshing() {
+                getIssues();
+            }
+
+            @Override
+            public void onRefreshSuccess() {
+                mRefreshView.setVisibility(View.GONE);
+                mSRLayout.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onRefreshFail() {
+                mRefreshView.setVisibility(View.VISIBLE);
+                mSRLayout.setVisibility(View.GONE);
+            }
+        });
+        mRefreshView.startRefresh();
     }
 
     @Override
@@ -126,7 +157,8 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
         mSRLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                mPresenter.setPageId(1);
+                getIssues();
             }
         });
     }
@@ -135,10 +167,28 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
         mIssuesAdapter = new IssuesRecyclerViewAdapter(getContext());
         mIssuesRV.setLayoutManager(new LinearLayoutManager(getContext()));
         mIssuesRV.setAdapter(mIssuesAdapter);
+
+        final LinearLayoutManager manager = (LinearLayoutManager) mIssuesRV.getLayoutManager();
+        mIssuesRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
+                int firstItemPosition = manager.findFirstCompletelyVisibleItemPosition();
+                if (lastItemPosition == mIssuesAdapter.getItemCount() - 1
+                        && firstItemPosition != mIssuesAdapter.getItemCount() - 1
+                        && mIssuesAdapter.isHasMoreData()) {
+                    if (!mSRLayout.isRefreshing()) {
+                        mIssuesAdapter.setHasLoading(true);
+                        getIssues();
+                    }
+                }
+            }
+        });
     }
 
     private void getIssues() {
-
+        mPresenter.getIssues();
     }
 
     @Override
@@ -163,16 +213,31 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
 
     @Override
     public void getIssueSuccess() {
-
+        mSRLayout.setRefreshing(false);
+        mIssuesAdapter.swapAllData(list);
+        if (!mRefreshView.isRefreshSuccess()) {
+            mRefreshView.refreshSuccess();
+        }
     }
 
     @Override
     public void getIssueFail() {
+        mSRLayout.setRefreshing(false);
+        mRefreshView.refreshFail();
+    }
 
+    @Override
+    public void gettingIssues(List<IssueBean> list) {
+        if (mSRLayout.isRefreshing()) {
+            this.list.clear();
+        }
+        if (list == null || list.size() == 0)
+            mIssuesAdapter.setHasLoading(false);
+        this.list.addAll(list);
     }
 
     @Override
     public void setPresenter(IssuesContract.Presenter presenter) {
-
+        this.mPresenter = presenter;
     }
 }

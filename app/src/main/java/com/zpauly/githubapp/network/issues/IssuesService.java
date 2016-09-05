@@ -62,7 +62,8 @@ public interface IssuesService {
                                           @Nullable @Query("labels") String labels,
                                           @Nullable @Query("sort") String sort,
                                           @Nullable @Query("direction") String dir,
-                                          @Nullable @Query("since") String since);
+                                          @Nullable @Query("since") String since,
+                                          @Nullable @Query("page") int pageId);
 
     /**
      * List all issues across owned and member repositories assigned to the authenticated user:
@@ -82,7 +83,8 @@ public interface IssuesService {
                                               @Nullable @Query("labels") String labels,
                                               @Nullable @Query("sort") String sort,
                                               @Nullable @Query("direction") String dir,
-                                              @Nullable @Query("since") String since);
+                                              @Nullable @Query("since") String since,
+                                              @Nullable @Query("page") int pageId);
 
     /**
      * List all issues for a given organization assigned to the authenticated user:
@@ -104,7 +106,8 @@ public interface IssuesService {
                                              @Nullable @Query("labels") String labels,
                                              @Nullable @Query("sort") String sort,
                                              @Nullable @Query("direction") String dir,
-                                             @Nullable @Query("since") String since);
+                                             @Nullable @Query("since") String since,
+                                             @Nullable @Query("page") int pageId);
 
     /**
      * List issues for a repository
@@ -134,7 +137,8 @@ public interface IssuesService {
                                                @Nullable @Query("sort") String sort,
                                                @Nullable @Query("direction") String direction,
                                                @Nullable @Query("since") String since,
-                                               @Nullable @Query("labels") String[] labels);
+                                               @Nullable @Query("labels") String[] labels,
+                                               @Nullable @Query("page") int pageId);
 
     /**
      * Get a single issue
@@ -148,7 +152,8 @@ public interface IssuesService {
     Observable<IssueBean> getASingleIssue(@Header("Authorization") String auth,
                                           @Path("owner") String owner,
                                           @Path("repo") String repo,
-                                          @Path("number") int number);
+                                          @Path("number") int number,
+                                          @Nullable @Query("page") int pageId);
 
     /**
      * List comments on an issue
@@ -164,5 +169,6 @@ public interface IssuesService {
                                                      @Path("owner") String owner,
                                                      @Path("repo") String repo,
                                                      @Path("number") int number,
-                                                     @Nullable @Query("since") String since);
+                                                     @Nullable @Query("since") String since,
+                                                     @Nullable @Query("page") int pageId);
 }

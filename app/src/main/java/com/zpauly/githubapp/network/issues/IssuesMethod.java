@@ -36,15 +36,15 @@ public class IssuesMethod extends BaseNetMethod {
 
     public void getIssues(Observer<List<IssueBean>> observer, String auth,
                           String filter, String state, String labels, String sort,
-                          String direction, String since) {
-        service.getIssues(auth, filter, state, labels, sort, direction, since)
+                          String direction, String since, int pageId) {
+        service.getIssues(auth, filter, state, labels, sort, direction, since, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 
-    public void getDefaultIssues(Observer<List<IssueBean>> observer, String auth) {
-        service.getIssues(auth, null, null, null, null, null, null)
+    public void getDefaultIssues(Observer<List<IssueBean>> observer, String auth, int pageId) {
+        service.getIssues(auth, null, null, null, null, null, null, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
@@ -52,15 +52,15 @@ public class IssuesMethod extends BaseNetMethod {
 
     public void getUserIssues(Observer<List<IssueBean>> observer, String auth,
                               String filter, String state, String labels, String sort,
-                              String direction, String since) {
-        service.getUserIssues(auth, filter, state, labels, sort, direction, since)
+                              String direction, String since, int pageId) {
+        service.getUserIssues(auth, filter, state, labels, sort, direction, since, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 
-    public void getDefaultUserIssues(Observer<List<IssueBean>> observer, String auth) {
-        service.getUserIssues(auth, null, null, null, null, null, null)
+    public void getDefaultUserIssues(Observer<List<IssueBean>> observer, String auth, int pageId) {
+        service.getUserIssues(auth, null, null, null, null, null, null, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
@@ -69,16 +69,16 @@ public class IssuesMethod extends BaseNetMethod {
     public void getOrgIssues(Observer<List<IssueBean>> observer, String auth,
                              String org,
                              String filter, String state, String labels, String sort,
-                             String direction, String since) {
-        service.getOrgIssues(auth, org, filter, state, labels, sort, direction, since)
+                             String direction, String since, int pageId) {
+        service.getOrgIssues(auth, org, filter, state, labels, sort, direction, since, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 
     public void getDefaultOrgIssues(Observer<List<IssueBean>> observer, String auth,
-                                    String org) {
-        service.getOrgIssues(auth, org, null, null, null, null, null, null)
+                                    String org, int pageId) {
+        service.getOrgIssues(auth, org, null, null, null, null, null, null, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
@@ -88,26 +88,26 @@ public class IssuesMethod extends BaseNetMethod {
                                String auth, String owner, String repo,
                                String milestone, String state, String assignee,
                                String creator, String mentioned, String sort,
-                               String direction, String since, String[] labels) {
+                               String direction, String since, String[] labels, int pageId) {
         service.getARepoIssues(auth, owner, repo, milestone, state, assignee, creator,
-                mentioned, sort, direction, since, labels)
+                mentioned, sort, direction, since, labels, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 
     public void getDefaultARepoIssues(Observer<List<IssueBean>> observer,
-                                      String auth, String owner, String repo) {
+                                      String auth, String owner, String repo, int pageId) {
         service.getARepoIssues(auth, owner, repo,
-                null, null, null, null, null, null, null, null, null)
+                null, null, null, null, null, null, null, null, null, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 
     public void getASingleIssue(Observer<IssueBean> observer,
-                                String auth, String owner, String repo, int number) {
-        service.getASingleIssue(auth, owner, repo, number)
+                                String auth, String owner, String repo, int number, int pageId) {
+        service.getASingleIssue(auth, owner, repo, number, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
@@ -115,8 +115,8 @@ public class IssuesMethod extends BaseNetMethod {
 
     public void getAnIssueComments(Observer<List<CommentBean>> observer,
                                    String auth, String owner, String repo, int number,
-                                   String since) {
-        service.getAnIssueComments(auth, owner, repo, number, since)
+                                   String since, int pageId) {
+        service.getAnIssueComments(auth, owner, repo, number, since, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
@@ -124,8 +124,8 @@ public class IssuesMethod extends BaseNetMethod {
 
     public void getDefaultAnIssueComments(Observer<List<CommentBean>> observer,
                                    String auth, String owner, String repo, int number,
-                                   String since) {
-        service.getAnIssueComments(auth, owner, repo, number, null)
+                                   String since, int pageId) {
+        service.getAnIssueComments(auth, owner, repo, number, null, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

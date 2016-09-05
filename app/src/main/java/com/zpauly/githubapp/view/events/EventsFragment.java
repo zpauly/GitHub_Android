@@ -94,7 +94,6 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
                 mAdapter.setHasLoading(true);
                 mAdapter.hideLoadingView();
                 loadData();
-                mAdapter.swapAllData(new ArrayList<EventsBean>());
             }
         });
     }
@@ -146,7 +145,12 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
 
     @Override
     public void loadEvents(List<EventsBean> eventsBeanList) {
-        list.clear();
+        if (eventsBeanList == null || eventsBeanList.size() == 0) {
+            mAdapter.setHasLoading(false);
+        }
+        if (mEventsSRLayout.isRefreshing()) {
+            list.clear();
+        }
         list.addAll(eventsBeanList);
     }
 
@@ -158,10 +162,7 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
 
     @Override
     public void loadSuccess() {
-        if (list == null || list.size() == 0) {
-            mAdapter.setHasLoading(false);
-        }
-        mAdapter.addAllData(list);
+        mAdapter.swapAllData(list);
         mEventsSRLayout.setRefreshing(false);
         if (!mRefreshView.isRefreshSuccess()) {
             mRefreshView.refreshSuccess();

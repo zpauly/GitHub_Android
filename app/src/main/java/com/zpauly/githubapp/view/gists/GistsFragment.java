@@ -104,7 +104,6 @@ public class GistsFragment extends BaseFragment implements GistsContract.View {
                 GistsPresenter presenter = (GistsPresenter) mPresenter;
                 mGistsRVAdapter.setHasLoading(true);
                 mGistsRVAdapter.hideLoadingView();
-                list.clear();
                 presenter.setPageId(1);
                 loadGists();
             }
@@ -173,6 +172,9 @@ public class GistsFragment extends BaseFragment implements GistsContract.View {
 
     @Override
     public void loadingGists(List<GistsBean> list) {
+        if (mSRLayout.isRefreshing()) {
+            this.list.clear();
+        }
         if (list == null || list.size() == 0) {
             mGistsRVAdapter.setHasLoading(false);
         } else {
