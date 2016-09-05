@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Html;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +28,7 @@ import com.zpauly.githubapp.utils.HtmlImageGetter;
 import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.view.ToolbarMenuFragment;
 import com.zpauly.githubapp.view.files.FilesActivity;
+import com.zpauly.githubapp.view.issues.IssuesActivity;
 import com.zpauly.githubapp.view.profile.OthersActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -53,9 +55,13 @@ public class RepoContentFragment extends ToolbarMenuFragment implements RepoCont
     private AppCompatTextView mTitleTV;
     private LinearLayout mDescLayout;
     private AppCompatTextView mDescTV;
+    private LinearLayout mWatchersLayout;
+    private LinearLayout mStargazersLayout;
+    private LinearLayout mForksLayout;
     private AppCompatTextView mWatchersTV;
     private AppCompatTextView mStargazersTV;
     private AppCompatTextView mForksTV;
+    private AppCompatTextView mIssuesTV;
     private AppCompatTextView mReadMeTV;
     private AppCompatTextView mLoadAgainTV;
     private AppCompatTextView mViewFilesTV;
@@ -81,9 +87,13 @@ public class RepoContentFragment extends ToolbarMenuFragment implements RepoCont
         mTitleTV = (AppCompatTextView) view.findViewById(R.id.repo_content_title_TV);
         mDescLayout = (LinearLayout) view.findViewById(R.id.repo_content_desc_layout);
         mDescTV = (AppCompatTextView) view.findViewById(R.id.repo_content_desc_TV);
+        mWatchersLayout = (LinearLayout) view.findViewById(R.id.repo_content_watchers_layout);
+        mStargazersLayout = (LinearLayout) view.findViewById(R.id.repo_content_stargazers_layout);
+        mForksLayout = (LinearLayout) view.findViewById(R.id.repo_content_forks_layout);
         mWatchersTV = (AppCompatTextView) view.findViewById(R.id.repo_content_watchers_TV);
         mStargazersTV = (AppCompatTextView) view.findViewById(R.id.repo_content_stargazers_TV);
         mForksTV = (AppCompatTextView) view.findViewById(R.id.repo_content_forks_TV);
+        mIssuesTV = (AppCompatTextView) view.findViewById(R.id.repo_content_issues_TV);
         mReadMeTV = (AppCompatTextView) view.findViewById(R.id.repo_content_readme_TV);
         mViewFilesTV = (AppCompatTextView) view.findViewById(R.id.repo_content_view_files_TV);
         mLoadAgainTV = (AppCompatTextView) view.findViewById(R.id.repo_content_readme_load_again_TV);
@@ -142,6 +152,30 @@ public class RepoContentFragment extends ToolbarMenuFragment implements RepoCont
             @Override
             public void onClick(View v) {
                 loadReadMe();
+            }
+        });
+        mIssuesTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IssuesActivity.launchRepoIssuesActivity(getContext(), repoBean.getOwner().getLogin(), repoBean.getName());
+            }
+        });
+        mWatchersLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        mStargazersLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        mForksLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
         mViewFilesTV.setEnabled(false);

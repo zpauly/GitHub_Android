@@ -17,10 +17,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:padding="@dimen/components_padding"
+            android:gravity="center"
             android:clickable="true"
             android:background="?attr/selectableItemBackground">
 
-            <android.support.v4.widget.CircleImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/issue_item_avatar"
                 app:civ_border_color="@color/md_divider_white"
                 app:civ_border_width="2dp"

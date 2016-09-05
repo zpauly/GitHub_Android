@@ -27,6 +27,14 @@ public class IssuesContract {
 
         String getDirection();
 
+        int getIssueType();
+
+        String getUsername();
+
+        String getRepoName();
+
+        String getOrgName();
+
         void getIssueSuccess();
 
         void getIssueFail();

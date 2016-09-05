@@ -57,7 +57,7 @@ public class RefreshView extends LinearLayout {
     }
 
     private void init() {
-        View view = inflate(getContext(), R.layout.fragment_refresh, null);
+        View view = inflate(getContext(), R.layout.refresh_view, null);
         LinearLayoutCompat.LayoutParams layoutParams =
                 new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);

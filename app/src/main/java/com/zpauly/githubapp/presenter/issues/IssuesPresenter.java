@@ -5,6 +5,7 @@ import android.content.Context;
 import com.zpauly.githubapp.base.NetPresenter;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
 import com.zpauly.githubapp.network.issues.IssuesMethod;
+import com.zpauly.githubapp.view.issues.IssuesActivity;
 
 import java.util.List;
 
@@ -63,7 +64,20 @@ public class IssuesPresenter extends NetPresenter implements IssuesContract.Pres
                 mIssuesView.gettingIssues(issueBeen);
             }
         };
-        issuesMethod.getIssues(issuesSubscriber, auth, mIssuesView.getFilter(), mIssuesView.getState(), null, mIssuesView.getSort(), mIssuesView.getDirection(), null, pageId++);
+        switch (mIssuesView.getIssueType()) {
+            case IssuesActivity.USER_ISSUES:
+                issuesMethod.getIssues(issuesSubscriber, auth, mIssuesView.getFilter(), mIssuesView.getState(), null, mIssuesView.getSort(), mIssuesView.getDirection(), null, pageId++);
+                break;
+            case IssuesActivity.REPO_ISSUES:
+                issuesMethod.getARepoIssues(issuesSubscriber, auth, mIssuesView.getUsername(), mIssuesView.getRepoName(), null, mIssuesView.getState(), null, null, null, mIssuesView.getSort(), mIssuesView.getDirection(), null, null, pageId++);
+                break;
+            case IssuesActivity.ORG_ISSUES:
+                issuesMethod.getOrgIssues(issuesSubscriber, auth, mIssuesView.getOrgName(), mIssuesView.getFilter(), mIssuesView.getState(), null, mIssuesView.getSort(), mIssuesView.getDirection(), null, pageId++);
+                break;
+            default:
+                break;
+        }
+
     }
 
     @Override

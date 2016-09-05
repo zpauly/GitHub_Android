@@ -1,5 +1,6 @@
 package com.zpauly.githubapp.view.issues;
 
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -48,6 +49,11 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
 
     private List<IssueBean> list = new ArrayList<>();
 
+    private int issueType = IssuesActivity.USER_ISSUES;
+    private String username;
+    private String repoName;
+    private String orgName;
+
     @Override
     public void inflateMenu() {
         inflateMenu(R.menu.issue_toolbar_menu);
@@ -58,6 +64,9 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
         mState = menu.findItem(R.id.issue_toolbar_state);
         mFilter = menu.findItem(R.id.issue_toolbar_filter);
         mSort = menu.findItem(R.id.issue_toolbar_sort);
+        if (issueType == IssuesActivity.REPO_ISSUES) {
+            mFilter.setVisible(false);
+        }
         setOnMenuItemSelectedListener(new OnMenuItemSelectedListener() {
             @Override
             public void onItemSelected(MenuItem item) {
@@ -116,6 +125,8 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
 
     @Override
     protected void initViews(View view) {
+        getAttrs();
+
         new IssuesPresenter(getContext(), this);
 
         mRefreshView = (RefreshView) view.findViewById(R.id.issue_RefreshView);
@@ -149,6 +160,16 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
     @Override
     protected View setContentView(LayoutInflater inflater, @Nullable ViewGroup container) {
         return inflater.inflate(R.layout.fragment_issue, container, false);
+    }
+
+    private void getAttrs() {
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            issueType = bundle.getInt(IssuesActivity.ISSUE_TYPE);
+            username = bundle.getString(IssuesActivity.USERNAME);
+            repoName = bundle.getString(IssuesActivity.REPO_NAME);
+            orgName = bundle.getString(IssuesActivity.ORG_NAME);
+        }
     }
 
     private void setupSwipeRefreshLayout() {
@@ -209,6 +230,26 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
     @Override
     public String getDirection() {
         return direction;
+    }
+
+    @Override
+    public int getIssueType() {
+        return issueType;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public String getRepoName() {
+        return repoName;
+    }
+
+    @Override
+    public String getOrgName() {
+        return orgName;
     }
 
     @Override

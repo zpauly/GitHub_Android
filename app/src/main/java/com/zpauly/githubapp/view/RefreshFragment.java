@@ -27,6 +27,6 @@ public class RefreshFragment extends BaseFragment {
 
     @Override
     protected View setContentView(LayoutInflater inflater, @Nullable ViewGroup container) {
-        return inflater.inflate(R.layout.fragment_refresh, container, false);
+        return inflater.inflate(R.layout.refresh_view, container, false);
     }
 }
