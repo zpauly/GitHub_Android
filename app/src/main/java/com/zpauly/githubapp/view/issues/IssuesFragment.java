@@ -145,6 +145,7 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
     }
 
     private void setSwipeRefrehLayoutRefreshing() {
+        mIssuesAdapter.setHasLoading(true);
         mPresenter.setPageId(1);
         getIssues();
     }
@@ -204,8 +205,7 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
         mSRLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.setPageId(1);
-                getIssues();
+                setSwipeRefrehLayoutRefreshing();
             }
         });
     }

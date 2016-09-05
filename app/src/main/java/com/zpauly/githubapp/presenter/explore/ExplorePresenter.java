@@ -2,13 +2,11 @@ package com.zpauly.githubapp.presenter.explore;
 
 import android.content.Context;
 
-import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.base.NetPresenter;
-import com.zpauly.githubapp.entity.search.SearchCodeBean;
-import com.zpauly.githubapp.entity.search.SearchReposBean;
-import com.zpauly.githubapp.entity.search.SearchUsersBean;
+import com.zpauly.githubapp.entity.response.search.SearchCodeBean;
+import com.zpauly.githubapp.entity.response.search.SearchReposBean;
+import com.zpauly.githubapp.entity.response.search.SearchUsersBean;
 import com.zpauly.githubapp.network.search.SearchMethod;
-import com.zpauly.githubapp.utils.SPUtil;
 
 import rx.Subscriber;
 

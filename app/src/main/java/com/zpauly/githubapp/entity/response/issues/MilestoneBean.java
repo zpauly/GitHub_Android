@@ -1,11 +1,14 @@
 package com.zpauly.githubapp.entity.response.issues;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.zpauly.githubapp.entity.response.UserBean;
 
 /**
  * Created by zpauly on 16/9/1.
  */
-public class MilestoneBean {
+public class MilestoneBean implements Parcelable {
     /**
      * url : https://api.github.com/repos/octocat/Hello-World/milestones/1
      * html_url : https://github.com/octocat/Hello-World/milestones/v1.0
@@ -179,4 +182,61 @@ public class MilestoneBean {
     public void setDue_on(String due_on) {
         this.due_on = due_on;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.url);
+        dest.writeString(this.html_url);
+        dest.writeString(this.labels_url);
+        dest.writeInt(this.id);
+        dest.writeInt(this.number);
+        dest.writeString(this.state);
+        dest.writeString(this.title);
+        dest.writeString(this.description);
+        dest.writeParcelable(this.creator, flags);
+        dest.writeInt(this.open_issues);
+        dest.writeInt(this.closed_issues);
+        dest.writeString(this.created_at);
+        dest.writeString(this.updated_at);
+        dest.writeString(this.closed_at);
+        dest.writeString(this.due_on);
+    }
+
+    public MilestoneBean() {
+    }
+
+    protected MilestoneBean(Parcel in) {
+        this.url = in.readString();
+        this.html_url = in.readString();
+        this.labels_url = in.readString();
+        this.id = in.readInt();
+        this.number = in.readInt();
+        this.state = in.readString();
+        this.title = in.readString();
+        this.description = in.readString();
+        this.creator = in.readParcelable(UserBean.class.getClassLoader());
+        this.open_issues = in.readInt();
+        this.closed_issues = in.readInt();
+        this.created_at = in.readString();
+        this.updated_at = in.readString();
+        this.closed_at = in.readString();
+        this.due_on = in.readString();
+    }
+
+    public static final Parcelable.Creator<MilestoneBean> CREATOR = new Parcelable.Creator<MilestoneBean>() {
+        @Override
+        public MilestoneBean createFromParcel(Parcel source) {
+            return new MilestoneBean(source);
+        }
+
+        @Override
+        public MilestoneBean[] newArray(int size) {
+            return new MilestoneBean[size];
+        }
+    };
 }

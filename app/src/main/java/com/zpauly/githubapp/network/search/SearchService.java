@@ -2,9 +2,9 @@ package com.zpauly.githubapp.network.search;
 
 import android.support.annotation.Nullable;
 
-import com.zpauly.githubapp.entity.search.SearchCodeBean;
-import com.zpauly.githubapp.entity.search.SearchReposBean;
-import com.zpauly.githubapp.entity.search.SearchUsersBean;
+import com.zpauly.githubapp.entity.response.search.SearchCodeBean;
+import com.zpauly.githubapp.entity.response.search.SearchReposBean;
+import com.zpauly.githubapp.entity.response.search.SearchUsersBean;
 
 import retrofit2.http.GET;
 import retrofit2.http.Header;

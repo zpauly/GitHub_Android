@@ -1,5 +1,8 @@
 package com.zpauly.githubapp.entity.response.issues;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.zpauly.githubapp.entity.response.UserBean;
 
 import java.util.List;
@@ -7,7 +10,7 @@ import java.util.List;
 /**
  * Created by zpauly on 16/9/1.
  */
-public class IssueBean {
+public class IssueBean implements Parcelable {
     /**
      * id : 1
      * url : https://api.github.com/repos/octocat/Hello-World/issues/1347
@@ -116,7 +119,7 @@ public class IssueBean {
 
     private PullRequestBean pull_request;
     private UserBean close_by;
-    private Object closed_at;
+    private String closed_at;
     private String created_at;
     private String updated_at;
     /**
@@ -263,11 +266,11 @@ public class IssueBean {
         this.pull_request = pull_request;
     }
 
-    public Object getClosed_at() {
+    public String getClosed_at() {
         return closed_at;
     }
 
-    public void setClosed_at(Object closed_at) {
+    public void setClosed_at(String closed_at) {
         this.closed_at = closed_at;
     }
 
@@ -310,4 +313,77 @@ public class IssueBean {
     public List<AssigneeBean> getAssignees() {
         return assignees;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.url);
+        dest.writeString(this.repository_url);
+        dest.writeString(this.labels_url);
+        dest.writeString(this.comments_url);
+        dest.writeString(this.events_url);
+        dest.writeString(this.html_url);
+        dest.writeInt(this.number);
+        dest.writeString(this.state);
+        dest.writeString(this.title);
+        dest.writeString(this.body);
+        dest.writeParcelable(this.user, flags);
+        dest.writeParcelable(this.assignee, flags);
+        dest.writeTypedList(this.assignees);
+        dest.writeParcelable(this.milestone, flags);
+        dest.writeByte(this.locked ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.comments);
+        dest.writeParcelable(this.pull_request, flags);
+        dest.writeParcelable(this.close_by, flags);
+        dest.writeString(this.closed_at);
+        dest.writeString(this.created_at);
+        dest.writeString(this.updated_at);
+        dest.writeTypedList(this.labels);
+    }
+
+    public IssueBean() {
+    }
+
+    protected IssueBean(Parcel in) {
+        this.id = in.readInt();
+        this.url = in.readString();
+        this.repository_url = in.readString();
+        this.labels_url = in.readString();
+        this.comments_url = in.readString();
+        this.events_url = in.readString();
+        this.html_url = in.readString();
+        this.number = in.readInt();
+        this.state = in.readString();
+        this.title = in.readString();
+        this.body = in.readString();
+        this.user = in.readParcelable(UserBean.class.getClassLoader());
+        this.assignee = in.readParcelable(AssigneeBean.class.getClassLoader());
+        this.assignees = in.createTypedArrayList(AssigneeBean.CREATOR);
+        this.milestone = in.readParcelable(MilestoneBean.class.getClassLoader());
+        this.locked = in.readByte() != 0;
+        this.comments = in.readInt();
+        this.pull_request = in.readParcelable(PullRequestBean.class.getClassLoader());
+        this.close_by = in.readParcelable(UserBean.class.getClassLoader());
+        this.closed_at = in.readString();
+        this.created_at = in.readString();
+        this.updated_at = in.readString();
+        this.labels = in.createTypedArrayList(LabelBean.CREATOR);
+    }
+
+    public static final Parcelable.Creator<IssueBean> CREATOR = new Parcelable.Creator<IssueBean>() {
+        @Override
+        public IssueBean createFromParcel(Parcel source) {
+            return new IssueBean(source);
+        }
+
+        @Override
+        public IssueBean[] newArray(int size) {
+            return new IssueBean[size];
+        }
+    };
 }

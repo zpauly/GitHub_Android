@@ -177,27 +177,32 @@ public class ImageUtil {
     }
 
     public static void loadAvatarImageFromUrl(Context context, String url, ImageView imageView) {
-        if (context == null) {
+        if (context == null)
             return;
+        if (context instanceof Activity) {
+            loadAvatarImageFromUrl((Activity) context, url, imageView);
+        } else {
+            Glide.with(context)
+                    .load(Uri.parse(url))
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .crossFade()
+                    .centerCrop()
+                    .into(imageView);
         }
-        Glide.with(context)
-                .load(Uri.parse(url))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .crossFade()
-                .centerCrop()
-                .into(imageView);
     }
 
     public static void loadAvatarImageFromUrl(Fragment context, String url, ImageView imageView) {
         if (context == null) {
             return;
         }
-        Glide.with(context)
-                .load(Uri.parse(url))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .crossFade()
-                .centerCrop()
-                .into(imageView);
+        if (!context.isDetached()) {
+            Glide.with(context)
+                    .load(Uri.parse(url))
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .crossFade()
+                    .centerCrop()
+                    .into(imageView);
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)

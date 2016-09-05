@@ -1,28 +1,29 @@
-package com.zpauly.githubapp.entity.search;
+package com.zpauly.githubapp.entity.response.search;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.zpauly.githubapp.entity.response.RepositoriesBean;
+import com.zpauly.githubapp.entity.response.CodeBean;
+import com.zpauly.githubapp.entity.response.UserBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by zpauly on 16-8-9.
+ * Created by zpauly on 16-8-10.
  */
 
-public class SearchReposBean implements Parcelable {
+public class SearchUsersBean implements Parcelable {
     private int total_count;
     private boolean incomplete_result;
-    private List<RepositoriesBean> items;
-
-    public void setTotal_count(int total_count) {
-        this.total_count = total_count;
-    }
+    private List<UserBean> items;
 
     public int getTotal_count() {
         return total_count;
+    }
+
+    public void setTotal_count(int total_count) {
+        this.total_count = total_count;
     }
 
     public void setIncomplete_result(boolean incomplete_result) {
@@ -33,11 +34,11 @@ public class SearchReposBean implements Parcelable {
         return incomplete_result;
     }
 
-    public void setItems(List<RepositoriesBean> items) {
+    public void setItems(List<UserBean> items) {
         this.items = items;
     }
 
-    public List<RepositoriesBean> getItems() {
+    public List<UserBean> getItems() {
         return items;
     }
 
@@ -53,25 +54,25 @@ public class SearchReposBean implements Parcelable {
         dest.writeList(this.items);
     }
 
-    public SearchReposBean() {
+    public SearchUsersBean() {
     }
 
-    protected SearchReposBean(Parcel in) {
+    protected SearchUsersBean(Parcel in) {
         this.total_count = in.readInt();
         this.incomplete_result = in.readByte() != 0;
-        this.items = new ArrayList<RepositoriesBean>();
-        in.readList(this.items, RepositoriesBean.class.getClassLoader());
+        this.items = new ArrayList<UserBean>();
+        in.readList(this.items, CodeBean.class.getClassLoader());
     }
 
-    public static final Creator<SearchReposBean> CREATOR = new Creator<SearchReposBean>() {
+    public static final Parcelable.Creator<SearchUsersBean> CREATOR = new Parcelable.Creator<SearchUsersBean>() {
         @Override
-        public SearchReposBean createFromParcel(Parcel source) {
-            return new SearchReposBean(source);
+        public SearchUsersBean createFromParcel(Parcel source) {
+            return new SearchUsersBean(source);
         }
 
         @Override
-        public SearchReposBean[] newArray(int size) {
-            return new SearchReposBean[size];
+        public SearchUsersBean[] newArray(int size) {
+            return new SearchUsersBean[size];
         }
     };
 }

@@ -2,9 +2,9 @@ package com.zpauly.githubapp.presenter.explore;
 
 import com.zpauly.githubapp.base.BasePresenter;
 import com.zpauly.githubapp.base.BaseView;
-import com.zpauly.githubapp.entity.search.SearchCodeBean;
-import com.zpauly.githubapp.entity.search.SearchReposBean;
-import com.zpauly.githubapp.entity.search.SearchUsersBean;
+import com.zpauly.githubapp.entity.response.search.SearchCodeBean;
+import com.zpauly.githubapp.entity.response.search.SearchReposBean;
+import com.zpauly.githubapp.entity.response.search.SearchUsersBean;
 
 /**
  * Created by zpauly on 16-8-10.

@@ -1,4 +1,4 @@
-package com.zpauly.githubapp.entity.search;
+package com.zpauly.githubapp.entity.response.search;
 
 import android.os.Parcel;
 import android.os.Parcelable;

@@ -15,15 +15,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zpauly.githubapp.R;
-import com.zpauly.githubapp.adapter.ReposRecyclerViewAdapter;
 import com.zpauly.githubapp.adapter.RepositoriesRecyclerViewAdapter;
 import com.zpauly.githubapp.adapter.UsersRecyclerViewAdapter;
 import com.zpauly.githubapp.base.BaseFragment;
 import com.zpauly.githubapp.entity.response.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.UserBean;
-import com.zpauly.githubapp.entity.search.SearchCodeBean;
-import com.zpauly.githubapp.entity.search.SearchReposBean;
-import com.zpauly.githubapp.entity.search.SearchUsersBean;
+import com.zpauly.githubapp.entity.response.search.SearchCodeBean;
+import com.zpauly.githubapp.entity.response.search.SearchReposBean;
+import com.zpauly.githubapp.entity.response.search.SearchUsersBean;
 import com.zpauly.githubapp.network.search.SearchService;
 import com.zpauly.githubapp.presenter.explore.ExploreContract;
 import com.zpauly.githubapp.presenter.explore.ExplorePresenter;

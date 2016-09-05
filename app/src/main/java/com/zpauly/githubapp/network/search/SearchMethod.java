@@ -2,9 +2,9 @@ package com.zpauly.githubapp.network.search;
 
 import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.base.BaseNetMethod;
-import com.zpauly.githubapp.entity.search.SearchCodeBean;
-import com.zpauly.githubapp.entity.search.SearchReposBean;
-import com.zpauly.githubapp.entity.search.SearchUsersBean;
+import com.zpauly.githubapp.entity.response.search.SearchCodeBean;
+import com.zpauly.githubapp.entity.response.search.SearchReposBean;
+import com.zpauly.githubapp.entity.response.search.SearchUsersBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
 
 import retrofit2.Retrofit;
