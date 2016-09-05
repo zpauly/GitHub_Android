@@ -70,6 +70,8 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
         setOnMenuItemSelectedListener(new OnMenuItemSelectedListener() {
             @Override
             public void onItemSelected(MenuItem item) {
+                if (!mRefreshView.isRefreshSuccess())
+                    return;
                 item.setChecked(true);
                 switch (item.getItemId()) {
                     case R.id.issue_toolbar_state:
@@ -118,6 +120,7 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
                         break;
                 }
                 mSRLayout.setRefreshing(true);
+                mPresenter.setPageId(1);
                 getIssues();
             }
         });

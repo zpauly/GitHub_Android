@@ -122,6 +122,9 @@ public class StarsFragment extends ToolbarMenuFragment implements StarContract.V
         setOnMenuItemSelectedListener(new OnMenuItemSelectedListener() {
             @Override
             public void onItemSelected(MenuItem item) {
+                if (!mRefreshView.isRefreshSuccess())
+                    return;
+                item.setChecked(true);
                 switch (item.getItemId()) {
                     case R.id.star_sort_recently_starred:
                         sort = ActivityService.SORT_CREATED;
