@@ -20,6 +20,8 @@ import com.zpauly.githubapp.view.viewholder.IssueViewHolder;
 public class IssuesRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<IssueBean, IssueViewHolder> {
     private final String TAG = getClass().getName();
 
+    private String owner;
+
     public IssuesRecyclerViewAdapter(Context context) {
         super(context);
     }
@@ -43,8 +45,12 @@ public class IssuesRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Issue
         holder.mLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                IssueContentActivity.launchActivity(getContext(), data);
+                IssueContentActivity.launchActivity(getContext(), data, owner);
             }
         });
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 }

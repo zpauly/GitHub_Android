@@ -81,9 +81,9 @@
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/issue_content_body"
                             android:background="@color/colorPrimaryLight"
-                            android:layout_margin="@dimen/components_padding"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:padding="@dimen/components_padding"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
     
                     </LinearLayout>
     

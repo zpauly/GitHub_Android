@@ -22,7 +22,7 @@
             android:layout_marginLeft="@dimen/components_margin"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:padding="@dimen/components_margin"

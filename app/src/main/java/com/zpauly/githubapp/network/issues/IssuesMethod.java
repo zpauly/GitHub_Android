@@ -124,7 +124,7 @@ public class IssuesMethod extends BaseNetMethod {
 
     public void getDefaultAnIssueComments(Observer<List<CommentBean>> observer,
                                    String auth, String owner, String repo, int number,
-                                   String since, int pageId) {
+                                   int pageId) {
         service.getAnIssueComments(auth, owner, repo, number, null, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -15,8 +15,10 @@ public class IssueContentActivity extends ToolbarActivity {
     private final String TAG = getClass().getName();
 
     public static final String ISSUE = "ISSUE";
+    public static final String ISSUE_OWNER = "ISSUE_OWNER";
 
     private IssueBean issue;
+    private String owner;
 
     @Override
     public void initViews() {
@@ -40,6 +42,7 @@ public class IssueContentActivity extends ToolbarActivity {
     private void setFragment() {
         Bundle bundle = new Bundle();
         bundle.putParcelable(ISSUE, issue);
+        bundle.putString(ISSUE_OWNER, owner);
         IssueContentFragment fragment = new IssueContentFragment();
         fragment.setArguments(bundle);
         setContent(fragment);
@@ -47,11 +50,13 @@ public class IssueContentActivity extends ToolbarActivity {
 
     private void getAttrs() {
         issue = getIntent().getParcelableExtra(ISSUE);
+        owner = getIntent().getStringExtra(ISSUE_OWNER);
     }
 
-    public static void launchActivity(Context context, IssueBean issue) {
+    public static void launchActivity(Context context, IssueBean issue, String owner) {
         Intent intent = new Intent();
         intent.putExtra(ISSUE, issue);
+        intent.putExtra(ISSUE_OWNER, owner);
         intent.setClass(context, IssueContentActivity.class);
         context.startActivity(intent);
     }

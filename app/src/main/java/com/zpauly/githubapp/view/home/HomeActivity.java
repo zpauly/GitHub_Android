@@ -93,7 +93,6 @@ public class HomeActivity extends DrawerActivity {
                     case R.id.navigation_stars:
                         if (currentFragmentID == STARS) {
                         } else {
-                            item.setChecked(true);
                             changeFragment(STARS);
                             setToolbarTitle(R.string.starred);
                         }
@@ -101,7 +100,6 @@ public class HomeActivity extends DrawerActivity {
                     case R.id.navigation_events:
                         if (currentFragmentID == EVENTS) {
                         } else {
-                            item.setChecked(true);
                             changeFragment(EVENTS);
                             setToolbarTitle(R.string.events);
                         }
@@ -110,7 +108,6 @@ public class HomeActivity extends DrawerActivity {
                         if (currentFragmentID == EXPLORE) {
 
                         } else {
-                            item.setChecked(true);
                             changeFragment(EXPLORE);
                             setToolbarTitle(R.string.explore);
                         }
@@ -119,7 +116,6 @@ public class HomeActivity extends DrawerActivity {
                         if (currentFragmentID == GISTS) {
 
                         } else {
-                            item.setChecked(true);
                             changeFragment(GISTS);
                             setToolbarTitle(R.string.gists);
                         }
@@ -128,7 +124,6 @@ public class HomeActivity extends DrawerActivity {
                         if (currentFragmentID == All_GISTS) {
 
                         } else {
-                            item.setChecked(true);
                             changeFragment(All_GISTS);
                             setToolbarTitle(R.string.all_gists);
                         }
@@ -137,7 +132,6 @@ public class HomeActivity extends DrawerActivity {
                         if (currentFragmentID == STARRED_GISTS) {
 
                         } else {
-                            item.setChecked(true);
                             changeFragment(STARRED_GISTS);
                             setToolbarTitle(R.string.starred_gists);
                         }
@@ -146,7 +140,6 @@ public class HomeActivity extends DrawerActivity {
                         if (currentFragmentID == ISSUES) {
 
                         } else {
-                            item.setChecked(true);
                             changeFragment(ISSUES);
                             setToolbarTitle(R.string.issues);
                         }
@@ -154,7 +147,6 @@ public class HomeActivity extends DrawerActivity {
                     case R.id.navigation_settings:
                         break;
                     case R.id.navigation_exit:
-                        item.setChecked(true);
                         exit();
                         break;
                     default:

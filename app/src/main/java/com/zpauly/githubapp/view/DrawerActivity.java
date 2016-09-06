@@ -38,6 +38,8 @@ public abstract class DrawerActivity extends ToolbarActivity {
     private OnNavItemClickListener listener;
     private OnNavHeaderAvatarClickListener avatarClickListener;
 
+    private MenuItem lastItem;
+
     protected void setOnNavItemClickListener(OnNavItemClickListener listener) {
         this.listener = listener;
     }
@@ -92,12 +94,16 @@ public abstract class DrawerActivity extends ToolbarActivity {
     }
 
     private void initNavView() {
+        lastItem = mNavigationView.getMenu().getItem(0);
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
+                lastItem.setChecked(false);
+                lastItem = item;
                 if (listener != null) {
                     listener.onItemClick(item);
                 }
+                item.setChecked(true);
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 return false;
             }
