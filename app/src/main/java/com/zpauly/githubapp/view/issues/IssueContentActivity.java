@@ -52,7 +52,7 @@ public class IssueContentActivity extends ToolbarActivity {
     public static void launchActivity(Context context, IssueBean issue) {
         Intent intent = new Intent();
         intent.putExtra(ISSUE, issue);
-        intent.setClass(context, IssuesActivity.class);
+        intent.setClass(context, IssueContentActivity.class);
         context.startActivity(intent);
     }
 }

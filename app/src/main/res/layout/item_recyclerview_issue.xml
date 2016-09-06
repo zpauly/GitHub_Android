@@ -8,6 +8,8 @@
 
     <LinearLayout
         android:id="@+id/issue_item_layout"
+        android:clickable="true"
+        android:background="?attr/selectableItemBackground"
         android:orientation="horizontal" android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -17,9 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:padding="@dimen/components_padding"
-            android:gravity="center"
-            android:clickable="true"
-            android:background="?attr/selectableItemBackground">
+            android:gravity="center">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/issue_item_avatar"
@@ -48,9 +48,7 @@
                 android:layout_height="match_parent"
                 android:paddingTop="@dimen/components_padding"
                 android:paddingBottom="@dimen/components_padding"
-                android:paddingRight="@dimen/components_padding"
-                android:clickable="true"
-                android:background="?attr/selectableItemBackground">
+                android:paddingRight="@dimen/components_padding">
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/issue_item_username"
@@ -77,8 +75,6 @@
                 android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                android:background="?attr/selectableItemBackground"
                 android:padding="@dimen/components_padding">
 
                 <ImageView

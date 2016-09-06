@@ -291,6 +291,9 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
     public void getIssueFail() {
         mSRLayout.setRefreshing(false);
         mRefreshView.refreshFail();
+        if (!mRefreshView.isRefreshSuccess()) {
+            mPresenter.setPageId(1);
+        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -9,13 +10,10 @@
         android:layout_height="match_parent" />
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/SRLayout"
+        android:visibility="gone"
+        android:id="@+id/issue_content_SRLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        
-        <android.support.v4.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -47,21 +45,36 @@
                         <LinearLayout
                             android:layout_marginTop="@dimen/components_margin"
                             android:orientation="horizontal"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content">
-    
-                            <android.support.v7.widget.AppCompatTextView
-                                android:id="@+id/issue_content_user"
-                                android:textColor="?attr/colorPrimary"
-                                style="@style/Base.TextAppearance.AppCompat.Small"
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/issue_content_user_avatar"
+                                app:civ_border_color="@color/md_divider_white"
+                                app:civ_border_width="2dp"
+                                android:layout_width="@dimen/nav_header_image_size"
+                                android:layout_height="@dimen/nav_header_image_size" />
+
+                            <LinearLayout
+                                android:padding="@dimen/components_padding"
+                                android:orientation="vertical"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content">
     
-                            <android.support.v7.widget.AppCompatTextView
-                                android:id="@+id/issue_content_open_time"
-                                style="@style/Base.TextAppearance.AppCompat.Body1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/issue_content_username"
+                                    android:textColor="?attr/colorPrimaryDark"
+                                    style="@style/Base.TextAppearance.AppCompat.Small"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/issue_content_open_time"
+                                    style="@style/Base.TextAppearance.AppCompat.Body1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
     
                         </LinearLayout>
     
@@ -82,8 +95,6 @@
                     android:layout_height="match_parent" />
     
             </LinearLayout>
-
-        </android.support.v4.widget.NestedScrollView>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

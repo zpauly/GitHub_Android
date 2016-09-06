@@ -25,7 +25,7 @@ public abstract class LoadMoreRecyclerViewAdapter<D, VH extends RecyclerView.Vie
     private boolean hasMoreData = true;
     private boolean flag = false;
 
-    protected LoadMoreRecyclerViewAdapter(Context context) {
+    public LoadMoreRecyclerViewAdapter(Context context) {
         super(context);
     }
 
