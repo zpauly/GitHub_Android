@@ -13,4 +13,6 @@
     <dimen name="body_text_size">14sp</dimen>
 
     <dimen name="list_item_avatar_size">40dp</dimen>
+    <dimen name="fab_button_size">56dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

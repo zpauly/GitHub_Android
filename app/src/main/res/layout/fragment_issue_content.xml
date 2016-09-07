@@ -15,6 +15,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -95,6 +99,17 @@
                     android:layout_height="match_parent" />
     
             </LinearLayout>
+
+            <com.zpauly.githubapp.ui.FloatingActionButton
+                android:src="@drawable/ic_create_white_24dp"
+                android:id="@+id/issue_content_FAB"
+                android:layout_gravity="bottom|end"
+                android:background="?attr/selectableItemBackground"
+                android:layout_margin="@dimen/fab_margin"
+                android:layout_width="@dimen/fab_button_size"
+                android:layout_height="@dimen/fab_button_size" />
+
+        </FrameLayout>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

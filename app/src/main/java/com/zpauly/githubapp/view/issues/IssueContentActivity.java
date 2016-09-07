@@ -1,5 +1,6 @@
 package com.zpauly.githubapp.view.issues;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -59,5 +60,6 @@ public class IssueContentActivity extends ToolbarActivity {
         intent.putExtra(ISSUE_OWNER, owner);
         intent.setClass(context, IssueContentActivity.class);
         context.startActivity(intent);
+//        ((Activity) context).finish();
     }
 }

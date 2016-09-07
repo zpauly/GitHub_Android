@@ -18,6 +18,7 @@ import com.zpauly.githubapp.entity.response.CommentBean;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
 import com.zpauly.githubapp.presenter.issues.IssueContentContract;
 import com.zpauly.githubapp.presenter.issues.IssueContentPresenter;
+import com.zpauly.githubapp.ui.FloatingActionButton;
 import com.zpauly.githubapp.ui.RefreshView;
 import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.TextUtil;
@@ -44,6 +45,7 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
     private AppCompatTextView mOpenTimeTV;
     private AppCompatTextView mBodyTV;
     private RecyclerView mCommentsRV;
+    private FloatingActionButton mIssueFAB;
 
     private IssueBean issueBean;
     private String owner;
@@ -68,9 +70,11 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
         mOpenTimeTV = (AppCompatTextView) view.findViewById(R.id.issue_content_open_time);
         mBodyTV = (AppCompatTextView) view.findViewById(R.id.issue_content_body);
         mCommentsRV = (RecyclerView) view.findViewById(R.id.issue_content_comments_RV);
+        mIssueFAB = (FloatingActionButton) view.findViewById(R.id.issue_content_FAB);
 
         setupSwipeRefreshLayout();
         setupRecyclerView();
+        setupFloatingActionButton();
 
         setupViews();
 
@@ -93,6 +97,10 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
             }
         });
         mRefreshView.startRefresh();
+    }
+
+    private void setupFloatingActionButton() {
+        mIssueFAB.attachButtonToRecyclerView(mCommentsRV);
     }
 
     @Override

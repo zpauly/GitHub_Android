@@ -48,4 +48,6 @@ public interface Constants {
 
 
     long CLICK_EXIT_TIME = 2000;
+
+    int SCROLL_THRESHOLD = 4;
 }
