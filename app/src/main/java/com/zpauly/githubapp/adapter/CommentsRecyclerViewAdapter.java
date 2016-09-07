@@ -9,6 +9,7 @@ import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.response.CommentBean;
 import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.TextUtil;
+import com.zpauly.githubapp.view.profile.OthersActivity;
 import com.zpauly.githubapp.view.viewholder.CommentsViewHolder;
 
 /**
@@ -28,15 +29,15 @@ public class CommentsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Com
 
     @Override
     public void bindContentViewHolder(CommentsViewHolder holder, int position) {
-        CommentBean data = getData().get(position);
+        final CommentBean data = getData().get(position);
         holder.mUsernameTV.setText(data.getUser().getLogin());
         holder.mTimeTV.setText(TextUtil.timeConverter(data.getCreated_at()));
         holder.mBodyTV.setText(data.getBody());
         ImageUtil.loadAvatarImageFromUrl(getContext(), data.getUser().getAvatar_url(), holder.mAvatarIV);
-        holder.mLayout.setOnClickListener(new View.OnClickListener() {
+        holder.mAvatarIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                OthersActivity.lanuchActivity(getContext(), data.getUser().getLogin());
             }
         });
     }

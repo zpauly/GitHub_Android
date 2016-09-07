@@ -21,6 +21,7 @@ import com.zpauly.githubapp.presenter.issues.IssueContentPresenter;
 import com.zpauly.githubapp.ui.RefreshView;
 import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.TextUtil;
+import com.zpauly.githubapp.view.profile.OthersActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,6 +117,12 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
         mUsernameTV.setText(issueBean.getUser().getLogin());
         mOpenTimeTV.setText("at " + TextUtil.timeConverter(issueBean.getCreated_at()));
         mBodyTV.setText(issueBean.getBody());
+        mUserAvatarIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OthersActivity.lanuchActivity(getContext(), issueBean.getUser().getLogin());
+            }
+        });
     }
 
     private void setupSwipeRefreshLayout() {
