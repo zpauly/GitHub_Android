@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:padding="@dimen/components_padding"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:layout_margin="@dimen/components_margin"
+            android:id="@+id/create_comment_ET"
+            android:maxLines="20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <com.zpauly.githubapp.ui.FloatingActionButton
+        android:id="@+id/create_comment_FAB"
+        android:src="@drawable/ic_send_white_24dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_width="@dimen/fab_button_size"
+        android:layout_height="@dimen/fab_button_size" />
+
+</android.support.design.widget.CoordinatorLayout>

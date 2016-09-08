@@ -22,6 +22,7 @@ import com.zpauly.githubapp.ui.FloatingActionButton;
 import com.zpauly.githubapp.ui.RefreshView;
 import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.TextUtil;
+import com.zpauly.githubapp.view.comment.CommentCreateActivity;
 import com.zpauly.githubapp.view.profile.OthersActivity;
 
 import java.util.ArrayList;
@@ -101,6 +102,12 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
 
     private void setupFloatingActionButton() {
         mIssueFAB.attachButtonToRecyclerView(mCommentsRV);
+        mIssueFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CommentCreateActivity.launchActivity(getContext(), owner, repoName, issueBean.getNumber());
+            }
+        });
     }
 
     @Override

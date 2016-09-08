@@ -32,6 +32,7 @@
         <activity android:name=".view.gists.GistFileActivity" />
         <activity android:name=".view.issues.IssuesActivity" />
         <activity android:name=".view.issues.IssueContentActivity" />
+        <activity android:name=".view.comment.CommentCreateActivity" />
     </application>
 
 </manifest>

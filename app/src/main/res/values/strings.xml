@@ -74,6 +74,11 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login">LOGIN</string>
+    <string name="create_comment">Create Comment</string>
+    <string name="uploading">Uploading</string>
+    <string name="upload_fail">Upload Fail</string>
+    <string name="upload_success">Upload Success</string>
+    <string name="please_input_body_first">Please Input Body First</string>
 
     <string name="started">Starred</string>
     <string name="unstarred">Unstarred</string>

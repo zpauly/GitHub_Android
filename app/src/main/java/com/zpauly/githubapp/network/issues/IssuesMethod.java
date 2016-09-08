@@ -130,4 +130,22 @@ public class IssuesMethod extends BaseNetMethod {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
+
+    public void createAnIssue(Observer<com.zpauly.githubapp.entity.request.IssueBean> observer,
+                              com.zpauly.githubapp.entity.request.IssueBean issueBean,
+                              String auth, String owner, String repo) {
+        service.createAnIssue(auth, issueBean, owner, repo)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void createAComment(Observer<CommentBean> observer,
+                               com.zpauly.githubapp.entity.request.CommentBean commentBean,
+                               String auth, String owner, String repo, int number) {
+        service.createAComment(auth, commentBean, owner, repo, number)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
 }

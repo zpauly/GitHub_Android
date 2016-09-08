@@ -8,8 +8,10 @@ import com.zpauly.githubapp.entity.response.issues.IssueBean;
 
 import java.util.List;
 
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -171,4 +173,34 @@ public interface IssuesService {
                                                      @Path("number") int number,
                                                      @Nullable @Query("since") String since,
                                                      @Nullable @Query("page") int pageId);
+
+    /**
+     * Create an issue
+     * @param auth
+     * @param issueBean
+     * @param owner
+     * @param repo
+     * @return
+     */
+    @POST("/repos/{owner}/{repo}/issues")
+    Observable<com.zpauly.githubapp.entity.request.IssueBean> createAnIssue(@Header("Authorization") String auth,
+                                                                            @Body com.zpauly.githubapp.entity.request.IssueBean issueBean,
+                                                                            @Path("owner") String owner,
+                                                                            @Path("repo") String repo);
+
+    /**
+     * Create a comment
+     * @param auth
+     * @param commentBean
+     * @param owner
+     * @param repo
+     * @param number
+     * @return
+     */
+    @POST("/repos/{owner}/{repo}/issues/{number}/comments")
+    Observable<CommentBean> createAComment(@Header("Authorization") String auth,
+                                           @Body com.zpauly.githubapp.entity.request.CommentBean commentBean,
+                                           @Path("owner") String owner,
+                                           @Path("repo") String repo,
+                                           @Path("number") int number);
 }
