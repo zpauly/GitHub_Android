@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.zpauly.githubapp.ui.RefreshView
@@ -21,4 +21,13 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-</LinearLayout>
+    <com.zpauly.githubapp.ui.FloatingActionButton
+        android:visibility="gone"
+        android:id="@+id/issue_create_FAB"
+        android:src="@drawable/ic_create_white_24dp"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_width="@dimen/fab_button_size"
+        android:layout_height="@dimen/fab_button_size" />
+
+</android.support.design.widget.CoordinatorLayout>

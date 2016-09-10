@@ -20,7 +20,7 @@ public class FloatingActionButton extends android.support.design.widget.Floating
 
     private float mMarginBottom;
 
-    private boolean buttonVisibleState;
+    private boolean buttonVisibleState = SHOW;
 
     public FloatingActionButton(Context context) {
         super(context);

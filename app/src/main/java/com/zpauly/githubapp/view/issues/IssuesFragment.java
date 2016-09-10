@@ -18,6 +18,7 @@ import com.zpauly.githubapp.listener.OnMenuItemSelectedListener;
 import com.zpauly.githubapp.network.issues.IssuesService;
 import com.zpauly.githubapp.presenter.issues.IssuesContract;
 import com.zpauly.githubapp.presenter.issues.IssuesPresenter;
+import com.zpauly.githubapp.ui.FloatingActionButton;
 import com.zpauly.githubapp.ui.RefreshView;
 import com.zpauly.githubapp.view.ToolbarMenuFragment;
 
@@ -35,6 +36,7 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
     private RefreshView mRefreshView;
     private SwipeRefreshLayout mSRLayout;
     private RecyclerView mIssuesRV;
+    private FloatingActionButton mIssueCreateFAB;
 
     private MenuItem mState;
     private MenuItem mFilter;
@@ -159,9 +161,11 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
         mRefreshView = (RefreshView) view.findViewById(R.id.issue_RefreshView);
         mSRLayout = (SwipeRefreshLayout) view.findViewById(R.id.issue_SRLayout);
         mIssuesRV = (RecyclerView) view.findViewById(R.id.issue_RV);
+        mIssueCreateFAB = (FloatingActionButton) view.findViewById(R.id.issue_create_FAB);
 
         setupSwipeRefreshLayout();
         setupRecyclerView();
+        setupFloatingActionButton();
 
         mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
             @Override
@@ -173,12 +177,14 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
             public void onRefreshSuccess() {
                 mRefreshView.setVisibility(View.GONE);
                 mSRLayout.setVisibility(View.VISIBLE);
+                mIssueCreateFAB.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onRefreshFail() {
                 mRefreshView.setVisibility(View.VISIBLE);
                 mSRLayout.setVisibility(View.GONE);
+                mIssueCreateFAB.setVisibility(View.GONE);
             }
         });
         mRefreshView.startRefresh();
@@ -197,6 +203,16 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
             repoName = bundle.getString(IssuesActivity.REPO_NAME);
             orgName = bundle.getString(IssuesActivity.ORG_NAME);
         }
+    }
+
+    private void setupFloatingActionButton() {
+        mIssueCreateFAB.attachButtonToRecyclerView(mIssuesRV);
+        mIssueCreateFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     private void setupSwipeRefreshLayout() {
