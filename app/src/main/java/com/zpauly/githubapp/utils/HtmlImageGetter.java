@@ -22,6 +22,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -132,11 +133,17 @@ public class HtmlImageGetter implements Html.ImageGetter {
             File imageFile;
             try {
                 URL aURL = new URL(url);
-                final URLConnection conn = aURL.openConnection();
+                final HttpURLConnection conn = (HttpURLConnection) aURL.openConnection();
                 Log.i(TAG, url);
                 if ((imageFile = cache.get(url)) == null || cache.get(url).length() == 0) {
                     conn.connect();
-                    BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
+                    BufferedInputStream bis;
+                    int state = conn.getResponseCode();
+                    if (state > 400) {
+                        bis = new BufferedInputStream(conn.getErrorStream());
+                    } else {
+                        bis = new BufferedInputStream(conn.getInputStream());
+                    }
                     imageFile = File.createTempFile("image", ".tmp", fileDir);
                     FileUtil.save(imageFile, bis);
                     cache.put(url, imageFile);
