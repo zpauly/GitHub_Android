@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.CommentsRecyclerViewAdapter;
 import com.zpauly.githubapp.base.BaseFragment;
@@ -44,7 +45,7 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
     private CircleImageView mUserAvatarIV;
     private AppCompatTextView mUsernameTV;
     private AppCompatTextView mOpenTimeTV;
-    private AppCompatTextView mBodyTV;
+    private ExpandableTextView mBodyTV;
     private RecyclerView mCommentsRV;
     private FloatingActionButton mIssueFAB;
 
@@ -69,7 +70,7 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
         mUserAvatarIV = (CircleImageView) view.findViewById(R.id.issue_content_user_avatar);
         mUsernameTV = (AppCompatTextView) view.findViewById(R.id.issue_content_username);
         mOpenTimeTV = (AppCompatTextView) view.findViewById(R.id.issue_content_open_time);
-        mBodyTV = (AppCompatTextView) view.findViewById(R.id.issue_content_body);
+        mBodyTV = (ExpandableTextView) view.findViewById(R.id.issue_content_body_ETV);
         mCommentsRV = (RecyclerView) view.findViewById(R.id.issue_content_comments_RV);
         mIssueFAB = (FloatingActionButton) view.findViewById(R.id.issue_content_FAB);
 

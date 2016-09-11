@@ -170,6 +170,7 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
         mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
             @Override
             public void beforeRefreshing() {
+                mIssuesAdapter.setHasLoading(false);
                 getIssues();
             }
 
@@ -177,14 +178,16 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
             public void onRefreshSuccess() {
                 mRefreshView.setVisibility(View.GONE);
                 mSRLayout.setVisibility(View.VISIBLE);
-                mIssueCreateFAB.setVisibility(View.VISIBLE);
+                if (!(issueType == IssuesActivity.USER_ISSUES))
+                    mIssueCreateFAB.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onRefreshFail() {
                 mRefreshView.setVisibility(View.VISIBLE);
                 mSRLayout.setVisibility(View.GONE);
-                mIssueCreateFAB.setVisibility(View.GONE);
+                if (!(issueType == IssuesActivity.USER_ISSUES))
+                    mIssueCreateFAB.setVisibility(View.GONE);
             }
         });
         mRefreshView.startRefresh();

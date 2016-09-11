@@ -133,6 +133,7 @@ public class HtmlImageGetter implements Html.ImageGetter {
             try {
                 URL aURL = new URL(url);
                 final URLConnection conn = aURL.openConnection();
+                Log.i(TAG, url);
                 if ((imageFile = cache.get(url)) == null || cache.get(url).length() == 0) {
                     conn.connect();
                     BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
@@ -171,7 +172,7 @@ public class HtmlImageGetter implements Html.ImageGetter {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                return null;
+                return returnErrorDrawable();
             }
         }
 

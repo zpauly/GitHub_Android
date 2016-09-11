@@ -39,4 +39,5 @@ dependencies {
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.17'
     compile 'com.caverock:androidsvg:1.2.1'
     compile 'Codeview-1.0.0:webviewcode:1.0.0'
+    compile 'com.ms-square:expandableTextView:0.1.4'
 }

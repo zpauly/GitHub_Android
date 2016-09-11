@@ -268,6 +268,7 @@ public class RepoContentFragment extends ToolbarMenuFragment implements RepoCont
     @Override
     public void loadRepoFail() {
         mSRLayout.setRefreshing(false);
+        mRefreshView.refreshFail();
     }
 
     @Override
