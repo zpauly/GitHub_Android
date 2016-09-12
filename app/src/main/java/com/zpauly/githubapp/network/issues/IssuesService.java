@@ -3,6 +3,7 @@ package com.zpauly.githubapp.network.issues;
 
 import android.support.annotation.Nullable;
 
+import com.zpauly.githubapp.entity.response.issues.AssigneeBean;
 import com.zpauly.githubapp.entity.response.issues.IssueCommentBean;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
 
@@ -187,6 +188,32 @@ public interface IssuesService {
                                                                             @Body com.zpauly.githubapp.entity.request.IssueBean issueBean,
                                                                             @Path("owner") String owner,
                                                                             @Path("repo") String repo);
+
+    /**
+     * Check assignee
+     * You may also check to see if a particular user is an assignee for a repository.
+     * @param auth
+     * @param owner
+     * @param repo
+     * @param assignee
+     * @return
+     */
+    @GET("/repos/{owner}/{repo}/assignees/{assignee}")
+    Observable checkAssignee(@Header("Authorization") String auth, @Path("owner") String owner,
+                             @Path("repo") String repo, @Path("assignee") String assignee);
+
+    /**
+     * List assignees
+     * This call lists all the available assignees to which issues may be assigned.
+     * @param auth
+     * @param owner
+     * @param repo
+     * @return
+     */
+    @GET("/repos/{owner}/{repo}/assignees")
+    Observable<List<AssigneeBean>> getAssignees(@Header("Authorization") String auth,
+                                                @Path("owner") String owner,
+                                                @Path("repo") String repo);
 
     /**
      * Create a comment

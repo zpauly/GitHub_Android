@@ -2,6 +2,7 @@ package com.zpauly.githubapp.network.issues;
 
 import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.base.BaseNetMethod;
+import com.zpauly.githubapp.entity.response.issues.AssigneeBean;
 import com.zpauly.githubapp.entity.response.issues.IssueCommentBean;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
@@ -126,6 +127,23 @@ public class IssuesMethod extends BaseNetMethod {
                                    String auth, String owner, String repo, int number,
                                    int pageId) {
         service.getAnIssueComments(auth, owner, repo, number, null, pageId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    @SuppressWarnings("unchecked")
+    public void checkAssignee(Observer observer, String auth, String owner, String repo,
+                              String assignee) {
+        service.checkAssignee(auth, owner, repo, assignee)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getAssignees(Observer<List<AssigneeBean>> observer, String auth,
+                             String owner, String repo) {
+        service.getAssignees(auth, owner, repo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
