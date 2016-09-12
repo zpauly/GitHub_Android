@@ -83,6 +83,14 @@
     <string name="started">Starred</string>
     <string name="unstarred">Unstarred</string>
 
+    <string name="title">Title</string>
+    <string name="body">Body</string>
+    <string name="create_issue">Create Issue</string>
+
+    <string name="milestone">MileStone</string>
+    <string name="assignees">Assignees</string>
+    <string name="labels">Labels</string>
+
     <string name="repos_all">All</string>
     <string name="repos_public">Public</string>
     <string name="repos_private">Private</string>

@@ -213,7 +213,7 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
         mIssueCreateFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                IssueCreateActivity.launchActivity(getContext(), username, repoName);
             }
         });
     }

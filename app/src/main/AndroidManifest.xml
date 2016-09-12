@@ -33,6 +33,7 @@
         <activity android:name=".view.issues.IssuesActivity" />
         <activity android:name=".view.issues.IssueContentActivity" />
         <activity android:name=".view.comment.CommentCreateActivity" />
+        <activity android:name=".view.issues.IssueCreateActivity" />
     </application>
 
 </manifest>

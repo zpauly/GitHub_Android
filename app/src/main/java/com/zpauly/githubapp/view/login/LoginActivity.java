@@ -208,7 +208,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         String auth = AuthUtil.generateAuth(username, password);
         SPUtil.putString(this, Constants.USER_INFO, Constants.USER_AUTH, auth);
         SPUtil.putString(this, Constants.USER_INFO, Constants.USER_USERNAME, username);
-        SPUtil.putInt(this, Constants.USER_INFO, Constants.USER_ID, appAuthorizationBean.getId());
     }
 
     @Override
