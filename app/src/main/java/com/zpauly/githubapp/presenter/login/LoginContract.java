@@ -2,6 +2,7 @@ package com.zpauly.githubapp.presenter.login;
 
 import com.zpauly.githubapp.base.BasePresenter;
 import com.zpauly.githubapp.base.BaseView;
+import com.zpauly.githubapp.entity.response.AppAuthorizationBean;
 import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 
 /**
@@ -19,7 +20,7 @@ public class LoginContract {
 
         void loginFail();
 
-        void logining();
+        void logining(AppAuthorizationBean bean);
 
         void loadUserInfo(AuthenticatedUserBean user);
 

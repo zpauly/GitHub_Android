@@ -2,7 +2,7 @@ package com.zpauly.githubapp.presenter.issues;
 
 import com.zpauly.githubapp.base.BasePresenter;
 import com.zpauly.githubapp.base.BaseView;
-import com.zpauly.githubapp.entity.response.CommentBean;
+import com.zpauly.githubapp.entity.response.issues.IssueCommentBean;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class IssueContentContract {
 
         void getCommentsFail();
 
-        void gettingComments(List<CommentBean> commentBeen);
+        void gettingComments(List<IssueCommentBean> commentBeen);
 
         String getRepo();
 

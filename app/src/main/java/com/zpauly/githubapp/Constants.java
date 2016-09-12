@@ -34,6 +34,9 @@ public interface Constants {
     //user password
     String USER_PASSWORD = "USER_PASSWORD";
 
+    //user id
+    String USER_ID = "USER_ID";
+
     //user auth
     String USER_AUTH = "USER_AUTH";
 

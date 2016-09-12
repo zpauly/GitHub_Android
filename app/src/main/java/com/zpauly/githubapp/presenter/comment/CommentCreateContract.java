@@ -2,7 +2,7 @@ package com.zpauly.githubapp.presenter.comment;
 
 import com.zpauly.githubapp.base.BasePresenter;
 import com.zpauly.githubapp.base.BaseView;
-import com.zpauly.githubapp.entity.response.CommentBean;
+import com.zpauly.githubapp.entity.response.issues.IssueCommentBean;
 
 /**
  * Created by zpauly on 16/9/8.
@@ -17,7 +17,7 @@ public class CommentCreateContract {
 
         void createCommentFail();
 
-        void creatingComment(CommentBean commentBean);
+        void creatingComment(IssueCommentBean issueCommentBean);
 
         String getOwner();
 

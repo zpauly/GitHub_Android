@@ -4,9 +4,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.zpauly.githubapp.base.NetPresenter;
-import com.zpauly.githubapp.entity.response.CommentBean;
+import com.zpauly.githubapp.entity.response.issues.IssueCommentBean;
 import com.zpauly.githubapp.network.issues.IssuesMethod;
-import com.zpauly.githubapp.utils.TextUtil;
 
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class IssueContentPresenter extends NetPresenter implements IssueContentC
     private String auth;
     private IssuesMethod issuesMethod;
 
-    private Subscriber<List<CommentBean>> commentsSubscriber;
+    private Subscriber<List<IssueCommentBean>> commentsSubscriber;
 
     private int pageId = 1;
 
@@ -37,7 +36,7 @@ public class IssueContentPresenter extends NetPresenter implements IssueContentC
 
     @Override
     public void getIssueComments() {
-        commentsSubscriber = new Subscriber<List<CommentBean>>() {
+        commentsSubscriber = new Subscriber<List<IssueCommentBean>>() {
             @Override
             public void onCompleted() {
                 mIssueContentView.getCommentsSuccess();
@@ -50,7 +49,7 @@ public class IssueContentPresenter extends NetPresenter implements IssueContentC
             }
 
             @Override
-            public void onNext(List<CommentBean> commentBeen) {
+            public void onNext(List<IssueCommentBean> commentBeen) {
                 mIssueContentView.gettingComments(commentBeen);
             }
         };

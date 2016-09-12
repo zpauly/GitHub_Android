@@ -3,7 +3,7 @@ package com.zpauly.githubapp.network.issues;
 
 import android.support.annotation.Nullable;
 
-import com.zpauly.githubapp.entity.response.CommentBean;
+import com.zpauly.githubapp.entity.response.issues.IssueCommentBean;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
 
 import java.util.List;
@@ -167,12 +167,12 @@ public interface IssuesService {
      * @return
      */
     @GET("/repos/{owner}/{repo}/issues/{number}/comments")
-    Observable<List<CommentBean>> getAnIssueComments(@Header("Authorization") String auth,
-                                                     @Path("owner") String owner,
-                                                     @Path("repo") String repo,
-                                                     @Path("number") int number,
-                                                     @Nullable @Query("since") String since,
-                                                     @Nullable @Query("page") int pageId);
+    Observable<List<IssueCommentBean>> getAnIssueComments(@Header("Authorization") String auth,
+                                                          @Path("owner") String owner,
+                                                          @Path("repo") String repo,
+                                                          @Path("number") int number,
+                                                          @Nullable @Query("since") String since,
+                                                          @Nullable @Query("page") int pageId);
 
     /**
      * Create an issue
@@ -198,9 +198,9 @@ public interface IssuesService {
      * @return
      */
     @POST("/repos/{owner}/{repo}/issues/{number}/comments")
-    Observable<CommentBean> createAComment(@Header("Authorization") String auth,
-                                           @Body com.zpauly.githubapp.entity.request.CommentBean commentBean,
-                                           @Path("owner") String owner,
-                                           @Path("repo") String repo,
-                                           @Path("number") int number);
+    Observable<IssueCommentBean> createAComment(@Header("Authorization") String auth,
+                                                @Body com.zpauly.githubapp.entity.request.CommentBean commentBean,
+                                                @Path("owner") String owner,
+                                                @Path("repo") String repo,
+                                                @Path("number") int number);
 }

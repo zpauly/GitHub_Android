@@ -1,9 +1,11 @@
-package com.zpauly.githubapp.entity.response;
+package com.zpauly.githubapp.entity.response.issues;
+
+import com.zpauly.githubapp.entity.response.UserBean;
 
 /**
  * Created by zpauly on 16/9/4.
  */
-public class CommentBean {
+public class IssueCommentBean {
     /**
      * id : 1
      * url : https://api.github.com/repos/octocat/Hello-World/issues/comments/1

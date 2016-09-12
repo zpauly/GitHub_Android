@@ -2,7 +2,7 @@ package com.zpauly.githubapp.network.issues;
 
 import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.base.BaseNetMethod;
-import com.zpauly.githubapp.entity.response.CommentBean;
+import com.zpauly.githubapp.entity.response.issues.IssueCommentBean;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
 
@@ -113,7 +113,7 @@ public class IssuesMethod extends BaseNetMethod {
                 .subscribe(observer);
     }
 
-    public void getAnIssueComments(Observer<List<CommentBean>> observer,
+    public void getAnIssueComments(Observer<List<IssueCommentBean>> observer,
                                    String auth, String owner, String repo, int number,
                                    String since, int pageId) {
         service.getAnIssueComments(auth, owner, repo, number, since, pageId)
@@ -122,7 +122,7 @@ public class IssuesMethod extends BaseNetMethod {
                 .subscribe(observer);
     }
 
-    public void getDefaultAnIssueComments(Observer<List<CommentBean>> observer,
+    public void getDefaultAnIssueComments(Observer<List<IssueCommentBean>> observer,
                                    String auth, String owner, String repo, int number,
                                    int pageId) {
         service.getAnIssueComments(auth, owner, repo, number, null, pageId)
@@ -140,7 +140,7 @@ public class IssuesMethod extends BaseNetMethod {
                 .subscribe(observer);
     }
 
-    public void createAComment(Observer<CommentBean> observer,
+    public void createAComment(Observer<IssueCommentBean> observer,
                                com.zpauly.githubapp.entity.request.CommentBean commentBean,
                                String auth, String owner, String repo, int number) {
         service.createAComment(auth, commentBean, owner, repo, number)

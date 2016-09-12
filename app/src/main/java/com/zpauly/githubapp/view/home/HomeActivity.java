@@ -172,6 +172,7 @@ public class HomeActivity extends DrawerActivity {
 
     private void exit() {
         SPUtil.clearAllField(this, Constants.USER_INFO);
+        SPUtil.clearAllField(this, Constants.LOCAL_CONFIGURATION);
         UserDao.deleteUser();
         Intent intent = new Intent();
         intent.setClass(this, LoginActivity.class);

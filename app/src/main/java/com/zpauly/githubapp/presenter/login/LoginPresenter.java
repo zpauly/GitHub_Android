@@ -65,7 +65,7 @@ public class LoginPresenter extends NetPresenter implements Presenter {
 
             @Override
             public void onNext(AppAuthorizationBean appAuthorization) {
-                mLoginView.logining();
+                mLoginView.logining(appAuthorization);
             }
         };
         String auth = mLoginView.getAuth();

@@ -8,12 +8,14 @@ import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.base.BaseActivity;
 import com.zpauly.githubapp.db.UserDao;
+import com.zpauly.githubapp.entity.response.AppAuthorizationBean;
 import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 import com.zpauly.githubapp.presenter.login.LoginContract;
 import com.zpauly.githubapp.presenter.login.LoginPresenter;
@@ -200,12 +202,13 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     }
 
     @Override
-    public void logining() {
+    public void logining(AppAuthorizationBean appAuthorizationBean) {
         String username = mUsernameET.getText().toString();
         String password = mPasswordET.getText().toString();
         String auth = AuthUtil.generateAuth(username, password);
         SPUtil.putString(this, Constants.USER_INFO, Constants.USER_AUTH, auth);
         SPUtil.putString(this, Constants.USER_INFO, Constants.USER_USERNAME, username);
+        SPUtil.putInt(this, Constants.USER_INFO, Constants.USER_ID, appAuthorizationBean.getId());
     }
 
     @Override
