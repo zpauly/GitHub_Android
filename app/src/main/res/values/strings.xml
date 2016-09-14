@@ -67,6 +67,7 @@
     <string name="simplified_chinese">中文</string>
     <string name="english">English</string>
     <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
     <string name="please_choose">Please Make a Choose</string>
     <string name="please_input_username">Empty Username</string>
     <string name="please_input_password">Empty Password</string>

@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import com.zpauly.githubapp.entity.response.issues.AssigneeBean;
 import com.zpauly.githubapp.entity.response.issues.IssueCommentBean;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
+import com.zpauly.githubapp.entity.response.issues.LabelBean;
+import com.zpauly.githubapp.entity.response.issues.MilestoneBean;
 
 import java.util.List;
 
@@ -199,7 +201,7 @@ public interface IssuesService {
      * @return
      */
     @GET("/repos/{owner}/{repo}/assignees/{assignee}")
-    Observable checkAssignee(@Header("Authorization") String auth, @Path("owner") String owner,
+    Observable<String> checkAssignee(@Header("Authorization") String auth, @Path("owner") String owner,
                              @Path("repo") String repo, @Path("assignee") String assignee);
 
     /**
@@ -230,4 +232,32 @@ public interface IssuesService {
                                                 @Path("owner") String owner,
                                                 @Path("repo") String repo,
                                                 @Path("number") int number);
+
+    /**
+     * List milestones for a repository
+     * @param auth
+     * @param state
+     * @param sort
+     * @param direction
+     * @return
+     */
+    @GET("/repos/{owner}/{repo}/milestones")
+    Observable<List<MilestoneBean>> getMilestones(@Header("Authorization") String auth,
+                                                 @Path("owner") String owner,
+                                                 @Path("repo") String repo,
+                                                 @Nullable @Query("state") String state,
+                                                 @Nullable @Query("sort") String sort,
+                                                 @Nullable @Query("direction") String direction);
+
+    /**
+     * List all labels for this repository
+     * @param auth
+     * @param owner
+     * @param repo
+     * @return
+     */
+    @GET("repos/{owner}/{repo}/labels")
+    Observable<List<LabelBean>> getLabels(@Header("Authorization") String auth,
+                                          @Path("owner") String owner,
+                                          @Path("repo") String repo);
 }

@@ -1,9 +1,12 @@
 package com.zpauly.githubapp.presenter.issues;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.zpauly.githubapp.base.NetPresenter;
 import com.zpauly.githubapp.entity.response.issues.AssigneeBean;
+import com.zpauly.githubapp.entity.response.issues.LabelBean;
+import com.zpauly.githubapp.entity.response.issues.MilestoneBean;
 import com.zpauly.githubapp.network.issues.IssuesMethod;
 
 import java.util.List;
@@ -22,8 +25,10 @@ public class IssueCreatePresenter extends NetPresenter implements IssueCreateCon
     private String auth;
     private IssuesMethod issuesMethod;
 
-    private Subscriber<List<AssigneeBean>> assigneesSubscribe;
-    private Subscriber checkSubscribe;
+    private Subscriber<List<AssigneeBean>> assigneesSubscriber;
+    private Subscriber<List<MilestoneBean>> milestonesSubscriber;
+    private Subscriber<List<LabelBean>> labelsSubscriber;
+    private Subscriber<String> checkSubscribe;
 
     public IssueCreatePresenter(Context context, IssueCreateContract.View view) {
         mContext = context;
@@ -34,7 +39,7 @@ public class IssueCreatePresenter extends NetPresenter implements IssueCreateCon
 
     @Override
     public void checkAssignee() {
-        checkSubscribe = new Subscriber() {
+        checkSubscribe = new Subscriber<String>() {
             @Override
             public void onCompleted() {
                 mIssueCreateView.checkSuccess();
@@ -47,17 +52,17 @@ public class IssueCreatePresenter extends NetPresenter implements IssueCreateCon
             }
 
             @Override
-            public void onNext(Object o) {
+            public void onNext(String o) {
 
             }
         };
-        issuesMethod.checkAssignee(checkSubscribe, auth, mIssueCreateView.getUsername(),
-                mIssueCreateView.getOwner(), mIssueCreateView.getUsername());
+        issuesMethod.checkAssignee(checkSubscribe, auth, mIssueCreateView.getOwner(),
+                mIssueCreateView.getRepoName(), mIssueCreateView.getUsername());
     }
 
     @Override
     public void getAssignees() {
-        assigneesSubscribe = new Subscriber<List<AssigneeBean>>() {
+        assigneesSubscriber = new Subscriber<List<AssigneeBean>>() {
             @Override
             public void onCompleted() {
                 mIssueCreateView.getAssigneesSuccess();
@@ -74,7 +79,53 @@ public class IssueCreatePresenter extends NetPresenter implements IssueCreateCon
                 mIssueCreateView.gettingAssignees(assigneeBeen);
             }
         };
-        issuesMethod.getAssignees(assigneesSubscribe, auth, mIssueCreateView.getOwner(),
+        issuesMethod.getAssignees(assigneesSubscriber, auth, mIssueCreateView.getOwner(),
+                mIssueCreateView.getRepoName());
+    }
+
+    @Override
+    public void getMilestones() {
+        milestonesSubscriber = new Subscriber<List<MilestoneBean>>() {
+            @Override
+            public void onCompleted() {
+                mIssueCreateView.getMilestonesSuccess();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                mIssueCreateView.getMilestonesFail();
+            }
+
+            @Override
+            public void onNext(List<MilestoneBean> milestoneBeen) {
+                mIssueCreateView.gettingMilestones(milestoneBeen);
+            }
+        };
+        Log.i(TAG, auth);
+        issuesMethod.getMilestones(milestonesSubscriber, auth, mIssueCreateView.getOwner(), mIssueCreateView.getRepoName(), null, null, null);
+    }
+
+    @Override
+    public void getLabels() {
+        labelsSubscriber = new Subscriber<List<LabelBean>>() {
+            @Override
+            public void onCompleted() {
+                mIssueCreateView.getLabelsSuccess();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                mIssueCreateView.getAssigneeFail();
+            }
+
+            @Override
+            public void onNext(List<LabelBean> labelBeen) {
+                mIssueCreateView.gettingLabels(labelBeen);
+            }
+        };
+        issuesMethod.getLabels(labelsSubscriber, auth, mIssueCreateView.getOwner(),
                 mIssueCreateView.getRepoName());
     }
 
@@ -86,6 +137,6 @@ public class IssueCreatePresenter extends NetPresenter implements IssueCreateCon
 
     @Override
     public void stop() {
-        unsubscribe(assigneesSubscribe, checkSubscribe);
+        unsubscribe(assigneesSubscriber, checkSubscribe);
     }
 }

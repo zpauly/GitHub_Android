@@ -5,6 +5,8 @@ import com.zpauly.githubapp.base.BaseNetMethod;
 import com.zpauly.githubapp.entity.response.issues.AssigneeBean;
 import com.zpauly.githubapp.entity.response.issues.IssueCommentBean;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
+import com.zpauly.githubapp.entity.response.issues.LabelBean;
+import com.zpauly.githubapp.entity.response.issues.MilestoneBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
 
 import java.util.List;
@@ -133,7 +135,7 @@ public class IssuesMethod extends BaseNetMethod {
     }
 
     @SuppressWarnings("unchecked")
-    public void checkAssignee(Observer observer, String auth, String owner, String repo,
+    public void checkAssignee(Observer<String> observer, String auth, String owner, String repo,
                               String assignee) {
         service.checkAssignee(auth, owner, repo, assignee)
                 .subscribeOn(Schedulers.io())
@@ -162,6 +164,22 @@ public class IssuesMethod extends BaseNetMethod {
                                com.zpauly.githubapp.entity.request.CommentBean commentBean,
                                String auth, String owner, String repo, int number) {
         service.createAComment(auth, commentBean, owner, repo, number)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getMilestones(Observer<List<MilestoneBean>> observer, String auth,
+                              String owner, String repo,
+                              String state, String sort, String direction) {
+        service.getMilestones(auth, owner, repo, state, sort, direction)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getLabels(Observer<List<LabelBean>> observer, String auth, String owner, String repo) {
+        service.getLabels(auth, owner, repo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
