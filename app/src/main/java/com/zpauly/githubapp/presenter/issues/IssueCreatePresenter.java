@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.zpauly.githubapp.base.NetPresenter;
 import com.zpauly.githubapp.entity.response.issues.AssigneeBean;
+import com.zpauly.githubapp.entity.response.issues.IssueBean;
 import com.zpauly.githubapp.entity.response.issues.LabelBean;
 import com.zpauly.githubapp.entity.response.issues.MilestoneBean;
 import com.zpauly.githubapp.network.issues.IssuesMethod;
@@ -28,6 +29,7 @@ public class IssueCreatePresenter extends NetPresenter implements IssueCreateCon
     private Subscriber<List<AssigneeBean>> assigneesSubscriber;
     private Subscriber<List<MilestoneBean>> milestonesSubscriber;
     private Subscriber<List<LabelBean>> labelsSubscriber;
+    private Subscriber<IssueBean> createSubscriber;
     private Subscriber<String> checkSubscribe;
 
     public IssueCreatePresenter(Context context, IssueCreateContract.View view) {
@@ -130,6 +132,28 @@ public class IssueCreatePresenter extends NetPresenter implements IssueCreateCon
     }
 
     @Override
+    public void createAnIssue() {
+        createSubscriber = new Subscriber<IssueBean>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(IssueBean issueBean) {
+
+            }
+        };
+        issuesMethod.createAnIssue(createSubscriber, mIssueCreateView.getIssueBean(),
+                auth, mIssueCreateView.getOwner(), mIssueCreateView.getRepoName());
+    }
+
+    @Override
     public void start() {
         auth = getAuth(mContext);
         issuesMethod = getMethod(IssuesMethod.class);
@@ -137,6 +161,7 @@ public class IssueCreatePresenter extends NetPresenter implements IssueCreateCon
 
     @Override
     public void stop() {
-        unsubscribe(assigneesSubscriber, checkSubscribe);
+        unsubscribe(assigneesSubscriber, milestonesSubscriber,
+                labelsSubscriber, createSubscriber, checkSubscribe);
     }
 }

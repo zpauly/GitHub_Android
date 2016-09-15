@@ -3,6 +3,7 @@ package com.zpauly.githubapp.presenter.issues;
 import com.zpauly.githubapp.base.BasePresenter;
 import com.zpauly.githubapp.base.BaseView;
 import com.zpauly.githubapp.entity.response.issues.AssigneeBean;
+import com.zpauly.githubapp.entity.response.issues.IssueBean;
 import com.zpauly.githubapp.entity.response.issues.LabelBean;
 import com.zpauly.githubapp.entity.response.issues.MilestoneBean;
 
@@ -20,6 +21,8 @@ public class IssueCreateContract {
         void getMilestones();
 
         void getLabels();
+
+        void createAnIssue();
     }
 
     public interface View extends BaseView<Presenter> {
@@ -44,6 +47,14 @@ public class IssueCreateContract {
         void getLabelsFail();
 
         void gettingLabels(List<LabelBean> labelBeen);
+
+        void createIssueSuccess();
+
+        void createIssueFail();
+
+        void creatingIssue(IssueBean issueBean);
+
+        com.zpauly.githubapp.entity.request.IssueBean getIssueBean();
 
         String getOwner();
 

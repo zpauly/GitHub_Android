@@ -151,7 +151,7 @@ public class IssuesMethod extends BaseNetMethod {
                 .subscribe(observer);
     }
 
-    public void createAnIssue(Observer<com.zpauly.githubapp.entity.request.IssueBean> observer,
+    public void createAnIssue(Observer<IssueBean> observer,
                               com.zpauly.githubapp.entity.request.IssueBean issueBean,
                               String auth, String owner, String repo) {
         service.createAnIssue(auth, issueBean, owner, repo)

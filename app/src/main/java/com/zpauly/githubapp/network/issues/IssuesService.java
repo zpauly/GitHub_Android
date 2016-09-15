@@ -186,7 +186,7 @@ public interface IssuesService {
      * @return
      */
     @POST("/repos/{owner}/{repo}/issues")
-    Observable<com.zpauly.githubapp.entity.request.IssueBean> createAnIssue(@Header("Authorization") String auth,
+    Observable<IssueBean> createAnIssue(@Header("Authorization") String auth,
                                                                             @Body com.zpauly.githubapp.entity.request.IssueBean issueBean,
                                                                             @Path("owner") String owner,
                                                                             @Path("repo") String repo);
