@@ -24,6 +24,7 @@ import com.zpauly.githubapp.presenter.issues.IssueCreateContract;
 import com.zpauly.githubapp.presenter.issues.IssueCreatePresenter;
 import com.zpauly.githubapp.ui.FloatingActionButton;
 import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.utils.TextUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +70,7 @@ public class IssueCreateFragment extends BaseFragment implements IssueCreateCont
 
     private com.zpauly.githubapp.entity.request.IssueBean createdIssueBean = new com.zpauly.githubapp.entity.request.IssueBean();
 
-    private List<MilestoneBean> selectedMilestoneList = new ArrayList<>();
+    private MilestoneBean selectedMilestone;
     private List<AssigneeBean> selectedAssigneeList = new ArrayList<>();
     private List<LabelBean> selectedLabelList = new ArrayList<>();
 
@@ -142,13 +143,10 @@ public class IssueCreateFragment extends BaseFragment implements IssueCreateCont
         mMilestonesDialog = new MaterialDialog.Builder(getContext())
                 .title(R.string.milestone)
                 .items(milestones)
-                .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
-                    public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
-                        selectedMilestoneList.clear();
-                        for (int i = 0; i < which.length; i++) {
-                            selectedMilestoneList.add(milestoneList.get(i));
-                        }
+                    public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                        selectedMilestone = milestoneList.get(which);
                         return false;
                     }
                 })
@@ -243,14 +241,39 @@ public class IssueCreateFragment extends BaseFragment implements IssueCreateCont
         mSendFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*title = mTitleET.getText().toString();
-                body = mBodyET.getText().toString();
+                if (mTitleET.getText() == null ||
+                        mTitleET.getText().toString().equals("")) {
+                    Snackbar.make(getView(), R.string.issue_no_title, Snackbar.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    title = mTitleET.getText().toString();
+                }
+                if (mBodyET.getText() != null) {
+                    body = mBodyET.getText().toString();
+                }
                 createdIssueBean.setTitle(title);
                 createdIssueBean.setBody(body);
-                mPresenter.createAnIssue();*/
-                Log.i(TAG, "milestones : " + selectedMilestoneList);
-                Log.i(TAG, "assignees : " + selectedAssigneeList);
-                Log.i(TAG, "labels : " + selectedLabelList);
+                if (selectedAssigneeList != null || selectedAssigneeList.size() != 0) {
+                    createdIssueBean.setAssignee(getOwner());
+                    createdIssueBean.setAssignees(selectedAssigneeList);
+                }
+                if (selectedLabelList != null || selectedLabelList.size() != 0) {
+                    List<String> labels = new ArrayList<String>();
+                    for (LabelBean bean : selectedLabelList) {
+                        labels.add(bean.getName());
+                    }
+                    createdIssueBean.setLabels(labels);
+                }
+                if (selectedMilestone != null && selectedMilestone.getNumber() != 0) {
+                    createdIssueBean.setMilestone(selectedMilestone.getNumber());
+                }
+                Log.i(TAG, "title : " + createdIssueBean.getTitle());
+                Log.i(TAG, "body : " + createdIssueBean.getBody());
+                Log.i(TAG, "assignee : " + createdIssueBean.getAssignee());
+                Log.i(TAG, "assignees : " + createdIssueBean.getAssignees());
+                Log.i(TAG, "milestone : " + createdIssueBean.getMilestone());
+                Log.i(TAG, "labels : " + createdIssueBean.getLabels());
+                mPresenter.createAnIssue();
             }
         });
     }

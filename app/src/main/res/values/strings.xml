@@ -87,6 +87,7 @@
     <string name="title">Title</string>
     <string name="body">Body</string>
     <string name="create_issue">Create Issue</string>
+    <string name="issue_no_title">Title of the issue is required</string>
 
     <string name="milestone">MileStone</string>
     <string name="assignees">Assignees</string>

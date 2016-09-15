@@ -119,7 +119,7 @@ public class IssueCreatePresenter extends NetPresenter implements IssueCreateCon
             @Override
             public void onError(Throwable e) {
                 e.printStackTrace();
-                mIssueCreateView.getAssigneeFail();
+                mIssueCreateView.getLabelsFail();
             }
 
             @Override
@@ -136,17 +136,18 @@ public class IssueCreatePresenter extends NetPresenter implements IssueCreateCon
         createSubscriber = new Subscriber<IssueBean>() {
             @Override
             public void onCompleted() {
-
+                mIssueCreateView.createIssueSuccess();
             }
 
             @Override
             public void onError(Throwable e) {
-
+                e.printStackTrace();
+                mIssueCreateView.createIssueFail();
             }
 
             @Override
             public void onNext(IssueBean issueBean) {
-
+                mIssueCreateView.creatingIssue(issueBean);
             }
         };
         issuesMethod.createAnIssue(createSubscriber, mIssueCreateView.getIssueBean(),
