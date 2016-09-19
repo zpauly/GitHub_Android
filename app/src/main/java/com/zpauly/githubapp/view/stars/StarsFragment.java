@@ -14,10 +14,9 @@ import android.view.ViewGroup;
 
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.ReposRecyclerViewAdapter;
-import com.zpauly.githubapp.base.BaseFragment;
 import com.zpauly.githubapp.db.ReposDao;
 import com.zpauly.githubapp.db.ReposModel;
-import com.zpauly.githubapp.entity.response.RepositoriesBean;
+import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.listener.OnMenuItemSelectedListener;
 import com.zpauly.githubapp.network.activity.ActivityService;
 import com.zpauly.githubapp.presenter.star.StarContract;

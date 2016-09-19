@@ -1,9 +1,11 @@
-package com.zpauly.githubapp.entity.response;
+package com.zpauly.githubapp.entity.response.repos;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
+import com.zpauly.githubapp.entity.response.PermissionsBean;
+import com.zpauly.githubapp.entity.response.UserBean;
 
 /**
  * Created by zpauly on 16-6-11.

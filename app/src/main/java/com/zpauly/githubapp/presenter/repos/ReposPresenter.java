@@ -2,13 +2,10 @@ package com.zpauly.githubapp.presenter.repos;
 
 import android.content.Context;
 
-import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.base.NetPresenter;
-import com.zpauly.githubapp.db.ReposDao;
-import com.zpauly.githubapp.entity.response.RepositoriesBean;
+import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.network.repositories.RepositoriesMethod;
 import com.zpauly.githubapp.network.repositories.RepositoriesService;
-import com.zpauly.githubapp.utils.SPUtil;
 
 import java.util.ArrayList;
 import java.util.List;

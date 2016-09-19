@@ -2,8 +2,8 @@ package com.zpauly.githubapp.network.repositories;
 
 import android.support.annotation.Nullable;
 
-import com.zpauly.githubapp.entity.response.RepositoriesBean;
-import com.zpauly.githubapp.entity.response.RepositoryContentBean;
+import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
+import com.zpauly.githubapp.entity.response.repos.RepositoryContentBean;
 
 import java.util.List;
 

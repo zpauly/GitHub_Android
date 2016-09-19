@@ -3,7 +3,7 @@ package com.zpauly.githubapp.entity.response.search;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.zpauly.githubapp.entity.response.RepositoriesBean;
+import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 
 import java.util.ArrayList;
 import java.util.List;

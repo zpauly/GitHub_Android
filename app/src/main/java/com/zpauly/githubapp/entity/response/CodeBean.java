@@ -1,5 +1,7 @@
 package com.zpauly.githubapp.entity.response;
 
+import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
+
 /**
  * Created by zpauly on 16-8-10.
  */

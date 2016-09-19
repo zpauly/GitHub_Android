@@ -2,7 +2,7 @@ package com.zpauly.githubapp.entity.response.events;
 
 import com.google.gson.annotations.SerializedName;
 import com.zpauly.githubapp.entity.response.OrganizationBean;
-import com.zpauly.githubapp.entity.response.RepositoriesBean;
+import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.zpauly.githubapp.entity.response;
+package com.zpauly.githubapp.entity.response.repos;
 
 /**
  * Created by zpauly on 16-7-31.

@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zpauly.githubapp.R;
-import com.zpauly.githubapp.entity.response.RepositoriesBean;
+import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.repositories.RepoContentActivity;
 import com.zpauly.githubapp.view.viewholder.ReposViewHolder;

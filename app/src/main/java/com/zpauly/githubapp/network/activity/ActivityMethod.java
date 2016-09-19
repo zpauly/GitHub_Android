@@ -4,7 +4,7 @@ import android.support.annotation.Nullable;
 
 import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.base.BaseNetMethod;
-import com.zpauly.githubapp.entity.response.RepositoriesBean;
+import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.events.EventsBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
 import com.zpauly.githubapp.utils.StringConverterFactory;

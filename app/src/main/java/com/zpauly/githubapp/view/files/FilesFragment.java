@@ -1,9 +1,7 @@
 package com.zpauly.githubapp.view.files;
 
-import android.database.sqlite.SQLiteBindOrColumnIndexOutOfRangeException;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
@@ -26,7 +24,7 @@ import com.zpauly.githubapp.adapter.PathRecyclerViewAdapter;
 import com.zpauly.githubapp.base.BaseFragment;
 import com.zpauly.githubapp.db.FileDirDao;
 import com.zpauly.githubapp.db.FileDirModel;
-import com.zpauly.githubapp.entity.response.RepositoryContentBean;
+import com.zpauly.githubapp.entity.response.repos.RepositoryContentBean;
 import com.zpauly.githubapp.listener.OnDirItemClickListener;
 import com.zpauly.githubapp.presenter.files.FilesContract;
 import com.zpauly.githubapp.presenter.files.FilesPresenter;

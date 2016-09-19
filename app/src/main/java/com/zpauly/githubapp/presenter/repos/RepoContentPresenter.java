@@ -3,16 +3,11 @@ package com.zpauly.githubapp.presenter.repos;
 import android.content.Context;
 import android.util.Log;
 
-import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.base.NetPresenter;
-import com.zpauly.githubapp.entity.response.RepositoriesBean;
-import com.zpauly.githubapp.entity.response.RepositoryContentBean;
+import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.network.activity.ActivityMethod;
 import com.zpauly.githubapp.network.repositories.RepositoriesMethod;
 import com.zpauly.githubapp.presenter.repos.RepoContentContract.Presenter;
-import com.zpauly.githubapp.utils.SPUtil;
-
-import java.util.List;
 
 import rx.Subscriber;
 

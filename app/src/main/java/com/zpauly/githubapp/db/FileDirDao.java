@@ -1,6 +1,6 @@
 package com.zpauly.githubapp.db;
 
-import com.zpauly.githubapp.entity.response.RepositoryContentBean;
+import com.zpauly.githubapp.entity.response.repos.RepositoryContentBean;
 
 import org.litepal.crud.DataSupport;
 

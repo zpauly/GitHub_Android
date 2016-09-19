@@ -8,13 +8,12 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.View;
 
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.ViewPagerAdapter;
 import com.zpauly.githubapp.db.ReposDao;
-import com.zpauly.githubapp.entity.response.RepositoriesBean;
+import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.presenter.repos.ReposContract;
 import com.zpauly.githubapp.presenter.repos.ReposPresenter;
 import com.zpauly.githubapp.ui.RefreshView;

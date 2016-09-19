@@ -18,7 +18,7 @@ import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.RepositoriesRecyclerViewAdapter;
 import com.zpauly.githubapp.adapter.UsersRecyclerViewAdapter;
 import com.zpauly.githubapp.base.BaseFragment;
-import com.zpauly.githubapp.entity.response.RepositoriesBean;
+import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.entity.response.search.SearchCodeBean;
 import com.zpauly.githubapp.entity.response.search.SearchReposBean;

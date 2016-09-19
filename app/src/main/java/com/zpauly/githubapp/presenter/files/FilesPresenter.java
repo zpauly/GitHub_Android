@@ -3,14 +3,12 @@ package com.zpauly.githubapp.presenter.files;
 import android.content.Context;
 import android.util.Log;
 
-import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.base.NetPresenter;
 import com.zpauly.githubapp.db.FileDirDao;
 import com.zpauly.githubapp.db.FileDirModel;
-import com.zpauly.githubapp.entity.response.RepositoryContentBean;
+import com.zpauly.githubapp.entity.response.repos.RepositoryContentBean;
 import com.zpauly.githubapp.network.gitdata.GitDataMethod;
 import com.zpauly.githubapp.network.repositories.RepositoriesMethod;
-import com.zpauly.githubapp.utils.SPUtil;
 
 import java.util.List;
 

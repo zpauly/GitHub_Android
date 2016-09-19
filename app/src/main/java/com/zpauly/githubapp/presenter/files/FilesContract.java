@@ -3,7 +3,7 @@ package com.zpauly.githubapp.presenter.files;
 import com.zpauly.githubapp.base.BasePresenter;
 import com.zpauly.githubapp.base.BaseView;
 import com.zpauly.githubapp.db.FileDirModel;
-import com.zpauly.githubapp.entity.response.RepositoryContentBean;
+import com.zpauly.githubapp.entity.response.repos.RepositoryContentBean;
 
 import java.util.List;
 

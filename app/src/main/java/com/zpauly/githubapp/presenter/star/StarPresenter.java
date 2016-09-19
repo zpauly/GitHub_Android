@@ -2,11 +2,9 @@ package com.zpauly.githubapp.presenter.star;
 
 import android.content.Context;
 
-import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.base.NetPresenter;
-import com.zpauly.githubapp.entity.response.RepositoriesBean;
+import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.network.activity.ActivityMethod;
-import com.zpauly.githubapp.utils.SPUtil;
 
 import java.util.List;
 
