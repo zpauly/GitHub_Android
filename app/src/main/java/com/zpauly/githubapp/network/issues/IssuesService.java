@@ -3,18 +3,22 @@ package com.zpauly.githubapp.network.issues;
 
 import android.support.annotation.Nullable;
 
+import com.zpauly.githubapp.entity.request.CommentRequestBean;
+import com.zpauly.githubapp.entity.request.IssueRequestBean;
 import com.zpauly.githubapp.entity.response.issues.AssigneeBean;
-import com.zpauly.githubapp.entity.response.issues.IssueCommentBean;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
+import com.zpauly.githubapp.entity.response.issues.IssueCommentBean;
 import com.zpauly.githubapp.entity.response.issues.LabelBean;
 import com.zpauly.githubapp.entity.response.issues.MilestoneBean;
 
 import java.util.List;
 
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -180,14 +184,14 @@ public interface IssuesService {
     /**
      * Create an issue
      * @param auth
-     * @param issueBean
+     * @param issueRequestBean
      * @param owner
      * @param repo
      * @return
      */
     @POST("/repos/{owner}/{repo}/issues")
     Observable<IssueBean> createAnIssue(@Header("Authorization") String auth,
-                                                                            @Body com.zpauly.githubapp.entity.request.IssueBean issueBean,
+                                                                            @Body IssueRequestBean issueRequestBean,
                                                                             @Path("owner") String owner,
                                                                             @Path("repo") String repo);
 
@@ -220,7 +224,7 @@ public interface IssuesService {
     /**
      * Create a comment
      * @param auth
-     * @param commentBean
+     * @param commentRequestBean
      * @param owner
      * @param repo
      * @param number
@@ -228,7 +232,7 @@ public interface IssuesService {
      */
     @POST("/repos/{owner}/{repo}/issues/{number}/comments")
     Observable<IssueCommentBean> createAComment(@Header("Authorization") String auth,
-                                                @Body com.zpauly.githubapp.entity.request.CommentBean commentBean,
+                                                @Body CommentRequestBean commentRequestBean,
                                                 @Path("owner") String owner,
                                                 @Path("repo") String repo,
                                                 @Path("number") int number);
@@ -260,4 +264,32 @@ public interface IssuesService {
     Observable<List<LabelBean>> getLabels(@Header("Authorization") String auth,
                                           @Path("owner") String owner,
                                           @Path("repo") String repo);
+
+    /**
+     * Users with push access can lock an issue's conversation.
+     * @param auth
+     * @param owner
+     * @param repo
+     * @param number
+     * @return
+     */
+    @PUT("/repos/{owner}/{repo}/issues/{number}/lock")
+    Observable<String> lockAnIssue(@Header("Authorization") String auth,
+                                   @Path("owner") String owner,
+                                   @Path("repo") String repo,
+                                   @Path("number") int number);
+
+    /**
+     * Users with push access can unlock an issue's conversation.
+     * @param auth
+     * @param owner
+     * @param repo
+     * @param number
+     * @return
+     */
+    @DELETE("/repos/{owner}/{repo}/issues/{number}/lock")
+    Observable<String> unlockAnIssue(@Header("Authorization") String auth,
+                                     @Path("owner") String owner,
+                                     @Path("repo") String repo,
+                                     @Path("number") int number);
 }

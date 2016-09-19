@@ -35,6 +35,12 @@ public class CommentCreateFragment extends BaseFragment implements CommentCreate
     private IssueCommentBean issueCommentBean;
 
     @Override
+    public void onStop() {
+        mPresenter.stop();
+        super.onStop();
+    }
+
+    @Override
     protected void initViews(View view) {
         getAttrs();
 

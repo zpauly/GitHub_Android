@@ -59,6 +59,12 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
     private List<IssueCommentBean> list = new ArrayList<>();
 
     @Override
+    public void onStop() {
+        mPresenter.stop();
+        super.onStop();
+    }
+
+    @Override
     protected void initViews(View view) {
         getAttrs();
 

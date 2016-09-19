@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by zpauly on 16/9/8.
  */
-public class IssueBean implements Parcelable {
+public class IssueRequestBean implements Parcelable {
     /**
      * title : Found a bug
      * body : I'm having a problem with this.
@@ -23,7 +23,7 @@ public class IssueBean implements Parcelable {
     private String title;
     private String body;
     private String assignee;
-    private int milestone;
+    private Integer milestone;
     /**
      * login : octocat
      * id : 1
@@ -71,11 +71,11 @@ public class IssueBean implements Parcelable {
         this.assignee = assignee;
     }
 
-    public int getMilestone() {
+    public Integer getMilestone() {
         return milestone;
     }
 
-    public void setMilestone(int milestone) {
+    public void setMilestone(Integer milestone) {
         this.milestone = milestone;
     }
 
@@ -110,10 +110,10 @@ public class IssueBean implements Parcelable {
         dest.writeStringList(this.labels);
     }
 
-    public IssueBean() {
+    public IssueRequestBean() {
     }
 
-    protected IssueBean(Parcel in) {
+    protected IssueRequestBean(Parcel in) {
         this.title = in.readString();
         this.body = in.readString();
         this.assignee = in.readString();
@@ -122,15 +122,15 @@ public class IssueBean implements Parcelable {
         this.labels = in.createStringArrayList();
     }
 
-    public static final Parcelable.Creator<IssueBean> CREATOR = new Parcelable.Creator<IssueBean>() {
+    public static final Parcelable.Creator<IssueRequestBean> CREATOR = new Parcelable.Creator<IssueRequestBean>() {
         @Override
-        public IssueBean createFromParcel(Parcel source) {
-            return new IssueBean(source);
+        public IssueRequestBean createFromParcel(Parcel source) {
+            return new IssueRequestBean(source);
         }
 
         @Override
-        public IssueBean[] newArray(int size) {
-            return new IssueBean[size];
+        public IssueRequestBean[] newArray(int size) {
+            return new IssueRequestBean[size];
         }
     };
 }

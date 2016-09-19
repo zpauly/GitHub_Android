@@ -2,6 +2,8 @@ package com.zpauly.githubapp.network.issues;
 
 import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.base.BaseNetMethod;
+import com.zpauly.githubapp.entity.request.CommentRequestBean;
+import com.zpauly.githubapp.entity.request.IssueRequestBean;
 import com.zpauly.githubapp.entity.response.issues.AssigneeBean;
 import com.zpauly.githubapp.entity.response.issues.IssueCommentBean;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
@@ -134,7 +136,6 @@ public class IssuesMethod extends BaseNetMethod {
                 .subscribe(observer);
     }
 
-    @SuppressWarnings("unchecked")
     public void checkAssignee(Observer<String> observer, String auth, String owner, String repo,
                               String assignee) {
         service.checkAssignee(auth, owner, repo, assignee)
@@ -151,19 +152,19 @@ public class IssuesMethod extends BaseNetMethod {
                 .subscribe(observer);
     }
 
-    public void createAnIssue(Observer<IssueBean> observer,
-                              com.zpauly.githubapp.entity.request.IssueBean issueBean,
-                              String auth, String owner, String repo) {
-        service.createAnIssue(auth, issueBean, owner, repo)
+    public void createAnIssue(Observer<IssueBean> observer, String auth,
+                              IssueRequestBean issueRequestBean,
+                              String owner, String repo) {
+        service.createAnIssue(auth, issueRequestBean, owner, repo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 
     public void createAComment(Observer<IssueCommentBean> observer,
-                               com.zpauly.githubapp.entity.request.CommentBean commentBean,
+                               CommentRequestBean commentRequestBean,
                                String auth, String owner, String repo, int number) {
-        service.createAComment(auth, commentBean, owner, repo, number)
+        service.createAComment(auth, commentRequestBean, owner, repo, number)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
@@ -180,6 +181,22 @@ public class IssuesMethod extends BaseNetMethod {
 
     public void getLabels(Observer<List<LabelBean>> observer, String auth, String owner, String repo) {
         service.getLabels(auth, owner, repo)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void lockAnIssue(Observer<String> observer, String auth,
+                            String owner, String repo, int number) {
+        service.lockAnIssue(auth, owner, repo, number)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void unlockAnIssue(Observer<String> observer, String auth,
+                              String owner, String repo, int number) {
+        service.unlockAnIssue(auth, owner, repo, number)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

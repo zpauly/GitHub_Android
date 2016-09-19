@@ -57,6 +57,12 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
     private String orgName;
 
     @Override
+    public void onStop() {
+        mPresenter.stop();
+        super.onStop();
+    }
+
+    @Override
     public void inflateMenu() {
         inflateMenu(R.menu.issue_toolbar_menu);
     }

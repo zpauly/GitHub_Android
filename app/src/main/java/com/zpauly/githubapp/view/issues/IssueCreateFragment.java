@@ -8,6 +8,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -15,7 +16,7 @@ import android.widget.LinearLayout;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.zpauly.githubapp.R;
-import com.zpauly.githubapp.base.BaseFragment;
+import com.zpauly.githubapp.entity.request.IssueRequestBean;
 import com.zpauly.githubapp.entity.response.issues.AssigneeBean;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
 import com.zpauly.githubapp.entity.response.issues.LabelBean;
@@ -24,7 +25,7 @@ import com.zpauly.githubapp.presenter.issues.IssueCreateContract;
 import com.zpauly.githubapp.presenter.issues.IssueCreatePresenter;
 import com.zpauly.githubapp.ui.FloatingActionButton;
 import com.zpauly.githubapp.ui.RefreshView;
-import com.zpauly.githubapp.utils.TextUtil;
+import com.zpauly.githubapp.view.ToolbarMenuFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ import java.util.List;
 /**
  * Created by zpauly on 16/9/12.
  */
-public class IssueCreateFragment extends BaseFragment implements IssueCreateContract.View {
+public class IssueCreateFragment extends ToolbarMenuFragment implements IssueCreateContract.View {
     private final String TAG = getClass().getName();
 
     private IssueCreateContract.Presenter mPresenter;
@@ -68,7 +69,7 @@ public class IssueCreateFragment extends BaseFragment implements IssueCreateCont
     private String title;
     private String body;
 
-    private com.zpauly.githubapp.entity.request.IssueBean createdIssueBean = new com.zpauly.githubapp.entity.request.IssueBean();
+    private IssueRequestBean createdIssueRequestBean = new IssueRequestBean();
 
     private MilestoneBean selectedMilestone;
     private List<AssigneeBean> selectedAssigneeList = new ArrayList<>();
@@ -78,6 +79,11 @@ public class IssueCreateFragment extends BaseFragment implements IssueCreateCont
     private List<AssigneeBean> assigneeList = new ArrayList<>();
     private List<LabelBean> labelList = new ArrayList<>();
 
+    @Override
+    public void onStop() {
+        mPresenter.stop();
+        super.onStop();
+    }
 
     @Override
     protected void initViews(View view) {
@@ -128,24 +134,30 @@ public class IssueCreateFragment extends BaseFragment implements IssueCreateCont
 
     private void setDialogs() {
         mLoadingDialog = new MaterialDialog.Builder(getContext())
+                .cancelable(false)
                 .title(R.string.loading)
                 .content(R.string.please_wait)
                 .progress(true, 0)
                 .build();
         mUploadingDialog = new MaterialDialog.Builder(getContext())
+                .cancelable(false)
                 .content(R.string.uploading)
                 .progress(true, 0)
+                .cancelable(false)
                 .build();
 
     }
 
     private void setMilestonesDialog() {
         mMilestonesDialog = new MaterialDialog.Builder(getContext())
+                .cancelable(false)
                 .title(R.string.milestone)
                 .items(milestones)
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                        if (milestones.length == 0)
+                            return false;
                         selectedMilestone = milestoneList.get(which);
                         return false;
                     }
@@ -163,11 +175,14 @@ public class IssueCreateFragment extends BaseFragment implements IssueCreateCont
 
     private void setAssigneesDialog() {
         mAssigeneesDialog = new MaterialDialog.Builder(getContext())
+                .cancelable(false)
                 .title(R.string.assignees)
                 .items(assignees)
                 .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                        if (assignees.length == 0)
+                            return false;
                         selectedAssigneeList.clear();
                         for (int i = 0; i < which.length; i++) {
                             selectedAssigneeList.add(assigneeList.get(i));
@@ -188,11 +203,14 @@ public class IssueCreateFragment extends BaseFragment implements IssueCreateCont
 
     private void setLabelsDialog() {
         mLabelsDialog = new MaterialDialog.Builder(getContext())
+                .cancelable(false)
                 .title(R.string.labels)
                 .items(labels)
                 .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                        if (labels.length == 0)
+                            return false;
                         selectedLabelList.clear();
                         for (int i = 0; i < which.length; i++) {
                             selectedLabelList.add(labelList.get(i));
@@ -251,28 +269,28 @@ public class IssueCreateFragment extends BaseFragment implements IssueCreateCont
                 if (mBodyET.getText() != null) {
                     body = mBodyET.getText().toString();
                 }
-                createdIssueBean.setTitle(title);
-                createdIssueBean.setBody(body);
+                createdIssueRequestBean.setTitle(title);
+                createdIssueRequestBean.setBody(body);
                 if (selectedAssigneeList != null || selectedAssigneeList.size() != 0) {
-                    createdIssueBean.setAssignee(getOwner());
-                    createdIssueBean.setAssignees(selectedAssigneeList);
+//                    createdIssueRequestBean.setAssignee(getOwner());
+                    createdIssueRequestBean.setAssignees(selectedAssigneeList);
                 }
                 if (selectedLabelList != null || selectedLabelList.size() != 0) {
                     List<String> labels = new ArrayList<String>();
                     for (LabelBean bean : selectedLabelList) {
                         labels.add(bean.getName());
                     }
-                    createdIssueBean.setLabels(labels);
+                    createdIssueRequestBean.setLabels(labels);
                 }
                 if (selectedMilestone != null && selectedMilestone.getNumber() != 0) {
-                    createdIssueBean.setMilestone(selectedMilestone.getNumber());
+                    createdIssueRequestBean.setMilestone(selectedMilestone.getNumber());
                 }
-                Log.i(TAG, "title : " + createdIssueBean.getTitle());
-                Log.i(TAG, "body : " + createdIssueBean.getBody());
-                Log.i(TAG, "assignee : " + createdIssueBean.getAssignee());
-                Log.i(TAG, "assignees : " + createdIssueBean.getAssignees());
-                Log.i(TAG, "milestone : " + createdIssueBean.getMilestone());
-                Log.i(TAG, "labels : " + createdIssueBean.getLabels());
+                Log.i(TAG, "title : " + createdIssueRequestBean.getTitle());
+                Log.i(TAG, "body : " + createdIssueRequestBean.getBody());
+                Log.i(TAG, "assignees : " + createdIssueRequestBean.getAssignees());
+                Log.i(TAG, "milestone : " + createdIssueRequestBean.getMilestone());
+                Log.i(TAG, "labels : " + createdIssueRequestBean.getLabels());
+                mUploadingDialog.show();
                 mPresenter.createAnIssue();
             }
         });
@@ -428,8 +446,8 @@ public class IssueCreateFragment extends BaseFragment implements IssueCreateCont
     }
 
     @Override
-    public com.zpauly.githubapp.entity.request.IssueBean getIssueBean() {
-        return createdIssueBean;
+    public IssueRequestBean getIssueBean() {
+        return createdIssueRequestBean;
     }
 
     @Override
@@ -450,5 +468,14 @@ public class IssueCreateFragment extends BaseFragment implements IssueCreateCont
     @Override
     public void setPresenter(IssueCreateContract.Presenter presenter) {
         this.mPresenter = presenter;
+    }
+
+    @Override
+    public void inflateMenu() {
+    }
+
+    @Override
+    public void createMenu(Menu menu) {
+
     }
 }

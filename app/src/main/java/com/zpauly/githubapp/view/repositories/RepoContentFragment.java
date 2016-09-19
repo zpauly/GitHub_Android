@@ -76,6 +76,12 @@ public class RepoContentFragment extends ToolbarMenuFragment implements RepoCont
     private boolean isStarred;
 
     @Override
+    public void onStop() {
+        mPresenter.stop();
+        super.onStop();
+    }
+
+    @Override
     protected void initViews(View view) {
         getAttrs();
 

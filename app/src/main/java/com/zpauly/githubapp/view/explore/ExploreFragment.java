@@ -59,6 +59,12 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
     private String query;
 
     @Override
+    public void onStop() {
+        mPresenter.stop();
+        super.onStop();
+    }
+
+    @Override
     protected void initViews(View view) {
         new ExplorePresenter(getContext(), this);
 

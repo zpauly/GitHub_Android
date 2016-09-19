@@ -6,7 +6,7 @@ import android.os.Parcelable;
 /**
  * Created by zpauly on 16/9/8.
  */
-public class CommentBean implements Parcelable {
+public class CommentRequestBean implements Parcelable {
     private String body;
 
     public void setBody(String body) {
@@ -27,22 +27,22 @@ public class CommentBean implements Parcelable {
         dest.writeString(this.body);
     }
 
-    public CommentBean() {
+    public CommentRequestBean() {
     }
 
-    protected CommentBean(Parcel in) {
+    protected CommentRequestBean(Parcel in) {
         this.body = in.readString();
     }
 
-    public static final Parcelable.Creator<CommentBean> CREATOR = new Parcelable.Creator<CommentBean>() {
+    public static final Parcelable.Creator<CommentRequestBean> CREATOR = new Parcelable.Creator<CommentRequestBean>() {
         @Override
-        public CommentBean createFromParcel(Parcel source) {
-            return new CommentBean(source);
+        public CommentRequestBean createFromParcel(Parcel source) {
+            return new CommentRequestBean(source);
         }
 
         @Override
-        public CommentBean[] newArray(int size) {
-            return new CommentBean[size];
+        public CommentRequestBean[] newArray(int size) {
+            return new CommentRequestBean[size];
         }
     };
 }

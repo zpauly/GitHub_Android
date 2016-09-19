@@ -3,6 +3,7 @@ package com.zpauly.githubapp.presenter.comment;
 import android.content.Context;
 
 import com.zpauly.githubapp.base.NetPresenter;
+import com.zpauly.githubapp.entity.request.CommentRequestBean;
 import com.zpauly.githubapp.entity.response.issues.IssueCommentBean;
 import com.zpauly.githubapp.network.issues.IssuesMethod;
 
@@ -63,9 +64,9 @@ public class CommentCreatePresenter extends NetPresenter implements CommentCreat
         unsubscribe(commentSubscriber);
     }
 
-    private com.zpauly.githubapp.entity.request.CommentBean getComment() {
-        com.zpauly.githubapp.entity.request.CommentBean commentBean = new com.zpauly.githubapp.entity.request.CommentBean();
-        commentBean.setBody(mCommentCreateView.getCommentBody());
-        return commentBean;
+    private CommentRequestBean getComment() {
+        CommentRequestBean commentRequestBean = new CommentRequestBean();
+        commentRequestBean.setBody(mCommentCreateView.getCommentBody());
+        return commentRequestBean;
     }
 }

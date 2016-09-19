@@ -150,8 +150,9 @@ public class IssueCreatePresenter extends NetPresenter implements IssueCreateCon
                 mIssueCreateView.creatingIssue(issueBean);
             }
         };
-        issuesMethod.createAnIssue(createSubscriber, mIssueCreateView.getIssueBean(),
-                auth, mIssueCreateView.getOwner(), mIssueCreateView.getRepoName());
+        issuesMethod.createAnIssue(createSubscriber, auth,
+                mIssueCreateView.getIssueBean(),
+                mIssueCreateView.getOwner(), mIssueCreateView.getRepoName());
     }
 
     @Override
