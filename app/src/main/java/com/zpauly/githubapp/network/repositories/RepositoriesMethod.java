@@ -1,9 +1,11 @@
 package com.zpauly.githubapp.network.repositories;
 
+import android.media.DrmInitData;
 import android.support.annotation.Nullable;
 
 import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.base.BaseNetMethod;
+import com.zpauly.githubapp.entity.response.repos.RepoCommentBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoryContentBean;
 import com.zpauly.githubapp.entity.response.repos.SingleCommitBean;
@@ -103,6 +105,14 @@ public class RepositoriesMethod extends BaseNetMethod {
     public void getASingleCommit(Observer<SingleCommitBean> observer, String auth,
                                  String owner, String repo, String sha) {
         service.getASingleCommit(auth, owner, repo, sha)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getACommitComments(Observer<List<RepoCommentBean>> observer, String auth,
+                                  String owner, String repo, String ref, int pageId) {
+        service.getACommitComments(auth, owner, repo, ref, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

@@ -1,7 +1,6 @@
 package com.zpauly.githubapp.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +9,6 @@ import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.base.BaseAdapter;
 import com.zpauly.githubapp.entity.response.events.Payload;
 import com.zpauly.githubapp.view.viewholder.EventsCommitsViewHolder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by zpauly on 16-7-24.

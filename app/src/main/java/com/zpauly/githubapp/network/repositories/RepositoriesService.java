@@ -2,6 +2,8 @@ package com.zpauly.githubapp.network.repositories;
 
 import android.support.annotation.Nullable;
 
+import com.zpauly.githubapp.entity.response.events.Payload;
+import com.zpauly.githubapp.entity.response.repos.RepoCommentBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoryContentBean;
 import com.zpauly.githubapp.entity.response.repos.SingleCommitBean;
@@ -124,4 +126,20 @@ public interface RepositoriesService {
                                                   @Path("owner") String owner,
                                                   @Path("repo") String repo,
                                                   @Path("sha") String sha);
+
+    /**
+     * List commit comments for a repository
+     * @param auth
+     * @param owner
+     * @param repo
+     * @param ref
+     * @param pageId
+     * @return
+     */
+    @GET("/repos/{owner}/{repo}/commits/{ref}/comments")
+    Observable<List<RepoCommentBean>> getACommitComments(@Header("Authorization") String auth,
+                                                         @Path("owner") String owner,
+                                                         @Path("repo") String repo,
+                                                         @Path("ref") String ref,
+                                                         @Query("page") int pageId);
 }
