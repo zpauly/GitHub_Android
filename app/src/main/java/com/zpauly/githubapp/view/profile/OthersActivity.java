@@ -2,17 +2,14 @@ package com.zpauly.githubapp.view.profile;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 import com.zpauly.githubapp.entity.response.UserBean;
@@ -23,8 +20,8 @@ import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.ToolbarActivity;
 import com.zpauly.githubapp.view.events.EventsActivity;
-import com.zpauly.githubapp.view.users.UsersActivity;
 import com.zpauly.githubapp.view.repositories.ReposActivity;
+import com.zpauly.githubapp.view.users.UsersActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -52,6 +49,14 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
     private TextView mFollowersTV;
     private TextView mFollowingTV;
     private TextView mCompanyTV;
+    private ImageView mLocationDividerIV;
+    private ImageView mEmailDividerIV;
+    private ImageView mTimeDividerIV;
+    private ImageView mCompanyDividerIV;
+    private LinearLayout mLocationLayout;
+    private LinearLayout mEmailLayout;
+    private LinearLayout mTimeLayout;
+    private LinearLayout mCompanyLayout;
     private LinearLayout mFollowersLayout;
     private LinearLayout mFollowingLayout;
     private RelativeLayout mEventsLayout;
@@ -91,6 +96,14 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
         mTimeTV.setText("");
         mCompanyTV = (TextView) findViewById(R.id.profile_company_TV);
         mCompanyTV.setText("");
+        mLocationLayout = (LinearLayout) findViewById(R.id.profile_location_layout);
+        mEmailLayout = (LinearLayout) findViewById(R.id.profile_email_layout);
+        mTimeLayout = (LinearLayout) findViewById(R.id.profile_time_layout);
+        mCompanyLayout = (LinearLayout) findViewById(R.id.profile_company_layout);
+        mLocationDividerIV = (ImageView) findViewById(R.id.profile_company_divider_IV);
+        mEmailDividerIV = (ImageView) findViewById(R.id.profile_email_divider_IV);
+        mTimeDividerIV = (ImageView) findViewById(R.id.profile_time_divider_IV);
+        mCompanyDividerIV = (ImageView) findViewById(R.id.profile_company_divider_IV);
         mFollowersTV = (TextView) findViewById(R.id.profile_followers_TV);
         mFollowingTV = (TextView) findViewById(R.id.profile_following_TV);
         mFollowersLayout = (LinearLayout) findViewById(R.id.profile_followers_layout);
@@ -216,6 +229,22 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
             mCompanyTV.setText(user.getCompany());
             mFollowersTV.setText(String.valueOf(user.getFollowers()));
             mFollowingTV.setText(String.valueOf(user.getFollowing()));
+            if (user.getEmail() == null || user.getEmail().equals("")) {
+                mEmailLayout.setVisibility(View.GONE);
+                mEmailDividerIV.setVisibility(View.GONE);
+            }
+            if (user.getLocation() == null || user.getLocation().equals("")) {
+                mLocationLayout.setVisibility(View.GONE);
+                mLocationDividerIV.setVisibility(View.GONE);
+            }
+            if (user.getCreated_at() == null || user.getCreated_at().equals("")) {
+                mTimeLayout.setVisibility(View.GONE);
+                mTimeDividerIV.setVisibility(View.GONE);
+            }
+            if (user.getCompany() == null || user.getCompany().equals("")) {
+                mCompanyLayout.setVisibility(View.GONE);
+                mCompanyDividerIV.setVisibility(View.GONE);
+            }
         }
         mSWLayout.setRefreshing(false);
         setupListener();

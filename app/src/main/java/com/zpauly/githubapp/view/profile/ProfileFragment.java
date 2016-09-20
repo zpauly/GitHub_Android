@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -50,6 +51,14 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     private TextView mFollowersTV;
     private TextView mFollowingTV;
     private TextView mCompanyTV;
+    private ImageView mLocationDividerIV;
+    private ImageView mEmailDividerIV;
+    private ImageView mTimeDividerIV;
+    private ImageView mCompanyDividerIV;
+    private LinearLayout mLocationLayout;
+    private LinearLayout mEmailLayout;
+    private LinearLayout mTimeLayout;
+    private LinearLayout mCompanyLayout;
     private LinearLayout mFollowersLayout;
     private LinearLayout mFollowingLayout;
     private RelativeLayout mEventsLayout;
@@ -80,6 +89,14 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         mJoinTimeTV.setText("");
         mCompanyTV = (TextView) view.findViewById(R.id.profile_company_TV);
         mCompanyTV.setText("");
+        mLocationLayout = (LinearLayout) view.findViewById(R.id.profile_location_layout);
+        mEmailLayout = (LinearLayout) view.findViewById(R.id.profile_email_layout);
+        mTimeLayout = (LinearLayout) view.findViewById(R.id.profile_time_layout);
+        mCompanyLayout = (LinearLayout) view.findViewById(R.id.profile_company_layout);
+        mLocationDividerIV = (ImageView) view.findViewById(R.id.profile_company_divider_IV);
+        mEmailDividerIV = (ImageView) view.findViewById(R.id.profile_email_divider_IV);
+        mTimeDividerIV = (ImageView) view.findViewById(R.id.profile_time_divider_IV);
+        mCompanyDividerIV = (ImageView) view.findViewById(R.id.profile_company_divider_IV);
         mFollowersTV = (TextView) view.findViewById(R.id.profile_followers_TV);
         mFollowingTV = (TextView) view.findViewById(R.id.profile_following_TV);
         mFollowersLayout = (LinearLayout) view.findViewById(R.id.profile_followers_layout);
@@ -126,6 +143,22 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         mEmailTV.setText(userInfo.getEmail());
         mCompanyTV.setText(userInfo.getCompany());
         mJoinTimeTV.setText(TextUtil.timeConverter(userInfo.getCreated_at()));
+        if (userInfo.getEmail() == null || userInfo.getEmail().equals("")) {
+            mEmailLayout.setVisibility(View.GONE);
+            mEmailDividerIV.setVisibility(View.GONE);
+        }
+        if (userInfo.getLocation() == null || userInfo.getLocation().equals("")) {
+            mLocationLayout.setVisibility(View.GONE);
+            mLocationDividerIV.setVisibility(View.GONE);
+        }
+        if (userInfo.getCreated_at() == null || userInfo.getCreated_at().equals("")) {
+            mTimeLayout.setVisibility(View.GONE);
+            mTimeDividerIV.setVisibility(View.GONE);
+        }
+        if (userInfo.getCompany() == null || userInfo.getCompany().equals("")) {
+            mCompanyLayout.setVisibility(View.GONE);
+            mCompanyDividerIV.setVisibility(View.GONE);
+        }
     }
 
     @Override
