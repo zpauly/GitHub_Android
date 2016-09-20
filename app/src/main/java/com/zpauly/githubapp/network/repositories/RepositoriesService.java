@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 
 import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoryContentBean;
+import com.zpauly.githubapp.entity.response.repos.SingleCommitBean;
 
 import java.util.List;
 
@@ -95,4 +96,32 @@ public interface RepositoriesService {
     Observable<String> getReadMe(@Header("Authorization") String auth,
                                  @Header("Accept") String acc,
                                  @Path("owner") String owner, @Path("repo") String repo);
+
+    /**
+     * List commits on a repository
+     * @param auth
+     * @param owner
+     * @param repo
+     * @param pageId
+     * @return
+     */
+    @GET("/repos/{owner}/repo/commits")
+    Observable<List<SingleCommitBean>> getRepositoryCommit(@Header("Authorization") String auth,
+                                                           @Path("owner") String owner,
+                                                           @Path("repo") String repo,
+                                                           @Query("page") int pageId);
+
+    /**
+     * Get a single commit
+     * @param auth
+     * @param owner
+     * @param repo
+     * @param sha
+     * @return
+     */
+    @GET("repos/{owner}/{repo}/commits/{sha}")
+    Observable<SingleCommitBean> getASingleCommit(@Header("Authorization") String auth,
+                                                  @Path("owner") String owner,
+                                                  @Path("repo") String repo,
+                                                  @Path("sha") String sha);
 }

@@ -6,6 +6,7 @@ import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.base.BaseNetMethod;
 import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoryContentBean;
+import com.zpauly.githubapp.entity.response.repos.SingleCommitBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
 import com.zpauly.githubapp.utils.StringConverterFactory;
 
@@ -86,6 +87,22 @@ public class RepositoriesMethod extends BaseNetMethod {
                 RxJavaCallAdapterFactory.create());
         RepositoriesService service = retrofit.create(RepositoriesService.class);
         service.getReadMe(auth, "application/vnd.github.VERSION.html", username, repo)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getRepositoryCommit(Observer<List<SingleCommitBean>> observer, String auth,
+                                    String owner, String repo, int pageId) {
+        service.getRepositoryCommit(auth, owner, repo, pageId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getASingleCommit(Observer<SingleCommitBean> observer, String auth,
+                                 String owner, String repo, String sha) {
+        service.getASingleCommit(auth, owner, repo, sha)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
