@@ -80,6 +80,12 @@
     <string name="upload_fail">Upload Fail</string>
     <string name="upload_success">Upload Success</string>
     <string name="please_input_body_first">Please Input Body First</string>
+    
+    <string name="choose">Choose</string>
+    <string name="commits">Commits</string>
+    <string name="branch">Branch</string>
+    <string name="releases">Releases</string>
+    <string name="contributor">Contributor</string>
 
     <string name="started">Starred</string>
     <string name="unstarred">Unstarred</string>

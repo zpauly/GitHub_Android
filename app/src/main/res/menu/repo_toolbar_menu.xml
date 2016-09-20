@@ -5,4 +5,19 @@
         android:title="@string/starred"
         android:icon="@drawable/ic_star_border_white_24dp"
         app:showAsAction="always"/>
+    <item android:id="@+id/repo_menu_choose"
+        android:title="@string/choose"
+        android:icon="@drawable/ic_filter_list"
+        app:showAsAction="always">
+        <menu>
+            <item android:id="@+id/repo_menu_commits"
+                android:title="@string/commits"/>
+            <item android:id="@+id/repo_menu_branch"
+                android:title="@string/branch"/>
+            <item android:id="@+id/repo_menu_releases"
+                android:title="@string/releases"/>
+            <item android:id="@+id/repo_menu_contributor"
+                android:title="@string/contributor"/>
+        </menu>
+    </item>
 </menu>

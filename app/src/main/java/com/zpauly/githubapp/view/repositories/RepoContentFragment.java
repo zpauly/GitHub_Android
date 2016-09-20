@@ -66,6 +66,7 @@ public class RepoContentFragment extends ToolbarMenuFragment implements RepoCont
     private ProgressBar mReadMePB;
 
     private MenuItem mMenuItemStar;
+    private MenuItem mMenuItemChoose;
 
     private RefreshView mRefreshView;
 
@@ -343,6 +344,7 @@ public class RepoContentFragment extends ToolbarMenuFragment implements RepoCont
     @Override
     public void createMenu(Menu menu) {
         mMenuItemStar = menu.findItem(R.id.repo_menu_star);
+        mMenuItemChoose = menu.findItem(R.id.repo_menu_choose);
         mMenuItemStar.setVisible(false);
         checkStarred();
         setOnMenuItemSelectedListener(new OnMenuItemSelectedListener() {
@@ -356,6 +358,17 @@ public class RepoContentFragment extends ToolbarMenuFragment implements RepoCont
                         } else {
                             starRepo();
                         }
+                        break;
+                    case R.id.repo_menu_commits:
+                        RepoCommitActivity.launchActiivty(getContext(), login, name);
+                        break;
+                    case R.id.repo_menu_branch:
+                        break;
+                    case R.id.repo_menu_releases:
+                        break;
+                    case R.id.repo_menu_contributor:
+                        break;
+                    default:
                         break;
                 }
             }

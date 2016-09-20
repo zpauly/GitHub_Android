@@ -30,10 +30,10 @@ public class CommitViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
 
         mLayout = (LinearLayout) itemView.findViewById(R.id.commit_item_layout);
-        mAvatarIV = (CircleImageView) itemView.findViewById(R.id.comment_item_Avatar);
-        mUsernameTV = (AppCompatTextView) itemView.findViewById(R.id.comment_item_username);
+        mAvatarIV = (CircleImageView) itemView.findViewById(R.id.commit_item_avatar);
+        mUsernameTV = (AppCompatTextView) itemView.findViewById(R.id.commit_item_username_TV);
         mMessageTV = (AppCompatTextView) itemView.findViewById(R.id.commit_item_message_TV);
-        mTimeTV = (AppCompatTextView) itemView.findViewById(R.id.comment_item_time);
+        mTimeTV = (AppCompatTextView) itemView.findViewById(R.id.commit_item_time_TV);
         mCommentCountTV = (AppCompatTextView) itemView.findViewById(R.id.commit_item_comment_count_TV);
     }
 }

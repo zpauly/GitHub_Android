@@ -107,7 +107,7 @@ public interface RepositoriesService {
      * @param pageId
      * @return
      */
-    @GET("/repos/{owner}/repo/commits")
+    @GET("/repos/{owner}/{repo}/commits")
     Observable<List<SingleCommitBean>> getRepositoryCommit(@Header("Authorization") String auth,
                                                            @Path("owner") String owner,
                                                            @Path("repo") String repo,

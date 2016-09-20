@@ -3,7 +3,7 @@
     style="@style/CardView"
     android:layout_margin="@dimen/card_margin"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:gravity="center_vertical"
@@ -26,6 +26,31 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
+                android:id="@+id/commit_item_comment_layout"
+                android:gravity="center_vertical"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/commit_item_comment_count_TV"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:src="@drawable/ic_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@id/commit_item_comment_layout"
+                android:layout_marginRight="@dimen/components_margin"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
@@ -49,26 +74,6 @@
                     android:id="@+id/commit_item_time_TV"
                     style="@style/TextAppearance.AppCompat.Body1"
                     android:layout_marginTop="@dimen/components_margin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/commit_item_comment_count_TV"
-                    style="@style/TextAppearance.AppCompat.Medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <ImageView
-                    android:src="@drawable/ic_comment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
