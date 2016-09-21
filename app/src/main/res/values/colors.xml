@@ -15,4 +15,8 @@
     <color name="loginButton">#0097A7</color>
     <color name="languageChoiceBackground">#795548</color>
     <color name="languageChoiceButton">#5D4037</color>
+
+    <color name="commitColor">#f8f8ff</color>
+    <color name="commitAdditionColor">#ffe4e4</color>
+    <color name="commitDeletionColor">#e2fde3</color>
 </resources>
