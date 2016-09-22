@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.base.BaseFragment;
-import com.zpauly.githubapp.entity.response.issues.IssueCommentBean;
+import com.zpauly.githubapp.entity.response.CommentBean;
 import com.zpauly.githubapp.presenter.comment.CommentCreateContract;
 import com.zpauly.githubapp.presenter.comment.CommentCreatePresenter;
 import com.zpauly.githubapp.ui.FloatingActionButton;
@@ -32,7 +32,7 @@ public class CommentCreateFragment extends BaseFragment implements CommentCreate
     private int number;
 
     private MaterialDialog uploadDialog;
-    private IssueCommentBean issueCommentBean;
+    private CommentBean commentBean;
 
     @Override
     public void onStop() {
@@ -105,8 +105,8 @@ public class CommentCreateFragment extends BaseFragment implements CommentCreate
     }
 
     @Override
-    public void creatingComment(IssueCommentBean issueCommentBean) {
-        this.issueCommentBean = issueCommentBean;
+    public void creatingComment(CommentBean commentBean) {
+        this.commentBean = commentBean;
     }
 
     @Override

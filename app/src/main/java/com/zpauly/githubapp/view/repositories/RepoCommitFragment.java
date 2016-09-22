@@ -43,6 +43,12 @@ public class RepoCommitFragment extends BaseFragment implements RepoCommitContra
 
     private List<SingleCommitBean> commitList = new ArrayList<>();
 
+    @Override
+    public void onStop() {
+        mPresenter.stop();
+        super.onStop();
+    }
+
     private void getAttrs() {
         Bundle bundle = getArguments();
         if (bundle != null) {

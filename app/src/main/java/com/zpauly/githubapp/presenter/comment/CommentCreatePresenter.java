@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.zpauly.githubapp.base.NetPresenter;
 import com.zpauly.githubapp.entity.request.CommentRequestBean;
-import com.zpauly.githubapp.entity.response.issues.IssueCommentBean;
+import com.zpauly.githubapp.entity.response.CommentBean;
 import com.zpauly.githubapp.network.issues.IssuesMethod;
 
 import rx.Subscriber;
@@ -21,7 +21,7 @@ public class CommentCreatePresenter extends NetPresenter implements CommentCreat
     private String auth;
     private IssuesMethod issuesMethod;
 
-    private Subscriber<IssueCommentBean> commentSubscriber;
+    private Subscriber<CommentBean> commentSubscriber;
 
     public CommentCreatePresenter(Context context, CommentCreateContract.View view) {
         this.mContext = context;
@@ -32,7 +32,7 @@ public class CommentCreatePresenter extends NetPresenter implements CommentCreat
 
     @Override
     public void createAComment() {
-        commentSubscriber = new Subscriber<IssueCommentBean>() {
+        commentSubscriber = new Subscriber<CommentBean>() {
             @Override
             public void onCompleted() {
                 mCommentCreateView.createCommentSuccess();
@@ -45,8 +45,8 @@ public class CommentCreatePresenter extends NetPresenter implements CommentCreat
             }
 
             @Override
-            public void onNext(IssueCommentBean issueCommentBean) {
-                mCommentCreateView.creatingComment(issueCommentBean);
+            public void onNext(CommentBean commentBean) {
+                mCommentCreateView.creatingComment(commentBean);
             }
         };
         issuesMethod.createAComment(commentSubscriber, getComment(), auth,

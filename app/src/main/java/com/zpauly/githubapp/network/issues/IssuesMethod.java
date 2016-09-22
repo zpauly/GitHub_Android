@@ -5,7 +5,7 @@ import com.zpauly.githubapp.base.BaseNetMethod;
 import com.zpauly.githubapp.entity.request.CommentRequestBean;
 import com.zpauly.githubapp.entity.request.IssueRequestBean;
 import com.zpauly.githubapp.entity.response.issues.AssigneeBean;
-import com.zpauly.githubapp.entity.response.issues.IssueCommentBean;
+import com.zpauly.githubapp.entity.response.CommentBean;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
 import com.zpauly.githubapp.entity.response.issues.LabelBean;
 import com.zpauly.githubapp.entity.response.issues.MilestoneBean;
@@ -118,7 +118,7 @@ public class IssuesMethod extends BaseNetMethod {
                 .subscribe(observer);
     }
 
-    public void getAnIssueComments(Observer<List<IssueCommentBean>> observer,
+    public void getAnIssueComments(Observer<List<CommentBean>> observer,
                                    String auth, String owner, String repo, int number,
                                    String since, int pageId) {
         service.getAnIssueComments(auth, owner, repo, number, since, pageId)
@@ -127,7 +127,7 @@ public class IssuesMethod extends BaseNetMethod {
                 .subscribe(observer);
     }
 
-    public void getDefaultAnIssueComments(Observer<List<IssueCommentBean>> observer,
+    public void getDefaultAnIssueComments(Observer<List<CommentBean>> observer,
                                    String auth, String owner, String repo, int number,
                                    int pageId) {
         service.getAnIssueComments(auth, owner, repo, number, null, pageId)
@@ -161,7 +161,7 @@ public class IssuesMethod extends BaseNetMethod {
                 .subscribe(observer);
     }
 
-    public void createAComment(Observer<IssueCommentBean> observer,
+    public void createAComment(Observer<CommentBean> observer,
                                CommentRequestBean commentRequestBean,
                                String auth, String owner, String repo, int number) {
         service.createAComment(auth, commentRequestBean, owner, repo, number)

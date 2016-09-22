@@ -7,7 +7,7 @@ import com.zpauly.githubapp.entity.request.CommentRequestBean;
 import com.zpauly.githubapp.entity.request.IssueRequestBean;
 import com.zpauly.githubapp.entity.response.issues.AssigneeBean;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
-import com.zpauly.githubapp.entity.response.issues.IssueCommentBean;
+import com.zpauly.githubapp.entity.response.CommentBean;
 import com.zpauly.githubapp.entity.response.issues.LabelBean;
 import com.zpauly.githubapp.entity.response.issues.MilestoneBean;
 
@@ -174,12 +174,12 @@ public interface IssuesService {
      * @return
      */
     @GET("/repos/{owner}/{repo}/issues/{number}/comments")
-    Observable<List<IssueCommentBean>> getAnIssueComments(@Header("Authorization") String auth,
-                                                          @Path("owner") String owner,
-                                                          @Path("repo") String repo,
-                                                          @Path("number") int number,
-                                                          @Nullable @Query("since") String since,
-                                                          @Nullable @Query("page") int pageId);
+    Observable<List<CommentBean>> getAnIssueComments(@Header("Authorization") String auth,
+                                                     @Path("owner") String owner,
+                                                     @Path("repo") String repo,
+                                                     @Path("number") int number,
+                                                     @Nullable @Query("since") String since,
+                                                     @Nullable @Query("page") int pageId);
 
     /**
      * Create an issue
@@ -231,11 +231,11 @@ public interface IssuesService {
      * @return
      */
     @POST("/repos/{owner}/{repo}/issues/{number}/comments")
-    Observable<IssueCommentBean> createAComment(@Header("Authorization") String auth,
-                                                @Body CommentRequestBean commentRequestBean,
-                                                @Path("owner") String owner,
-                                                @Path("repo") String repo,
-                                                @Path("number") int number);
+    Observable<CommentBean> createAComment(@Header("Authorization") String auth,
+                                           @Body CommentRequestBean commentRequestBean,
+                                           @Path("owner") String owner,
+                                           @Path("repo") String repo,
+                                           @Path("number") int number);
 
     /**
      * List milestones for a repository

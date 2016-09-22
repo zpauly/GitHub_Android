@@ -1,12 +1,11 @@
-package com.zpauly.githubapp.entity.response.repos;
+package com.zpauly.githubapp.entity.response;
 
 import com.zpauly.githubapp.entity.response.UserBean;
 
 /**
- * Created by zpauly on 16/9/20.
+ * Created by zpauly on 16/9/4.
  */
-
-public class RepoCommentBean {
+public class CommentBean {
 
     /**
      * html_url : https://github.com/octocat/Hello-World/commit/6dcb09b5b57875f334f61aebed695e2e4193db5e#commitcomment-1

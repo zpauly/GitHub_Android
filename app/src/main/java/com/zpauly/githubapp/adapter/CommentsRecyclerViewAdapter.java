@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zpauly.githubapp.R;
-import com.zpauly.githubapp.entity.response.issues.IssueCommentBean;
+import com.zpauly.githubapp.entity.response.CommentBean;
 import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.profile.OthersActivity;
@@ -15,7 +15,7 @@ import com.zpauly.githubapp.view.viewholder.CommentsViewHolder;
 /**
  * Created by zpauly on 16/9/6.
  */
-public class CommentsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<IssueCommentBean, CommentsViewHolder> {
+public class CommentsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<CommentBean, CommentsViewHolder> {
     public CommentsRecyclerViewAdapter(Context context) {
         super(context);
     }
@@ -29,7 +29,7 @@ public class CommentsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Iss
 
     @Override
     public void bindContentViewHolder(CommentsViewHolder holder, int position) {
-        final IssueCommentBean data = getData().get(position);
+        final CommentBean data = getData().get(position);
         holder.mUsernameTV.setText(data.getUser().getLogin());
         holder.mTimeTV.setText(TextUtil.timeConverter(data.getCreated_at()));
         holder.mBodyTV.setText(data.getBody());

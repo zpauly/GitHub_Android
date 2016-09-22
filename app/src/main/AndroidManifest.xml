@@ -37,6 +37,7 @@
         <activity android:name=".view.repositories.RepoCommitActivity" />
         <activity android:name=".view.commit.CommitContentActivity" />
         <activity android:name=".view.commit.CommitFilePatchActivity" />
+        <activity android:name=".view.comment.CommentActivity" />
     </application>
 
 </manifest>

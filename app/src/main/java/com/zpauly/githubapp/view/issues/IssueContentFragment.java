@@ -16,7 +16,7 @@ import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.CommentsRecyclerViewAdapter;
 import com.zpauly.githubapp.base.BaseFragment;
-import com.zpauly.githubapp.entity.response.issues.IssueCommentBean;
+import com.zpauly.githubapp.entity.response.CommentBean;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
 import com.zpauly.githubapp.presenter.issues.IssueContentContract;
 import com.zpauly.githubapp.presenter.issues.IssueContentPresenter;
@@ -58,7 +58,7 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
 
     private String repoName;
 
-    private List<IssueCommentBean> list = new ArrayList<>();
+    private List<CommentBean> list = new ArrayList<>();
 
     @Override
     public void onStop() {
@@ -213,11 +213,11 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
     }
 
     @Override
-    public void gettingComments(List<IssueCommentBean> commentBeen) {
+    public void gettingComments(List<CommentBean> commentBeen) {
         if (mSRLayout.isRefreshing()) {
             list.clear();
         }
-        if (list == null || list.size() == 0)
+        if (commentBeen == null || commentBeen.size() == 0)
             mCommentsAdapter.setHasLoading(false);
         list.addAll(commentBeen);
     }

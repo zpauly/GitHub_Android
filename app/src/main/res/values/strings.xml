@@ -62,6 +62,7 @@
     <string name="oldest">Oldest</string>
     <string name="most_commented">Most commmented</string>
     <string name="least_commented">Least commented</string>
+    <string name="comments">Comments</string>
 
     <string name="language_setting">LANGUAEG SETTING</string>
     <string name="simplified_chinese">中文</string>

@@ -8,6 +8,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -15,11 +17,14 @@ import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.PatchRecyclerViewAdapter;
 import com.zpauly.githubapp.base.BaseFragment;
 import com.zpauly.githubapp.entity.response.repos.SingleCommitBean;
+import com.zpauly.githubapp.listener.OnMenuItemSelectedListener;
 import com.zpauly.githubapp.presenter.commit.CommitContentContract;
 import com.zpauly.githubapp.presenter.commit.CommitContentPresenter;
 import com.zpauly.githubapp.ui.RefreshView;
 import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.TextUtil;
+import com.zpauly.githubapp.view.ToolbarMenuFragment;
+import com.zpauly.githubapp.view.comment.CommentActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -27,7 +32,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by zpauly on 16/9/22.
  */
 
-public class CommitContentFragment extends BaseFragment implements CommitContentContract.View {
+public class CommitContentFragment extends ToolbarMenuFragment implements CommitContentContract.View {
     private final String TAG = getClass().getName();
 
     private CommitContentContract.Presenter mPresenter;
@@ -48,6 +53,12 @@ public class CommitContentFragment extends BaseFragment implements CommitContent
     private String sha;
 
     private SingleCommitBean singleCommitBean;
+
+    @Override
+    public void onStop() {
+        mPresenter.stop();
+        super.onStop();
+    }
 
     private void getAttrs() {
         Bundle bundle = getArguments();
@@ -157,5 +168,27 @@ public class CommitContentFragment extends BaseFragment implements CommitContent
     @Override
     public void setPresenter(CommitContentContract.Presenter presenter) {
         mPresenter = presenter;
+    }
+
+    @Override
+    public void inflateMenu() {
+        inflateMenu(R.menu.commit_toolbar_menu);
+    }
+
+    @Override
+    public void createMenu(Menu menu) {
+        setOnMenuItemSelectedListener(new OnMenuItemSelectedListener() {
+            @Override
+            public void onItemSelected(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.commit_toolbar_comment:
+                        CommentActivity.launchCommitCommentActivity(getContext(),
+                                owner, repo, sha);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
     }
 }

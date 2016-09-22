@@ -4,27 +4,30 @@ import com.zpauly.githubapp.base.BasePresenter;
 import com.zpauly.githubapp.base.BaseView;
 import com.zpauly.githubapp.entity.response.CommentBean;
 
+import java.util.List;
+
 /**
- * Created by zpauly on 16/9/8.
+ * Created by zpauly on 16/9/22.
  */
-public class CommentCreateContract {
+
+public class CommitCommentContract {
     public interface Presenter extends BasePresenter {
-        void createAComment();
+        void getASingleCommitComments();
+
+        void setPageId(int pageId);
     }
 
     public interface View extends BaseView<Presenter> {
-        void createCommentSuccess();
+        void getCommentsSuccess();
 
-        void createCommentFail();
+        void getCommentsFail();
 
-        void creatingComment(CommentBean commentBean);
+        void gettingComments(List<CommentBean> commentBeen);
 
         String getOwner();
 
         String getRepo();
 
-        int getNum();
-
-        String getCommentBody();
+        String getRef();
     }
 }

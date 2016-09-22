@@ -2,8 +2,7 @@ package com.zpauly.githubapp.network.repositories;
 
 import android.support.annotation.Nullable;
 
-import com.zpauly.githubapp.entity.response.events.Payload;
-import com.zpauly.githubapp.entity.response.repos.RepoCommentBean;
+import com.zpauly.githubapp.entity.response.CommentBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoryContentBean;
 import com.zpauly.githubapp.entity.response.repos.SingleCommitBean;
@@ -137,9 +136,9 @@ public interface RepositoriesService {
      * @return
      */
     @GET("/repos/{owner}/{repo}/commits/{ref}/comments")
-    Observable<List<RepoCommentBean>> getACommitComments(@Header("Authorization") String auth,
-                                                         @Path("owner") String owner,
-                                                         @Path("repo") String repo,
-                                                         @Path("ref") String ref,
-                                                         @Query("page") int pageId);
+    Observable<List<CommentBean>> getACommitComments(@Header("Authorization") String auth,
+                                                     @Path("owner") String owner,
+                                                     @Path("repo") String repo,
+                                                     @Path("ref") String ref,
+                                                     @Query("page") int pageId);
 }

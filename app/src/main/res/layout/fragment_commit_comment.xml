@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.zpauly.githubapp.ui.RefreshView
+        android:id="@+id/commit_comment_RefreshView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <android.support.design.widget.CoordinatorLayout
+        android:visibility="gone"
+        android:id="@+id/comment_content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/comment_SRLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/commit_comment_RV"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <com.zpauly.githubapp.ui.FloatingActionButton
+            android:layout_gravity="bottom|end"
+            android:id="@+id/commit_comment_create_FAB"
+            android:src="@drawable/ic_edit_white_24dp"
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_width="@dimen/fab_button_size"
+            android:layout_height="@dimen/fab_button_size" />
+
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</LinearLayout>
