@@ -44,7 +44,7 @@ public class ColoredLineTextView extends LinearLayout implements Iterable<TextVi
         init();
     }
 
-    public void init() {
+    private void init() {
         setOrientation(VERTICAL);
         mTextViewList = new ArrayList<>();
     }
@@ -57,6 +57,13 @@ public class ColoredLineTextView extends LinearLayout implements Iterable<TextVi
             setupTextView(textView, strings[i]);
         }
         invalidate();
+    }
+
+    public TextView getTextView(int index) {
+        if (index >= mTextViewList.size()) {
+            return null;
+        }
+        return mTextViewList.get(index);
     }
 
     public String[] getText() {

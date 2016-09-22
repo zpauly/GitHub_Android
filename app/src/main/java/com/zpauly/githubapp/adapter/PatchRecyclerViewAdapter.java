@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.base.BaseAdapter;
 import com.zpauly.githubapp.entity.response.repos.FileBean;
+import com.zpauly.githubapp.view.commit.CommitFilePatchActivity;
 import com.zpauly.githubapp.view.viewholder.PatchesViewHolder;
 
 /**
@@ -30,14 +31,14 @@ public class PatchRecyclerViewAdapter extends BaseAdapter<FileBean, PatchesViewH
 
     @Override
     public void onBindViewHolder(PatchesViewHolder holder, int position) {
-        FileBean data = getData().get(position);
+        final FileBean data = getData().get(position);
         holder.mFilenameTV.setText(data.getFilename());
         holder.mAdditionCountTV.setText(String.valueOf(data.getAdditions()));
         holder.mDeletionCountTV.setText(String.valueOf(data.getDeletions()));
         holder.mLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                CommitFilePatchActivity.launchActivity(getContext(), data);
             }
         });
     }

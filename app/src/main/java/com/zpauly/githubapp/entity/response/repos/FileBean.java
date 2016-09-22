@@ -7,6 +7,7 @@ import android.os.Parcelable;
  * Created by zpauly on 16/9/19.
  */
 public class FileBean implements Parcelable {
+    private String sha;
     private String filename;
     private int additions;
     private int deletions;
@@ -15,6 +16,14 @@ public class FileBean implements Parcelable {
     private String raw_url;
     private String blob_url;
     private String patch;
+
+    public String getSha() {
+        return sha;
+    }
+
+    public void setSha(String sha) {
+        this.sha = sha;
+    }
 
     public String getFilename() {
         return filename;
@@ -87,6 +96,7 @@ public class FileBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.sha);
         dest.writeString(this.filename);
         dest.writeInt(this.additions);
         dest.writeInt(this.deletions);
@@ -101,6 +111,7 @@ public class FileBean implements Parcelable {
     }
 
     protected FileBean(Parcel in) {
+        this.sha = in.readString();
         this.filename = in.readString();
         this.additions = in.readInt();
         this.deletions = in.readInt();

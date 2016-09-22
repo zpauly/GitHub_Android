@@ -86,6 +86,9 @@
     <string name="branch">Branch</string>
     <string name="releases">Releases</string>
     <string name="contributor">Contributor</string>
+    <string name="additions">Additions</string>
+    <string name="deletions">Deletions</string>
+    <string name="changes">Changes</string>
 
     <string name="started">Starred</string>
     <string name="unstarred">Unstarred</string>
