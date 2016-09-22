@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.zpauly.githubapp.R;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -73,6 +75,8 @@ public class ColoredLineTextView extends LinearLayout implements Iterable<TextVi
     private void setupTextView(TextView textView, String text) {
         LinearLayout.LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         addView(textView, layoutParams);
+        textView.setPadding(getResources().getDimensionPixelSize(R.dimen.components_padding), 0,
+                getResources().getDimensionPixelSize(R.dimen.components_padding), 0);
         textView.setText(text);
     }
 

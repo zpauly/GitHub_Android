@@ -1,16 +1,20 @@
 package com.zpauly.githubapp.view.commit;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.base.BaseFragment;
 import com.zpauly.githubapp.entity.response.repos.FileBean;
 import com.zpauly.githubapp.ui.ColoredLineTextView;
+
+import java.util.Iterator;
 
 /**
  * Created by zpauly on 16/9/22.
@@ -52,11 +56,15 @@ public class CommitFilePatchFragment extends BaseFragment {
             i++;
             if (line.startsWith("+")) {
                 mPatchCLTV.setLineBackgroundColor(i, getResources().getColor(R.color.commitAdditionColor));
-//                mPatchCLTV.getTextView(i).setBackgroundColor(R.color.colorAccent);
             }
             if (line.startsWith("-")) {
                 mPatchCLTV.setLineBackgroundColor(i, getResources().getColor(R.color.commitDeletionColor));
             }
+        }
+
+        Iterator<TextView> it = mPatchCLTV.iterator();
+        while (it.hasNext()) {
+            it.next().setTextColor(Color.BLACK);
         }
     }
 
