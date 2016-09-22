@@ -2,6 +2,7 @@ package com.zpauly.githubapp.view.issues;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -47,6 +48,7 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
     private AppCompatTextView mOpenTimeTV;
     private ExpandableTextView mBodyTV;
     private RecyclerView mCommentsRV;
+    private NestedScrollView mContentNSV;
     private FloatingActionButton mIssueFAB;
 
     private IssueBean issueBean;
@@ -78,6 +80,7 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
         mOpenTimeTV = (AppCompatTextView) view.findViewById(R.id.issue_content_open_time);
         mBodyTV = (ExpandableTextView) view.findViewById(R.id.issue_content_body_ETV);
         mCommentsRV = (RecyclerView) view.findViewById(R.id.issue_content_comments_RV);
+        mContentNSV = (NestedScrollView) view.findViewById(R.id.issue_content_NSV);
         mIssueFAB = (FloatingActionButton) view.findViewById(R.id.issue_content_FAB);
 
         setupSwipeRefreshLayout();
@@ -108,7 +111,7 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
     }
 
     private void setupFloatingActionButton() {
-        mIssueFAB.attachButtonToRecyclerView(mCommentsRV);
+        mIssueFAB.attachButtonToNestedScrollView(mContentNSV);
         mIssueFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

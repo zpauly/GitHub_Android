@@ -1,6 +1,7 @@
 package com.zpauly.githubapp.ui;
 
 import android.content.Context;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 
 import com.nineoldandroids.view.ViewPropertyAnimator;
+import com.zpauly.githubapp.listener.NestedScrollViewScrollListener;
 import com.zpauly.githubapp.listener.RecyclerViewScrollListener;
 
 /**
@@ -84,11 +86,28 @@ public class FloatingActionButton extends android.support.design.widget.Floating
         }
     }
 
+    public void attachButtonToNestedScrollView(NestedScrollView nestedScrollView) {
+        ButtonNestedScrollViewScrollListener listener = new ButtonNestedScrollViewScrollListener();
+        nestedScrollView.setOnScrollChangeListener(listener);
+    }
+
     public void attachButtonToRecyclerView(RecyclerView recyclerView) {
         recyclerView.addOnScrollListener(new ButtonRecyclerViewScrollListener());
     }
 
     private class ButtonRecyclerViewScrollListener extends RecyclerViewScrollListener {
+        @Override
+        public void onScrollUp() {
+            buttonShowOrHide(HIDE,false);
+        }
+
+        @Override
+        public void onScrollDown() {
+            buttonShowOrHide(SHOW, false);
+        }
+    }
+
+    private class ButtonNestedScrollViewScrollListener extends NestedScrollViewScrollListener {
         @Override
         public void onScrollUp() {
             buttonShowOrHide(HIDE,false);
