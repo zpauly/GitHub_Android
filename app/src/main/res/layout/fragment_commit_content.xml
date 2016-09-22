@@ -6,15 +6,15 @@
     android:layout_height="match_parent">
 
     <com.zpauly.githubapp.ui.RefreshView
-        android:visibility="gone"
         android:id="@+id/commit_content_RefreshView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <android.support.v4.widget.NestedScrollView
+        android:visibility="gone"
+        android:id="@+id/commit_content_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:orientation="vertical"
@@ -29,6 +29,7 @@
 
                 <LinearLayout
                     android:id="@+id/commit_content_committer_layout"
+                    android:clickable="true"
                     android:background="?attr/selectableItemBackground"
                     android:padding="@dimen/components_padding"
                     android:orientation="vertical"
@@ -55,12 +56,14 @@
                             android:layout_height="@dimen/list_item_avatar_size" />
 
                         <android.support.v7.widget.AppCompatTextView
+                            android:layout_marginLeft="@dimen/components_margin"
                             android:id="@+id/commit_content_committer_name_TV"
                             style="@style/TextAppearance.AppCompat.Medium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
                         <LinearLayout
+                            android:layout_marginLeft="@dimen/components_margin"
                             android:orientation="vertical"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
@@ -111,7 +114,7 @@
 
             <android.support.v7.widget.RecyclerView
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                android:id="@+id/commit_content_file_RV"
+                android:id="@+id/commit_content_patch_RV"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 

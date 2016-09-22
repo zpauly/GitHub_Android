@@ -1,7 +1,6 @@
 package com.zpauly.githubapp.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,7 @@ public class CommitsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Sing
     }
 
     @Override
-    public void bindContentViewHolder(CommitViewHolder holder, int position) {
+    public void bindContentViewHolder(CommitViewHolder holder, final int position) {
         SingleCommitBean data = getData().get(position);
         if (data.getAuthor() != null) {
             ImageUtil.loadAvatarImageFromUrl(getContext(), data.getAuthor().getAvatar_url(),
@@ -39,11 +38,11 @@ public class CommitsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Sing
             holder.mLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    if (getItemClickedListener() != null) {
+                        getItemClickedListener().onItemClicked(v, position);
+                    }
                 }
             });
-        } else {
-
         }
         if (data.getCommit() != null) {
             holder.mUsernameTV.setText(data.getCommit().getCommitter().getName());

@@ -12,11 +12,13 @@ import android.view.ViewGroup;
 
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.CommitsRecyclerViewAdapter;
+import com.zpauly.githubapp.base.BaseAdapter;
 import com.zpauly.githubapp.base.BaseFragment;
 import com.zpauly.githubapp.entity.response.repos.SingleCommitBean;
 import com.zpauly.githubapp.presenter.repos.RepoCommitContract;
 import com.zpauly.githubapp.presenter.repos.RepoCommitPresenter;
 import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.view.commit.CommitContentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,6 +134,13 @@ public class RepoCommitFragment extends BaseFragment implements RepoCommitContra
     @Override
     public void getCommitsSuccess() {
         mCommitAdapter.swapAllData(commitList);
+        mCommitAdapter.setOnItemClickedListener(new BaseAdapter.OnItemClickedListener() {
+            @Override
+            public void onItemClicked(View view, int position) {
+                CommitContentActivity.launchActivity(getContext(), owner, repoName,
+                        commitList.get(position).getSha());
+            }
+        });
         mCommitSRLayout.setRefreshing(false);
         if (!mRefreshView.isRefreshSuccess()) {
             mRefreshView.refreshSuccess();

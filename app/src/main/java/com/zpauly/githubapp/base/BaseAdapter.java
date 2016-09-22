@@ -2,6 +2,7 @@ package com.zpauly.githubapp.base;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
@@ -14,6 +15,20 @@ import java.util.List;
 public abstract class BaseAdapter<D, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
     protected Context mContext;
     protected List<D> mData;
+
+    private OnItemClickedListener mOnItemClickedListener;
+
+    public interface OnItemClickedListener {
+        void onItemClicked(View view, int position);
+    }
+
+    protected OnItemClickedListener getItemClickedListener() {
+        return mOnItemClickedListener;
+    }
+
+    public void setOnItemClickedListener(OnItemClickedListener onItemClickedListener) {
+        mOnItemClickedListener = onItemClickedListener;
+    }
 
     public BaseAdapter(Context context) {
         mContext = context;
