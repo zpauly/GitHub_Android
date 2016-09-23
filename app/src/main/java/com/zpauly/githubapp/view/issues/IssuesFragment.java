@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -176,7 +177,6 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
         mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
             @Override
             public void beforeRefreshing() {
-                mIssuesAdapter.setHasLoading(false);
                 getIssues();
             }
 
@@ -247,11 +247,10 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
-                int firstItemPosition = manager.findFirstCompletelyVisibleItemPosition();
                 if (lastItemPosition == mIssuesAdapter.getItemCount() - 1
-                        && firstItemPosition != mIssuesAdapter.getItemCount() - 1
                         && mIssuesAdapter.isHasMoreData()) {
                     if (!mSRLayout.isRefreshing()) {
+                        Log.i(TAG, "load more");
                         getIssues();
                     }
                 }

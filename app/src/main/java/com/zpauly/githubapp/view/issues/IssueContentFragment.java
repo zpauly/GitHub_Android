@@ -92,6 +92,7 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
         mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
             @Override
             public void beforeRefreshing() {
+                list.clear();
                 getIssueComments();
             }
 
@@ -163,7 +164,6 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
 
     private void setSwipeRefreshViewRefershing() {
         mCommentsAdapter.setHasLoading(true);
-//        mCommentsAdapter.hideLoadingView();
         mPresenter.setPageId(1);
         getIssueComments();
     }
@@ -172,19 +172,17 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
         mCommentsAdapter = new CommentsRecyclerViewAdapter(getContext());
         mCommentsRV.setLayoutManager(new LinearLayoutManager(getContext()));
         mCommentsRV.setAdapter(mCommentsAdapter);
-        mCommentsAdapter.setHasLoading(true);
+
         final LinearLayoutManager manager = (LinearLayoutManager) mCommentsRV.getLayoutManager();
         mCommentsRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
-                int firstItemPosition = manager.findFirstCompletelyVisibleItemPosition();
                 if (lastItemPosition == mCommentsAdapter.getItemCount() - 1
-                        && firstItemPosition != mCommentsAdapter.getItemCount() - 1
                         && mCommentsAdapter.isHasMoreData()) {
+                    Log.i(TAG, "load more");
                     if (!mSRLayout.isRefreshing()) {
-                        Log.i(TAG, "load more");
                         getIssueComments();
                     }
                 }
