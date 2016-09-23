@@ -16,6 +16,8 @@ import com.zpauly.githubapp.entity.response.gists.GistsBean;
 import com.zpauly.githubapp.presenter.gists.GistsContract;
 import com.zpauly.githubapp.presenter.gists.GistsPresenter;
 import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.utils.viewmanager.LoadMoreInSwipeRefreshLayoutMoreManager;
+import com.zpauly.githubapp.utils.viewmanager.RefreshViewManager;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -46,6 +48,9 @@ public class GistsFragment extends BaseFragment implements GistsContract.View {
 
     private int gists_id = 0;
 
+    private LoadMoreInSwipeRefreshLayoutMoreManager loadMoreInSwipeRefreshLayoutMoreManager;
+    private RefreshViewManager refreshViewManager;
+
     @Override
     public void onStop() {
         mPresenter.stop();
@@ -66,26 +71,38 @@ public class GistsFragment extends BaseFragment implements GistsContract.View {
         setupRecyclerView();
         setupSwipeRefreshLayout();
 
-        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
+        setViewManager(new LoadMoreInSwipeRefreshLayoutMoreManager(mGistsRV, mSRLayout) {
             @Override
-            public void beforeRefreshing() {
+            public void load() {
+                loadGists();
+            }
+        }, new RefreshViewManager(mRefreshView, mSRLayout) {
+            @Override
+            public void load() {
                 list.clear();
                 loadGists();
             }
-
-            @Override
-            public void onRefreshSuccess() {
-                mRefreshView.setVisibility(View.GONE);
-                mSRLayout.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onRefreshFail() {
-                mRefreshView.setVisibility(View.VISIBLE);
-                mSRLayout.setVisibility(View.GONE);
-            }
         });
-        mRefreshView.startRefresh();
+//
+//        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
+//            @Override
+//            public void beforeRefreshing() {
+//
+//            }
+//
+//            @Override
+//            public void onRefreshSuccess() {
+//                mRefreshView.setVisibility(View.GONE);
+//                mSRLayout.setVisibility(View.VISIBLE);
+//            }
+//
+//            @Override
+//            public void onRefreshFail() {
+//                mRefreshView.setVisibility(View.VISIBLE);
+//                mSRLayout.setVisibility(View.GONE);
+//            }
+//        });
+//        mRefreshView.startRefresh();
     }
 
     private void getAttrs() {
@@ -102,10 +119,9 @@ public class GistsFragment extends BaseFragment implements GistsContract.View {
             @Override
             public void onRefresh() {
                 GistsPresenter presenter = (GistsPresenter) mPresenter;
-                mGistsRVAdapter.setHasLoading(true);
-                mGistsRVAdapter.hideLoadingView();
                 presenter.setPageId(1);
-                loadGists();
+
+                loadMoreInSwipeRefreshLayoutMoreManager.setSwipeRefreshLayoutRefreshing(mGistsRVAdapter);
             }
         });
     }
@@ -116,22 +132,22 @@ public class GistsFragment extends BaseFragment implements GistsContract.View {
         mGistsRV.setLayoutManager(new LinearLayoutManager(getContext()));
         mGistsRV.setAdapter(mGistsRVAdapter);
 
-        final LinearLayoutManager manager = (LinearLayoutManager) mGistsRV.getLayoutManager();
-        mGistsRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                int lastVisiableCompletePosition = manager.findLastVisibleItemPosition();
-                int firstVisiableCompletePosition = manager.findFirstVisibleItemPosition();
-                if (lastVisiableCompletePosition == mGistsRVAdapter.getItemCount() - 1
-                        && firstVisiableCompletePosition != mGistsRVAdapter.getItemCount() - 1
-                        && mGistsRVAdapter.isHasMoreData()) {
-                    if (!mSRLayout.isRefreshing()) {
-                        mGistsRVAdapter.setHasLoading(true);
-                        loadGists();
-                    }
-                }
-            }
-        });
+//        final LinearLayoutManager manager = (LinearLayoutManager) mGistsRV.getLayoutManager();
+//        mGistsRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                int lastVisiableCompletePosition = manager.findLastVisibleItemPosition();
+//                int firstVisiableCompletePosition = manager.findFirstVisibleItemPosition();
+//                if (lastVisiableCompletePosition == mGistsRVAdapter.getItemCount() - 1
+//                        && firstVisiableCompletePosition != mGistsRVAdapter.getItemCount() - 1
+//                        && mGistsRVAdapter.isHasMoreData()) {
+//                    if (!mSRLayout.isRefreshing()) {
+//                        mGistsRVAdapter.setHasLoading(true);
+//                        loadGists();
+//                    }
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -175,9 +191,7 @@ public class GistsFragment extends BaseFragment implements GistsContract.View {
         if (mSRLayout.isRefreshing()) {
             this.list.clear();
         }
-        if (list == null || list.size() == 0) {
-            mGistsRVAdapter.setHasLoading(false);
-        } else {
+        if (!loadMoreInSwipeRefreshLayoutMoreManager.hasNoMoreData(list, mGistsRVAdapter)) {
             Iterator<GistsBean> iterator = list.iterator();
             while (iterator.hasNext()) {
                 GistsBean bean = iterator.next();
@@ -187,6 +201,11 @@ public class GistsFragment extends BaseFragment implements GistsContract.View {
             }
             this.list.addAll(list);
         }
+//        if (list == null || list.size() == 0) {
+//            mGistsRVAdapter.setHasLoading(false);
+//        } else {
+//
+//        }
     }
 
     @Override

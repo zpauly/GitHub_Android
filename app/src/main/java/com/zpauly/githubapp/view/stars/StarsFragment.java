@@ -22,6 +22,8 @@ import com.zpauly.githubapp.network.activity.ActivityService;
 import com.zpauly.githubapp.presenter.star.StarContract;
 import com.zpauly.githubapp.presenter.star.StarPresenter;
 import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.utils.viewmanager.LoadMoreInSwipeRefreshLayoutMoreManager;
+import com.zpauly.githubapp.utils.viewmanager.RefreshViewManager;
 import com.zpauly.githubapp.view.ToolbarMenuFragment;
 
 import java.util.ArrayList;
@@ -48,6 +50,9 @@ public class StarsFragment extends ToolbarMenuFragment implements StarContract.V
     private String sort = ActivityService.SORT_CREATED;
     private String direction = ActivityService.DIRECTION_DESC;
 
+    private LoadMoreInSwipeRefreshLayoutMoreManager loadMoreInSwipeRefreshLayoutMoreManager;
+    private RefreshViewManager refreshViewManager;
+
     @Override
     public void onStop() {
         if (mPresenter != null) {
@@ -68,26 +73,39 @@ public class StarsFragment extends ToolbarMenuFragment implements StarContract.V
         setupRecyclerView();
         setupSwipeRefreshLayout();
 
-        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
+        setViewManager(new LoadMoreInSwipeRefreshLayoutMoreManager(mStarredReposRV, mStarredReposSRLayout) {
             @Override
-            public void beforeRefreshing() {
+            public void load() {
+                loadStarredRepositories();
+            }
+        }, new RefreshViewManager(mRefreshView, mStarredReposSRLayout) {
+            @Override
+            public void load() {
                 ReposDao.deleteRepos();
                 loadStarredRepositories();
             }
-
-            @Override
-            public void onRefreshSuccess() {
-                mRefreshView.setVisibility(View.GONE);
-                mStarredReposSRLayout.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onRefreshFail() {
-                mRefreshView.setVisibility(View.VISIBLE);
-                mStarredReposSRLayout.setVisibility(View.GONE);
-            }
         });
-        mRefreshView.startRefresh();
+
+//        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
+//            @Override
+//            public void beforeRefreshing() {
+//                ReposDao.deleteRepos();
+//                loadStarredRepositories();
+//            }
+//
+//            @Override
+//            public void onRefreshSuccess() {
+//                mRefreshView.setVisibility(View.GONE);
+//                mStarredReposSRLayout.setVisibility(View.VISIBLE);
+//            }
+//
+//            @Override
+//            public void onRefreshFail() {
+//                mRefreshView.setVisibility(View.VISIBLE);
+//                mStarredReposSRLayout.setVisibility(View.GONE);
+//            }
+//        });
+//        mRefreshView.startRefresh();
     }
 
     private void setupSwipeRefreshLayout() {
@@ -139,11 +157,9 @@ public class StarsFragment extends ToolbarMenuFragment implements StarContract.V
 
     private void setSwipeRefreshLayoutRefreshing() {
         ReposDao.deleteRepos();
-        mAdapter.setHasLoading(true);
-        mAdapter.hideLoadingView();
         StarPresenter presenter = (StarPresenter) mPresenter;
         presenter.setPageId(1);
-        loadStarredRepositories();
+        loadMoreInSwipeRefreshLayoutMoreManager.setSwipeRefreshLayoutRefreshing(mAdapter);
     }
 
     private void setupRecyclerView() {
@@ -151,23 +167,23 @@ public class StarsFragment extends ToolbarMenuFragment implements StarContract.V
         mStarredReposRV.setLayoutManager(new LinearLayoutManager(getContext()));
         mStarredReposRV.setAdapter(mAdapter);
 
-        final LinearLayoutManager manager = (LinearLayoutManager) mStarredReposRV.getLayoutManager();
-        mStarredReposRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
-                int firstItemPosition = manager.findFirstCompletelyVisibleItemPosition();
-                if (lastItemPosition == mAdapter.getItemCount() - 1
-                        && firstItemPosition != mAdapter.getItemCount() - 1
-                        && mAdapter.isHasMoreData()) {
-                    if (!mStarredReposSRLayout.isRefreshing()) {
-                        mAdapter.setHasLoading(true);
-                        loadStarredRepositories();
-                    }
-                }
-            }
-        });
+//        final LinearLayoutManager manager = (LinearLayoutManager) mStarredReposRV.getLayoutManager();
+//        mStarredReposRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
+//                int firstItemPosition = manager.findFirstCompletelyVisibleItemPosition();
+//                if (lastItemPosition == mAdapter.getItemCount() - 1
+//                        && firstItemPosition != mAdapter.getItemCount() - 1
+//                        && mAdapter.isHasMoreData()) {
+//                    if (!mStarredReposSRLayout.isRefreshing()) {
+//                        mAdapter.setHasLoading(true);
+//                        loadStarredRepositories();
+//                    }
+//                }
+//            }
+//        });
     }
 
     private void loadStarredRepositories() {
@@ -190,9 +206,7 @@ public class StarsFragment extends ToolbarMenuFragment implements StarContract.V
             ReposDao.insertRepo(repo);
         }
         Log.i(TAG, String.valueOf(starredRepositories.size()));
-        if (starredRepositories == null || starredRepositories.size() == 0) {
-            mAdapter.setHasLoading(false);
-        }
+        loadMoreInSwipeRefreshLayoutMoreManager.hasNoMoreData(starredRepositories, mAdapter);
         list.clear();
         list.addAll(ReposDao.queryRepos());
     }

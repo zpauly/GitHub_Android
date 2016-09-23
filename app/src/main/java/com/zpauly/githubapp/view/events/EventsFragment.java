@@ -16,6 +16,8 @@ import com.zpauly.githubapp.entity.response.events.EventsBean;
 import com.zpauly.githubapp.presenter.events.EventsContract;
 import com.zpauly.githubapp.presenter.events.EventsPresenter;
 import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.utils.viewmanager.LoadMoreInSwipeRefreshLayoutMoreManager;
+import com.zpauly.githubapp.utils.viewmanager.RefreshViewManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +42,9 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
 
     private List<EventsBean> list = new ArrayList<>();
 
+    private LoadMoreInSwipeRefreshLayoutMoreManager loadMoreInSwipeRefreshLayoutMoreManager;
+    private RefreshViewManager refreshViewManager;
+
     @Override
     public void onStop() {
         if (mPresenter != null) {
@@ -61,26 +66,20 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
         setupSwipeRefreshLayout();
         setupRecyclerView();
 
-
-        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
+        setViewManager(new LoadMoreInSwipeRefreshLayoutMoreManager(mEventsRV, mEventsSRLayout) {
             @Override
-            public void beforeRefreshing() {
+            public void load() {
                 loadData();
             }
-
+        }, new RefreshViewManager(mRefreshView, mEventsSRLayout) {
             @Override
-            public void onRefreshSuccess() {
-                mRefreshView.setVisibility(View.GONE);
-                mEventsSRLayout.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onRefreshFail() {
-                mRefreshView.setVisibility(View.VISIBLE);
-                mEventsSRLayout.setVisibility(View.GONE);
+            public void load() {
+                loadData();
             }
         });
-        mRefreshView.startRefresh();
+
+        loadMoreInSwipeRefreshLayoutMoreManager = getViewManager(LoadMoreInSwipeRefreshLayoutMoreManager.class);
+        refreshViewManager = getViewManager(RefreshViewManager.class);
     }
 
     private void setupSwipeRefreshLayout() {
@@ -91,9 +90,7 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
             public void onRefresh() {
                 EventsPresenter presenter = (EventsPresenter) mPresenter;
                 presenter.setPageId(1);
-                mAdapter.setHasLoading(true);
-                mAdapter.hideLoadingView();
-                loadData();
+                loadMoreInSwipeRefreshLayoutMoreManager.setSwipeRefreshLayoutRefreshing(mAdapter);
             }
         });
     }
@@ -102,24 +99,6 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
         mAdapter = new EventsRecyclerViewAdapter(getContext());
         mEventsRV.setLayoutManager(new LinearLayoutManager(getContext()));
         mEventsRV.setAdapter(mAdapter);
-
-        final LinearLayoutManager manager = (LinearLayoutManager) mEventsRV.getLayoutManager();
-        mEventsRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
-                int firstItemPosition = manager.findFirstCompletelyVisibleItemPosition();
-                if (lastItemPosition == mAdapter.getItemCount() - 1
-                        && firstItemPosition != mAdapter.getItemCount() - 1
-                        && mAdapter.isHasMoreData()) {
-                    if (!mEventsSRLayout.isRefreshing()) {
-                        mAdapter.setHasLoading(true);
-                        loadData();
-                    }
-                }
-            }
-        });
     }
 
     private void loadData() {
@@ -145,9 +124,7 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
 
     @Override
     public void loadEvents(List<EventsBean> eventsBeanList) {
-        if (eventsBeanList == null || eventsBeanList.size() == 0) {
-            mAdapter.setHasLoading(false);
-        }
+        loadMoreInSwipeRefreshLayoutMoreManager.hasNoMoreData(eventsBeanList, mAdapter);
         if (mEventsSRLayout.isRefreshing()) {
             list.clear();
         }

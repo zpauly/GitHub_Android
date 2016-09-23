@@ -21,6 +21,8 @@ import com.zpauly.githubapp.presenter.issues.IssuesContract;
 import com.zpauly.githubapp.presenter.issues.IssuesPresenter;
 import com.zpauly.githubapp.ui.FloatingActionButton;
 import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.utils.viewmanager.LoadMoreInSwipeRefreshLayoutMoreManager;
+import com.zpauly.githubapp.utils.viewmanager.RefreshViewManager;
 import com.zpauly.githubapp.view.ToolbarMenuFragment;
 
 import java.util.ArrayList;
@@ -56,6 +58,9 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
     private String username;
     private String repoName;
     private String orgName;
+
+    private LoadMoreInSwipeRefreshLayoutMoreManager loadMoreInSwipeRefreshLayoutMoreManager;
+    private RefreshViewManager refreshViewManager;
 
     @Override
     public void onStop() {
@@ -154,9 +159,8 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
     }
 
     private void setSwipeRefreshLayoutRefreshing() {
-        mIssuesAdapter.setHasLoading(true);
         mPresenter.setPageId(1);
-        getIssues();
+        loadMoreInSwipeRefreshLayoutMoreManager.setSwipeRefreshLayoutRefreshing(mIssuesAdapter);
     }
 
     @Override
@@ -174,29 +178,67 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
         setupRecyclerView();
         setupFloatingActionButton();
 
-        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
+        setViewManager(new LoadMoreInSwipeRefreshLayoutMoreManager(mIssuesRV, mSRLayout) {
             @Override
-            public void beforeRefreshing() {
+            public void load() {
                 getIssues();
             }
-
+        }, new RefreshViewManager(mRefreshView, mSRLayout) {
             @Override
-            public void onRefreshSuccess() {
-                mRefreshView.setVisibility(View.GONE);
-                mSRLayout.setVisibility(View.VISIBLE);
-                if (!(issueType == IssuesActivity.USER_ISSUES))
-                    mIssueCreateFAB.setVisibility(View.VISIBLE);
+            public void load() {
+
             }
 
             @Override
-            public void onRefreshFail() {
-                mRefreshView.setVisibility(View.VISIBLE);
-                mSRLayout.setVisibility(View.GONE);
-                if (!(issueType == IssuesActivity.USER_ISSUES))
-                    mIssueCreateFAB.setVisibility(View.GONE);
+            public void setRefreshView(final RefreshView refreshView, final View otherView) {
+                refreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
+                    @Override
+                    public void beforeRefreshing() {
+                        getIssues();
+                    }
+
+                    @Override
+                    public void onRefreshSuccess() {
+                        refreshView.setVisibility(View.GONE);
+                        otherView.setVisibility(View.VISIBLE);
+                        if (!(issueType == IssuesActivity.USER_ISSUES))
+                            mIssueCreateFAB.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onRefreshFail() {
+                        refreshView.setVisibility(View.VISIBLE);
+                        otherView.setVisibility(View.GONE);
+                        if (!(issueType == IssuesActivity.USER_ISSUES))
+                            mIssueCreateFAB.setVisibility(View.GONE);
+                    }
+                });
             }
         });
-        mRefreshView.startRefresh();
+
+//        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
+//            @Override
+//            public void beforeRefreshing() {
+//                getIssues();
+//            }
+//
+//            @Override
+//            public void onRefreshSuccess() {
+//                mRefreshView.setVisibility(View.GONE);
+//                mSRLayout.setVisibility(View.VISIBLE);
+//                if (!(issueType == IssuesActivity.USER_ISSUES))
+//                    mIssueCreateFAB.setVisibility(View.VISIBLE);
+//            }
+//
+//            @Override
+//            public void onRefreshFail() {
+//                mRefreshView.setVisibility(View.VISIBLE);
+//                mSRLayout.setVisibility(View.GONE);
+//                if (!(issueType == IssuesActivity.USER_ISSUES))
+//                    mIssueCreateFAB.setVisibility(View.GONE);
+//            }
+//        });
+//        mRefreshView.startRefresh();
     }
 
     @Override
@@ -241,21 +283,21 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
         mIssuesRV.setLayoutManager(new LinearLayoutManager(getContext()));
         mIssuesRV.setAdapter(mIssuesAdapter);
 
-        final LinearLayoutManager manager = (LinearLayoutManager) mIssuesRV.getLayoutManager();
-        mIssuesRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
-                if (lastItemPosition == mIssuesAdapter.getItemCount() - 1
-                        && mIssuesAdapter.isHasMoreData()) {
-                    if (!mSRLayout.isRefreshing()) {
-                        Log.i(TAG, "load more");
-                        getIssues();
-                    }
-                }
-            }
-        });
+//        final LinearLayoutManager manager = (LinearLayoutManager) mIssuesRV.getLayoutManager();
+//        mIssuesRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
+//                if (lastItemPosition == mIssuesAdapter.getItemCount() - 1
+//                        && mIssuesAdapter.isHasMoreData()) {
+//                    if (!mSRLayout.isRefreshing()) {
+//                        Log.i(TAG, "load more");
+//                        getIssues();
+//                    }
+//                }
+//            }
+//        });
     }
 
     private void getIssues() {
@@ -325,8 +367,7 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
         if (mSRLayout.isRefreshing()) {
             this.list.clear();
         }
-        if (list == null || list.size() == 0)
-            mIssuesAdapter.setHasLoading(false);
+        loadMoreInSwipeRefreshLayoutMoreManager.hasNoMoreData(list, mIssuesAdapter);
         this.list.addAll(list);
     }
 

@@ -18,6 +18,8 @@ import com.zpauly.githubapp.entity.response.repos.SingleCommitBean;
 import com.zpauly.githubapp.presenter.repos.RepoCommitContract;
 import com.zpauly.githubapp.presenter.repos.RepoCommitPresenter;
 import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.utils.viewmanager.LoadMoreInSwipeRefreshLayoutMoreManager;
+import com.zpauly.githubapp.utils.viewmanager.RefreshViewManager;
 import com.zpauly.githubapp.view.commit.CommitContentActivity;
 
 import java.util.ArrayList;
@@ -42,6 +44,9 @@ public class RepoCommitFragment extends BaseFragment implements RepoCommitContra
     private CommitsRecyclerViewAdapter mCommitAdapter;
 
     private List<SingleCommitBean> commitList = new ArrayList<>();
+
+    private LoadMoreInSwipeRefreshLayoutMoreManager loadMoreInSwipeRefreshLayoutMoreManager;
+    private RefreshView refreshView;
 
     @Override
     public void onStop() {
@@ -70,26 +75,39 @@ public class RepoCommitFragment extends BaseFragment implements RepoCommitContra
         setupSwipeRefreshLayout();
         setupRecyclerView();
 
-        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
+        setViewManager(new LoadMoreInSwipeRefreshLayoutMoreManager(mCommitRV, mCommitSRLayout) {
             @Override
-            public void beforeRefreshing() {
+            public void load() {
+                getCommits();
+            }
+        }, new RefreshViewManager(mRefreshView, mCommitSRLayout) {
+            @Override
+            public void load() {
                 mPresenter.setPageId(1);
                 getCommits();
             }
-
-            @Override
-            public void onRefreshSuccess() {
-                mRefreshView.setVisibility(View.GONE);
-                mCommitSRLayout.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onRefreshFail() {
-                mRefreshView.setVisibility(View.VISIBLE);
-                mCommitSRLayout.setVisibility(View.GONE);
-            }
         });
-        mRefreshView.startRefresh();
+
+//        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
+//            @Override
+//            public void beforeRefreshing() {
+//                mPresenter.setPageId(1);
+//                getCommits();
+//            }
+//
+//            @Override
+//            public void onRefreshSuccess() {
+//                mRefreshView.setVisibility(View.GONE);
+//                mCommitSRLayout.setVisibility(View.VISIBLE);
+//            }
+//
+//            @Override
+//            public void onRefreshFail() {
+//                mRefreshView.setVisibility(View.VISIBLE);
+//                mCommitSRLayout.setVisibility(View.GONE);
+//            }
+//        });
+//        mRefreshView.startRefresh();
     }
 
     private void getCommits() {
@@ -103,7 +121,7 @@ public class RepoCommitFragment extends BaseFragment implements RepoCommitContra
             @Override
             public void onRefresh() {
                 mPresenter.setPageId(1);
-                getCommits();
+                loadMoreInSwipeRefreshLayoutMoreManager.setSwipeRefreshLayoutRefreshing(mCommitAdapter);
             }
         });
     }
@@ -113,23 +131,23 @@ public class RepoCommitFragment extends BaseFragment implements RepoCommitContra
         mCommitRV.setLayoutManager(new LinearLayoutManager(getContext()));
         mCommitRV.setAdapter(mCommitAdapter);
 
-        final LinearLayoutManager manager = (LinearLayoutManager) mCommitRV.getLayoutManager();
-        mCommitRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
-                int firstItemPosition = manager.findFirstCompletelyVisibleItemPosition();
-                if (lastItemPosition == mCommitAdapter.getItemCount() - 1
-                        && firstItemPosition != mCommitAdapter.getItemCount() - 1
-                        && mCommitAdapter.isHasMoreData()) {
-                    if (!mCommitSRLayout.isRefreshing()) {
-                        mCommitAdapter.setHasLoading(true);
-                        getCommits();
-                    }
-                }
-            }
-        });
+//        final LinearLayoutManager manager = (LinearLayoutManager) mCommitRV.getLayoutManager();
+//        mCommitRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
+//                int firstItemPosition = manager.findFirstCompletelyVisibleItemPosition();
+//                if (lastItemPosition == mCommitAdapter.getItemCount() - 1
+//                        && firstItemPosition != mCommitAdapter.getItemCount() - 1
+//                        && mCommitAdapter.isHasMoreData()) {
+//                    if (!mCommitSRLayout.isRefreshing()) {
+//                        mCommitAdapter.setHasLoading(true);
+//                        getCommits();
+//                    }
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -164,10 +182,7 @@ public class RepoCommitFragment extends BaseFragment implements RepoCommitContra
         if (mCommitSRLayout.isRefreshing()) {
             commitList.clear();
         }
-        if (singleCommitBeen == null || singleCommitBeen.size() == 0) {
-            mCommitAdapter.setHasLoading(false);
-            return;
-        }
+        loadMoreInSwipeRefreshLayoutMoreManager.hasNoMoreData(singleCommitBeen, mCommitAdapter);
         commitList.addAll(singleCommitBeen);
     }
 

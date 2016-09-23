@@ -18,6 +18,8 @@ import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.presenter.follow.FollowContract;
 import com.zpauly.githubapp.presenter.follow.FollowPresenter;
 import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.utils.viewmanager.LoadMoreInSwipeRefreshLayoutMoreManager;
+import com.zpauly.githubapp.utils.viewmanager.RefreshViewManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +43,9 @@ public class UsersFragment extends BaseFragment implements FollowContract.View {
 
     private int userId = 0;
 
+    private LoadMoreInSwipeRefreshLayoutMoreManager loadMoreInSwipeRefreshLayoutMoreManager;
+    private RefreshViewManager refreshViewManager;
+
     @Override
     public void onStop() {
         if (mPresenter != null) {
@@ -63,25 +68,37 @@ public class UsersFragment extends BaseFragment implements FollowContract.View {
         setupSwipeRefreshLayout();
         setupRecyclerView();
 
-        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
+        setViewManager(new LoadMoreInSwipeRefreshLayoutMoreManager(mContentRV, mSWLayout) {
             @Override
-            public void beforeRefreshing() {
+            public void load() {
                 loadFollow();
             }
-
+        }, new RefreshViewManager(mRefreshView, mSWLayout) {
             @Override
-            public void onRefreshSuccess() {
-                mRefreshView.setVisibility(View.GONE);
-                mSWLayout.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onRefreshFail() {
-                mRefreshView.setVisibility(View.VISIBLE);
-                mSWLayout.setVisibility(View.GONE);
+            public void load() {
+                loadFollow();
             }
         });
-        mRefreshView.startRefresh();
+
+//        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
+//            @Override
+//            public void beforeRefreshing() {
+//                loadFollow();
+//            }
+//
+//            @Override
+//            public void onRefreshSuccess() {
+//                mRefreshView.setVisibility(View.GONE);
+//                mSWLayout.setVisibility(View.VISIBLE);
+//            }
+//
+//            @Override
+//            public void onRefreshFail() {
+//                mRefreshView.setVisibility(View.VISIBLE);
+//                mSWLayout.setVisibility(View.GONE);
+//            }
+//        });
+//        mRefreshView.startRefresh();
     }
 
     @Override
@@ -95,10 +112,8 @@ public class UsersFragment extends BaseFragment implements FollowContract.View {
         mSWLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mRVAdapter.setHasLoading(true);
-                mRVAdapter.hideLoadingView();
                 mRVAdapter.addAllData(new ArrayList<UserBean>());
-                loadFollow();
+                loadMoreInSwipeRefreshLayoutMoreManager.setSwipeRefreshLayoutRefreshing(mRVAdapter);
             }
         });
     }
@@ -112,27 +127,27 @@ public class UsersFragment extends BaseFragment implements FollowContract.View {
         mContentRV.setLayoutManager(new LinearLayoutManager(getContext()));
         mContentRV.setAdapter(mRVAdapter);
 
-        final LinearLayoutManager manager = (LinearLayoutManager) mContentRV.getLayoutManager();
-        mContentRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                int lastVisiableItemPosition = manager.findLastCompletelyVisibleItemPosition();
-                if (lastVisiableItemPosition == mRVAdapter.getItemCount() - 1
-                        && manager.findFirstCompletelyVisibleItemPosition() != mRVAdapter.getItemCount() - 1
-                        && mRVAdapter.isHasMoreData()) {
-                    mRVAdapter.setHasLoading(true);
-                    if (!mSWLayout.isRefreshing()) {
-                        loadFollow();
-                    }
-                }
-            }
-        });
+//        final LinearLayoutManager manager = (LinearLayoutManager) mContentRV.getLayoutManager();
+//        mContentRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//            }
+//
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                int lastVisiableItemPosition = manager.findLastCompletelyVisibleItemPosition();
+//                if (lastVisiableItemPosition == mRVAdapter.getItemCount() - 1
+//                        && manager.findFirstCompletelyVisibleItemPosition() != mRVAdapter.getItemCount() - 1
+//                        && mRVAdapter.isHasMoreData()) {
+//                    mRVAdapter.setHasLoading(true);
+//                    if (!mSWLayout.isRefreshing()) {
+//                        loadFollow();
+//                    }
+//                }
+//            }
+//        });
     }
 
     private void loadFollow() {
@@ -179,9 +194,7 @@ public class UsersFragment extends BaseFragment implements FollowContract.View {
     public void loadSuccess() {
         mRVAdapter.addAllData(list);
         mSWLayout.setRefreshing(false);
-        if (list == null || list.size() == 0) {
-            mRVAdapter.setHasLoading(false);
-        }
+        loadMoreInSwipeRefreshLayoutMoreManager.hasNoMoreData(list, mRVAdapter);
         if (!mRefreshView.isRefreshSuccess()) {
             mRefreshView.refreshSuccess();
         }

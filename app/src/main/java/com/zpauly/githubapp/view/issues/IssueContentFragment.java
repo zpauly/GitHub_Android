@@ -24,6 +24,8 @@ import com.zpauly.githubapp.ui.FloatingActionButton;
 import com.zpauly.githubapp.ui.RefreshView;
 import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.TextUtil;
+import com.zpauly.githubapp.utils.viewmanager.LoadMoreInSwipeRefreshLayoutMoreManager;
+import com.zpauly.githubapp.utils.viewmanager.RefreshViewManager;
 import com.zpauly.githubapp.view.comment.CommentCreateActivity;
 import com.zpauly.githubapp.view.profile.OthersActivity;
 
@@ -60,6 +62,9 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
 
     private List<CommentBean> list = new ArrayList<>();
 
+    private LoadMoreInSwipeRefreshLayoutMoreManager loadMoreInSwipeRefreshLayoutMoreManager;
+    private RefreshViewManager refreshViewManager;
+
     @Override
     public void onStop() {
         mPresenter.stop();
@@ -89,26 +94,20 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
 
         setupViews();
 
-        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
+        setViewManager(new LoadMoreInSwipeRefreshLayoutMoreManager(mCommentsRV, mSRLayout) {
             @Override
-            public void beforeRefreshing() {
-                list.clear();
+            public void load() {
                 getIssueComments();
             }
-
+        }, new RefreshViewManager(mRefreshView, mSRLayout) {
             @Override
-            public void onRefreshSuccess() {
-                mRefreshView.setVisibility(View.GONE);
-                mSRLayout.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onRefreshFail() {
-                mRefreshView.setVisibility(View.VISIBLE);
-                mSRLayout.setVisibility(View.GONE);
+            public void load() {
+                getIssueComments();
             }
         });
-        mRefreshView.startRefresh();
+
+        loadMoreInSwipeRefreshLayoutMoreManager = getViewManager(LoadMoreInSwipeRefreshLayoutMoreManager.class);
+        refreshViewManager = getViewManager(RefreshViewManager.class);
     }
 
     private void setupFloatingActionButton() {
@@ -163,31 +162,14 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
     }
 
     private void setSwipeRefreshViewRefershing() {
-        mCommentsAdapter.setHasLoading(true);
         mPresenter.setPageId(1);
-        getIssueComments();
+        loadMoreInSwipeRefreshLayoutMoreManager.setSwipeRefreshLayoutRefreshing(mCommentsAdapter);
     }
 
     private void setupRecyclerView() {
         mCommentsAdapter = new CommentsRecyclerViewAdapter(getContext());
         mCommentsRV.setLayoutManager(new LinearLayoutManager(getContext()));
         mCommentsRV.setAdapter(mCommentsAdapter);
-
-        final LinearLayoutManager manager = (LinearLayoutManager) mCommentsRV.getLayoutManager();
-        mCommentsRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
-                if (lastItemPosition == mCommentsAdapter.getItemCount() - 1
-                        && mCommentsAdapter.isHasMoreData()) {
-                    Log.i(TAG, "load more");
-                    if (!mSRLayout.isRefreshing()) {
-                        getIssueComments();
-                    }
-                }
-            }
-        });
     }
 
     private void getIssueComments() {
@@ -217,8 +199,7 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
         if (mSRLayout.isRefreshing()) {
             list.clear();
         }
-        if (commentBeen == null || commentBeen.size() == 0)
-            mCommentsAdapter.setHasLoading(false);
+        loadMoreInSwipeRefreshLayoutMoreManager.hasNoMoreData(commentBeen, mCommentsAdapter);
         list.addAll(commentBeen);
     }
 

@@ -18,6 +18,8 @@ import com.zpauly.githubapp.presenter.comment.CommitCommentContract;
 import com.zpauly.githubapp.presenter.comment.CommitCommentPresenter;
 import com.zpauly.githubapp.ui.FloatingActionButton;
 import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.utils.viewmanager.LoadMoreInSwipeRefreshLayoutMoreManager;
+import com.zpauly.githubapp.utils.viewmanager.RefreshViewManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +49,9 @@ public class CommentFragment extends BaseFragment implements CommitCommentContra
 
     private List<CommentBean> commentList = new ArrayList<>();
 
+    private LoadMoreInSwipeRefreshLayoutMoreManager loadMoreInSwipeRefreshLayoutMoreManager;
+    private RefreshViewManager refreshViewManager;
+
     @Override
     protected void initViews(View view) {
         mRefreshView = (RefreshView) view.findViewById(R.id.commit_comment_RefreshView);
@@ -70,26 +75,18 @@ public class CommentFragment extends BaseFragment implements CommitCommentContra
         setupCommitCommmentRecyclerView();
         setupFloatingActionButton();
 
-        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
+        setViewManager(new LoadMoreInSwipeRefreshLayoutMoreManager(mCommentRV, mCommentSRLayout) {
             @Override
-            public void beforeRefreshing() {
+            public void load() {
+                getCommitComments();
+            }
+        }, new RefreshViewManager(mRefreshView, mContentLayout) {
+            @Override
+            public void load() {
                 mCommitCommentPresenter.setPageId(1);
                 getCommitComments();
             }
-
-            @Override
-            public void onRefreshSuccess() {
-                mRefreshView.setVisibility(View.GONE);
-                mContentLayout.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onRefreshFail() {
-                mRefreshView.setVisibility(View.VISIBLE);
-                mContentLayout.setVisibility(View.GONE);
-            }
         });
-        mRefreshView.startRefresh();
     }
 
     private void setupSwipeRefreshLayout() {
@@ -121,24 +118,24 @@ public class CommentFragment extends BaseFragment implements CommitCommentContra
         mCommentAdapter = new CommentsRecyclerViewAdapter(getContext());
         mCommentRV.setLayoutManager(new LinearLayoutManager(getContext()));
         mCommentRV.setAdapter(mCommentAdapter);
-
-        final LinearLayoutManager manager = (LinearLayoutManager) mCommentRV.getLayoutManager();
-        mCommentRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
-                int firstItemPosition = manager.findFirstCompletelyVisibleItemPosition();
-                if (lastItemPosition == mCommentAdapter.getItemCount() - 1
-                        && firstItemPosition != mCommentAdapter.getItemCount() - 1
-                        && mCommentAdapter.isHasMoreData()) {
-                    if (!mCommentSRLayout.isRefreshing()) {
-                        mCommentAdapter.setHasLoading(true);
-                        getCommitComments();
-                    }
-                }
-            }
-        });
+//
+//        final LinearLayoutManager manager = (LinearLayoutManager) mCommentRV.getLayoutManager();
+//        mCommentRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
+//                int firstItemPosition = manager.findFirstCompletelyVisibleItemPosition();
+//                if (lastItemPosition == mCommentAdapter.getItemCount() - 1
+//                        && firstItemPosition != mCommentAdapter.getItemCount() - 1
+//                        && mCommentAdapter.isHasMoreData()) {
+//                    if (!mCommentSRLayout.isRefreshing()) {
+//                        mCommentAdapter.setHasLoading(true);
+//                        getCommitComments();
+//                    }
+//                }
+//            }
+//        });
     }
 
     private void getAttrs() {
@@ -190,9 +187,7 @@ public class CommentFragment extends BaseFragment implements CommitCommentContra
         if (!mCommentSRLayout.isRefreshing()) {
             commentList.clear();
         }
-        if (commentBeen == null || commentBeen.size() == 0) {
-            mCommentAdapter.setHasLoading(false);
-        }
+        loadMoreInSwipeRefreshLayoutMoreManager.hasNoMoreData(commentBeen, mCommentAdapter);
         commentList.addAll(commentBeen);
     }
 
