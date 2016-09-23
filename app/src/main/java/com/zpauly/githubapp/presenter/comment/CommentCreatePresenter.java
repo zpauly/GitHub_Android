@@ -3,9 +3,12 @@ package com.zpauly.githubapp.presenter.comment;
 import android.content.Context;
 
 import com.zpauly.githubapp.base.NetPresenter;
-import com.zpauly.githubapp.entity.request.CommentRequestBean;
+import com.zpauly.githubapp.entity.request.CommitCommentRequestBean;
+import com.zpauly.githubapp.entity.request.IssueCommentRequestBean;
 import com.zpauly.githubapp.entity.response.CommentBean;
 import com.zpauly.githubapp.network.issues.IssuesMethod;
+import com.zpauly.githubapp.network.repositories.RepositoriesMethod;
+import com.zpauly.githubapp.view.comment.CommentCreateActivity;
 
 import rx.Subscriber;
 
@@ -20,6 +23,7 @@ public class CommentCreatePresenter extends NetPresenter implements CommentCreat
 
     private String auth;
     private IssuesMethod issuesMethod;
+    private RepositoriesMethod repositoriesMethod;
 
     private Subscriber<CommentBean> commentSubscriber;
 
@@ -49,14 +53,26 @@ public class CommentCreatePresenter extends NetPresenter implements CommentCreat
                 mCommentCreateView.creatingComment(commentBean);
             }
         };
-        issuesMethod.createAComment(commentSubscriber, getComment(), auth,
-                mCommentCreateView.getOwner(), mCommentCreateView.getRepo(), mCommentCreateView.getNum());
+        switch (mCommentCreateView.getCommentType()) {
+            case CommentCreateActivity.TYPE_COMMIT:
+                repositoriesMethod.createACommitComment(commentSubscriber, auth,
+                        mCommentCreateView.getOwner(), mCommentCreateView.getRepo(),
+                        mCommentCreateView.getSha(), getCommitComment());
+                break;
+            case CommentCreateActivity.TYPE_ISSUE:
+                issuesMethod.createAComment(commentSubscriber, getIssueComment(), auth,
+                        mCommentCreateView.getOwner(), mCommentCreateView.getRepo(), mCommentCreateView.getNum());
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
     public void start() {
         auth = getAuth(mContext);
         issuesMethod = getMethod(IssuesMethod.class);
+        repositoriesMethod = getMethod(RepositoriesMethod.class);
     }
 
     @Override
@@ -64,9 +80,15 @@ public class CommentCreatePresenter extends NetPresenter implements CommentCreat
         unsubscribe(commentSubscriber);
     }
 
-    private CommentRequestBean getComment() {
-        CommentRequestBean commentRequestBean = new CommentRequestBean();
-        commentRequestBean.setBody(mCommentCreateView.getCommentBody());
-        return commentRequestBean;
+    private CommitCommentRequestBean getCommitComment() {
+        CommitCommentRequestBean commitCommentRequestBean = new CommitCommentRequestBean();
+        commitCommentRequestBean.setBody(mCommentCreateView.getCommentBody());
+        return commitCommentRequestBean;
+    }
+
+    private IssueCommentRequestBean getIssueComment() {
+        IssueCommentRequestBean issueCommentRequestBean = new IssueCommentRequestBean();
+        issueCommentRequestBean.setBody(mCommentCreateView.getCommentBody());
+        return issueCommentRequestBean;
     }
 }

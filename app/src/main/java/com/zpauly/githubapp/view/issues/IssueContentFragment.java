@@ -115,7 +115,7 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
         mIssueFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CommentCreateActivity.launchActivity(getContext(), owner, repoName, issueBean.getNumber());
+                CommentCreateActivity.launchIssueCommentActivity(getContext(), owner, repoName, issueBean.getNumber());
             }
         });
     }
@@ -163,6 +163,7 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
 
     private void setSwipeRefreshViewRefershing() {
         mCommentsAdapter.setHasLoading(true);
+//        mCommentsAdapter.hideLoadingView();
         mPresenter.setPageId(1);
         getIssueComments();
     }
@@ -171,6 +172,7 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
         mCommentsAdapter = new CommentsRecyclerViewAdapter(getContext());
         mCommentsRV.setLayoutManager(new LinearLayoutManager(getContext()));
         mCommentsRV.setAdapter(mCommentsAdapter);
+        mCommentsAdapter.setHasLoading(true);
         final LinearLayoutManager manager = (LinearLayoutManager) mCommentsRV.getLayoutManager();
         mCommentsRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -182,7 +184,7 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
                         && firstItemPosition != mCommentsAdapter.getItemCount() - 1
                         && mCommentsAdapter.isHasMoreData()) {
                     if (!mSRLayout.isRefreshing()) {
-                        mCommentsAdapter.setHasLoading(true);
+                        Log.i(TAG, "load more");
                         getIssueComments();
                     }
                 }

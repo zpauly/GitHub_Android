@@ -25,6 +25,10 @@ public class CommentCreateContract {
 
         int getNum();
 
+        String getSha();
+
         String getCommentBody();
+
+        int getCommentType();
     }
 }

@@ -27,9 +27,11 @@ public class CommentCreateFragment extends BaseFragment implements CommentCreate
     private AppCompatEditText mCommentET;
     private FloatingActionButton mCommentFAB;
 
+    private int commentType;
     private String repo;
     private String owner;
     private int number;
+    private String sha;
 
     private MaterialDialog uploadDialog;
     private CommentBean commentBean;
@@ -63,9 +65,11 @@ public class CommentCreateFragment extends BaseFragment implements CommentCreate
     private void getAttrs() {
         Bundle bundle = getArguments();
         if (bundle != null) {
+            commentType = bundle.getInt(CommentActivity.COMMENT_TYPE);
             repo = bundle.getString(CommentCreateActivity.REPO);
             owner = bundle.getString(CommentCreateActivity.OWNER);
             number = bundle.getInt(CommentCreateActivity.NUM);
+            sha = bundle.getString(CommentCreateActivity.SHA);
         }
     }
 
@@ -125,8 +129,18 @@ public class CommentCreateFragment extends BaseFragment implements CommentCreate
     }
 
     @Override
+    public String getSha() {
+        return sha;
+    }
+
+    @Override
     public String getCommentBody() {
         return mCommentET.getText().toString();
+    }
+
+    @Override
+    public int getCommentType() {
+        return commentType;
     }
 
     @Override

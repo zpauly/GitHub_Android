@@ -23,7 +23,7 @@ public abstract class LoadMoreRecyclerViewAdapter<D, VH extends RecyclerView.Vie
     protected Context mContext;
 
     private boolean hasMoreData = true;
-    private boolean flag = false;
+    private boolean flag = true;
 
     public LoadMoreRecyclerViewAdapter(Context context) {
         super(context);
@@ -82,7 +82,7 @@ public abstract class LoadMoreRecyclerViewAdapter<D, VH extends RecyclerView.Vie
 
     public void hideLoadingView() {
         flag = false;
-        notifyDataSetChanged();
+//        notifyDataSetChanged();
     }
 
     public void setHasLoading(boolean hasMoreData) {

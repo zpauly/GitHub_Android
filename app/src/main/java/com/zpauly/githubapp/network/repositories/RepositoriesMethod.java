@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 
 import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.base.BaseNetMethod;
+import com.zpauly.githubapp.entity.request.CommitCommentRequestBean;
 import com.zpauly.githubapp.entity.response.CommentBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoryContentBean;
@@ -112,6 +113,15 @@ public class RepositoriesMethod extends BaseNetMethod {
     public void getACommitComments(Observer<List<CommentBean>> observer, String auth,
                                    String owner, String repo, String ref, int pageId) {
         service.getACommitComments(auth, owner, repo, ref, pageId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void createACommitComment(Observer<CommentBean> observer, String auth,
+                                     String owner, String repo, String sha,
+                                     CommitCommentRequestBean bean) {
+        service.createACommitComment(auth, owner, repo, sha, bean)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

@@ -252,7 +252,6 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
                         && firstItemPosition != mIssuesAdapter.getItemCount() - 1
                         && mIssuesAdapter.isHasMoreData()) {
                     if (!mSRLayout.isRefreshing()) {
-                        mIssuesAdapter.setHasLoading(true);
                         getIssues();
                     }
                 }

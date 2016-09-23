@@ -3,7 +3,7 @@ package com.zpauly.githubapp.network.issues;
 
 import android.support.annotation.Nullable;
 
-import com.zpauly.githubapp.entity.request.CommentRequestBean;
+import com.zpauly.githubapp.entity.request.IssueCommentRequestBean;
 import com.zpauly.githubapp.entity.request.IssueRequestBean;
 import com.zpauly.githubapp.entity.response.issues.AssigneeBean;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
@@ -224,7 +224,7 @@ public interface IssuesService {
     /**
      * Create a comment
      * @param auth
-     * @param commentRequestBean
+     * @param issueCommentRequestBean
      * @param owner
      * @param repo
      * @param number
@@ -232,7 +232,7 @@ public interface IssuesService {
      */
     @POST("/repos/{owner}/{repo}/issues/{number}/comments")
     Observable<CommentBean> createAComment(@Header("Authorization") String auth,
-                                           @Body CommentRequestBean commentRequestBean,
+                                           @Body IssueCommentRequestBean issueCommentRequestBean,
                                            @Path("owner") String owner,
                                            @Path("repo") String repo,
                                            @Path("number") int number);

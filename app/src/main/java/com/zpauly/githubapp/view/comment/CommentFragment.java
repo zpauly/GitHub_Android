@@ -99,6 +99,7 @@ public class CommentFragment extends BaseFragment implements CommitCommentContra
             @Override
             public void onRefresh() {
                 mCommentAdapter.setHasLoading(true);
+                mCommentAdapter.hideLoadingView();
                 mCommitCommentPresenter.setPageId(1);
                 getCommitComments();
             }
@@ -110,7 +111,8 @@ public class CommentFragment extends BaseFragment implements CommitCommentContra
         mCommentFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                CommentCreateActivity.launchCommitCommentActivity(getContext(),
+                        owner, repo, ref);
             }
         });
     }
@@ -170,6 +172,7 @@ public class CommentFragment extends BaseFragment implements CommitCommentContra
 
     @Override
     public void getCommentsSuccess() {
+        mCommentAdapter.swapAllData(commentList);
         mCommentSRLayout.setRefreshing(false);
         if (!mRefreshView.isRefreshSuccess()) {
             mRefreshView.refreshSuccess();

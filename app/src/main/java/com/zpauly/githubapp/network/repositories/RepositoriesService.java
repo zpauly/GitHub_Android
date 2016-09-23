@@ -2,6 +2,7 @@ package com.zpauly.githubapp.network.repositories;
 
 import android.support.annotation.Nullable;
 
+import com.zpauly.githubapp.entity.request.CommitCommentRequestBean;
 import com.zpauly.githubapp.entity.response.CommentBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoryContentBean;
@@ -10,8 +11,10 @@ import com.zpauly.githubapp.entity.response.repos.SingleCommitBean;
 import java.util.List;
 
 
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -141,4 +144,20 @@ public interface RepositoriesService {
                                                      @Path("repo") String repo,
                                                      @Path("ref") String ref,
                                                      @Query("page") int pageId);
+
+    /**
+     * Create a commit comment
+     * @param auth
+     * @param owner
+     * @param repo
+     * @param sha
+     * @param bean
+     * @return
+     */
+    @POST("/repos/{owner}/{repo}/commits/{sha}/comments")
+    Observable<CommentBean> createACommitComment(@Header("Authorization") String auth,
+                                                 @Path("owner") String owner,
+                                                 @Path("repo") String repo,
+                                                 @Path("sha") String sha,
+                                                 @Body CommitCommentRequestBean bean);
 }

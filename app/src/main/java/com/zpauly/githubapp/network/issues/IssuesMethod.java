@@ -2,7 +2,7 @@ package com.zpauly.githubapp.network.issues;
 
 import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.base.BaseNetMethod;
-import com.zpauly.githubapp.entity.request.CommentRequestBean;
+import com.zpauly.githubapp.entity.request.IssueCommentRequestBean;
 import com.zpauly.githubapp.entity.request.IssueRequestBean;
 import com.zpauly.githubapp.entity.response.issues.AssigneeBean;
 import com.zpauly.githubapp.entity.response.CommentBean;
@@ -162,9 +162,9 @@ public class IssuesMethod extends BaseNetMethod {
     }
 
     public void createAComment(Observer<CommentBean> observer,
-                               CommentRequestBean commentRequestBean,
+                               IssueCommentRequestBean issueCommentRequestBean,
                                String auth, String owner, String repo, int number) {
-        service.createAComment(auth, commentRequestBean, owner, repo, number)
+        service.createAComment(auth, issueCommentRequestBean, owner, repo, number)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
