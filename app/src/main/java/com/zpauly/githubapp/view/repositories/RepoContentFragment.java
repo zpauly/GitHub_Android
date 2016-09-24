@@ -365,6 +365,7 @@ public class RepoContentFragment extends ToolbarMenuFragment implements RepoCont
                     case R.id.repo_menu_branch:
                         break;
                     case R.id.repo_menu_releases:
+                        RepoReleasesActivity.launchActivity(getContext(), login, name);
                         break;
                     case R.id.repo_menu_contributor:
                         break;

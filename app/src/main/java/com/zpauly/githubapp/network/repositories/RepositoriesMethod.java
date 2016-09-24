@@ -6,6 +6,7 @@ import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.base.BaseNetMethod;
 import com.zpauly.githubapp.entity.request.CommitCommentRequestBean;
 import com.zpauly.githubapp.entity.response.CommentBean;
+import com.zpauly.githubapp.entity.response.repos.ReleaseBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoryContentBean;
 import com.zpauly.githubapp.entity.response.repos.SingleCommitBean;
@@ -122,6 +123,22 @@ public class RepositoriesMethod extends BaseNetMethod {
                                      String owner, String repo, String sha,
                                      CommitCommentRequestBean bean) {
         service.createACommitComment(auth, owner, repo, sha, bean)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getRepositoryReleases(Observer<List<ReleaseBean>> observer, String auth,
+                                      String owner, String repo, int pageId) {
+        service.getRepositoryReleases(auth, owner, repo, pageId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getASingleRelease(Observer<ReleaseBean> observer, String auth,
+                                  String owner, String repo, int id, int pageId) {
+        service.getASingleRelease(auth, owner, repo, id, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

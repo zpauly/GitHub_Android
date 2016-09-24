@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/CardView"
+    android:layout_margin="@dimen/card_margin"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/releases_item_layout"
+        android:clickable="true"
+        android:background="?attr/selectableItemBackground"
+        android:padding="@dimen/components_padding"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/releases_item_name_TV"
+            android:textColor="@color/colorPrimary"
+            style="@style/Base.TextAppearance.AppCompat.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/components_margin"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/releases_item_avatar_IV"
+                android:layout_width="@dimen/list_item_avatar_size"
+                android:layout_height="@dimen/list_item_avatar_size" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_marginLeft="@dimen/components_margin"
+                android:id="@+id/releases_item_username_TV"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/components_margin"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/ic_tag"
+                android:layout_width="@dimen/small_image_size"
+                android:layout_height="@dimen/small_image_size" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_marginLeft="@dimen/components_margin"
+                style="@style/Base.TextAppearance.AppCompat.Body1"
+                android:id="@+id/releases_item_tag_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

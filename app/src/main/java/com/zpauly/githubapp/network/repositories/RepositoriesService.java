@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 
 import com.zpauly.githubapp.entity.request.CommitCommentRequestBean;
 import com.zpauly.githubapp.entity.response.CommentBean;
+import com.zpauly.githubapp.entity.response.repos.ReleaseBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoryContentBean;
 import com.zpauly.githubapp.entity.response.repos.SingleCommitBean;
@@ -160,4 +161,34 @@ public interface RepositoriesService {
                                                  @Path("repo") String repo,
                                                  @Path("sha") String sha,
                                                  @Body CommitCommentRequestBean bean);
+
+    /**
+     * List releases for a repository
+     * @param auth
+     * @param owner
+     * @param repo
+     * @param pageId
+     * @return
+     */
+    @GET("/repos/{owner}/{repo}/releases")
+    Observable<List<ReleaseBean>> getRepositoryReleases(@Header("Authorization") String auth,
+                                                        @Path("owner") String owner,
+                                                        @Path("repo") String repo,
+                                                        @Query("page") int pageId);
+
+    /**
+     * Get a single release
+     * @param auth
+     * @param owner
+     * @param repo
+     * @param id
+     * @param pageId
+     * @return
+     */
+    @GET("/repos/{owner}/{repo}/releases/{id}")
+    Observable<ReleaseBean> getASingleRelease(@Header("Authorization") String auth,
+                                              @Path("owner") String owner,
+                                              @Path("repo") String repo,
+                                              @Path("id") int id,
+                                              @Query("page") int pageId);
 }

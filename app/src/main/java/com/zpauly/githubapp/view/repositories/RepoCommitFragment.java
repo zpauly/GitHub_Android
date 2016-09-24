@@ -46,7 +46,7 @@ public class RepoCommitFragment extends BaseFragment implements RepoCommitContra
     private List<SingleCommitBean> commitList = new ArrayList<>();
 
     private LoadMoreInSwipeRefreshLayoutMoreManager loadMoreInSwipeRefreshLayoutMoreManager;
-    private RefreshView refreshView;
+    private RefreshViewManager refreshViewManager;
 
     @Override
     public void onStop() {
@@ -87,6 +87,9 @@ public class RepoCommitFragment extends BaseFragment implements RepoCommitContra
                 getCommits();
             }
         });
+
+        loadMoreInSwipeRefreshLayoutMoreManager = getViewManager(LoadMoreInSwipeRefreshLayoutMoreManager.class);
+        refreshViewManager = getViewManager(RefreshViewManager.class);
 
 //        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
 //            @Override

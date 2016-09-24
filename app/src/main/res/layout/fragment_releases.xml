@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.zpauly.githubapp.ui.RefreshView
+        android:id="@+id/releases_RefreshView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/releases_SRLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/releases_RV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>
