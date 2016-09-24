@@ -80,6 +80,9 @@ public class UsersFragment extends BaseFragment implements FollowContract.View {
             }
         });
 
+        loadMoreInSwipeRefreshLayoutMoreManager = getViewManager(LoadMoreInSwipeRefreshLayoutMoreManager.class);
+        refreshViewManager = getViewManager(RefreshViewManager.class);
+
 //        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
 //            @Override
 //            public void beforeRefreshing() {

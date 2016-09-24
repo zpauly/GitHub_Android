@@ -83,6 +83,9 @@ public class GistsFragment extends BaseFragment implements GistsContract.View {
                 loadGists();
             }
         });
+
+        loadMoreInSwipeRefreshLayoutMoreManager = getViewManager(LoadMoreInSwipeRefreshLayoutMoreManager.class);
+        refreshViewManager = getViewManager(RefreshViewManager.class);
 //
 //        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
 //            @Override

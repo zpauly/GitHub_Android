@@ -86,6 +86,9 @@ public class StarsFragment extends ToolbarMenuFragment implements StarContract.V
             }
         });
 
+        loadMoreInSwipeRefreshLayoutMoreManager = getViewManager(LoadMoreInSwipeRefreshLayoutMoreManager.class);
+        refreshViewManager = getViewManager(RefreshViewManager.class);
+
 //        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
 //            @Override
 //            public void beforeRefreshing() {

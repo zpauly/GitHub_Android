@@ -95,6 +95,8 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
         mUsersAdapter = new UsersRecyclerViewAdapter(getContext());
         mExploreRV.setLayoutManager(new LinearLayoutManager(getContext()));
         mExploreRV.setAdapter(mReposAdapter);
+        mReposAdapter.hideLoadingView();
+        mUsersAdapter.hideLoadingView();
     }
 
     private void searchRepos() {
