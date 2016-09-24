@@ -17,6 +17,7 @@ public abstract class LoadMoreInSwipeRefreshLayoutMoreManager extends LoadMoreMa
 
     public void setSwipeRefreshLayoutRefreshing(LoadMoreRecyclerViewAdapter adapter) {
         adapter.setHasLoading(true);
+        adapter.hideLoadingView();
         load();
     }
 }

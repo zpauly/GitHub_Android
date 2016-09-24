@@ -216,6 +216,9 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
             }
         });
 
+         loadMoreInSwipeRefreshLayoutMoreManager = getViewManager(LoadMoreInSwipeRefreshLayoutMoreManager.class);
+        refreshViewManager = getViewManager(RefreshViewManager.class);
+
 //        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
 //            @Override
 //            public void beforeRefreshing() {
@@ -367,6 +370,7 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
         if (mSRLayout.isRefreshing()) {
             this.list.clear();
         }
+        Log.i(TAG, String.valueOf(list.size()));
         loadMoreInSwipeRefreshLayoutMoreManager.hasNoMoreData(list, mIssuesAdapter);
         this.list.addAll(list);
     }

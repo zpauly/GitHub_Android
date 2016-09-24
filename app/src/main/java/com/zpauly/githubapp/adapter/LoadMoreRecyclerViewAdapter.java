@@ -88,7 +88,7 @@ public abstract class LoadMoreRecyclerViewAdapter<D, VH extends RecyclerView.Vie
     public void setHasLoading(boolean hasMoreData) {
         this.hasMoreData = hasMoreData;
         flag = true;
-//        notifyDataSetChanged();
+        notifyDataSetChanged();
     }
 
     public boolean isHasMoreData() {
