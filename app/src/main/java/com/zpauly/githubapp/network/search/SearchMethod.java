@@ -35,24 +35,24 @@ public class SearchMethod extends BaseNetMethod {
     }
 
     public void getSearchRepos(Observer<SearchReposBean> observer, String auth, String query,
-                               String sort, String order) {
-        service.getSearchRepos(auth, query, sort, order)
+                               String sort, String order, int pageId) {
+        service.getSearchRepos(auth, query, sort, order, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 
     public void getSearchCode(Observer<SearchCodeBean> observer, String auth, String query,
-                              String sort, String order) {
-        service.getSearchCode(auth, query, sort, order)
+                              String sort, String order, int pageId) {
+        service.getSearchCode(auth, query, sort, order, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 
     public void getSearchUsers(Observer<SearchUsersBean> observer, String auth, String query,
-                               String sort, String order) {
-        service.getSearchUsers(auth, query, sort, order)
+                               String sort, String order, int pageId) {
+        service.getSearchUsers(auth, query, sort, order, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

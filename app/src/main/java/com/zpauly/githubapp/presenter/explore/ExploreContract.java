@@ -17,6 +17,8 @@ public class ExploreContract {
         void getSearchCode();
 
         void getSearchUsers();
+
+        void setPageId(int pageId);
     }
 
     public interface View extends BaseView<Presenter> {

@@ -26,6 +26,7 @@ import com.zpauly.githubapp.entity.response.search.SearchUsersBean;
 import com.zpauly.githubapp.network.search.SearchService;
 import com.zpauly.githubapp.presenter.explore.ExploreContract;
 import com.zpauly.githubapp.presenter.explore.ExplorePresenter;
+import com.zpauly.githubapp.utils.viewmanager.LoadMoreInSwipeRefreshLayoutMoreManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +59,8 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
 
     private String query;
 
+    private LoadMoreInSwipeRefreshLayoutMoreManager loadMoreInSwipeRefreshLayoutMoreManager;
+
     @Override
     public void onStop() {
         mPresenter.stop();
@@ -73,6 +76,15 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
 
         setupSwipeRefreshLayout();
         setupRecyclerView();
+
+        setViewManager(new LoadMoreInSwipeRefreshLayoutMoreManager(mExploreRV, mExploreSRLayout) {
+            @Override
+            public void load() {
+                searchRepos();
+            }
+        });
+
+        loadMoreInSwipeRefreshLayoutMoreManager = getViewManager(LoadMoreInSwipeRefreshLayoutMoreManager.class);
     }
 
     private void setupSwipeRefreshLayout() {
@@ -84,7 +96,19 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
                 if (query == null) {
                     mExploreSRLayout.setRefreshing(false);
                 } else {
-                    searchRepos();
+                    mPresenter.setPageId(1);
+                    switch (typeTag) {
+                        case TYPE_REPOS:
+                            loadMoreInSwipeRefreshLayoutMoreManager.setSwipeRefreshLayoutRefreshing(mReposAdapter);
+                            break;
+                        case TYPE_USERS:
+                            loadMoreInSwipeRefreshLayoutMoreManager.setSwipeRefreshLayoutRefreshing(mUsersAdapter);
+                            break;
+                        case TYPE_CODE:
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         });
@@ -263,6 +287,7 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
     @Override
     public void searchingUsers(SearchUsersBean bean) {
         Log.i(TAG, String.valueOf(bean.getItems().size()));
+        loadMoreInSwipeRefreshLayoutMoreManager.hasNoMoreData(bean.getItems(), mUsersAdapter);
         usersList.addAll(bean.getItems());
     }
 
@@ -274,6 +299,7 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
     @Override
     public void searchingRepos(SearchReposBean bean) {
         Log.i(TAG, String.valueOf(bean.getItems().size()));
+        loadMoreInSwipeRefreshLayoutMoreManager.hasNoMoreData(bean.getItems(), mReposAdapter);
         reposList.addAll(bean.getItems());
     }
 

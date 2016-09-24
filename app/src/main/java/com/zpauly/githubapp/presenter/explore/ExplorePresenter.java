@@ -27,6 +27,8 @@ public class ExplorePresenter extends NetPresenter implements ExploreContract.Pr
     private Subscriber<SearchCodeBean> searchCodeSubscriber;
     private Subscriber<SearchUsersBean> searchUsersSubscriber;
 
+    private int pageId = 1;
+
     public ExplorePresenter(Context context, ExploreContract.View view) {
         this.mContext = context;
         this.mExploreView = view;
@@ -65,7 +67,7 @@ public class ExplorePresenter extends NetPresenter implements ExploreContract.Pr
             }
         };
         method.getSearchRepos(searchReposSubscriber, auth, mExploreView.getQuery(),
-                mExploreView.getSort(), mExploreView.getOrder());
+                mExploreView.getSort(), mExploreView.getOrder(), pageId++);
     }
 
     @Override
@@ -88,7 +90,7 @@ public class ExplorePresenter extends NetPresenter implements ExploreContract.Pr
             }
         };
         method.getSearchCode(searchCodeSubscriber, auth, mExploreView.getQuery(),
-                mExploreView.getSort(), mExploreView.getOrder());
+                mExploreView.getSort(), mExploreView.getOrder(), pageId++);
     }
 
     @Override
@@ -111,6 +113,11 @@ public class ExplorePresenter extends NetPresenter implements ExploreContract.Pr
             }
         };
         method.getSearchUsers(searchUsersSubscriber, auth, mExploreView.getQuery(),
-                mExploreView.getSort(), mExploreView.getOrder());
+                mExploreView.getSort(), mExploreView.getOrder(), pageId++);
+    }
+
+    @Override
+    public void setPageId(int pageId) {
+        this.pageId = pageId;
     }
 }

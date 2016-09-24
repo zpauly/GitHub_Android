@@ -38,7 +38,8 @@ public interface SearchService {
     Observable<SearchReposBean> getSearchRepos(@Header("Authorization") String auth,
                                                @Query("q") String query,
                                                @Nullable @Query("sort") String sort,
-                                               @Nullable @Query("order") String order);
+                                               @Nullable @Query("order") String order,
+                                               @Query("page") int pageId);
 
 
     String SORT_INDEXED = "indexed";
@@ -55,7 +56,8 @@ public interface SearchService {
     Observable<SearchCodeBean> getSearchCode(@Header("Authorization") String auth,
                                              @Query("q") String query,
                                              @Nullable @Query("sort") String sort,
-                                             @Nullable @Query("order") String order);
+                                             @Nullable @Query("order") String order,
+                                             @Query("page") int pageId);
 
 
     String SORT_REPOSITORIES = "repositories";
@@ -76,5 +78,6 @@ public interface SearchService {
     Observable<SearchUsersBean> getSearchUsers(@Header("Authorization") String auth,
                                                @Query("q") String query,
                                                @Nullable @Query("sort") String sort,
-                                               @Nullable @Query("order") String order);
+                                               @Nullable @Query("order") String order,
+                                               @Query("query") int pageId);
 }
