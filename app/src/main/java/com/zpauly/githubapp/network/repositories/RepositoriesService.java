@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 
 import com.zpauly.githubapp.entity.request.CommitCommentRequestBean;
 import com.zpauly.githubapp.entity.response.CommentBean;
+import com.zpauly.githubapp.entity.response.repos.ContributorBean;
 import com.zpauly.githubapp.entity.response.repos.ReleaseBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoryContentBean;
@@ -191,4 +192,18 @@ public interface RepositoriesService {
                                               @Path("repo") String repo,
                                               @Path("id") int id,
                                               @Query("page") int pageId);
+
+    /**
+     * List contributorsIntegrations Enabled
+     * @param auth
+     * @param owner
+     * @param repo
+     * @param pageId
+     * @return
+     */
+    @GET("/repos/{owner}/{repo}/contributors")
+    Observable<List<ContributorBean>> getContributors(@Header("Authorization") String auth,
+                                                      @Path("owner") String owner,
+                                                      @Path("repo") String repo,
+                                                      @Query("page") int pageId);
 }

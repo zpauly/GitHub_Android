@@ -59,6 +59,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
+            <ImageView
+                android:layout_marginLeft="@dimen/components_margin"
+                android:src="@drawable/ic_access_time"
+                android:layout_width="@dimen/small_image_size"
+                android:layout_height="@dimen/small_image_size" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_marginLeft="@dimen/components_margin"
+                style="@style/Base.TextAppearance.AppCompat.Body1"
+                android:id="@+id/releases_item_time_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
         </LinearLayout>
 
     </LinearLayout>

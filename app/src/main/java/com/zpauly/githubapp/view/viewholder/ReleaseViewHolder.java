@@ -24,6 +24,8 @@ public class ReleaseViewHolder extends RecyclerView.ViewHolder {
 
     public final AppCompatTextView mTagTV;
 
+    public final AppCompatTextView mTimeTV;
+
     public ReleaseViewHolder(View itemView) {
         super(itemView);
 
@@ -32,5 +34,6 @@ public class ReleaseViewHolder extends RecyclerView.ViewHolder {
         mNameTV = (AppCompatTextView) itemView.findViewById(R.id.releases_item_name_TV);
         mUsernameTV = (AppCompatTextView) itemView.findViewById(R.id.releases_item_username_TV);
         mTagTV = (AppCompatTextView) itemView.findViewById(R.id.releases_item_tag_TV);
+        mTimeTV = (AppCompatTextView) itemView.findViewById(R.id.releases_item_time_TV);
     }
 }

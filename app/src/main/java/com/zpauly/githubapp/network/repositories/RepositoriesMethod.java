@@ -6,6 +6,7 @@ import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.base.BaseNetMethod;
 import com.zpauly.githubapp.entity.request.CommitCommentRequestBean;
 import com.zpauly.githubapp.entity.response.CommentBean;
+import com.zpauly.githubapp.entity.response.repos.ContributorBean;
 import com.zpauly.githubapp.entity.response.repos.ReleaseBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoryContentBean;
@@ -139,6 +140,14 @@ public class RepositoriesMethod extends BaseNetMethod {
     public void getASingleRelease(Observer<ReleaseBean> observer, String auth,
                                   String owner, String repo, int id, int pageId) {
         service.getASingleRelease(auth, owner, repo, id, pageId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getContributors(Observer<List<ContributorBean>> observer, String auth,
+                                String owner, String repo, int pageId) {
+        service.getContributors(auth, owner, repo, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.response.repos.ReleaseBean;
 import com.zpauly.githubapp.utils.ImageUtil;
+import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.viewholder.ReleaseViewHolder;
 
 /**
@@ -30,17 +31,20 @@ public class ReleasesRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Rel
     }
 
     @Override
-    public void bindContentViewHolder(ReleaseViewHolder holder, int position) {
+    public void bindContentViewHolder(ReleaseViewHolder holder, final int position) {
         ReleaseBean data = getData().get(position);
         holder.mNameTV.setText(data.getName());
         holder.mUsernameTV.setText(data.getAuthor().getLogin());
         holder.mTagTV.setText(data.getTag_name());
+        holder.mTimeTV.setText(TextUtil.timeConverter(data.getCreated_at()));
         ImageUtil.loadAvatarImageFromUrl(getContext(), data.getAuthor().getAvatar_url(),
                 holder.mAvatarIV);
         holder.mLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (getItemClickedListener() != null) {
+                    getItemClickedListener().onItemClicked(v, position);
+                }
             }
         });
     }
