@@ -1,14 +1,18 @@
 package com.zpauly.githubapp.entity.response.repos;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.zpauly.githubapp.entity.response.UserBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by zpauly on 16/9/24.
  */
 
-public class ReleaseBean {
+public class ReleaseBean implements Parcelable {
 
     /**
      * url : https://api.github.com/repos/octocat/Hello-World/releases/1
@@ -218,4 +222,66 @@ public class ReleaseBean {
     public void setAssets(List<AssetsBean> assets) {
         this.assets = assets;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.url);
+        dest.writeString(this.html_url);
+        dest.writeString(this.assets_url);
+        dest.writeString(this.upload_url);
+        dest.writeString(this.tarball_url);
+        dest.writeString(this.zipball_url);
+        dest.writeInt(this.id);
+        dest.writeString(this.tag_name);
+        dest.writeString(this.target_commitish);
+        dest.writeString(this.name);
+        dest.writeString(this.body);
+        dest.writeByte(this.draft ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.prerelease ? (byte) 1 : (byte) 0);
+        dest.writeString(this.created_at);
+        dest.writeString(this.published_at);
+        dest.writeParcelable(this.author, flags);
+        dest.writeList(this.assets);
+    }
+
+    public ReleaseBean() {
+    }
+
+    protected ReleaseBean(Parcel in) {
+        this.url = in.readString();
+        this.html_url = in.readString();
+        this.assets_url = in.readString();
+        this.upload_url = in.readString();
+        this.tarball_url = in.readString();
+        this.zipball_url = in.readString();
+        this.id = in.readInt();
+        this.tag_name = in.readString();
+        this.target_commitish = in.readString();
+        this.name = in.readString();
+        this.body = in.readString();
+        this.draft = in.readByte() != 0;
+        this.prerelease = in.readByte() != 0;
+        this.created_at = in.readString();
+        this.published_at = in.readString();
+        this.author = in.readParcelable(UserBean.class.getClassLoader());
+        this.assets = new ArrayList<AssetsBean>();
+        in.readList(this.assets, AssetsBean.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<ReleaseBean> CREATOR = new Parcelable.Creator<ReleaseBean>() {
+        @Override
+        public ReleaseBean createFromParcel(Parcel source) {
+            return new ReleaseBean(source);
+        }
+
+        @Override
+        public ReleaseBean[] newArray(int size) {
+            return new ReleaseBean[size];
+        }
+    };
 }

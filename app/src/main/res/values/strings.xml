@@ -44,7 +44,7 @@
     <string name="search_hint">Search...</string>
     <string name="sort">Sort By</string>
     <string name="click_to_refresh">Click To Refresh</string>
-
+    
     <string name="best_match">Best match</string>
     <string name="most_stars">Most stars</string>
     <string name="fewest_stars">Fewest stars</string>
@@ -63,6 +63,7 @@
     <string name="most_commented">Most commmented</string>
     <string name="least_commented">Least commented</string>
     <string name="comments">Comments</string>
+    <string name="release_notes">Releases Notes</string>
 
     <string name="language_setting">LANGUAEG SETTING</string>
     <string name="simplified_chinese">中文</string>

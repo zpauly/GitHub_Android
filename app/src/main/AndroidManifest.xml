@@ -39,6 +39,7 @@
         <activity android:name=".view.commit.CommitFilePatchActivity" />
         <activity android:name=".view.comment.CommentActivity" />
         <activity android:name=".view.repositories.RepoReleasesActivity" />
+        <activity android:name=".view.repositories.ReleaseContentActivity" />
     </application>
 
 </manifest>
