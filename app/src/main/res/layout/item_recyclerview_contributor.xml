@@ -3,16 +3,17 @@
     style="@style/CardView"
     android:layout_margin="@dimen/components_margin"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <LinearLayout
+        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:id="@+id/contributor_item_layout"
         android:padding="@dimen/components_padding"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/contributor_item_avatar_IV"
@@ -23,7 +24,7 @@
             android:layout_marginLeft="@dimen/components_margin"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/contributor_item_username_TV"

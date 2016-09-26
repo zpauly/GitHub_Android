@@ -40,6 +40,7 @@
         <activity android:name=".view.comment.CommentActivity" />
         <activity android:name=".view.repositories.RepoReleasesActivity" />
         <activity android:name=".view.repositories.ReleaseContentActivity" />
+        <activity android:name=".view.repositories.ContributorsActivity" />
     </application>
 
 </manifest>

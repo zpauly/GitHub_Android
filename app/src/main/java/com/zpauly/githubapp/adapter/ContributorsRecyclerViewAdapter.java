@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.response.repos.ContributorBean;
 import com.zpauly.githubapp.utils.ImageUtil;
+import com.zpauly.githubapp.view.profile.OthersActivity;
 import com.zpauly.githubapp.view.viewholder.ContributorViewHolder;
 
 /**
@@ -30,7 +31,7 @@ public class ContributorsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter
 
     @Override
     public void bindContentViewHolder(ContributorViewHolder holder, int position) {
-        ContributorBean data = getData().get(position);
+        final ContributorBean data = getData().get(position);
         holder.mUsernameTV.setText(data.getLogin());
         holder.mCommitCountTV.setText(String.valueOf(data.getContributions() + " "
                 + getContext().getString(R.string.commits)));
@@ -38,7 +39,7 @@ public class ContributorsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter
         holder.mLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                OthersActivity.lanuchActivity(getContext(), data.getLogin());
             }
         });
     }
