@@ -117,6 +117,35 @@
                     android:layout_height="1dp" />
 
                 <LinearLayout
+                    android:id="@+id/profile_blog_layout"
+                    android:clickable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/components_padding"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:src="@drawable/ic_link"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp" />
+
+                    <TextView
+                        android:id="@+id/profile_blog_TV"
+                        android:layout_marginLeft="@dimen/components_margin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/profile_blog_divider_IV"
+                    android:background="@drawable/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+
+                <LinearLayout
                     android:id="@+id/profile_time_layout"
                     android:clickable="true"
                     android:background="?attr/selectableItemBackground"

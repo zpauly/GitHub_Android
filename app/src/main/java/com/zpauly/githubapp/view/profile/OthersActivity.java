@@ -49,14 +49,17 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
     private TextView mFollowersTV;
     private TextView mFollowingTV;
     private TextView mCompanyTV;
+    private TextView mBlogTV;
     private ImageView mLocationDividerIV;
     private ImageView mEmailDividerIV;
     private ImageView mTimeDividerIV;
     private ImageView mCompanyDividerIV;
+    private ImageView mBlogDividerIV;
     private LinearLayout mLocationLayout;
     private LinearLayout mEmailLayout;
     private LinearLayout mTimeLayout;
     private LinearLayout mCompanyLayout;
+    private LinearLayout mBlogLayout;
     private LinearLayout mFollowersLayout;
     private LinearLayout mFollowingLayout;
     private RelativeLayout mEventsLayout;
@@ -96,14 +99,18 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
         mTimeTV.setText("");
         mCompanyTV = (TextView) findViewById(R.id.profile_company_TV);
         mCompanyTV.setText("");
+        mBlogTV = (TextView) findViewById(R.id.profile_blog_TV);
+        mBlogTV.setText("");
         mLocationLayout = (LinearLayout) findViewById(R.id.profile_location_layout);
         mEmailLayout = (LinearLayout) findViewById(R.id.profile_email_layout);
         mTimeLayout = (LinearLayout) findViewById(R.id.profile_time_layout);
         mCompanyLayout = (LinearLayout) findViewById(R.id.profile_company_layout);
+        mBlogLayout = (LinearLayout) findViewById(R.id.profile_blog_layout);
         mLocationDividerIV = (ImageView) findViewById(R.id.profile_company_divider_IV);
         mEmailDividerIV = (ImageView) findViewById(R.id.profile_email_divider_IV);
         mTimeDividerIV = (ImageView) findViewById(R.id.profile_time_divider_IV);
         mCompanyDividerIV = (ImageView) findViewById(R.id.profile_company_divider_IV);
+        mBlogDividerIV = (ImageView) findViewById(R.id.profile_blog_divider_IV);
         mFollowersTV = (TextView) findViewById(R.id.profile_followers_TV);
         mFollowingTV = (TextView) findViewById(R.id.profile_following_TV);
         mFollowersLayout = (LinearLayout) findViewById(R.id.profile_followers_layout);
@@ -227,6 +234,7 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
             mEmailTV.setText(user.getEmail());
             mTimeTV.setText(TextUtil.timeConverter(user.getCreated_at()));
             mCompanyTV.setText(user.getCompany());
+            mBlogTV.setText(user.getBlog());
             mFollowersTV.setText(String.valueOf(user.getFollowers()));
             mFollowingTV.setText(String.valueOf(user.getFollowing()));
             if (user.getEmail() == null || user.getEmail().equals("")) {
@@ -244,6 +252,10 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
             if (user.getCompany() == null || user.getCompany().equals("")) {
                 mCompanyLayout.setVisibility(View.GONE);
                 mCompanyDividerIV.setVisibility(View.GONE);
+            }
+            if (user.getBlog() == null || user.getBlog().equals("")) {
+                mBlogLayout.setVisibility(View.GONE);
+                mBlogDividerIV.setVisibility(View.GONE);
             }
         }
         mSWLayout.setRefreshing(false);
