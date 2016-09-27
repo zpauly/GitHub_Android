@@ -64,6 +64,12 @@
     <string name="least_commented">Least commented</string>
     <string name="comments">Comments</string>
     <string name="release_notes">Releases Notes</string>
+    <string name="download">Download</string>
+    <string name="ensure_to_download">Are you sure to download?</string>
+    <string name="downloading">Downloading</string>
+    <string name="download_complete">Download complete</string>
+    <string name="remote_service_started">remote_service_started</string>
+    <string name="download_fail">Download fail</string>
 
     <string name="language_setting">LANGUAEG SETTING</string>
     <string name="simplified_chinese">中文</string>

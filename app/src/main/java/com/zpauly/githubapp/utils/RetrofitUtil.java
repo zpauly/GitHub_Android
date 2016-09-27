@@ -15,10 +15,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by root on 16-5-7.
  */
 public class RetrofitUtil {
-    public static Retrofit initRetrofit(String baseUrl) {
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.connectTimeout(Constants.DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+    private static OkHttpClient.Builder builder;
 
+    static {
+        builder = new OkHttpClient.Builder();
+        builder.connectTimeout(Constants.DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+        builder.followRedirects(true);
+        builder.followSslRedirects(true);
+    }
+
+    public static Retrofit initRetrofit(String baseUrl) {
         Retrofit retrofit = new Retrofit.Builder()
                 .client(builder.build())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -29,11 +35,18 @@ public class RetrofitUtil {
         return retrofit;
     }
 
+    public static Retrofit initSimpleRetrofit(String baseUrl) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(builder.build())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .baseUrl(baseUrl)
+                .build();
+
+        return retrofit;
+    }
+
     public static Retrofit initCustomRetrofit(String baseUrl, Converter.Factory converter,
                                               CallAdapter.Factory callAdapter) {
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.connectTimeout(Constants.DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-
         Retrofit retrofit = new Retrofit.Builder()
                 .client(builder.build())
                 .addConverterFactory(converter)

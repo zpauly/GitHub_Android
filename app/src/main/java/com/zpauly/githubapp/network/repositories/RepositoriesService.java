@@ -13,12 +13,14 @@ import com.zpauly.githubapp.entity.response.repos.SingleCommitBean;
 import java.util.List;
 
 
+import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.Streaming;
 import rx.Observable;
 
 /**
@@ -41,6 +43,10 @@ public interface RepositoriesService {
     String SORT_PRIVATE = "private";
 
     String SORT_MEMBER = "member";
+
+    String TARBALL = "tarball";
+
+    String ZIPBALL = "zipball";
 
     /**
      * List repositories that are accessible to the authenticated user.
@@ -206,4 +212,19 @@ public interface RepositoriesService {
                                                       @Path("owner") String owner,
                                                       @Path("repo") String repo,
                                                       @Query("page") int pageId);
+
+    /**
+     * Get archive link
+     * @param auth
+     * @param archive_format
+     * @param ref
+     * @return
+     */
+    @Streaming
+    @GET("/repos/{owner}/{repo}/{archive_format}/{ref}")
+    Observable<ResponseBody> getArchiveLink(@Header("Authorization") String auth,
+                                            @Path("owner") String owner,
+                                            @Path("repo") String repo,
+                                            @Path("archive_format") String archive_format,
+                                            @Nullable @Path("ref") String ref);
 }

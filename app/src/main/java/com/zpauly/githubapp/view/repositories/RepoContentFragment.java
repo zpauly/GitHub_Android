@@ -1,6 +1,8 @@
 package com.zpauly.githubapp.view.repositories;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
@@ -8,6 +10,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Html;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,11 +19,15 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.listener.OnMenuItemSelectedListener;
+import com.zpauly.githubapp.network.repositories.RepositoriesService;
 import com.zpauly.githubapp.presenter.repos.RepoContentContract;
 import com.zpauly.githubapp.presenter.repos.RepoContentPresenter;
+import com.zpauly.githubapp.service.DownloadSevice;
 import com.zpauly.githubapp.ui.RefreshView;
 import com.zpauly.githubapp.utils.HtmlImageGetter;
 import com.zpauly.githubapp.utils.ImageUtil;
@@ -67,12 +74,15 @@ public class RepoContentFragment extends ToolbarMenuFragment implements RepoCont
 
     private MenuItem mMenuItemStar;
     private MenuItem mMenuItemChoose;
+    private MenuItem mMenuDownload;
 
     private RefreshView mRefreshView;
 
     private String content;
     private RepositoriesBean repoBean;
     private boolean isStarred;
+
+    private MaterialDialog downloadDialog;
 
     @Override
     public void onStop() {
@@ -109,6 +119,8 @@ public class RepoContentFragment extends ToolbarMenuFragment implements RepoCont
         setupSwipeRefreshLayout();
         setupViews();
 
+        setupDialogs();
+
         mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
             @Override
             public void beforeRefreshing() {
@@ -131,12 +143,43 @@ public class RepoContentFragment extends ToolbarMenuFragment implements RepoCont
         mRefreshView.startRefresh();
     }
 
+    private void setupDialogs() {
+        downloadDialog = new MaterialDialog.Builder(getContext())
+                .title(full_name)
+                .content(R.string.ensure_to_download)
+                .cancelable(false)
+                .positiveText(R.string.ok)
+                .negativeText(R.string.cancel)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        Intent intent = new Intent();
+                        Log.i(TAG, "ref = " + repoBean.getDefault_branch());
+                        intent.putExtra(DownloadSevice.ARCHIVE_FORMAT, RepositoriesService.ZIPBALL);
+                        intent.putExtra(DownloadSevice.REF, repoBean.getDefault_branch());
+                        intent.putExtra(DownloadSevice.FULL_NAME, full_name);
+                        intent.putExtra(DownloadSevice.OWNER, login);
+                        intent.setClass(getContext(), DownloadSevice.class);
+                        getContext().startService(intent);
+                    }
+                })
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                    }
+                })
+                .build();
+    }
+
     private void getAttrs() {
         Bundle bundle = getArguments();
-        full_name = bundle.getString(RepoContentActivity.FULL_NAME);
-        name = bundle.getString(RepoContentActivity.NAME);
-        repo_url = bundle.getString(RepoContentActivity.REPO_URL);
-        login = bundle.getString(RepoContentActivity.LOGIN);
+        if (bundle != null) {
+            full_name = bundle.getString(RepoContentActivity.FULL_NAME);
+            name = bundle.getString(RepoContentActivity.NAME);
+            repo_url = bundle.getString(RepoContentActivity.REPO_URL);
+            login = bundle.getString(RepoContentActivity.LOGIN);
+        }
     }
 
     private void setupSwipeRefreshLayout() {
@@ -268,6 +311,7 @@ public class RepoContentFragment extends ToolbarMenuFragment implements RepoCont
                         repoBean.getDefault_branch(), repoBean.getHtml_url());
             }
         });
+        mMenuDownload.setVisible(true);
     }
 
     @Override
@@ -345,6 +389,8 @@ public class RepoContentFragment extends ToolbarMenuFragment implements RepoCont
     public void createMenu(Menu menu) {
         mMenuItemStar = menu.findItem(R.id.repo_menu_star);
         mMenuItemChoose = menu.findItem(R.id.repo_menu_choose);
+        mMenuDownload = menu.findItem(R.id.repo_menu_download);
+        mMenuDownload.setVisible(false);
         mMenuItemStar.setVisible(false);
         checkStarred();
         setOnMenuItemSelectedListener(new OnMenuItemSelectedListener() {
@@ -358,6 +404,9 @@ public class RepoContentFragment extends ToolbarMenuFragment implements RepoCont
                         } else {
                             starRepo();
                         }
+                        break;
+                    case R.id.repo_menu_download:
+                        downloadDialog.show();
                         break;
                     case R.id.repo_menu_commits:
                         RepoCommitActivity.launchActiivty(getContext(), login, name);

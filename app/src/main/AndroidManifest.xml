@@ -41,6 +41,8 @@
         <activity android:name=".view.repositories.RepoReleasesActivity" />
         <activity android:name=".view.repositories.ReleaseContentActivity" />
         <activity android:name=".view.repositories.ContributorsActivity" />
+
+        <service android:name=".service.DownloadSevice" />
     </application>
 
 </manifest>

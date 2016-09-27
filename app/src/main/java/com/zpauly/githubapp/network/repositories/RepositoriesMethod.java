@@ -16,6 +16,7 @@ import com.zpauly.githubapp.utils.StringConverterFactory;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import rx.Observer;
@@ -148,6 +149,16 @@ public class RepositoriesMethod extends BaseNetMethod {
     public void getContributors(Observer<List<ContributorBean>> observer, String auth,
                                 String owner, String repo, int pageId) {
         service.getContributors(auth, owner, repo, pageId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getArchiveLink(Observer<ResponseBody> observer, String auth,
+                               String owner, String repo, String archive_format, String ref) {
+        Retrofit retrofit = RetrofitUtil.initSimpleRetrofit(Api.GitHubApi);
+        RepositoriesService service = retrofit.create(RepositoriesService.class);
+        service.getArchiveLink(auth, owner, repo, archive_format, ref)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
