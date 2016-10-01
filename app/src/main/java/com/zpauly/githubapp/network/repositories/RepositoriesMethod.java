@@ -14,13 +14,17 @@ import com.zpauly.githubapp.entity.response.repos.SingleCommitBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
 import com.zpauly.githubapp.utils.StringConverterFactory;
 
+import java.io.File;
 import java.util.List;
 
 import okhttp3.ResponseBody;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -154,11 +158,14 @@ public class RepositoriesMethod extends BaseNetMethod {
                 .subscribe(observer);
     }
 
-    public void getArchiveLink(Observer<ResponseBody> observer, String auth,
-                               String owner, String repo, String archive_format, String ref) {
+    public void getArchiveLink(Observer<File> observer,
+                               Func1<Response<ResponseBody>, Observable<File>> func1,
+                               String auth, String owner, String repo,
+                               String archive_format, String ref) {
         Retrofit retrofit = RetrofitUtil.initSimpleRetrofit(Api.GitHubApi);
         RepositoriesService service = retrofit.create(RepositoriesService.class);
         service.getArchiveLink(auth, owner, repo, archive_format, ref)
+                .flatMap(func1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

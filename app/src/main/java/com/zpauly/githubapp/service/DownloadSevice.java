@@ -20,7 +20,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import okhttp3.Response;
 import okhttp3.ResponseBody;
+import okio.BufferedSink;
+import okio.Okio;
+import rx.Subscriber;
 
 /**
  * Created by zpauly on 16/9/27.
@@ -101,13 +105,46 @@ public class DownloadSevice extends Service implements DownloadContract.View {
 
     @Override
     public void downloadRepoFail() {
-        mNotificationManager.cancel(R.string.remote_service_started);
+        mBuilder.setProgress(0, 0, false)
+                .setContentText(getText(R.string.download_fail));
+        mNotificationManager.notify(R.string.remote_service_started, mBuilder.build());
     }
 
     @Override
-    public void downloading(ResponseBody responseBody) {
-        writeFileFromResponseToDisk(this, responseBody.contentLength(),
-                fullName + ".zip", responseBody);
+    public void downloading(File file) {
+
+    }
+
+    @Override
+    public void flatMap(retrofit2.Response<ResponseBody> responseBodyResponse, Subscriber<? super File> subscriber) {
+        try {
+            File file = writeFileFromResponseToDisk(responseBodyResponse.body().contentLength(),
+                    responseBodyResponse.headers().get("Content-Disposition").replace("attachment; filename=", ""),
+                    responseBodyResponse.body());
+            subscriber.onNext(file);
+            subscriber.onCompleted();
+        } catch (IOException e) {
+            subscriber.onError(e);
+        }
+//        try {
+//            // you can access headers of response
+//            String header = responseBodyResponse.headers().get("Content-Disposition");
+//            // this is specific case, it's up to you how you want to save your file
+//            // if you are not downloading file from direct link, you might be lucky to obtain file name from header
+//            String fileName = header.replace("attachment; filename=", "");
+//            // will create file in global Music directory, can be any other directory, just don't forget to handle permissions
+//            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsoluteFile(), fileName);
+//
+//            BufferedSink sink = Okio.buffer(Okio.sink(file));
+//            // you can access body of response
+//            sink.writeAll(responseBodyResponse.body().source());
+//            sink.close();
+//            subscriber.onNext(file);
+//            subscriber.onCompleted();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            subscriber.onError(e);
+//        }
     }
 
     @Override
@@ -135,34 +172,34 @@ public class DownloadSevice extends Service implements DownloadContract.View {
         mPresenter = presenter;
     }
 
-    private void writeFileFromResponseToDisk(final Context context, final long fileSize,
-                                                final String fileName, final ResponseBody responseBody) {
-        File path = getExternalFilesDir(null);
+    private File writeFileFromResponseToDisk(final long fileSize,
+                                                final String fileName, ResponseBody responseBody) throws IOException {
+        String state = Environment.getExternalStorageState();
+        if (!state.equals(Environment.MEDIA_MOUNTED)) {
+            return null;
+        }
+
+        File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 //                + File.separator + fileName;
         int size = (int) fileSize;
         byte[] fileReader = new byte[size];
 
         long fileSizeDownload = 0;
         File downloadFile = new File(path, fileName);
-        try {
-//            if (!downloadFile.exists()) {
-//                downloadFile.createNewFile();
-//            }
-            Log.i(TAG, "file");
-            InputStream inputStream = responseBody.byteStream();
-            OutputStream outputStream = new FileOutputStream(downloadFile);
-
-            Log.i(TAG, "start to read");
-            int read;
-            while ((read = inputStream.read(fileReader)) != -1) {
-                mBuilder.setProgress(size, (int) fileSizeDownload, false);
-                mNotificationManager.notify(R.string.remote_service_started, mBuilder.build());
-                outputStream.write(fileReader, 0, read);
-                fileSizeDownload += read;
-                Log.i(TAG, String.valueOf(fileSizeDownload));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (!downloadFile.exists())
+            downloadFile.createNewFile();
+        Log.i(TAG, "file");
+        InputStream inputStream = responseBody.byteStream();
+        OutputStream outputStream = new FileOutputStream(downloadFile);
+        Log.i(TAG, "start to read");
+        int read;
+        while ((read = inputStream.read(fileReader)) != -1) {
+            mBuilder.setProgress(size, (int) fileSizeDownload, false);
+            mNotificationManager.notify(R.string.remote_service_started, mBuilder.build());
+            outputStream.write(fileReader, 0, read);
+            fileSizeDownload += read;
+            Log.i(TAG, String.valueOf(fileSizeDownload) + "/" + String.valueOf(size));
         }
+        return downloadFile;
     }
 }

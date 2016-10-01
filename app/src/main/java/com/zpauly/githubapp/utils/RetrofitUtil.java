@@ -36,6 +36,9 @@ public class RetrofitUtil {
     }
 
     public static Retrofit initSimpleRetrofit(String baseUrl) {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
+                .followRedirects(true)
+                .followSslRedirects(true);
         Retrofit retrofit = new Retrofit.Builder()
                 .client(builder.build())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())

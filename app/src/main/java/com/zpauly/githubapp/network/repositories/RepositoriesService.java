@@ -12,8 +12,8 @@ import com.zpauly.githubapp.entity.response.repos.SingleCommitBean;
 
 import java.util.List;
 
-
 import okhttp3.ResponseBody;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -222,9 +222,9 @@ public interface RepositoriesService {
      */
     @Streaming
     @GET("/repos/{owner}/{repo}/{archive_format}/{ref}")
-    Observable<ResponseBody> getArchiveLink(@Header("Authorization") String auth,
-                                            @Path("owner") String owner,
-                                            @Path("repo") String repo,
-                                            @Path("archive_format") String archive_format,
-                                            @Nullable @Path("ref") String ref);
+    Observable<Response<ResponseBody>> getArchiveLink(@Header("Authorization") String auth,
+                                                     @Path("owner") String owner,
+                                                     @Path("repo") String repo,
+                                                     @Path("archive_format") String archive_format,
+                                                     @Nullable @Path("ref") String ref);
 }

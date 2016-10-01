@@ -3,7 +3,11 @@ package com.zpauly.githubapp.presenter.repos;
 import com.zpauly.githubapp.base.BasePresenter;
 import com.zpauly.githubapp.base.BaseView;
 
+import java.io.File;
+
 import okhttp3.ResponseBody;
+import retrofit2.Response;
+import rx.Subscriber;
 
 /**
  * Created by zpauly on 16/9/27.
@@ -19,7 +23,10 @@ public class DownloadContract {
 
         void downloadRepoFail();
 
-        void downloading(ResponseBody responseBody);
+        void downloading(File file);
+
+        void flatMap(Response<ResponseBody> responseBodyResponse,
+                     Subscriber<? super File> subscriber);
 
         String getRepo();
 
