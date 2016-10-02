@@ -3,7 +3,6 @@ package com.zpauly.githubapp.service;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
 import android.os.IBinder;
@@ -20,10 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import okhttp3.Response;
 import okhttp3.ResponseBody;
-import okio.BufferedSink;
-import okio.Okio;
 import rx.Subscriber;
 
 /**
@@ -119,32 +115,16 @@ public class DownloadSevice extends Service implements DownloadContract.View {
     public void flatMap(retrofit2.Response<ResponseBody> responseBodyResponse, Subscriber<? super File> subscriber) {
         try {
             File file = writeFileFromResponseToDisk(responseBodyResponse.body().contentLength(),
-                    responseBodyResponse.headers().get("Content-Disposition").replace("attachment; filename=", ""),
+                    repo + ".zip",
                     responseBodyResponse.body());
+            if (file == null) {
+                return;
+            }
             subscriber.onNext(file);
             subscriber.onCompleted();
         } catch (IOException e) {
             subscriber.onError(e);
         }
-//        try {
-//            // you can access headers of response
-//            String header = responseBodyResponse.headers().get("Content-Disposition");
-//            // this is specific case, it's up to you how you want to save your file
-//            // if you are not downloading file from direct link, you might be lucky to obtain file name from header
-//            String fileName = header.replace("attachment; filename=", "");
-//            // will create file in global Music directory, can be any other directory, just don't forget to handle permissions
-//            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsoluteFile(), fileName);
-//
-//            BufferedSink sink = Okio.buffer(Okio.sink(file));
-//            // you can access body of response
-//            sink.writeAll(responseBodyResponse.body().source());
-//            sink.close();
-//            subscriber.onNext(file);
-//            subscriber.onCompleted();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            subscriber.onError(e);
-//        }
     }
 
     @Override
@@ -180,12 +160,18 @@ public class DownloadSevice extends Service implements DownloadContract.View {
         }
 
         File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-//                + File.separator + fileName;
         int size = (int) fileSize;
+        Log.i(TAG, "size = " + size);
         byte[] fileReader = new byte[size];
 
         long fileSizeDownload = 0;
         File downloadFile = new File(path, fileName);
+        if (downloadFile.getFreeSpace() * 0.9 < fileSize) {
+            mBuilder.setProgress(0, 0, false)
+                    .setContentText(getString(R.string.no_free_space));
+            mNotificationManager.notify(R.string.remote_service_started, mBuilder.build());
+            return null;
+        }
         if (!downloadFile.exists())
             downloadFile.createNewFile();
         Log.i(TAG, "file");

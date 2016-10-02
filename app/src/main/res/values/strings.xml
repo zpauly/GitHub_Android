@@ -70,6 +70,7 @@
     <string name="download_complete">Download complete</string>
     <string name="remote_service_started">remote_service_started</string>
     <string name="download_fail">Download fail</string>
+    <string name="no_free_space">No free space</string>
 
     <string name="language_setting">LANGUAEG SETTING</string>
     <string name="simplified_chinese">中文</string>
