@@ -10,6 +10,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Html;
 import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -141,6 +142,8 @@ public class RepoContentFragment extends ToolbarMenuFragment implements RepoCont
             }
         });
         mRefreshView.startRefresh();
+
+        mReadMeTV.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     private void setupDialogs() {

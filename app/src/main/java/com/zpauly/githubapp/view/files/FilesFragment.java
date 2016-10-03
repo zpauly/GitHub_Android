@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -344,6 +345,7 @@ public class FilesFragment extends BaseFragment implements FilesContract.View {
                     url + "/raw/" + branch);
             Spanned htmlSpann = Html.fromHtml(fileContent, imageGetter, null);
             mFileTV.setText(htmlSpann);
+            mFileTV.setMovementMethod(LinkMovementMethod.getInstance());
         }
     }
 
