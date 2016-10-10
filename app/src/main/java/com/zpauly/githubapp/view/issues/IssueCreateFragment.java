@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.gson.Gson;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.request.IssueRequestBean;
 import com.zpauly.githubapp.entity.response.issues.AssigneeBean;
@@ -72,7 +73,7 @@ public class IssueCreateFragment extends ToolbarMenuFragment implements IssueCre
     private IssueRequestBean createdIssueRequestBean = new IssueRequestBean();
 
     private MilestoneBean selectedMilestone;
-    private List<AssigneeBean> selectedAssigneeList = new ArrayList<>();
+    private AssigneeBean selectedAssignee;
     private List<LabelBean> selectedLabelList = new ArrayList<>();
 
     private List<MilestoneBean> milestoneList = new ArrayList<>();
@@ -159,15 +160,24 @@ public class IssueCreateFragment extends ToolbarMenuFragment implements IssueCre
                         if (milestones.length == 0)
                             return false;
                         selectedMilestone = milestoneList.get(which);
+                        if (selectedMilestone != null && selectedMilestone.getNumber() != 0) {
+                            createdIssueRequestBean.setMilestone(selectedMilestone.getNumber());
+                        }
                         return false;
                     }
                 })
                 .positiveText(R.string.ok)
                 .negativeText(R.string.cancel)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                    }
+                })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        milestoneList.clear();
+                        selectedMilestone = null;
                     }
                 })
                 .build();
@@ -178,14 +188,15 @@ public class IssueCreateFragment extends ToolbarMenuFragment implements IssueCre
                 .cancelable(false)
                 .title(R.string.assignees)
                 .items(assignees)
-                .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
-                    public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                    public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+
                         if (assignees.length == 0)
                             return false;
-                        selectedAssigneeList.clear();
-                        for (int i = 0; i < which.length; i++) {
-                            selectedAssigneeList.add(assigneeList.get(i));
+                        selectedAssignee = assigneeList.get(which);
+                        if (selectedAssignee != null) {
+                            createdIssueRequestBean.setAssignee(selectedAssignee.getLogin());
                         }
                         return false;
                     }
@@ -195,7 +206,7 @@ public class IssueCreateFragment extends ToolbarMenuFragment implements IssueCre
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        milestoneList.clear();
+                        selectedAssignee = null;
                     }
                 })
                 .build();
@@ -215,6 +226,13 @@ public class IssueCreateFragment extends ToolbarMenuFragment implements IssueCre
                         for (int i = 0; i < which.length; i++) {
                             selectedLabelList.add(labelList.get(i));
                         }
+                        if (selectedLabelList != null || selectedLabelList.size() != 0) {
+                            List<String> labels = new ArrayList<>();
+                            for (LabelBean bean : selectedLabelList) {
+                                labels.add(bean.getName());
+                            }
+                            createdIssueRequestBean.setLabels(labels);
+                        }
                         return false;
                     }
                 })
@@ -223,7 +241,7 @@ public class IssueCreateFragment extends ToolbarMenuFragment implements IssueCre
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        milestoneList.clear();
+                        selectedLabelList.clear();
                     }
                 })
                 .build();
@@ -269,29 +287,19 @@ public class IssueCreateFragment extends ToolbarMenuFragment implements IssueCre
                 if (mBodyET.getText() != null) {
                     body = mBodyET.getText().toString();
                 }
+                createdIssueRequestBean.setAssignee(userInfo.getLogin());
                 createdIssueRequestBean.setTitle(title);
                 createdIssueRequestBean.setBody(body);
-                if (selectedAssigneeList != null || selectedAssigneeList.size() != 0) {
-//                    createdIssueRequestBean.setAssignee(getOwner());
-                    createdIssueRequestBean.setAssignees(selectedAssigneeList);
-                }
-                if (selectedLabelList != null || selectedLabelList.size() != 0) {
-                    List<String> labels = new ArrayList<String>();
-                    for (LabelBean bean : selectedLabelList) {
-                        labels.add(bean.getName());
-                    }
-                    createdIssueRequestBean.setLabels(labels);
-                }
-                if (selectedMilestone != null && selectedMilestone.getNumber() != 0) {
-                    createdIssueRequestBean.setMilestone(selectedMilestone.getNumber());
-                }
-                Log.i(TAG, "title : " + createdIssueRequestBean.getTitle());
-                Log.i(TAG, "body : " + createdIssueRequestBean.getBody());
-                Log.i(TAG, "assignees : " + createdIssueRequestBean.getAssignees());
-                Log.i(TAG, "milestone : " + createdIssueRequestBean.getMilestone());
-                Log.i(TAG, "labels : " + createdIssueRequestBean.getLabels());
-                mUploadingDialog.show();
-                mPresenter.createAnIssue();
+                Gson gson = new Gson();
+//                Log.i(TAG, "title : " + createdIssueRequestBean.getTitle());
+//                Log.i(TAG, "body : " + createdIssueRequestBean.getBody());
+//                Log.i(TAG, "assignees : " + jsonArray.toString());
+//                Log.i(TAG, "assignees : " + createdIssueRequestBean.getAssignees());
+//                Log.i(TAG, "milestone : " + createdIssueRequestBean.getMilestone());
+//                Log.i(TAG, "labels : " + createdIssueRequestBean.getLabels());
+                Log.i(TAG, "issue : " + gson.toJson(createdIssueRequestBean));
+//                mUploadingDialog.show();
+//                mPresenter.createAnIssue();
             }
         });
     }
