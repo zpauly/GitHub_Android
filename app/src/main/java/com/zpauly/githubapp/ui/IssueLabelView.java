@@ -68,6 +68,7 @@ public class IssueLabelView extends LinearLayout {
         setPadding(labelPadding, labelPadding, labelPadding, labelPadding);
         mLabelIV = new ImageView(getContext());
         mLabelTV = new AppCompatTextView(getContext());
+        mLabelIV.setImageResource(R.drawable.ic_label);
         ViewGroup.LayoutParams imageLP = new ViewGroup.LayoutParams(imageSize, imageSize);
         addView(mLabelIV, imageLP);
         ViewGroup.LayoutParams textViewLP = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -77,16 +78,17 @@ public class IssueLabelView extends LinearLayout {
 
     private void getParams() {
         imageSize = getResources().getDimensionPixelSize(R.dimen.small_image_size);
-        labelContentMargin = getResources().getDimensionPixelOffset(R.dimen.components_margin);
         labelPadding = getResources().getDimensionPixelOffset(R.dimen.text_view_padding);
+        labelContentMargin = labelPadding;
     }
 
-    private void setText(int resId) {
+    public void setText(int resId) {
         mLabelTV.setText(resId);
     }
 
-    private void setText(CharSequence text) {
+    public void setText(CharSequence text) {
         mLabelTV.setText(text);
+        invalidate();
     }
 
     public void setBgColor(int color) {
@@ -99,6 +101,10 @@ public class IssueLabelView extends LinearLayout {
         int c = Color.parseColor(color);
         background.setColor(c);
         mLabelTV.setTextColor(computeTextColorFromBackgroundColor(color));
+    }
+
+    public String getText() {
+        return mLabelTV.getText().toString();
     }
 
     private int computeTextColorFromBackgroundColor(String colorString){

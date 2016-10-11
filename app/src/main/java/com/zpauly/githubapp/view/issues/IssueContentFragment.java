@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.zpauly.githubapp.R;
@@ -18,9 +19,11 @@ import com.zpauly.githubapp.adapter.CommentsRecyclerViewAdapter;
 import com.zpauly.githubapp.base.BaseFragment;
 import com.zpauly.githubapp.entity.response.CommentBean;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
+import com.zpauly.githubapp.entity.response.issues.LabelBean;
 import com.zpauly.githubapp.presenter.issues.IssueContentContract;
 import com.zpauly.githubapp.presenter.issues.IssueContentPresenter;
 import com.zpauly.githubapp.ui.FloatingActionButton;
+import com.zpauly.githubapp.ui.IssueLabelView;
 import com.zpauly.githubapp.ui.RefreshView;
 import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.TextUtil;
@@ -52,6 +55,9 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
     private RecyclerView mCommentsRV;
     private NestedScrollView mContentNSV;
     private FloatingActionButton mIssueFAB;
+    private LinearLayout mLabelsLayout;
+    private AppCompatTextView mMilestoneTV;
+    private LinearLayout mMilestoneLayout;
 
     private IssueBean issueBean;
     private String owner;
@@ -87,6 +93,9 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
         mCommentsRV = (RecyclerView) view.findViewById(R.id.issue_content_comments_RV);
         mContentNSV = (NestedScrollView) view.findViewById(R.id.issue_content_NSV);
         mIssueFAB = (FloatingActionButton) view.findViewById(R.id.issue_content_FAB);
+        mLabelsLayout = (LinearLayout) view.findViewById(R.id.issue_content_labels_layout);
+        mMilestoneTV = (AppCompatTextView) view.findViewById(R.id.issue_content_milestone_TV);
+        mMilestoneLayout = (LinearLayout) view.findViewById(R.id.issue_content_milestone_layout);
 
         setupSwipeRefreshLayout();
         setupRecyclerView();
@@ -120,6 +129,13 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
         });
     }
 
+    private void addLabel(LabelBean labelBean) {
+        IssueLabelView issueLabelView = new IssueLabelView(getContext());
+        issueLabelView.setBgColor("#" + labelBean.getColor());
+        issueLabelView.setText(labelBean.getName());
+        mLabelsLayout.addView(issueLabelView);
+    }
+
     @Override
     protected View setContentView(LayoutInflater inflater, @Nullable ViewGroup container) {
         return inflater.inflate(R.layout.fragment_issue_content, container, false);
@@ -148,6 +164,14 @@ public class IssueContentFragment extends BaseFragment implements IssueContentCo
                 OthersActivity.lanuchActivity(getContext(), issueBean.getUser().getLogin());
             }
         });
+        for (LabelBean labelBean : issueBean.getLabels()) {
+            addLabel(labelBean);
+        }
+        if (issueBean.getMilestone() != null) {
+            mMilestoneTV.setText(issueBean.getMilestone().getTitle());
+        } else {
+            mMilestoneLayout.setVisibility(View.GONE);
+        }
     }
 
     private void setupSwipeRefreshLayout() {

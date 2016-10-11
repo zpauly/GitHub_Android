@@ -116,18 +116,31 @@
                         </com.ms.square.android.expandabletextview.ExpandableTextView>
 
                         <LinearLayout
+                            android:layout_marginTop="@dimen/components_margin"
+                            android:id="@+id/issue_content_labels_layout"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/issue_content_milestone_layout"
+                            android:layout_marginTop="@dimen/components_margin"
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
                             <ImageView
-                                android:src="@drawable/ic_tag"
+                                android:src="@drawable/ic_milestone"
                                 android:layout_width="@dimen/small_image_size"
                                 android:layout_height="@dimen/small_image_size" />
 
                             <android.support.v7.widget.AppCompatTextView
-                                android:id="@+id/issue_content_label_"
-                                android:layout_marginLeft="@dimen/components_margin"
+                                android:id="@+id/issue_content_milestone_TV"
+                                style="@style/Base.TextAppearance.AppCompat.Small"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
 
