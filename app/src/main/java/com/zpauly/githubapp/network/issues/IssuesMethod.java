@@ -172,8 +172,8 @@ public class IssuesMethod extends BaseNetMethod {
 
     public void getMilestones(Observer<List<MilestoneBean>> observer, String auth,
                               String owner, String repo,
-                              String state, String sort, String direction) {
-        service.getMilestones(auth, owner, repo, state, sort, direction)
+                              String state, String sort, String direction, int pageId) {
+        service.getMilestones(auth, owner, repo, state, sort, direction, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

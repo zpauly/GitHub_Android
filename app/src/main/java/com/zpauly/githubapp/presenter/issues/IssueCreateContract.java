@@ -31,6 +31,8 @@ public class IssueCreateContract {
 
         void checkFail();
 
+        void checkNotFound();
+
         void getAssigneesSuccess();
 
         void getAssigneeFail();

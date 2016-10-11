@@ -43,6 +43,7 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
 
     private MenuItem mState;
     private MenuItem mFilter;
+    private MenuItem mManager;
     private MenuItem mSort;
 
     private String state = IssuesService.STATE_OPEN;
@@ -77,9 +78,14 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
     public void createMenu(Menu menu) {
         mState = menu.findItem(R.id.issue_toolbar_state);
         mFilter = menu.findItem(R.id.issue_toolbar_filter);
+        mManager = menu.findItem(R.id.issue_toolbar_manager);
         mSort = menu.findItem(R.id.issue_toolbar_sort);
         if (issueType == IssuesActivity.REPO_ISSUES) {
             mFilter.setVisible(false);
+            mManager.setVisible(true);
+        } else {
+            mFilter.setVisible(true);
+            mManager.setVisible(false);
         }
         setOnMenuItemSelectedListener(new OnMenuItemSelectedListener() {
             @Override
@@ -98,6 +104,12 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
                         }
                         mSRLayout.setRefreshing(true);
                         setSwipeRefreshLayoutRefreshing();
+                        break;
+                    case R.id.issue_manager_labels:
+
+                        break;
+                    case R.id.issue_manager_milestones:
+                        MilestoneActivity.launchActivity(getContext(), repoName, username);
                         break;
                     case R.id.issue_filter_created:
                         filter = IssuesService.FILTER_CREATED;

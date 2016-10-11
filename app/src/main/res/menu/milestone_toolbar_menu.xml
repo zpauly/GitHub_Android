@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/milestone_toolbar_state"
+        android:icon="@drawable/ic_info_outline"
+        android:title="@string/state"
+        app:showAsAction="always"/>
+    <item android:id="@+id/milestone_toolbar_sort"
+        android:title="@string/sort"
+        android:icon="@drawable/ic_sort_white_24dp"
+        app:showAsAction="always">
+        <menu>
+            <group android:id="@+id/milestone_sort_grp"
+                android:checkableBehavior="single">
+                <item android:id="@+id/milestone_sort_recently_updated"
+                    android:title="@string/recently_updated"
+                    android:checked="true"/>
+                <item android:id="@+id/milestone_sort_furthest_due_date"
+                    android:title="@string/furthest_due_date"/>
+                <item android:id="@+id/milestone_sort_closest_due_date"
+                    android:title="@string/closest_due_date"/>
+                <item android:id="@+id/milestone_sort_least_complete"
+                    android:title="@string/least_complete"/>
+                <item android:id="@+id/milestone_sort_most_complete"
+                    android:title="@string/most_complete"/>
+            </group>
+        </menu>
+    </item>
+</menu>

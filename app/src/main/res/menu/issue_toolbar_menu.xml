@@ -5,6 +5,17 @@
         android:title="@string/state"
         android:icon="@drawable/ic_info_outline"
         app:showAsAction="always" />
+    <item android:id="@+id/issue_toolbar_manager"
+        android:title="@string/manager"
+        android:icon="@drawable/ic_settings_white_24dp"
+        app:showAsAction="always">
+        <menu>
+            <item android:id="@+id/issue_manager_labels"
+                android:title="@string/labels"/>
+            <item android:id="@+id/issue_manager_milestones"
+                android:title="@string/milestones"/>
+        </menu>
+    </item>
     <item android:id="@+id/issue_toolbar_filter"
         android:title="@string/filter"
         android:icon="@drawable/ic_filter_list"

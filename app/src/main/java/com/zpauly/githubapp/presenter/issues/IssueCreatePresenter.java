@@ -9,6 +9,7 @@ import com.zpauly.githubapp.entity.response.issues.IssueBean;
 import com.zpauly.githubapp.entity.response.issues.LabelBean;
 import com.zpauly.githubapp.entity.response.issues.MilestoneBean;
 import com.zpauly.githubapp.network.issues.IssuesMethod;
+import com.zpauly.githubapp.network.issues.IssuesService;
 
 import java.util.List;
 
@@ -50,7 +51,11 @@ public class IssueCreatePresenter extends NetPresenter implements IssueCreateCon
             @Override
             public void onError(Throwable e) {
                 e.printStackTrace();
-                mIssueCreateView.checkFail();
+                if (e.getMessage().contains("404")) {
+                    mIssueCreateView.checkNotFound();
+                } else {
+                    mIssueCreateView.checkFail();
+                }
             }
 
             @Override
@@ -101,11 +106,11 @@ public class IssueCreatePresenter extends NetPresenter implements IssueCreateCon
 
             @Override
             public void onNext(List<MilestoneBean> milestoneBeen) {
-                mIssueCreateView.gettingMilestones(milestoneBeen);
+
             }
         };
         Log.i(TAG, auth);
-        issuesMethod.getMilestones(milestonesSubscriber, auth, mIssueCreateView.getOwner(), mIssueCreateView.getRepoName(), null, null, null);
+        issuesMethod.getMilestones(milestonesSubscriber, auth, mIssueCreateView.getOwner(), mIssueCreateView.getRepoName(), null, null, null, 1);
     }
 
     @Override

@@ -290,16 +290,8 @@ public class IssueCreateFragment extends ToolbarMenuFragment implements IssueCre
                 createdIssueRequestBean.setAssignee(userInfo.getLogin());
                 createdIssueRequestBean.setTitle(title);
                 createdIssueRequestBean.setBody(body);
-                Gson gson = new Gson();
-//                Log.i(TAG, "title : " + createdIssueRequestBean.getTitle());
-//                Log.i(TAG, "body : " + createdIssueRequestBean.getBody());
-//                Log.i(TAG, "assignees : " + jsonArray.toString());
-//                Log.i(TAG, "assignees : " + createdIssueRequestBean.getAssignees());
-//                Log.i(TAG, "milestone : " + createdIssueRequestBean.getMilestone());
-//                Log.i(TAG, "labels : " + createdIssueRequestBean.getLabels());
-                Log.i(TAG, "issue : " + gson.toJson(createdIssueRequestBean));
-//                mUploadingDialog.show();
-//                mPresenter.createAnIssue();
+                mUploadingDialog.show();
+                mPresenter.createAnIssue();
             }
         });
     }
@@ -358,6 +350,13 @@ public class IssueCreateFragment extends ToolbarMenuFragment implements IssueCre
     @Override
     public void checkFail() {
         mRefreshView.refreshFail();
+        mChooseLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void checkNotFound() {
+        if (!mRefreshView.isRefreshSuccess())
+            mRefreshView.refreshSuccess();
         mChooseLayout.setVisibility(View.GONE);
     }
 

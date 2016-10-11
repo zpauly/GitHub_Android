@@ -53,6 +53,10 @@ public interface IssuesService {
 
     String DIRECTION_DESC = "desc";//Default
 
+    String DUE_ON = "due_on";//Default
+
+    String COMPLETENESS = "completeness";
+
     /**
      * List all issues assigned to the authenticated user across all visible repositories including owned repositories, member repositories, and organization repositories:
      * @param auth
@@ -251,7 +255,8 @@ public interface IssuesService {
                                                  @Path("repo") String repo,
                                                  @Nullable @Query("state") String state,
                                                  @Nullable @Query("sort") String sort,
-                                                 @Nullable @Query("direction") String direction);
+                                                 @Nullable @Query("direction") String direction,
+                                                  @Query("page") int pageId);
 
     /**
      * List all labels for this repository

@@ -99,6 +99,21 @@
     <string name="deletions">Deletions</string>
     <string name="changes">Changes</string>
 
+    <string name="no_due_date">No due date</string>
+
+    <string name="manager">Manager</string>
+    <string name="milestones">Milestones</string>
+    <string name="furthest_due_date">Furthest due date</string>
+    <string name="closest_due_date">Closest due date</string>
+    <string name="least_complete">Least complete</string>
+    <string name="most_complete">Most complete</string>
+    <string name="most_issues">Most issues</string>
+    <string name="least_issues">Least issues</string>
+    
+    <string name="complete">complete</string>
+    <string name="open">open</string>
+    <string name="closed">closed</string>
+
     <string name="started">Starred</string>
     <string name="unstarred">Unstarred</string>
 
