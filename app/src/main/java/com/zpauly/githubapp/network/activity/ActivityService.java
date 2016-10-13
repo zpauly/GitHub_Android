@@ -2,14 +2,15 @@ package com.zpauly.githubapp.network.activity;
 
 import android.support.annotation.Nullable;
 
-import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.events.EventsBean;
+import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 
 import java.util.List;
 
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -42,11 +43,13 @@ public interface ActivityService {
      *                  Default: desc
      * @return
      */
+    @Headers("Cache-Control: public, max-age=600")
     @GET("/user/starred")
     Observable<List<RepositoriesBean>> getStarredRepositories(@Header("Authorization") String auth
             , @Nullable @Query("sort") String sort, @Nullable @Query("direction") String direction,
                                                                  @Query("page") int pageId);
 
+    @Headers("Cache-Control: public, max-age=600")
     @GET("/users/{username}/starred")
     Observable<List<RepositoriesBean>> getOthersRepositories(@Path("username") String username, @Query("page") int pageId);
 
@@ -97,6 +100,7 @@ public interface ActivityService {
      * @param username
      * @return
      */
+    @Headers("Cache-Control: public, max-age=600")
     @GET("/users/{username}/received_events")
     Observable<List<EventsBean>> getReceivedEvents(@Header("Authorization") String auth,
                                                    @Path("username") String username,
@@ -111,6 +115,7 @@ public interface ActivityService {
      * @param username
      * @return
      */
+    @Headers("Cache-Control: public, max-age=600")
     @GET("/users/{username}/events")
     Observable<List<EventsBean>> getUserEvents(@Header("Authorization") String auth,
                                                @Path("username") String username,

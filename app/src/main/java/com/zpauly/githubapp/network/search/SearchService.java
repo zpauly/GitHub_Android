@@ -8,6 +8,7 @@ import com.zpauly.githubapp.entity.response.search.SearchUsersBean;
 
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -34,6 +35,7 @@ public interface SearchService {
      * @param order
      * @return
      */
+    @Headers("Cache-Control: public, max-age=600")
     @GET("/search/repositories")
     Observable<SearchReposBean> getSearchRepos(@Header("Authorization") String auth,
                                                @Query("q") String query,
@@ -52,6 +54,7 @@ public interface SearchService {
      * @param order
      * @return
      */
+    @Headers("Cache-Control: public, max-age=600")
     @GET("/search/code")
     Observable<SearchCodeBean> getSearchCode(@Header("Authorization") String auth,
                                              @Query("q") String query,
@@ -74,6 +77,7 @@ public interface SearchService {
      * @param order
      * @return
      */
+    @Headers("Cache-Control: public, max-age=600")
     @GET("/search/users")
     Observable<SearchUsersBean> getSearchUsers(@Header("Authorization") String auth,
                                                @Query("q") String query,

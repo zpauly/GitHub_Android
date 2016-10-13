@@ -17,6 +17,7 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -68,6 +69,7 @@ public interface IssuesService {
      * @param since
      * @return
      */
+    @Headers("Cache-Control: public, max-age=600")
     @GET("/issues")
     Observable<List<IssueBean>> getIssues(@Header("Authorization") String auth,
                                           @Nullable @Query("filter") String filter,
@@ -89,6 +91,7 @@ public interface IssuesService {
      * @param since
      * @return
      */
+    @Headers("Cache-Control: public, max-age=600")
     @GET("/user/issues")
     Observable<List<IssueBean>> getUserIssues(@Header("Authorization") String auth,
                                               @Nullable @Query("filter") String filter,
@@ -111,6 +114,7 @@ public interface IssuesService {
      * @param since
      * @return
      */
+    @Headers("Cache-Control: public, max-age=600")
     @GET("/orgs/{org}/issues")
     Observable<List<IssueBean>> getOrgIssues(@Header("Authorization") String auth,
                                              @Path("org") String org,
@@ -138,6 +142,7 @@ public interface IssuesService {
      * @param labels
      * @return
      */
+    @Headers("Cache-Control: public, max-age=600")
     @GET("/repos/{owner}/{repo}/issues")
     Observable<List<IssueBean>> getARepoIssues(@Header("Authorization") String auth,
                                                @Path("owner") String owner,
@@ -161,6 +166,7 @@ public interface IssuesService {
      * @param number
      * @return
      */
+    @Headers("Cache-Control: public, max-age=600")
     @GET("/repos/{owner}/{repo}/issues/{number}")
     Observable<IssueBean> getASingleIssue(@Header("Authorization") String auth,
                                           @Path("owner") String owner,
@@ -177,6 +183,7 @@ public interface IssuesService {
      * @param since
      * @return
      */
+    @Headers("Cache-Control: public, max-age=600")
     @GET("/repos/{owner}/{repo}/issues/{number}/comments")
     Observable<List<CommentBean>> getAnIssueComments(@Header("Authorization") String auth,
                                                      @Path("owner") String owner,
@@ -220,6 +227,7 @@ public interface IssuesService {
      * @param repo
      * @return
      */
+    @Headers("Cache-Control: public, max-age=600")
     @GET("/repos/{owner}/{repo}/assignees")
     Observable<List<AssigneeBean>> getAssignees(@Header("Authorization") String auth,
                                                 @Path("owner") String owner,
@@ -234,6 +242,7 @@ public interface IssuesService {
      * @param number
      * @return
      */
+    @Headers("Cache-Control: public, max-age=600")
     @POST("/repos/{owner}/{repo}/issues/{number}/comments")
     Observable<CommentBean> createAComment(@Header("Authorization") String auth,
                                            @Body IssueCommentRequestBean issueCommentRequestBean,
@@ -249,6 +258,7 @@ public interface IssuesService {
      * @param direction
      * @return
      */
+    @Headers("Cache-Control: public, max-age=600")
     @GET("/repos/{owner}/{repo}/milestones")
     Observable<List<MilestoneBean>> getMilestones(@Header("Authorization") String auth,
                                                  @Path("owner") String owner,
@@ -265,6 +275,7 @@ public interface IssuesService {
      * @param repo
      * @return
      */
+    @Headers("Cache-Control: public, max-age=600")
     @GET("repos/{owner}/{repo}/labels")
     Observable<List<LabelBean>> getLabels(@Header("Authorization") String auth,
                                           @Path("owner") String owner,

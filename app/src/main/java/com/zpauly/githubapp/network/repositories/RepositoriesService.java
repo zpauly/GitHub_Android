@@ -17,6 +17,7 @@ import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -58,11 +59,13 @@ public interface RepositoriesService {
      * @param sort Can be one of all, owner, public, private, member
      * @return
      */
+    @Headers("Cache-Control: public, max-age=600")
     @GET("/user/repos")
     Observable<List<RepositoriesBean>> getOwendRepositories(@Header("Authorization") String auth
             , @Nullable @Query("affiliation") List<String> affiliation
             , @Nullable @Query("sort") String sort, @Query("page") int pageId);
 
+    @Headers("Cache-Control: public, max-age=600")
     @GET("/users/{username}/repos")
     Observable<List<RepositoriesBean>> getRepositories(@Header("Authorization") String auth,
                                                        @Path("username") String username,
@@ -71,6 +74,7 @@ public interface RepositoriesService {
                                                        @Query("page") int pageId);
 
     //repo
+    @Headers("Cache-Control: public, max-age=600")
     @GET("/repos/{username}/{repo}")
     Observable<RepositoriesBean> getRepository(@Header("Authorization") String auth,
                                                @Path("username") String username,
@@ -85,12 +89,14 @@ public interface RepositoriesService {
      * @param path
      * @return
      */
+    @Headers("Cache-Control: public, max-age=600")
     @GET("/repos/{owner}/{repo}/contents/{path}")
     Observable<List<RepositoryContentBean>> getRepositoryContent(@Nullable @Header("Accept") String acc,
                                                                  @Header("Authorization") String auth,
                                                                  @Path("owner") String owner,
                                                                  @Path("repo") String repo, @Path("path") String path);
 
+    @Headers("Cache-Control: public, max-age=600")
     @GET("/repos/{owner}/{repo}/contents/{path}")
     Observable<String> getFileContent(@Header("Authorization") String auth,
                                       @Nullable @Header("Accept") String acc,
@@ -104,6 +110,7 @@ public interface RepositoriesService {
      * @param repo
      * @return
      */
+    @Headers("Cache-Control: public, max-age=600")
     @GET("/repos/{owner}/{repo}/readme")
     Observable<String> getReadMe(@Header("Authorization") String auth,
                                  @Header("Accept") String acc,
@@ -117,6 +124,7 @@ public interface RepositoriesService {
      * @param pageId
      * @return
      */
+    @Headers("Cache-Control: public, max-age=600")
     @GET("/repos/{owner}/{repo}/commits")
     Observable<List<SingleCommitBean>> getRepositoryCommit(@Header("Authorization") String auth,
                                                            @Path("owner") String owner,
@@ -131,6 +139,7 @@ public interface RepositoriesService {
      * @param sha
      * @return
      */
+    @Headers("Cache-Control: public, max-age=600")
     @GET("repos/{owner}/{repo}/commits/{sha}")
     Observable<SingleCommitBean> getASingleCommit(@Header("Authorization") String auth,
                                                   @Path("owner") String owner,
@@ -146,6 +155,7 @@ public interface RepositoriesService {
      * @param pageId
      * @return
      */
+    @Headers("Cache-Control: public, max-age=600")
     @GET("/repos/{owner}/{repo}/commits/{ref}/comments")
     Observable<List<CommentBean>> getACommitComments(@Header("Authorization") String auth,
                                                      @Path("owner") String owner,
@@ -177,6 +187,7 @@ public interface RepositoriesService {
      * @param pageId
      * @return
      */
+    @Headers("Cache-Control: public, max-age=600")
     @GET("/repos/{owner}/{repo}/releases")
     Observable<List<ReleaseBean>> getRepositoryReleases(@Header("Authorization") String auth,
                                                         @Path("owner") String owner,
@@ -207,6 +218,7 @@ public interface RepositoriesService {
      * @param pageId
      * @return
      */
+    @Headers("Cache-Control: public, max-age=600")
     @GET("/repos/{owner}/{repo}/contributors")
     Observable<List<ContributorBean>> getContributors(@Header("Authorization") String auth,
                                                       @Path("owner") String owner,

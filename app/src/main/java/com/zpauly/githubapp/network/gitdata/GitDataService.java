@@ -4,6 +4,7 @@ import com.zpauly.githubapp.entity.response.BlobBean;
 
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.Path;
 import rx.Observable;
 
@@ -20,6 +21,7 @@ public interface GitDataService {
      * @param sha
      * @return
      */
+    @Headers("Cache-Control: public, max-age=600")
     @GET("/repos/{owner}/{repo}/git/blobs/{sha}")
     Observable<String> getABlob(@Header("Authorization") String auth,
                                   @Header("accept") String acc,
