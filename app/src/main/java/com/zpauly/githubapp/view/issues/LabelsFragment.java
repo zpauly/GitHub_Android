@@ -69,7 +69,7 @@ public class LabelsFragment extends ToolbarMenuFragment implements LabelsContrac
 
         setupRecyclerView();
 
-        setViewManager(new RefreshViewManager(mRefreshView, mLabelsRV) {
+        setViewManager(new RefreshViewManager(mRefreshView, mLabelsRV, mEditFAB) {
             @Override
             public void load() {
                 getLabels();

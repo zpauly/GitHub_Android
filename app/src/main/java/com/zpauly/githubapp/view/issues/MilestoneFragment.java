@@ -76,7 +76,7 @@ public class MilestoneFragment extends ToolbarMenuFragment implements MilestoneC
             public void load() {
                 getMilestones();
             }
-        }, new RefreshViewManager(mRefreshView, mSRLayout) {
+        }, new RefreshViewManager(mRefreshView, mSRLayout, mMilestoneFAB) {
             @Override
             public void load() {
                 getMilestones();
