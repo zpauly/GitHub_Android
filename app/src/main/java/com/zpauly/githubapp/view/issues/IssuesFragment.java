@@ -106,7 +106,7 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
                         setSwipeRefreshLayoutRefreshing();
                         break;
                     case R.id.issue_manager_labels:
-
+                        LabelsActivity.launchActivity(getContext(), repoName, username);
                         break;
                     case R.id.issue_manager_milestones:
                         MilestoneActivity.launchActivity(getContext(), repoName, username);

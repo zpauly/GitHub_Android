@@ -133,7 +133,7 @@ public class IssueCreatePresenter extends NetPresenter implements IssueCreateCon
             }
         };
         issuesMethod.getLabels(labelsSubscriber, auth, mIssueCreateView.getOwner(),
-                mIssueCreateView.getRepoName());
+                mIssueCreateView.getRepoName(), 1);
     }
 
     @Override

@@ -179,8 +179,8 @@ public class IssuesMethod extends BaseNetMethod {
                 .subscribe(observer);
     }
 
-    public void getLabels(Observer<List<LabelBean>> observer, String auth, String owner, String repo) {
-        service.getLabels(auth, owner, repo)
+    public void getLabels(Observer<List<LabelBean>> observer, String auth, String owner, String repo, int pageId) {
+        service.getLabels(auth, owner, repo, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

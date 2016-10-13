@@ -268,7 +268,8 @@ public interface IssuesService {
     @GET("repos/{owner}/{repo}/labels")
     Observable<List<LabelBean>> getLabels(@Header("Authorization") String auth,
                                           @Path("owner") String owner,
-                                          @Path("repo") String repo);
+                                          @Path("repo") String repo,
+                                          @Query("page") int pageId);
 
     /**
      * Users with push access can lock an issue's conversation.

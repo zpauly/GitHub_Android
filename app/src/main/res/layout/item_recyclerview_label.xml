@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/label_item_layout"
+        android:gravity="center_vertical"
+        android:clickable="true"
+        android:background="?attr/selectableItemBackground"
+        android:padding="@dimen/components_padding"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:background="@drawable/issue_label_bg"
+            android:orientation="horizontal"
+            android:padding="@dimen/components_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/ic_label"
+                android:layout_width="@dimen/medium_image_size"
+                android:layout_height="@dimen/medium_image_size" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/label_item_name_TV"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_marginLeft="@dimen/components_margin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/label_item_edit_IV"
+            android:layout_marginLeft="@dimen/components_margin"
+            android:src="@drawable/ic_edit_black_24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
