@@ -4,6 +4,8 @@ package com.zpauly.githubapp;
  * Created by zpauly on 16-6-8.
  */
 public interface Constants {
+    long MAX_MEMORY = Runtime.getRuntime().maxMemory();
+
     /**
      * local configuration in sharedprefrences
      */

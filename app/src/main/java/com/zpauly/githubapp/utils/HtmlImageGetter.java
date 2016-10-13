@@ -15,6 +15,7 @@ import android.view.Display;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.ui.URLDrawable;
 
@@ -43,7 +44,7 @@ public class HtmlImageGetter implements Html.ImageGetter {
     private int width;
     private int height;
 
-    public static final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+    public static final int maxMemory = (int) Constants.MAX_MEMORY / 1024;
     private static final LruCache<String, File> cache = new LruCache<String, File>(maxMemory / 8) {
         @Override
         protected int sizeOf(String key, File value) {

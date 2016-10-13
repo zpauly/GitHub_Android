@@ -6,6 +6,7 @@ import android.util.DisplayMetrics;
 
 import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.utils.LanguageUtil;
+import com.zpauly.githubapp.utils.RetrofitUtil;
 import com.zpauly.githubapp.utils.SPUtil;
 
 import org.litepal.LitePalApplication;
@@ -19,6 +20,8 @@ public class BaseApplication extends LitePalApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        RetrofitUtil.setupContext(getApplicationContext());
 
         getLocalLanguageSetting();
     }

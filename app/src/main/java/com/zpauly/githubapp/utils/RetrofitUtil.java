@@ -1,9 +1,13 @@
 package com.zpauly.githubapp.utils;
 
+import android.content.Context;
+
 import com.zpauly.githubapp.Constants;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
@@ -15,13 +19,24 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by root on 16-5-7.
  */
 public class RetrofitUtil {
+    private static Context mContext;
+
+    public static void setupContext(Context context) {
+        Nested.setupContext(context);
+    }
+
     private static OkHttpClient.Builder builder;
 
     static {
+        File cacheDir = new File(mContext.getCacheDir(), "NetCache");
+        Cache cache = new Cache(cacheDir, Constants.MAX_MEMORY / 1024);
+
         builder = new OkHttpClient.Builder();
+        builder.cache(cache);
         builder.connectTimeout(Constants.DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         builder.followRedirects(true);
         builder.followSslRedirects(true);
+        builder.addInterceptor(new NetCacheInterceptor(mContext));
     }
 
     public static Retrofit initRetrofit(String baseUrl) {
@@ -58,5 +73,11 @@ public class RetrofitUtil {
                 .build();
 
         return retrofit;
+    }
+
+    private static class Nested {
+        static void setupContext(Context context) {
+            mContext = context;
+        }
     }
 }
