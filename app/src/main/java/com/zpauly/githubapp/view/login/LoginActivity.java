@@ -8,7 +8,6 @@ import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.zpauly.githubapp.Constants;
@@ -21,7 +20,7 @@ import com.zpauly.githubapp.presenter.login.LoginContract;
 import com.zpauly.githubapp.presenter.login.LoginPresenter;
 import com.zpauly.githubapp.utils.AuthUtil;
 import com.zpauly.githubapp.utils.SPUtil;
-import com.zpauly.githubapp.view.home.HomeActivity;
+import com.zpauly.githubapp.view.home.HomeActivityLeft;
 
 public class LoginActivity extends BaseActivity implements LoginContract.View {
     private LoginContract.Presenter mPresenter;
@@ -60,7 +59,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     public void initViews() {
         if (!SPUtil.getBoolean(this, Constants.LOCAL_CONFIGURATION, Constants.FIRST_USED, true)) {
             Intent intent = new Intent();
-            intent.setClass(this, HomeActivity.class);
+            intent.setClass(this, HomeActivityLeft.class);
             startActivity(intent);
             finish();
         }
@@ -221,7 +220,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         loadingDialog.dismiss();
         SPUtil.putBoolean(this, Constants.LOCAL_CONFIGURATION, Constants.FIRST_USED, false);
         Intent intent = new Intent();
-        intent.setClass(this, HomeActivity.class);
+        intent.setClass(this, HomeActivityLeft.class);
         startActivity(intent);
         finish();
     }

@@ -23,13 +23,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by zpauly on 16-6-9.
  */
-public abstract class DrawerActivity extends ToolbarActivity {
+public abstract class LeftDrawerActivity extends ToolbarActivity {
     private final String TAG = getClass().getName();
 
     private UserModel userInfo;
 
     protected DrawerLayout mDrawerLayout;
-    protected NavigationView mNavigationView;
+    protected NavigationView mLeftNavigationView;
 
     protected CircleImageView mDrawerAvatar;
     protected TextView mDrawerName;
@@ -61,9 +61,9 @@ public abstract class DrawerActivity extends ToolbarActivity {
 
     private void initNavDrawer() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.nav_drawer_layout);
-        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        mLeftNavigationView = (NavigationView) findViewById(R.id.left_nav_view);
 
-        View nav_header = mNavigationView.getHeaderView(0);
+        View nav_header = mLeftNavigationView.getHeaderView(0);
 
         mDrawerAvatar = (CircleImageView) nav_header.findViewById(R.id.drawer_avatar_IV);
         mDrawerName = (TextView) nav_header.findViewById(R.id.drawer_name_TV);
@@ -94,8 +94,8 @@ public abstract class DrawerActivity extends ToolbarActivity {
     }
 
     private void initNavView() {
-        lastItem = mNavigationView.getMenu().getItem(0);
-        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        lastItem = mLeftNavigationView.getMenu().getItem(0);
+        mLeftNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 lastItem.setChecked(false);
@@ -123,6 +123,6 @@ public abstract class DrawerActivity extends ToolbarActivity {
 
     @Override
     public void initContent() {
-        setContentView(R.layout.drawer_layout);
+        setContentView(R.layout.left_drawer_layout);
     }
 }

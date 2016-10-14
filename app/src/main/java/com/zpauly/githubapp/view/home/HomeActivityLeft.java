@@ -15,7 +15,7 @@ import com.zpauly.githubapp.db.UserDao;
 import com.zpauly.githubapp.listener.OnNavHeaderAvatarClickListener;
 import com.zpauly.githubapp.listener.OnNavItemClickListener;
 import com.zpauly.githubapp.utils.SPUtil;
-import com.zpauly.githubapp.view.DrawerActivity;
+import com.zpauly.githubapp.view.LeftDrawerActivity;
 import com.zpauly.githubapp.view.events.EventsActivity;
 import com.zpauly.githubapp.view.events.EventsFragment;
 import com.zpauly.githubapp.view.explore.ExploreFragment;
@@ -28,7 +28,7 @@ import com.zpauly.githubapp.view.stars.StarsFragment;
 /**
  * Created by zpauly on 16-6-9.
  */
-public class HomeActivity extends DrawerActivity {
+public class HomeActivityLeft extends LeftDrawerActivity {
     private final String TAG = getClass().getName();
 
     private long lastPressTime = System.currentTimeMillis();
@@ -82,7 +82,7 @@ public class HomeActivity extends DrawerActivity {
         setOnNavHeaderAvatarClickListener(new OnNavHeaderAvatarClickListener() {
             @Override
             public void onClick(View v) {
-                ProfileActivity.launchActivity(HomeActivity.this);
+                ProfileActivity.launchActivity(HomeActivityLeft.this);
 //                finish();
             }
         });

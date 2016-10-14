@@ -21,7 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.home.HomeActivity" />
+        <activity android:name=".view.home.HomeActivityLeft" />
         <activity android:name=".view.repositories.ReposActivity" />
         <activity android:name=".view.events.EventsActivity" />
         <activity android:name=".view.users.UsersActivity"/>

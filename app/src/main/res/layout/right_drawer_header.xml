@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:background="@color/colorPrimary"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/right_nav_title"
+        style="@style/Base.TextAppearance.AppCompat.Title"
+        android:textColor="@android:color/white"
+        android:layout_marginLeft="@dimen/components_margin"
+        android:text="items"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
