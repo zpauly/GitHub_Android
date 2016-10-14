@@ -2,11 +2,16 @@ package com.zpauly.githubapp.view.repositories;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 
+import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.response.repos.ReleaseBean;
+import com.zpauly.githubapp.utils.ImageUtil;
+import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.ToolbarActivity;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by zpauly on 16/9/25.
@@ -19,11 +24,32 @@ public class ReleaseContentActivity extends ToolbarActivity {
 
     private ReleaseBean releaseBean;
 
+    private CircleImageView mAvatarIV;
+    private AppCompatTextView mUsernameTV;
+    private AppCompatTextView mTagTV;
+    private AppCompatTextView mTimeTV;
+    private AppCompatTextView mBodyTV;
+
     @Override
     public void initViews() {
         getAttrs();
 
-        setFragment();
+        setContent(R.layout.content_release_content);
+
+        mUsernameTV = (AppCompatTextView) findViewById(R.id.release_username_TV);
+        mAvatarIV = (CircleImageView) findViewById(R.id.release_avatar_IV);
+        mTagTV = (AppCompatTextView) findViewById(R.id.release_tag_TV);
+        mTimeTV = (AppCompatTextView) findViewById(R.id.release_time_TV);
+        mBodyTV = (AppCompatTextView) findViewById(R.id.release_body_TV);
+
+        if (releaseBean != null) {
+            mUsernameTV.setText(releaseBean.getAuthor().getLogin());
+            mTagTV.setText(releaseBean.getTag_name());
+            mTimeTV.setText(TextUtil.timeConverter(releaseBean.getCreated_at()));
+            mBodyTV.setText(releaseBean.getBody());
+            ImageUtil.loadAvatarImageFromUrl(this, releaseBean.getAuthor().getAvatar_url(),
+                    mAvatarIV);
+        }
     }
 
     private void getAttrs() {
@@ -33,21 +59,13 @@ public class ReleaseContentActivity extends ToolbarActivity {
     @Override
     protected void setToolbar() {
         super.setToolbar();
-        setToolbarTitle("");
+        setToolbarTitle(releaseBean.getName());
         setOnToolbarNavClickedListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
-    }
-
-    private void setFragment() {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(RELEASE, releaseBean);
-        ReleaseContentFragment fragment = new ReleaseContentFragment();
-        fragment.setArguments(bundle);
-        setContent(fragment);
     }
 
     public static void launchActivity(Context context, ReleaseBean releaseBean) {

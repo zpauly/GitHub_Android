@@ -2,16 +2,22 @@ package com.zpauly.githubapp.view.comment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v7.widget.AppCompatEditText;
 import android.view.View;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.zpauly.githubapp.R;
+import com.zpauly.githubapp.entity.response.CommentBean;
+import com.zpauly.githubapp.presenter.comment.CommentCreateContract;
+import com.zpauly.githubapp.presenter.comment.CommentCreatePresenter;
+import com.zpauly.githubapp.ui.FloatingActionButton;
 import com.zpauly.githubapp.view.ToolbarActivity;
 
 /**
  * Created by zpauly on 16/9/8.
  */
-public class CommentCreateActivity extends ToolbarActivity {
+public class CommentCreateActivity extends ToolbarActivity implements CommentCreateContract.View {
     private final String TAG = getClass().getName();
 
     public static final String COMMENT_TYPE = "COMMENT_TYPE";
@@ -23,37 +29,54 @@ public class CommentCreateActivity extends ToolbarActivity {
     public static final String NUM = "NUM";
     public static final String SHA = "SHA";
 
+    private CommentCreateContract.Presenter mPresenter;
+
+    private AppCompatEditText mCommentET;
+    private FloatingActionButton mCommentFAB;
+
     private int commentType;
-    private String owner;
     private String repo;
-    private String sha;
+    private String owner;
     private int number;
+    private String sha;
+
+    private MaterialDialog uploadDialog;
+    private CommentBean commentBean;
+
+    @Override
+    protected void onStop() {
+        mPresenter.stop();
+        super.onStop();
+    }
 
     @Override
     public void initViews() {
-        getAttrs();
+        getParams();
 
-        setFragment();
+        setContent(R.layout.content_create_comment);
+
+        new CommentCreatePresenter(this, this);
+
+        uploadDialog = new MaterialDialog.Builder(this)
+                .progress(true, 0)
+                .cancelable(false)
+                .title(R.string.please_wait)
+                .content(R.string.uploading)
+                .build();
+
+        mCommentET = (AppCompatEditText) findViewById(R.id.create_comment_ET);
+        mCommentFAB = (FloatingActionButton) findViewById(R.id.create_comment_FAB);
+        mCommentET.setText("");
+
+        setFloatingActionButton();
     }
 
-    private void getAttrs() {
+    private void getParams() {
         commentType = getIntent().getIntExtra(COMMENT_TYPE, -1);
         owner = getIntent().getStringExtra(OWNER);
         repo = getIntent().getStringExtra(REPO);
         number = getIntent().getIntExtra(NUM, -1);
         sha = getIntent().getStringExtra(SHA);
-    }
-
-    private void setFragment() {
-        Bundle bundle = new Bundle();
-        bundle.putInt(COMMENT_TYPE, commentType);
-        bundle.putString(REPO, repo);
-        bundle.putString(OWNER, owner);
-        bundle.putInt(NUM, number);
-        bundle.putString(SHA, sha);
-        CommentCreateFragment fragment = new CommentCreateFragment();
-        fragment.setArguments(bundle);
-        setContent(fragment);
     }
 
     @Override
@@ -87,5 +110,75 @@ public class CommentCreateActivity extends ToolbarActivity {
         intent.putExtra(SHA, sha);
         intent.setClass(context, CommentCreateActivity.class);
         context.startActivity(intent);
+    }
+
+    private void setFloatingActionButton() {
+        mCommentFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mCommentET.getText() == null || mCommentET.getText().toString().equals("")) {
+                    Snackbar.make(getCurrentFocus(), R.string.please_input_body_first, Snackbar.LENGTH_SHORT).show();
+                } else {
+                    createAComment();
+                }
+            }
+        });
+    }
+
+    private void createAComment() {
+        uploadDialog.show();
+        mPresenter.createAComment();
+    }
+
+    @Override
+    public void createCommentSuccess() {
+        uploadDialog.dismiss();
+        Snackbar.make(getCurrentFocus(), R.string.upload_success, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void createCommentFail() {
+        uploadDialog.dismiss();
+        Snackbar.make(getCurrentFocus(), R.string.upload_fail, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void creatingComment(CommentBean commentBean) {
+        this.commentBean = commentBean;
+    }
+
+    @Override
+    public String getOwner() {
+        return owner;
+    }
+
+    @Override
+    public String getRepo() {
+        return repo;
+    }
+
+    @Override
+    public int getNum() {
+        return number;
+    }
+
+    @Override
+    public String getSha() {
+        return sha;
+    }
+
+    @Override
+    public String getCommentBody() {
+        return mCommentET.getText().toString();
+    }
+
+    @Override
+    public int getCommentType() {
+        return commentType;
+    }
+
+    @Override
+    public void setPresenter(CommentCreateContract.Presenter presenter) {
+        this.mPresenter = presenter;
     }
 }
