@@ -27,18 +27,6 @@ public class RetrofitUtil {
 
     private static OkHttpClient.Builder builder;
 
-    static {
-        File cacheDir = new File(mContext.getCacheDir(), "NetCache");
-        Cache cache = new Cache(cacheDir, Constants.MAX_MEMORY / 1024);
-
-        builder = new OkHttpClient.Builder();
-        builder.cache(cache);
-        builder.connectTimeout(Constants.DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-        builder.followRedirects(true);
-        builder.followSslRedirects(true);
-        builder.addInterceptor(new NetCacheInterceptor(mContext));
-    }
-
     public static Retrofit initRetrofit(String baseUrl) {
         Retrofit retrofit = new Retrofit.Builder()
                 .client(builder.build())
@@ -78,6 +66,15 @@ public class RetrofitUtil {
     private static class Nested {
         static void setupContext(Context context) {
             mContext = context;
+            File cacheDir = new File(mContext.getCacheDir(), "NetCache");
+            Cache cache = new Cache(cacheDir, Constants.MAX_MEMORY / 1024);
+
+            builder = new OkHttpClient.Builder();
+            builder.cache(cache);
+            builder.connectTimeout(Constants.DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+            builder.followRedirects(true);
+            builder.followSslRedirects(true);
+            builder.addInterceptor(new NetCacheInterceptor(mContext));
         }
     }
 }

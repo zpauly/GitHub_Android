@@ -202,7 +202,7 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
             }
 
             @Override
-            public void setRefreshView(final RefreshView refreshView, final View otherView) {
+            public void setRefreshView(final RefreshView refreshView, final View... otherView) {
                 refreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
                     @Override
                     public void beforeRefreshing() {
@@ -212,7 +212,7 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
                     @Override
                     public void onRefreshSuccess() {
                         refreshView.setVisibility(View.GONE);
-                        otherView.setVisibility(View.VISIBLE);
+                        mSRLayout.setVisibility(View.VISIBLE);
                         if (!(issueType == IssuesActivity.USER_ISSUES))
                             mIssueCreateFAB.setVisibility(View.VISIBLE);
                     }
@@ -220,7 +220,7 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
                     @Override
                     public void onRefreshFail() {
                         refreshView.setVisibility(View.VISIBLE);
-                        otherView.setVisibility(View.GONE);
+                        mSRLayout.setVisibility(View.GONE);
                         if (!(issueType == IssuesActivity.USER_ISSUES))
                             mIssueCreateFAB.setVisibility(View.GONE);
                     }
