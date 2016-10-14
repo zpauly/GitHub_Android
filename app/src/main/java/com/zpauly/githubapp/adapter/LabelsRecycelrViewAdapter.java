@@ -1,6 +1,10 @@
 package com.zpauly.githubapp.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +12,7 @@ import android.view.ViewGroup;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.base.BaseAdapter;
 import com.zpauly.githubapp.entity.response.issues.LabelBean;
+import com.zpauly.githubapp.utils.ColorUtil;
 import com.zpauly.githubapp.view.viewholder.LabelViewHolder;
 
 /**
@@ -36,6 +41,11 @@ public class LabelsRecycelrViewAdapter extends BaseAdapter<LabelBean, LabelViewH
         if (data == null)
             return;
         holder.mNameTV.setText(data.getName());
+        holder.mLabelCard.setBackgroundResource(R.drawable.issue_label_bg);
+        GradientDrawable bg = (GradientDrawable) holder.mLabelCard.getBackground();
+        bg.setColor(Color.parseColor("#" + data.getColor()));
+        holder.mNameTV.setTextColor(ColorUtil.computeTextColorFromBackgroundColor("#"
+                + data.getColor()));
         if (isEditImageShow) {
             holder.mEditIV.setVisibility(View.VISIBLE);
         } else {
