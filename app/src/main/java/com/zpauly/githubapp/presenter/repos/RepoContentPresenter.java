@@ -61,7 +61,11 @@ public class RepoContentPresenter extends NetPresenter implements Presenter {
             @Override
             public void onError(Throwable e) {
                 e.printStackTrace();
-                mRepoContentView.loadReadMeFail();
+                if (e.getMessage().contains("HTTP 404 Not Found")) {
+                    mRepoContentView.noReadMe();
+                } else {
+                    mRepoContentView.loadReadMeFail();
+                }
             }
 
             @Override
@@ -85,6 +89,7 @@ public class RepoContentPresenter extends NetPresenter implements Presenter {
             @Override
             public void onError(Throwable e) {
                 e.printStackTrace();
+                Log.i(TAG, "load repo fail");
                 mRepoContentView.loadRepoFail();
             }
 

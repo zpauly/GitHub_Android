@@ -1,6 +1,7 @@
 package com.zpauly.githubapp.presenter.issues;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.zpauly.githubapp.base.NetPresenter;
 import com.zpauly.githubapp.entity.response.issues.LabelBean;
@@ -48,7 +49,7 @@ public class LabelsPresenter extends NetPresenter implements LabelsContract.Pres
                     mLabelsView.gettingLabels(labelList);
                     mLabelsView.getLabelsSuccess();
                 } else {
-                    get();
+                    getLabels();
                 }
             }
 

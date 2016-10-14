@@ -2,7 +2,6 @@ package com.zpauly.githubapp.view.issues;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +13,7 @@ import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.LabelsRecycelrViewAdapter;
 import com.zpauly.githubapp.entity.response.issues.LabelBean;
 import com.zpauly.githubapp.presenter.issues.LabelsContract;
+import com.zpauly.githubapp.presenter.issues.LabelsPresenter;
 import com.zpauly.githubapp.ui.FloatingActionButton;
 import com.zpauly.githubapp.ui.RefreshView;
 import com.zpauly.githubapp.utils.viewmanager.RefreshViewManager;
@@ -52,7 +52,7 @@ public class LabelsFragment extends ToolbarMenuFragment implements LabelsContrac
     }
 
     private void getParams() {
-        Bundle bundle = new Bundle();
+        Bundle bundle = getArguments();
         if (bundle != null) {
             repo = bundle.getString(LabelsActivity.REPO);
             owner = bundle.getString(LabelsActivity.OWNER);
@@ -62,6 +62,8 @@ public class LabelsFragment extends ToolbarMenuFragment implements LabelsContrac
     @Override
     protected void initViews(View view) {
         getParams();
+
+        new LabelsPresenter(getContext(), this);
 
         mRefreshView = (RefreshView) view.findViewById(R.id.labels_RefreshView);
         mLabelsRV = (RecyclerView) view.findViewById(R.id.labels_RV);

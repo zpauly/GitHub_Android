@@ -24,6 +24,8 @@ public class RepoContentContract {
     public interface View extends BaseView<Presenter> {
         void loadReadMeFail();
 
+        void noReadMe();
+
         void loadReadMeSuccess();
 
         void loadingReadMe(String string);

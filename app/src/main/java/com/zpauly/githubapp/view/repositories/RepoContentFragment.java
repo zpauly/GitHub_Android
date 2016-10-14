@@ -280,6 +280,15 @@ public class RepoContentFragment extends ToolbarMenuFragment implements RepoCont
     }
 
     @Override
+    public void noReadMe() {
+        mLoadAgainTV.setVisibility(View.GONE);
+        mReadMePB.setVisibility(View.GONE);
+        if (!mRefreshView.isRefreshSuccess()) {
+            mRefreshView.refreshSuccess();
+        }
+    }
+
+    @Override
     public void loadReadMeSuccess() {
         mReadMePB.setVisibility(View.GONE);
         mReadMeTV.setVisibility(View.VISIBLE);
