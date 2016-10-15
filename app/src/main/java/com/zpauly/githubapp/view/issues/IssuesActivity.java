@@ -4,15 +4,25 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.zpauly.githubapp.R;
+import com.zpauly.githubapp.listener.OnMenuItemSelectedListener;
+import com.zpauly.githubapp.view.RightDrawerActivity;
 import com.zpauly.githubapp.view.ToolbarActivity;
 
 /**
  * Created by zpauly on 16/9/5.
  */
-public class IssuesActivity extends ToolbarActivity {
+public class IssuesActivity extends RightDrawerActivity {
     private final String TAG = getClass().getName();
 
     public static final String ISSUE_NAME = "ISSUE_NAME";
@@ -81,6 +91,14 @@ public class IssuesActivity extends ToolbarActivity {
         setContent(issuesFragment);
     }
 
+    @Override
+    protected void setContent(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.nav_content, fragment);
+        fragmentTransaction.commit();
+    }
+
     public static void launchActivity(Context context) {
         Intent intent = new Intent();
         intent.putExtra(ISSUE_TYPE, USER_ISSUES);
@@ -104,5 +122,29 @@ public class IssuesActivity extends ToolbarActivity {
         intent.putExtra(ORG_NAME, orgName);
         intent.setClass(context, IssuesActivity.class);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void initNavMenu() {
+        inflaterNavMenu(R.menu.repo_issus_right_nav_drawer_menu);
+        Menu menu = getNav().getMenu();
+        MenuItem label = menu.findItem(R.id.repo_issue_drawer_labels);
+        label.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                LabelsActivity.launchActivity(IssuesActivity.this, repoName, username);
+                closeDrawer();
+                return false;
+            }
+        });
+        MenuItem milestone = menu.findItem(R.id.repo_issue_drawer_milestones);
+        milestone.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                MilestoneActivity.launchActivity(IssuesActivity.this, repoName, username);
+                closeDrawer();
+                return false;
+            }
+        });
     }
 }

@@ -137,6 +137,8 @@
 
     <string name="filter">Filter by</string>
 
+    <string name="more">More</string>
+
     <string name="exit">Sign out</string>
 
     <string name="double_click_to_exit">Click Again to Exit</string>

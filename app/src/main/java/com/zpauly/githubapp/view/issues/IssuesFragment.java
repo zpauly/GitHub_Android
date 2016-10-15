@@ -2,6 +2,8 @@ package com.zpauly.githubapp.view.issues;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,7 +45,7 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
 
     private MenuItem mState;
     private MenuItem mFilter;
-    private MenuItem mManager;
+    private MenuItem mMore;
     private MenuItem mSort;
 
     private String state = IssuesService.STATE_OPEN;
@@ -63,6 +65,8 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
     private LoadMoreInSwipeRefreshLayoutMoreManager loadMoreInSwipeRefreshLayoutMoreManager;
     private RefreshViewManager refreshViewManager;
 
+    private DrawerLayout mRightDrawer;
+
     @Override
     public void onStop() {
         mPresenter.stop();
@@ -78,21 +82,21 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
     public void createMenu(Menu menu) {
         mState = menu.findItem(R.id.issue_toolbar_state);
         mFilter = menu.findItem(R.id.issue_toolbar_filter);
-        mManager = menu.findItem(R.id.issue_toolbar_manager);
+        mMore = menu.findItem(R.id.issue_toolbar_selection);
         mSort = menu.findItem(R.id.issue_toolbar_sort);
         if (issueType == IssuesActivity.REPO_ISSUES) {
             mFilter.setVisible(false);
-            mManager.setVisible(true);
+            mMore.setVisible(true);
         } else {
             mFilter.setVisible(true);
-            mManager.setVisible(false);
+            mMore.setVisible(false);
         }
         setOnMenuItemSelectedListener(new OnMenuItemSelectedListener() {
             @Override
             public void onItemSelected(MenuItem item) {
                 if (!mRefreshView.isRefreshSuccess())
                     return;
-                item.setChecked(true);
+                Log.i(TAG, "menu item clicked");
                 switch (item.getItemId()) {
                     case R.id.issue_toolbar_state:
                         if (state.equals(IssuesService.STATE_OPEN)) {
@@ -104,12 +108,6 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
                         }
                         mSRLayout.setRefreshing(true);
                         setSwipeRefreshLayoutRefreshing();
-                        break;
-                    case R.id.issue_manager_labels:
-                        LabelsActivity.launchActivity(getContext(), repoName, username);
-                        break;
-                    case R.id.issue_manager_milestones:
-                        MilestoneActivity.launchActivity(getContext(), repoName, username);
                         break;
                     case R.id.issue_filter_created:
                         filter = IssuesService.FILTER_CREATED;
@@ -162,6 +160,12 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
                         mSRLayout.setRefreshing(true);
                         setSwipeRefreshLayoutRefreshing();
                         break;
+                    case R.id.issue_toolbar_selection:
+                        Log.i(TAG, "selection clicked");
+                        if (mRightDrawer != null) {
+                            mRightDrawer.openDrawer(GravityCompat.END);
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -185,6 +189,8 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
         mSRLayout = (SwipeRefreshLayout) view.findViewById(R.id.issue_SRLayout);
         mIssuesRV = (RecyclerView) view.findViewById(R.id.issue_RV);
         mIssueCreateFAB = (FloatingActionButton) view.findViewById(R.id.issue_create_FAB);
+
+        mRightDrawer = (DrawerLayout) getActivity().findViewById(R.id.nav_drawer_layout);
 
         setupSwipeRefreshLayout();
         setupRecyclerView();
@@ -230,30 +236,6 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
 
          loadMoreInSwipeRefreshLayoutMoreManager = getViewManager(LoadMoreInSwipeRefreshLayoutMoreManager.class);
         refreshViewManager = getViewManager(RefreshViewManager.class);
-
-//        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
-//            @Override
-//            public void beforeRefreshing() {
-//                getIssues();
-//            }
-//
-//            @Override
-//            public void onRefreshSuccess() {
-//                mRefreshView.setVisibility(View.GONE);
-//                mSRLayout.setVisibility(View.VISIBLE);
-//                if (!(issueType == IssuesActivity.USER_ISSUES))
-//                    mIssueCreateFAB.setVisibility(View.VISIBLE);
-//            }
-//
-//            @Override
-//            public void onRefreshFail() {
-//                mRefreshView.setVisibility(View.VISIBLE);
-//                mSRLayout.setVisibility(View.GONE);
-//                if (!(issueType == IssuesActivity.USER_ISSUES))
-//                    mIssueCreateFAB.setVisibility(View.GONE);
-//            }
-//        });
-//        mRefreshView.startRefresh();
     }
 
     @Override

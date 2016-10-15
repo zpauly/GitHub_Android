@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/repo_issue_right_nav_more_grp"
+        android:checkableBehavior="single">
+        <item android:id="@+id/repo_issue_drawer_labels"
+            android:title="@string/labels"/>
+        <item android:id="@+id/repo_issue_drawer_milestones"
+            android:title="@string/milestones"/>
+    </group>
+</menu>

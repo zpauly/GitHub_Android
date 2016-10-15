@@ -95,4 +95,12 @@ public abstract class RightDrawerActivity extends ToolbarActivity {
     protected void closeDrawer() {
         mDrawerLayout.closeDrawer(GravityCompat.END);
     }
+
+    public DrawerLayout getDrawer() {
+        return mDrawerLayout;
+    }
+
+    public NavigationView getNav() {
+        return mRightNav;
+    }
 }
