@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/repo_right_nav_selections"
+        android:checkableBehavior="single">
+        <item android:id="@+id/repo_right_nav_commits"
+            android:title="@string/commits" />
+        <item android:id="@+id/repo_right_nav_branches"
+            android:title="@string/branches"/>
+        <item android:id="@+id/repo_right_nav_releases"
+            android:title="@string/releases"/>
+        <item android:id="@+id/repo_right_nav_contributors"
+            android:title="@string/contributors"/>
+    </group>
+</menu>

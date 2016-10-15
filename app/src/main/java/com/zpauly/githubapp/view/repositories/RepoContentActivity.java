@@ -1,5 +1,6 @@
 package com.zpauly.githubapp.view.repositories;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -23,6 +24,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.listener.OnMenuItemSelectedListener;
+import com.zpauly.githubapp.listener.OnNavItemClickListener;
 import com.zpauly.githubapp.network.repositories.RepositoriesService;
 import com.zpauly.githubapp.presenter.repos.RepoContentContract;
 import com.zpauly.githubapp.presenter.repos.RepoContentPresenter;
@@ -30,6 +32,7 @@ import com.zpauly.githubapp.service.DownloadSevice;
 import com.zpauly.githubapp.ui.RefreshView;
 import com.zpauly.githubapp.utils.HtmlImageGetter;
 import com.zpauly.githubapp.utils.ImageUtil;
+import com.zpauly.githubapp.view.RightDrawerActivity;
 import com.zpauly.githubapp.view.ToolbarActivity;
 import com.zpauly.githubapp.view.files.FilesActivity;
 import com.zpauly.githubapp.view.issues.IssuesActivity;
@@ -41,7 +44,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by zpauly on 16-7-31.
  */
 
-public class RepoContentActivity extends ToolbarActivity implements RepoContentContract.View {
+public class RepoContentActivity extends RightDrawerActivity implements RepoContentContract.View {
     private final String TAG = getClass().getName();
 
     public static final String FULL_NAME = "FULL_NAME";
@@ -439,21 +442,33 @@ public class RepoContentActivity extends ToolbarActivity implements RepoContentC
                     case R.id.repo_menu_download:
                         downloadDialog.show();
                         break;
-                    case R.id.repo_menu_commits:
+                    case R.id.repo_menu_choose:
+                        openDrawer();
+                        break;
+                    case R.id.repo_right_nav_commits:
                         RepoCommitActivity.launchActiivty(RepoContentActivity.this, login, name);
+                        closeDrawer();
                         break;
-                    case R.id.repo_menu_branch:
+                    case R.id.repo_right_nav_branches:
+                        closeDrawer();
                         break;
-                    case R.id.repo_menu_releases:
+                    case R.id.repo_right_nav_releases:
                         RepoReleasesActivity.launchActivity(RepoContentActivity.this, login, name);
+                        closeDrawer();
                         break;
-                    case R.id.repo_menu_contributor:
+                    case R.id.repo_right_nav_contributors:
                         ContributorsActivity.launchActivity(RepoContentActivity.this, login, name);
+                        closeDrawer();
                         break;
                     default:
                         break;
                 }
             }
         });
+    }
+
+    @Override
+    public void initNavMenu() {
+        inflaterNavMenu(R.menu.repo_right_nav_menu);
     }
 }

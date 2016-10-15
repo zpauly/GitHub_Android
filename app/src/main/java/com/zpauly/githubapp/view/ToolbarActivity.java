@@ -51,6 +51,15 @@ public abstract class ToolbarActivity extends BaseActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDefaultDisplayHomeAsUpEnabled(true);
             setToolbar();
+            mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    if (mOnMenuItemSelectedListener != null) {
+                        mOnMenuItemSelectedListener.onItemSelected(item);
+                    }
+                    return false;
+                }
+            });
         }
     }
 
@@ -100,13 +109,5 @@ public abstract class ToolbarActivity extends BaseActivity {
         inflateMenu(inflater, menu);
         createMenu(menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (mOnMenuItemSelectedListener != null) {
-            mOnMenuItemSelectedListener.onItemSelected(item);
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

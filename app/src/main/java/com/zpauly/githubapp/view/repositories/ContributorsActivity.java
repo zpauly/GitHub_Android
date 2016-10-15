@@ -91,7 +91,7 @@ public class ContributorsActivity extends ToolbarActivity implements Contributor
     @Override
     protected void setToolbar() {
         super.setToolbar();
-        setToolbarTitle(R.string.contributor);
+        setToolbarTitle(R.string.contributors);
         setOnToolbarNavClickedListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

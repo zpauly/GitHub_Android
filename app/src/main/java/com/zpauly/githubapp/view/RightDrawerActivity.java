@@ -7,9 +7,11 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.AppCompatTextView;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.listener.OnNavItemClickListener;
@@ -25,19 +27,14 @@ public abstract class RightDrawerActivity extends ToolbarActivity {
     private NavigationView mRightNav;
     private AppCompatTextView mTitleTV;
 
+    private ViewGroup mContentRoot;
+
     private Menu mNavMenu;
 
     private OnNavItemClickListener mOnNavItemClickListener;
 
     public void setOnNavItemClickListener(OnNavItemClickListener listener) {
         mOnNavItemClickListener = listener;
-    }
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        initNavDrawer();
     }
 
     private void initNavDrawer() {
@@ -56,12 +53,18 @@ public abstract class RightDrawerActivity extends ToolbarActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (mOnNavItemClickListener != null) {
-                    closeDrawer();
                     mOnMenuItemSelectedListener.onItemSelected(item);
+                    closeDrawer();
                 }
                 return false;
             }
         });
+    }
+
+    @Override
+    protected void setContent(int layoutResId) {
+        View view = LayoutInflater.from(this).inflate(layoutResId, mContentRoot, false);
+        mContentRoot.addView(view);
     }
 
     protected void setNavHeaderTitle(int resId) {
@@ -81,6 +84,8 @@ public abstract class RightDrawerActivity extends ToolbarActivity {
     @Override
     public void initContent() {
         setContentView(R.layout.right_drawer_layout);
+        mContentRoot = (ViewGroup) findViewById(R.id.nav_content);
+        initNavDrawer();
     }
 
     protected void openDrawer() {
