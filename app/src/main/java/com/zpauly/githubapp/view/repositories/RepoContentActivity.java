@@ -31,7 +31,9 @@ import com.zpauly.githubapp.presenter.repos.RepoContentPresenter;
 import com.zpauly.githubapp.service.DownloadSevice;
 import com.zpauly.githubapp.ui.RefreshView;
 import com.zpauly.githubapp.utils.HtmlImageGetter;
+import com.zpauly.githubapp.utils.HtmlUtil;
 import com.zpauly.githubapp.utils.ImageUtil;
+import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.RightDrawerActivity;
 import com.zpauly.githubapp.view.ToolbarActivity;
 import com.zpauly.githubapp.view.files.FilesActivity;
@@ -318,8 +320,7 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
         mReadMeTV.setVisibility(View.VISIBLE);
         HtmlImageGetter imageGetter = new HtmlImageGetter(mReadMeTV, this,
                 repoBean.getHtml_url() + "/raw/" + repoBean.getDefault_branch());
-        Spanned htmlSpann = Html.fromHtml(content, imageGetter, null);
-        mReadMeTV.setText(htmlSpann);
+        TextUtil.showReadMe(mReadMeTV, content, imageGetter);
         if (!mRefreshView.isRefreshSuccess()) {
             mRefreshView.refreshSuccess();
         }

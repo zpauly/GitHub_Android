@@ -28,6 +28,7 @@ import com.zpauly.githubapp.presenter.files.FilesContract;
 import com.zpauly.githubapp.presenter.files.FilesPresenter;
 import com.zpauly.githubapp.ui.DividerItemDecoration;
 import com.zpauly.githubapp.utils.HtmlImageGetter;
+import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.ToolbarActivity;
 
 import java.util.ArrayList;
@@ -368,9 +369,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
             mFileLayout.setVisibility(View.VISIBLE);
             HtmlImageGetter imageGetter = new HtmlImageGetter(mFileTV, this,
                     url + "/raw/" + branch);
-            Spanned htmlSpann = Html.fromHtml(fileContent, imageGetter, null);
-            mFileTV.setText(htmlSpann);
-            mFileTV.setMovementMethod(LinkMovementMethod.getInstance());
+            TextUtil.showReadMe(mFileTV, fileContent, imageGetter);
         }
     }
 

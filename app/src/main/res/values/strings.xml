@@ -135,6 +135,8 @@
     <string name="recently_starred">Recently starred</string>
     <string name="recently_active">Recently active</string>
 
+    <string name="something_wrong_with_network_connection">Something wrong with network connection</string>
+
     <string name="filter">Filter by</string>
 
     <string name="more">More</string>

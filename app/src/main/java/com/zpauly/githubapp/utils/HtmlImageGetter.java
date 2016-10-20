@@ -30,7 +30,7 @@ import java.net.URLConnection;
 import pl.droidsonroids.gif.GifDrawable;
 
 /**
- * Created by root on 16-7-31.
+ * Created by zpauly on 16-7-31.
  */
 
 public class HtmlImageGetter implements Html.ImageGetter {
