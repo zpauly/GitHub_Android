@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:id="@+id/repo_right_nav_selections"
-        android:checkableBehavior="single">
-        <item android:id="@+id/repo_right_nav_commits"
-            android:title="@string/commits" />
-        <item android:id="@+id/repo_right_nav_branches"
-            android:title="@string/branches"/>
-        <item android:id="@+id/repo_right_nav_releases"
-            android:title="@string/releases"/>
-        <item android:id="@+id/repo_right_nav_contributors"
-            android:title="@string/contributors"/>
-    </group>
+    <item android:id="@+id/repo_right_nav"
+        android:title="@string/more">
+        <menu>
+            <group android:id="@+id/repo_right_nav_selections_grp"
+                android:checkableBehavior="single">
+                <item android:id="@+id/repo_right_nav_commits"
+                    android:title="@string/commits" />
+                <item android:id="@+id/repo_right_nav_branches"
+                    android:title="@string/branches"/>
+                <item android:id="@+id/repo_right_nav_releases"
+                    android:title="@string/releases"/>
+                <item android:id="@+id/repo_right_nav_contributors"
+                    android:title="@string/contributors"/>
+            </group>
+        </menu>
+    </item>
+    <item android:id="@+id/repo_right_nav_download"
+        android:title="@string/download"/>
+    <item android:id="@+id/repo_right_nav_branches_and_tags"
+        android:title="@string/switch_branches_or_tags">
+        <menu>
+            <group android:id="@+id/repo_right_nav_branches_and_tags_grp"
+                android:checkableBehavior="single">
+                <item android:id="@+id/repo_right_nav_switch_branches"
+                    android:title="@string/branches"/>
+                <item android:id="@+id/repo_right_nav_switch_tags"
+                    android:title="@string/tags"/>
+            </group>
+        </menu>
+    </item>
 </menu>

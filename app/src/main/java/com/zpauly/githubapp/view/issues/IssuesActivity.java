@@ -16,6 +16,7 @@ import android.view.View;
 
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.listener.OnMenuItemSelectedListener;
+import com.zpauly.githubapp.listener.OnNavItemClickListener;
 import com.zpauly.githubapp.view.RightDrawerActivity;
 import com.zpauly.githubapp.view.ToolbarActivity;
 
@@ -127,24 +128,37 @@ public class IssuesActivity extends RightDrawerActivity {
     @Override
     public void initNavMenu() {
         inflaterNavMenu(R.menu.repo_issus_right_nav_drawer_menu);
-        Menu menu = getNav().getMenu();
-        MenuItem label = menu.findItem(R.id.repo_issue_drawer_labels);
-        label.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        setOnNavItemClickListener(new OnNavItemClickListener() {
             @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                LabelsActivity.launchActivity(IssuesActivity.this, repoName, username);
-                closeDrawer();
-                return false;
+            public void onItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.repo_issue_drawer_labels:
+                        LabelsActivity.launchActivity(IssuesActivity.this, repoName, username);
+                        break;
+                    case R.id.repo_issue_drawer_milestones:
+                        MilestoneActivity.launchActivity(IssuesActivity.this, repoName, username);
+                        break;
+                    default:
+                        break;
+                }
             }
         });
-        MenuItem milestone = menu.findItem(R.id.repo_issue_drawer_milestones);
-        milestone.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                MilestoneActivity.launchActivity(IssuesActivity.this, repoName, username);
-                closeDrawer();
-                return false;
-            }
-        });
+//        Menu menu = getNav().getMenu();
+//        MenuItem label = menu.findItem(R.id.repo_issue_drawer_labels);
+//        label.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//
+//                return false;
+//            }
+//        });
+//        MenuItem milestone = menu.findItem(R.id.repo_issue_drawer_milestones);
+//        milestone.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                closeDrawer();
+//                return false;
+//            }
+//        });
     }
 }

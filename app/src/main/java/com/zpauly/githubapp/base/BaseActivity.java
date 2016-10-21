@@ -1,8 +1,13 @@
 package com.zpauly.githubapp.base;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.transition.Transition;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -23,11 +28,16 @@ import java.util.Map;
  * Created by zpauly on 16-6-8.
  */
 public abstract class BaseActivity extends AppCompatActivity {
+    private final String TAG = getClass().getName();
+
     protected UserModel userInfo;
     protected String username;
 
     protected View mView;
     protected Map<String, ViewManager> viewManagerMap = new HashMap<>();
+
+    private Slide slide;
+    private Fade fade;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,8 +52,24 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         initViews();
 
+        setupWindowAnimations();
+
         for (ViewManager viewManager : viewManagerMap.values()) {
             viewManager.manager();
+        }
+    }
+
+    private void setupWindowAnimations() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Log.i(TAG, "setup transitions");
+            slide = new Slide();
+            slide.setDuration(5000);
+            fade = new Fade();
+            fade.setDuration(1000);
+            getWindow().setExitTransition(slide);
+            getWindow().setEnterTransition(fade);
+            getWindow().setReenterTransition(fade);
+            getWindow().setReturnTransition(slide);
         }
     }
 

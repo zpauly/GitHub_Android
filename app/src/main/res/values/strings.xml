@@ -4,7 +4,9 @@
     <string name="test">11111</string>
 
     <string name="loading">Loading......</string>
+    <string name="load_fail">Fail to load</string>
     <string name="please_wait">Please Wait</string>
+    <string name="error_occurred">Error Occurred</string>
 
     <string name="profile">Profile</string>
     <string name="followers">Followers</string>
@@ -95,6 +97,8 @@
     <string name="branches">Branches</string>
     <string name="releases">Releases</string>
     <string name="contributors">Contributors</string>
+    <string name="tags">Tags</string>
+    <string name="switch_branches_or_tags">Switch branches/tags</string>
     <string name="additions">Additions</string>
     <string name="deletions">Deletions</string>
     <string name="changes">Changes</string>

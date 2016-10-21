@@ -6,11 +6,13 @@ import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.base.BaseNetMethod;
 import com.zpauly.githubapp.entity.request.CommitCommentRequestBean;
 import com.zpauly.githubapp.entity.response.CommentBean;
+import com.zpauly.githubapp.entity.response.repos.BranchBean;
 import com.zpauly.githubapp.entity.response.repos.ContributorBean;
 import com.zpauly.githubapp.entity.response.repos.ReleaseBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoryContentBean;
 import com.zpauly.githubapp.entity.response.repos.SingleCommitBean;
+import com.zpauly.githubapp.entity.response.repos.TagBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
 import com.zpauly.githubapp.utils.StringConverterFactory;
 
@@ -166,6 +168,22 @@ public class RepositoriesMethod extends BaseNetMethod {
         RepositoriesService service = retrofit.create(RepositoriesService.class);
         service.getArchiveLink(auth, owner, repo, archive_format, ref)
                 .flatMap(func1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getTags(Observer<List<TagBean>> observer,
+                        String auth, String owner, String repo) {
+        service.getTags(auth, owner, repo)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getBranches(Observer<List<BranchBean>> observer,
+                            String auth, String owner, String repo) {
+        service.getBranches(auth, owner, repo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

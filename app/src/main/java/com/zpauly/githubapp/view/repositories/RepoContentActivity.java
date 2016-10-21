@@ -22,7 +22,9 @@ import android.widget.ProgressBar;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.zpauly.githubapp.R;
+import com.zpauly.githubapp.entity.response.repos.BranchBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
+import com.zpauly.githubapp.entity.response.repos.TagBean;
 import com.zpauly.githubapp.listener.OnMenuItemSelectedListener;
 import com.zpauly.githubapp.listener.OnNavItemClickListener;
 import com.zpauly.githubapp.network.repositories.RepositoriesService;
@@ -39,6 +41,9 @@ import com.zpauly.githubapp.view.ToolbarActivity;
 import com.zpauly.githubapp.view.files.FilesActivity;
 import com.zpauly.githubapp.view.issues.IssuesActivity;
 import com.zpauly.githubapp.view.profile.OthersActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -81,8 +86,6 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
     private ProgressBar mReadMePB;
 
     private MenuItem mMenuItemStar;
-    private MenuItem mMenuItemChoose;
-    private MenuItem mMenuDownload;
 
     private RefreshView mRefreshView;
 
@@ -90,7 +93,16 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
     private RepositoriesBean repoBean;
     private boolean isStarred;
 
-    private MaterialDialog downloadDialog;
+    private MaterialDialog mDownloadDialog;
+    private MaterialDialog mLoadingDialog;
+    private MaterialDialog mBranchesDialog;
+    private MaterialDialog mTagsDialog;
+
+    private List<String> branches = new ArrayList<>();
+    private List<String> tags = new ArrayList<>();
+
+    private String preRef;
+    private String ref = preRef;
 
     @Override
     protected void onStop() {
@@ -188,7 +200,7 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
     }
 
     private void setupDialogs() {
-        downloadDialog = new MaterialDialog.Builder(this)
+        mDownloadDialog = new MaterialDialog.Builder(this)
                 .title(full_name)
                 .content(R.string.ensure_to_download)
                 .cancelable(false)
@@ -211,6 +223,76 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         dialog.dismiss();
+                    }
+                })
+                .build();
+
+        mLoadingDialog = new MaterialDialog.Builder(this)
+                .cancelable(false)
+                .title(R.string.loading)
+                .content(R.string.please_wait)
+                .progress(true, 0)
+                .build();
+    }
+
+    private void setBranchesDialog() {
+        mBranchesDialog = new MaterialDialog.Builder(this)
+                .title(R.string.branches)
+                .items(branches)
+                .cancelable(false)
+                .positiveText(R.string.ok)
+                .negativeText(R.string.cancel)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                    }
+                })
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        ref = preRef;
+                    }
+                })
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                        if (which > branches.size() && which >= 0) {
+                            preRef = ref;
+                            ref = branches.get(which);
+                        }
+                        return false;
+                    }
+                })
+                .build();
+    }
+
+    private void setTagsDialog() {
+        mTagsDialog = new MaterialDialog.Builder(this)
+                .title(R.string.tags)
+                .items(tags)
+                .cancelable(false)
+                .positiveText(R.string.ok)
+                .negativeText(R.string.cancel)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                    }
+                })
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        ref = preRef;
+                    }
+                })
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                        if (which < tags.size() && which >= 0) {
+                            preRef = ref;
+                            ref = tags.get(which);
+                        }
+                        return false;
                     }
                 })
                 .build();
@@ -277,6 +359,14 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
         mPresenter.loadReadMe();
     }
 
+    private void loadBranches() {
+        mPresenter.loadBranches();
+    }
+
+    private void loadTags() {
+        mPresenter.loadTags();
+    }
+
     private void loadRepo() {
         mPresenter.loadRepo();
     }
@@ -296,6 +386,46 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
     @Override
     public void setPresenter(RepoContentContract.Presenter presenter) {
         mPresenter = presenter;
+    }
+
+    @Override
+    public void loadBranchesSuccess() {
+        mLoadingDialog.dismiss();
+        setBranchesDialog();
+        mBranchesDialog.show();
+    }
+
+    @Override
+    public void loadBranchesFail() {
+        mLoadingDialog.dismiss();
+        Snackbar.make(getCurrentFocus(), R.string.load_fail, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void loadTagsSuccess() {
+        mLoadingDialog.dismiss();
+        setTagsDialog();
+        mTagsDialog.show();
+    }
+
+    @Override
+    public void loadTagsFail() {
+        mLoadingDialog.dismiss();
+        Snackbar.make(getCurrentFocus(), R.string.load_fail, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void loadingBranches(List<BranchBean> branchBeen) {
+        for (BranchBean branch : branchBeen) {
+            branches.add(branch.getName());
+        }
+    }
+
+    @Override
+    public void loadingTags(List<TagBean> tagBeen) {
+        for (TagBean tag : tagBeen) {
+            tags.add(tag.getName());
+        }
     }
 
     @Override
@@ -390,7 +520,7 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
 
     @Override
     public void starFail() {
-
+        Snackbar.make(getCurrentFocus(), R.string.error_occurred, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -403,7 +533,7 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
 
     @Override
     public void unstarFail() {
-
+        Snackbar.make(getCurrentFocus(), R.string.error_occurred, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -419,13 +549,12 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
     @Override
     public void inflateMenu(MenuInflater inflater, Menu menu) {
         inflater.inflate(R.menu.repo_toolbar_menu, menu);
+        initNav();
     }
 
     @Override
     public void createMenu(Menu menu) {
         mMenuItemStar = menu.findItem(R.id.repo_menu_star);
-        mMenuItemChoose = menu.findItem(R.id.repo_menu_choose);
-        mMenuDownload = menu.findItem(R.id.repo_menu_download);
         mMenuItemStar.setVisible(false);
         checkStarred();
         setOnMenuItemSelectedListener(new OnMenuItemSelectedListener() {
@@ -440,27 +569,46 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
                             starRepo();
                         }
                         break;
-                    case R.id.repo_menu_download:
-                        downloadDialog.show();
-                        break;
                     case R.id.repo_menu_choose:
                         openDrawer();
                         break;
-                    case R.id.repo_right_nav_commits:
-                        RepoCommitActivity.launchActiivty(RepoContentActivity.this, login, name);
-                        closeDrawer();
-                        break;
-                    case R.id.repo_right_nav_branches:
-                        closeDrawer();
-                        break;
-                    case R.id.repo_right_nav_releases:
-                        RepoReleasesActivity.launchActivity(RepoContentActivity.this, login, name);
-                        closeDrawer();
-                        break;
-                    case R.id.repo_right_nav_contributors:
-                        ContributorsActivity.launchActivity(RepoContentActivity.this, login, name);
-                        closeDrawer();
-                        break;
+//                    case R.id.repo_right_nav_commits:
+//                        RepoCommitActivity.launchActiivty(RepoContentActivity.this, login, name);
+//                        closeDrawer();
+//                        break;
+//                    case R.id.repo_right_nav_branches:
+//                        closeDrawer();
+//                        break;
+//                    case R.id.repo_right_nav_releases:
+//                        RepoReleasesActivity.launchActivity(RepoContentActivity.this, login, name);
+//                        closeDrawer();
+//                        break;
+//                    case R.id.repo_right_nav_contributors:
+//                        ContributorsActivity.launchActivity(RepoContentActivity.this, login, name);
+//                        closeDrawer();
+//                        break;
+//                    case R.id.repo_right_nav_download:
+//                        mDownloadDialog.show();
+//                        closeDrawer();
+//                        break;
+//                    case R.id.repo_right_nav_switch_branches:
+//                        if (branches.size() == 0) {
+//                            mLoadingDialog.show();
+//                            loadBranches();
+//                        } else {
+//                            mBranchesDialog.show();
+//                        }
+//                        closeDrawer();
+//                        break;
+//                    case R.id.repo_right_nav_switch_tags:
+//                        if (tags.size() == 0) {
+//                            mLoadingDialog.show();
+//                            loadTags();
+//                        } else {
+//                            mTagsDialog.show();
+//                        }
+//                        closeDrawer();
+//                        break;
                     default:
                         break;
                 }
@@ -471,5 +619,49 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
     @Override
     public void initNavMenu() {
         inflaterNavMenu(R.menu.repo_right_nav_menu);
+        initNav();
+    }
+
+    private void initNav() {
+        setOnNavItemClickListener(new OnNavItemClickListener() {
+            @Override
+            public void onItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.repo_right_nav_commits:
+                        Log.i(TAG, "load repo commit activity");
+                        RepoCommitActivity.launchActiivty(RepoContentActivity.this, login, name);
+                        break;
+                    case R.id.repo_right_nav_branches:
+                        break;
+                    case R.id.repo_right_nav_releases:
+                        RepoReleasesActivity.launchActivity(RepoContentActivity.this, login, name);
+                        break;
+                    case R.id.repo_right_nav_contributors:
+                        ContributorsActivity.launchActivity(RepoContentActivity.this, login, name);
+                        break;
+                    case R.id.repo_right_nav_download:
+                        mDownloadDialog.show();
+                        break;
+                    case R.id.repo_right_nav_switch_branches:
+                        if (branches.size() == 0) {
+                            mLoadingDialog.show();
+                            loadBranches();
+                        } else {
+                            mBranchesDialog.show();
+                        }
+                        break;
+                    case R.id.repo_right_nav_switch_tags:
+                        if (tags.size() == 0) {
+                            mLoadingDialog.show();
+                            loadTags();
+                        } else {
+                            mTagsDialog.show();
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
     }
 }

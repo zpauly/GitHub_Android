@@ -53,7 +53,7 @@ public abstract class RightDrawerActivity extends ToolbarActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (mOnNavItemClickListener != null) {
-                    mOnMenuItemSelectedListener.onItemSelected(item);
+                    mOnNavItemClickListener.onItemClick(item);
                     closeDrawer();
                 }
                 return false;

@@ -4,10 +4,14 @@ import android.content.Context;
 import android.util.Log;
 
 import com.zpauly.githubapp.base.NetPresenter;
+import com.zpauly.githubapp.entity.response.repos.BranchBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
+import com.zpauly.githubapp.entity.response.repos.TagBean;
 import com.zpauly.githubapp.network.activity.ActivityMethod;
 import com.zpauly.githubapp.network.repositories.RepositoriesMethod;
 import com.zpauly.githubapp.presenter.repos.RepoContentContract.Presenter;
+
+import java.util.List;
 
 import rx.Subscriber;
 
@@ -28,6 +32,8 @@ public class RepoContentPresenter extends NetPresenter implements Presenter {
     private Subscriber<String> repoContentSubscriber;
     private Subscriber<RepositoriesBean> repoSubscriber;
     private Subscriber<String> starSubscriber;
+    private Subscriber<List<BranchBean>> branchesSubscriber;
+    private Subscriber<List<TagBean>> tagsSubscriber;
 
     public RepoContentPresenter(Context context, RepoContentContract.View view) {
         mContext = context;
@@ -100,6 +106,52 @@ public class RepoContentPresenter extends NetPresenter implements Presenter {
         };
         Log.i(TAG, auth);
         method.getRepository(repoSubscriber, auth, mRepoContentView.getUsername(), mRepoContentView.getRepoName());
+    }
+
+    @Override
+    public void loadBranches() {
+        branchesSubscriber = new Subscriber<List<BranchBean>>() {
+            @Override
+            public void onCompleted() {
+                mRepoContentView.loadBranchesSuccess();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                mRepoContentView.loadBranchesFail();
+            }
+
+            @Override
+            public void onNext(List<BranchBean> branchBeen) {
+                mRepoContentView.loadingBranches(branchBeen);
+            }
+        };
+        method.getBranches(branchesSubscriber, auth,
+                mRepoContentView.getUsername(), mRepoContentView.getRepoName());
+    }
+
+    @Override
+    public void loadTags() {
+        tagsSubscriber = new Subscriber<List<TagBean>>() {
+            @Override
+            public void onCompleted() {
+                mRepoContentView.loadTagsSuccess();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                mRepoContentView.loadTagsFail();
+            }
+
+            @Override
+            public void onNext(List<TagBean> tagBeen) {
+                mRepoContentView.loadingTags(tagBeen);
+            }
+        };
+        method.getTags(tagsSubscriber, auth,
+                mRepoContentView.getUsername(), mRepoContentView.getRepoName());
     }
 
     @Override

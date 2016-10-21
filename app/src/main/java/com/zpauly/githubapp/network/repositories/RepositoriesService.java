@@ -4,11 +4,13 @@ import android.support.annotation.Nullable;
 
 import com.zpauly.githubapp.entity.request.CommitCommentRequestBean;
 import com.zpauly.githubapp.entity.response.CommentBean;
+import com.zpauly.githubapp.entity.response.repos.BranchBean;
 import com.zpauly.githubapp.entity.response.repos.ContributorBean;
 import com.zpauly.githubapp.entity.response.repos.ReleaseBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoryContentBean;
 import com.zpauly.githubapp.entity.response.repos.SingleCommitBean;
+import com.zpauly.githubapp.entity.response.repos.TagBean;
 
 import java.util.List;
 
@@ -239,4 +241,28 @@ public interface RepositoriesService {
                                                      @Path("repo") String repo,
                                                      @Path("archive_format") String archive_format,
                                                      @Nullable @Path("ref") String ref);
+
+    /**
+     * List Tags
+     * @param auth
+     * @param owner
+     * @param repo
+     * @return
+     */
+    @GET("/repos/{owner}/{repo}/tags?per_page=100")
+    Observable<List<TagBean>> getTags(@Header("Authorization") String auth,
+                                      @Path("owner") String owner,
+                                      @Path("repo") String repo);
+
+    /**
+     * List Branches
+     * @param auth
+     * @param owner
+     * @param repo
+     * @return
+     */
+    @GET("/repos/{owner}/{repo}/branches?per_page=100")
+    Observable<List<BranchBean>> getBranches(@Header("Authorization") String auth,
+                                             @Path("owner") String owner,
+                                             @Path("repo") String repo);
 }
