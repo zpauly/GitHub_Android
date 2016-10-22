@@ -44,6 +44,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
 
     public static final String REPO = "REPO";
     public static final String OWNER = "OWNER";
+    public static final String REF = "REF";
     public static final String BRANCH = "BRANCH";
     public static final String URL = "URL";
 
@@ -51,6 +52,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
 
     private String repo;
     private String owner;
+    private String ref;
     private String branch;
     private String url;
     private String path;
@@ -106,6 +108,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
     private void getParams() {
         repo = getIntent().getStringExtra(REPO);
         owner = getIntent().getStringExtra(OWNER);
+        ref = getIntent().getStringExtra(REF);
         branch = getIntent().getStringExtra(BRANCH);
         url = getIntent().getStringExtra(URL);
         path = "";
@@ -123,11 +126,13 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         });
     }
 
-    public static void launchActivity(Context context, String owner, String repo, String branch, String url) {
+    public static void launchActivity(Context context, String owner, String repo,
+                                      String ref, String branch, String url) {
         Intent intent = new Intent();
         intent.putExtra(REPO, repo);
         intent.putExtra(OWNER, owner);
         intent.putExtra(BRANCH, branch);
+        intent.putExtra(REF, ref);
         intent.putExtra(URL, url);
         intent.setClass(context, FilesActivity.class);
         context.startActivity(intent);
@@ -300,6 +305,16 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         fileContent = file + "\n" + "\n" + "\n" + "\n";
     }
 
+    @Override
+    public String getRef() {
+        return ref;
+    }
+
+    @Override
+    public String getBranch() {
+        return branch;
+    }
+
     private List<FileDirModel> arrangeList(List<FileDirModel> list) {
         List<FileDirModel> dirs = new ArrayList<>();
         List<FileDirModel> files = new ArrayList<>();
@@ -360,7 +375,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
             mFileLayout.setVisibility(View.GONE);
             mCodeWB.loadDataWithBaseURL(null,
                     "<html><head></head><body><table style=\"width:100%; height:100%;\"><tr><td style=\"vertical-align:middle;\"><img src=\""
-                            + url + "/raw/" + branch + "/" + path + "\"></td></tr></table></body></html>",
+                            + url + "/raw/" + ref + "/" + path + "\"></td></tr></table></body></html>",
                     "html/css",
                     "utf-8",
                     null);
@@ -368,7 +383,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
             mCodeWB.setVisibility(View.GONE);
             mFileLayout.setVisibility(View.VISIBLE);
             HtmlImageGetter imageGetter = new HtmlImageGetter(mFileTV, this,
-                    url + "/raw/" + branch);
+                    url + "/raw/" + ref);
             TextUtil.showReadMe(mFileTV, fileContent, imageGetter);
         }
     }

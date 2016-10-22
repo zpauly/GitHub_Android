@@ -80,7 +80,8 @@ public interface RepositoriesService {
     @GET("/repos/{username}/{repo}")
     Observable<RepositoriesBean> getRepository(@Header("Authorization") String auth,
                                                @Path("username") String username,
-                                               @Path("repo") String repo);
+                                               @Path("repo") String repo,
+                                               @Query("ref") String ref);
 
     //contents
     /**
@@ -96,14 +97,18 @@ public interface RepositoriesService {
     Observable<List<RepositoryContentBean>> getRepositoryContent(@Nullable @Header("Accept") String acc,
                                                                  @Header("Authorization") String auth,
                                                                  @Path("owner") String owner,
-                                                                 @Path("repo") String repo, @Path("path") String path);
+                                                                 @Path("repo") String repo,
+                                                                 @Path("path") String path,
+                                                                 @Query("ref") String ref);
 
     @Headers("Cache-Control: public, max-age=600")
     @GET("/repos/{owner}/{repo}/contents/{path}")
     Observable<String> getFileContent(@Header("Authorization") String auth,
                                       @Nullable @Header("Accept") String acc,
                                       @Path("owner") String owner,
-                                      @Path("repo") String repo, @Path("path") String path);
+                                      @Path("repo") String repo,
+                                      @Path("path") String path,
+                                      @Query("branch") String branch);
 
     /**
      * Get the README
@@ -116,7 +121,8 @@ public interface RepositoriesService {
     @GET("/repos/{owner}/{repo}/readme")
     Observable<String> getReadMe(@Header("Authorization") String auth,
                                  @Header("Accept") String acc,
-                                 @Path("owner") String owner, @Path("repo") String repo);
+                                 @Path("owner") String owner, @Path("repo") String repo,
+                                 @Query("ref") String ref);
 
     /**
      * List commits on a repository

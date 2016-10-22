@@ -38,5 +38,9 @@ public class FilesContract {
         void loadFileFail();
 
         void loadingFile(String file);
+
+        String getRef();
+
+        String getBranch();
     }
 }

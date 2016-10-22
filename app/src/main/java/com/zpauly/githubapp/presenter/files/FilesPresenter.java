@@ -75,7 +75,7 @@ public class FilesPresenter extends NetPresenter implements FilesContract.Presen
             }
         };
         Log.i(TAG, auth);
-        method.getRepositoryContent(contentSubscriber, auth, null, owner, repo, path);
+        method.getRepositoryContent(contentSubscriber, auth, null, owner, repo, path, mFilesView.getRef());
     }
 
     @Override
@@ -130,7 +130,7 @@ public class FilesPresenter extends NetPresenter implements FilesContract.Presen
         Log.i(TAG, auth);
         if (path.endsWith(".md")) {
             method.getFileContent(fileSubscriber, auth, "application/vnd.github.VERSION.html",
-                    owner, repo, path);
+                    owner, repo, path, mFilesView.getBranch());
         } else {
             GitDataMethod.getInstance().getAblob(fileSubscriber, auth, owner, repo, sha);
         }

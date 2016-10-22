@@ -73,5 +73,7 @@ public class RepoContentContract {
         String getUsername();
 
         String getRepoName();
+
+        String getRef();
     }
 }

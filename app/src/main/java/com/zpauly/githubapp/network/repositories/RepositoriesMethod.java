@@ -67,37 +67,39 @@ public class RepositoriesMethod extends BaseNetMethod {
                 .subscribe(observer);
     }
 
-    public void getRepositoryContent(Observer<List<RepositoryContentBean>> observer, String auth, String acc,
-                                     String owner, String repo, String path) {
-        service.getRepositoryContent(acc, auth, owner, repo, path)
+    public void getRepositoryContent(Observer<List<RepositoryContentBean>> observer,
+                                     String auth, String acc,
+                                     String owner, String repo,
+                                     String path, String ref) {
+        service.getRepositoryContent(acc, auth, owner, repo, path, ref)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 
     public void getFileContent(Observer<String> observer, String auth, String acc,
-                               String owner, String repo, String path) {
+                               String owner, String repo, String path, String branch) {
         Retrofit retrofit = RetrofitUtil.initCustomRetrofit(Api.GitHubApi, StringConverterFactory.create(),
                 RxJavaCallAdapterFactory.create());
         RepositoriesService service = retrofit.create(RepositoriesService.class);
-        service.getFileContent(auth, acc, owner, repo, path)
+        service.getFileContent(auth, acc, owner, repo, path, branch)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 
-    public void getRepository(Observer<RepositoriesBean> observer, String auth, String username, String repo) {
-        service.getRepository(auth, username, repo)
+    public void getRepository(Observer<RepositoriesBean> observer, String auth, String username, String repo, String ref) {
+        service.getRepository(auth, username, repo, ref)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 
-    public void getReadMe(Observer<String> observer, String auth, String username, String repo) {
+    public void getReadMe(Observer<String> observer, String auth, String username, String repo, String ref) {
         Retrofit retrofit = RetrofitUtil.initCustomRetrofit(Api.GitHubApi, StringConverterFactory.create(),
                 RxJavaCallAdapterFactory.create());
         RepositoriesService service = retrofit.create(RepositoriesService.class);
-        service.getReadMe(auth, "application/vnd.github.VERSION.html", username, repo)
+        service.getReadMe(auth, "application/vnd.github.VERSION.html", username, repo, ref)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

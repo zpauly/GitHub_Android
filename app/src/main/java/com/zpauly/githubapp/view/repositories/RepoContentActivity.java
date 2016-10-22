@@ -101,8 +101,12 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
     private List<String> branches = new ArrayList<>();
     private List<String> tags = new ArrayList<>();
 
+    private String preBranch;
+    private String branch;
     private String preRef;
     private String ref = preRef;
+
+    private boolean isRefChanged = false;
 
     @Override
     protected void onStop() {
@@ -245,12 +249,16 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-
+                        Log.i(TAG, "ref = " + ref);
+                        if (isRefChanged) {
+                            loadRepo();
+                        }
                     }
                 })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        branch = preBranch;
                         ref = preRef;
                     }
                 })
@@ -258,8 +266,15 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
                         if (which > branches.size() && which >= 0) {
-                            preRef = ref;
-                            ref = branches.get(which);
+                            preBranch = branch;
+                            branch = branches.get(which);
+                            if (!branches.get(which).equals(ref)) {
+                                preRef = ref;
+                                ref = branches.get(which);
+                                isRefChanged = true;
+                            } else {
+                                isRefChanged = false;
+                            }
                         }
                         return false;
                     }
@@ -277,6 +292,10 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        Log.i(TAG, "ref = " + ref);
+                        if (isRefChanged) {
+                            loadRepo();
+                        }
                     }
                 })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -289,8 +308,13 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
                         if (which < tags.size() && which >= 0) {
-                            preRef = ref;
-                            ref = tags.get(which);
+                            if (tags.get(which).equals(ref)) {
+                                preRef = ref;
+                                ref = tags.get(which);
+                                isRefChanged = true;
+                            } else {
+                                isRefChanged = false;
+                            }
                         }
                         return false;
                     }
@@ -475,9 +499,11 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
             @Override
             public void onClick(View v) {
                 FilesActivity.launchActivity(RepoContentActivity.this, login, name,
-                        repoBean.getDefault_branch(), repoBean.getHtml_url());
+                        ref, branch, repoBean.getHtml_url());
             }
         });
+        preBranch = branch = repoBean.getDefault_branch();
+        preRef = ref = repoBean.getDefault_branch();
     }
 
     @Override
@@ -547,6 +573,11 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
     }
 
     @Override
+    public String getRef() {
+        return ref;
+    }
+
+    @Override
     public void inflateMenu(MenuInflater inflater, Menu menu) {
         inflater.inflate(R.menu.repo_toolbar_menu, menu);
         initNav();
@@ -572,43 +603,6 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
                     case R.id.repo_menu_choose:
                         openDrawer();
                         break;
-//                    case R.id.repo_right_nav_commits:
-//                        RepoCommitActivity.launchActiivty(RepoContentActivity.this, login, name);
-//                        closeDrawer();
-//                        break;
-//                    case R.id.repo_right_nav_branches:
-//                        closeDrawer();
-//                        break;
-//                    case R.id.repo_right_nav_releases:
-//                        RepoReleasesActivity.launchActivity(RepoContentActivity.this, login, name);
-//                        closeDrawer();
-//                        break;
-//                    case R.id.repo_right_nav_contributors:
-//                        ContributorsActivity.launchActivity(RepoContentActivity.this, login, name);
-//                        closeDrawer();
-//                        break;
-//                    case R.id.repo_right_nav_download:
-//                        mDownloadDialog.show();
-//                        closeDrawer();
-//                        break;
-//                    case R.id.repo_right_nav_switch_branches:
-//                        if (branches.size() == 0) {
-//                            mLoadingDialog.show();
-//                            loadBranches();
-//                        } else {
-//                            mBranchesDialog.show();
-//                        }
-//                        closeDrawer();
-//                        break;
-//                    case R.id.repo_right_nav_switch_tags:
-//                        if (tags.size() == 0) {
-//                            mLoadingDialog.show();
-//                            loadTags();
-//                        } else {
-//                            mTagsDialog.show();
-//                        }
-//                        closeDrawer();
-//                        break;
                     default:
                         break;
                 }

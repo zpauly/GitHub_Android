@@ -81,7 +81,7 @@ public class RepoContentPresenter extends NetPresenter implements Presenter {
         };
         Log.i(TAG, auth);
         method.getReadMe(repoContentSubscriber, auth, mRepoContentView.getUsername(),
-                mRepoContentView.getRepoName());
+                mRepoContentView.getRepoName(), mRepoContentView.getRef());
     }
 
     @Override
@@ -105,7 +105,7 @@ public class RepoContentPresenter extends NetPresenter implements Presenter {
             }
         };
         Log.i(TAG, auth);
-        method.getRepository(repoSubscriber, auth, mRepoContentView.getUsername(), mRepoContentView.getRepoName());
+        method.getRepository(repoSubscriber, auth, mRepoContentView.getUsername(), mRepoContentView.getRepoName(), mRepoContentView.getRef());
     }
 
     @Override
