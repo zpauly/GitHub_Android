@@ -3,9 +3,11 @@ package com.zpauly.githubapp.presenter.issues;
 import android.content.Context;
 
 import com.zpauly.githubapp.base.NetPresenter;
+import com.zpauly.githubapp.entity.response.events.Payload;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
 import com.zpauly.githubapp.network.issues.IssuesMethod;
-import com.zpauly.githubapp.view.issues.IssuesActivity;
+import com.zpauly.githubapp.network.pullRequests.PullRequestsMethod;
+import com.zpauly.githubapp.view.issues.IssuesOrPullRequestsActivity;
 
 import java.util.List;
 
@@ -14,20 +16,22 @@ import rx.Subscriber;
 /**
  * Created by zpauly on 16/9/4.
  */
-public class IssuesPresenter extends NetPresenter implements IssuesContract.Presenter {
+public class IssuesOrPullRequestsPresenter extends NetPresenter implements IssuesOrPullRequestsContract.Presenter {
     private final String TAG = getClass().getName();
 
     private Context mContext;
-    private IssuesContract.View mIssuesView;
+    private IssuesOrPullRequestsContract.View mIssuesView;
 
     private String auth;
     private IssuesMethod issuesMethod;
+    private PullRequestsMethod pullRequestsMethod;
 
     private Subscriber<List<IssueBean>> issuesSubscriber;
+    private Subscriber<List<Payload.PullRequestBean>> pullRequestsSubscrber;
 
     private int pageId = 1;
 
-    public IssuesPresenter(Context context, IssuesContract.View view) {
+    public IssuesOrPullRequestsPresenter(Context context, IssuesOrPullRequestsContract.View view) {
         mContext = context;
         mIssuesView = view;
         view.setPresenter(this);
@@ -65,13 +69,13 @@ public class IssuesPresenter extends NetPresenter implements IssuesContract.Pres
             }
         };
         switch (mIssuesView.getIssueType()) {
-            case IssuesActivity.USER_ISSUES:
+            case IssuesOrPullRequestsActivity.USER_ISSUES:
                 issuesMethod.getIssues(issuesSubscriber, auth, mIssuesView.getFilter(), mIssuesView.getState(), null, mIssuesView.getSort(), mIssuesView.getDirection(), null, pageId++);
                 break;
-            case IssuesActivity.REPO_ISSUES:
+            case IssuesOrPullRequestsActivity.REPO_ISSUES:
                 issuesMethod.getARepoIssues(issuesSubscriber, auth, mIssuesView.getUsername(), mIssuesView.getRepoName(), null, mIssuesView.getState(), null, null, null, mIssuesView.getSort(), mIssuesView.getDirection(), null, null, pageId++);
                 break;
-            case IssuesActivity.ORG_ISSUES:
+            case IssuesOrPullRequestsActivity.ORG_ISSUES:
                 issuesMethod.getOrgIssues(issuesSubscriber, auth, mIssuesView.getOrgName(), mIssuesView.getFilter(), mIssuesView.getState(), null, mIssuesView.getSort(), mIssuesView.getDirection(), null, pageId++);
                 break;
             default:
@@ -81,13 +85,39 @@ public class IssuesPresenter extends NetPresenter implements IssuesContract.Pres
     }
 
     @Override
+    public void getPullRequests() {
+        pullRequestsSubscrber = new Subscriber<List<Payload.PullRequestBean>>() {
+            @Override
+            public void onCompleted() {
+                mIssuesView.getPullRequestsSuccess();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                mIssuesView.getPullRequestsFail();
+            }
+
+            @Override
+            public void onNext(List<Payload.PullRequestBean> pullRequestBeen) {
+                mIssuesView.gettingPullRequests(pullRequestBeen);
+            }
+        };
+        pullRequestsMethod.getPullRequests(pullRequestsSubscrber, auth,
+                mIssuesView.getUsername(), mIssuesView.getRepoName(), mIssuesView.getState(),
+                null, null,
+                mIssuesView.getSort(), mIssuesView.getDirection(), pageId++);
+    }
+
+    @Override
     public void start() {
         auth = getAuth(mContext);
         issuesMethod = getMethod(IssuesMethod.class);
+        pullRequestsMethod = getMethod(PullRequestsMethod.class);
     }
 
     @Override
     public void stop() {
-        unsubscribe(issuesSubscriber);
+        unsubscribe(issuesSubscriber, pullRequestsSubscrber);
     }
 }

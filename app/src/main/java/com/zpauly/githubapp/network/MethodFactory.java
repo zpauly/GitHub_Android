@@ -9,6 +9,7 @@ import com.zpauly.githubapp.network.gitdata.GitDataMethod;
 import com.zpauly.githubapp.network.issues.IssuesMethod;
 import com.zpauly.githubapp.network.organizations.OrganizationsMethod;
 import com.zpauly.githubapp.network.overview.OverviewMethod;
+import com.zpauly.githubapp.network.pullRequests.PullRequestsMethod;
 import com.zpauly.githubapp.network.repositories.RepositoriesMethod;
 import com.zpauly.githubapp.network.search.SearchMethod;
 import com.zpauly.githubapp.network.user.UserMethod;
@@ -36,6 +37,8 @@ public class MethodFactory {
             return SearchMethod.getInstance();
         } else if (clazz.getName().equals(UserMethod.class.getName())) {
             return UserMethod.getInstance();
+        } else if (clazz.getName().equals(PullRequestsMethod.class.getName())) {
+            return PullRequestsMethod.getInstance();
         } else {
             return null;
         }

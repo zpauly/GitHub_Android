@@ -55,6 +55,7 @@
     <string name="recently_updated">Recently updated</string>
     <string name="least_recently_updated">Least Recently Updated</string>
 
+    <string name="pull_requests">Pull Requests</string>
     <string name="issues">Issues</string>
     <string name="state">State</string>
     <string name="created">Created</string>
@@ -91,7 +92,8 @@
     <string name="upload_fail">Upload Fail</string>
     <string name="upload_success">Upload Success</string>
     <string name="please_input_body_first">Please Input Body First</string>
-    
+
+    <string name="information">Information</string>
     <string name="choose">Choose</string>
     <string name="commits">Commits</string>
     <string name="branches">Branches</string>

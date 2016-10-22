@@ -31,7 +31,7 @@
         <activity android:name=".view.files.FilesActivity" />
         <activity android:name=".view.gists.GistContentActivity" />
         <activity android:name=".view.gists.GistFileActivity" />
-        <activity android:name=".view.issues.IssuesActivity" />
+        <activity android:name=".view.issues.IssuesOrPullRequestsActivity" />
         <activity android:name=".view.issues.IssueContentActivity" />
         <activity android:name=".view.comment.CommentCreateActivity" />
         <activity android:name=".view.issues.IssueCreateActivity" />

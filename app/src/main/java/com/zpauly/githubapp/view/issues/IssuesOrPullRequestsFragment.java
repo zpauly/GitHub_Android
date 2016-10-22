@@ -16,11 +16,14 @@ import android.view.ViewGroup;
 
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.IssuesRecyclerViewAdapter;
+import com.zpauly.githubapp.adapter.PullRequestsRecyclerViewAdapter;
+import com.zpauly.githubapp.entity.response.events.Payload;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
 import com.zpauly.githubapp.listener.OnMenuItemSelectedListener;
 import com.zpauly.githubapp.network.issues.IssuesService;
-import com.zpauly.githubapp.presenter.issues.IssuesContract;
-import com.zpauly.githubapp.presenter.issues.IssuesPresenter;
+import com.zpauly.githubapp.network.pullRequests.PullRequestsService;
+import com.zpauly.githubapp.presenter.issues.IssuesOrPullRequestsContract;
+import com.zpauly.githubapp.presenter.issues.IssuesOrPullRequestsPresenter;
 import com.zpauly.githubapp.ui.FloatingActionButton;
 import com.zpauly.githubapp.ui.RefreshView;
 import com.zpauly.githubapp.utils.viewmanager.LoadMoreInSwipeRefreshLayoutMoreManager;
@@ -33,10 +36,10 @@ import java.util.List;
 /**
  * Created by zpauly on 16/9/4.
  */
-public class IssuesFragment extends ToolbarMenuFragment implements IssuesContract.View {
+public class IssuesOrPullRequestsFragment extends ToolbarMenuFragment implements IssuesOrPullRequestsContract.View {
     private final String TAG = getClass().getName();
 
-    private IssuesContract.Presenter mPresenter;
+    private IssuesOrPullRequestsContract.Presenter mPresenter;
 
     private RefreshView mRefreshView;
     private SwipeRefreshLayout mSRLayout;
@@ -48,16 +51,24 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
     private MenuItem mMore;
     private MenuItem mSort;
 
+    //issue params
     private String state = IssuesService.STATE_OPEN;
     private String filter = IssuesService.FILTER_CREATED;
     private String sort = IssuesService.SORT_CREATED;
     private String direction = IssuesService.DIRECTION_DESC;
 
+    //pull requests params
+    private String pull_request_state = PullRequestsService.OPEN;
+    private String pull_request_sort = PullRequestsService.CREATED;
+    private String pull_request_direction = PullRequestsService.DESC;
+
     private IssuesRecyclerViewAdapter mIssuesAdapter;
+    private PullRequestsRecyclerViewAdapter mPullRequestsAdapter;
 
-    private List<IssueBean> list = new ArrayList<>();
+    private List<IssueBean> issueList = new ArrayList<>();
+    private List<Payload.PullRequestBean> pullRequestList = new ArrayList<>();
 
-    private int issueType = IssuesActivity.USER_ISSUES;
+    private int dataType = IssuesOrPullRequestsActivity.USER_ISSUES;
     private String username;
     private String repoName;
     private String orgName;
@@ -67,6 +78,8 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
 
     private DrawerLayout mRightDrawer;
 
+    private boolean isIssues;
+
     @Override
     public void onStop() {
         mPresenter.stop();
@@ -75,16 +88,34 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
 
     @Override
     public void inflateMenu() {
-        inflateMenu(R.menu.issue_toolbar_menu);
+        if (dataType == IssuesOrPullRequestsActivity.USER_ISSUES ||
+                dataType == IssuesOrPullRequestsActivity.REPO_ISSUES ||
+                dataType == IssuesOrPullRequestsActivity.ORG_ISSUES) {
+            inflateMenu(R.menu.issue_toolbar_menu);
+        } else if (dataType == IssuesOrPullRequestsActivity.REPO_PULL_REQUESTS ||
+                dataType == IssuesOrPullRequestsActivity.USER_PULL_REQUESTS) {
+            inflateMenu(R.menu.pull_requests_toolbar_menu);
+        }
     }
 
     @Override
     public void createMenu(Menu menu) {
+        if (dataType == IssuesOrPullRequestsActivity.USER_ISSUES ||
+                dataType == IssuesOrPullRequestsActivity.REPO_ISSUES ||
+                dataType == IssuesOrPullRequestsActivity.ORG_ISSUES) {
+            setupIssuesMenu(menu);
+        } else if (dataType == IssuesOrPullRequestsActivity.REPO_PULL_REQUESTS ||
+                dataType == IssuesOrPullRequestsActivity.USER_PULL_REQUESTS) {
+            setupPullRequestsMenu(menu);
+        }
+    }
+
+    private void setupIssuesMenu(Menu menu) {
         mState = menu.findItem(R.id.issue_toolbar_state);
         mFilter = menu.findItem(R.id.issue_toolbar_filter);
         mMore = menu.findItem(R.id.issue_toolbar_selection);
         mSort = menu.findItem(R.id.issue_toolbar_sort);
-        if (issueType == IssuesActivity.REPO_ISSUES) {
+        if (dataType == IssuesOrPullRequestsActivity.REPO_ISSUES) {
             mFilter.setVisible(false);
             mMore.setVisible(true);
         } else {
@@ -125,40 +156,22 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
                         setSwipeRefreshLayoutRefreshing();
                         break;
                     case R.id.issue_sort_newest:
-                        sort = IssuesService.SORT_CREATED;
-                        direction = IssuesService.DIRECTION_DESC;
-                        mSRLayout.setRefreshing(true);
-                        setSwipeRefreshLayoutRefreshing();
+                        menuSortChanged(IssuesService.SORT_CREATED, IssuesService.DIRECTION_DESC);
                         break;
                     case R.id.issue_sort_oldest:
-                        sort = IssuesService.SORT_CREATED;
-                        direction = IssuesService.DIRECTION_ASC;
-                        mSRLayout.setRefreshing(true);
-                        setSwipeRefreshLayoutRefreshing();
+                        menuSortChanged(IssuesService.SORT_CREATED, IssuesService.DIRECTION_ASC);
                         break;
                     case R.id.issue_sort_most_commented:
-                        sort = IssuesService.SORT_COMMENTS;
-                        direction = IssuesService.DIRECTION_DESC;
-                        mSRLayout.setRefreshing(true);
-                        setSwipeRefreshLayoutRefreshing();
+                        menuSortChanged(IssuesService.SORT_COMMENTS, IssuesService.DIRECTION_DESC);
                         break;
                     case R.id.issue_sort_least_commented:
-                        sort = IssuesService.SORT_COMMENTS;
-                        direction = IssuesService.DIRECTION_ASC;
-                        mSRLayout.setRefreshing(true);
-                        setSwipeRefreshLayoutRefreshing();
+                        menuSortChanged(IssuesService.SORT_COMMENTS, IssuesService.DIRECTION_ASC);
                         break;
                     case R.id.issue_sort_recently_updated:
-                        sort = IssuesService.SORT_UPDATED;
-                        direction = IssuesService.DIRECTION_DESC;
-                        mSRLayout.setRefreshing(true);
-                        setSwipeRefreshLayoutRefreshing();
+                        menuSortChanged(IssuesService.SORT_UPDATED, IssuesService.DIRECTION_DESC);
                         break;
                     case R.id.issue_sort_least_recently_updated:
-                        sort = IssuesService.SORT_UPDATED;
-                        direction = IssuesService.DIRECTION_ASC;
-                        mSRLayout.setRefreshing(true);
-                        setSwipeRefreshLayoutRefreshing();
+                        menuSortChanged(IssuesService.SORT_UPDATED, IssuesService.DIRECTION_ASC);
                         break;
                     case R.id.issue_toolbar_selection:
                         Log.i(TAG, "selection clicked");
@@ -174,16 +187,77 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
         });
     }
 
+    private void setupPullRequestsMenu(final Menu menu) {
+        mState = menu.findItem(R.id.pull_requests_toolbar_state);
+        setOnMenuItemSelectedListener(new OnMenuItemSelectedListener() {
+            @Override
+            public void onItemSelected(MenuItem item) {
+                if (!mRefreshView.isRefreshSuccess() || mSRLayout.isRefreshing()) {
+                    return;
+                }
+                switch (item.getItemId()) {
+                    case R.id.pull_requests_toolbar_state:
+                        if (pull_request_state.equals(PullRequestsService.OPEN)) {
+                            pull_request_state = PullRequestsService.CLOSED;
+                            mState.setIcon(R.drawable.ic_check);
+                        } else if (pull_request_state.equals(PullRequestsService.CLOSED)) {
+                            pull_request_state = PullRequestsService.OPEN;
+                            mState.setIcon(R.drawable.ic_info_outline);
+                        }
+                        mSRLayout.setRefreshing(true);
+                        setSwipeRefreshLayoutRefreshing();
+                        break;
+                    case R.id.pull_requests_sort_newest:
+                        menuSortChanged(PullRequestsService.CREATED, PullRequestsService.DESC);
+                        break;
+                    case R.id.pull_requests_sort_oldest:
+                        menuSortChanged(PullRequestsService.CREATED, PullRequestsService.ASC);
+                        break;
+                    case R.id.pull_requests_sort_most_commented:
+                        menuSortChanged(PullRequestsService.POPULARITY, PullRequestsService.DESC);
+                        break;
+                    case R.id.pull_requests_sort_least_commented:
+                        menuSortChanged(PullRequestsService.POPULARITY, PullRequestsService.ASC);
+                        break;
+                    case R.id.pull_requests_sort_recently_updated:
+                        menuSortChanged(PullRequestsService.UPDATED, PullRequestsService.DESC);
+                        break;
+                    case R.id.pull_requests_sort_least_recently_updated:
+                        menuSortChanged(PullRequestsService.UPDATED, PullRequestsService.ASC);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+    }
+
+    private void menuSortChanged(String sort, String direction) {
+        if (isIssues) {
+            this.sort = sort;
+            this.direction = direction;
+        } else {
+            this.pull_request_sort = sort;
+            this.pull_request_direction = direction;
+        }
+        mSRLayout.setRefreshing(true);
+        setSwipeRefreshLayoutRefreshing();
+    }
+
     private void setSwipeRefreshLayoutRefreshing() {
         mPresenter.setPageId(1);
-        loadMoreInSwipeRefreshLayoutMoreManager.setSwipeRefreshLayoutRefreshing(mIssuesAdapter);
+        if (isIssues) {
+            loadMoreInSwipeRefreshLayoutMoreManager.setSwipeRefreshLayoutRefreshing(mIssuesAdapter);
+        } else {
+            loadMoreInSwipeRefreshLayoutMoreManager.setSwipeRefreshLayoutRefreshing(mPullRequestsAdapter);
+        }
     }
 
     @Override
     protected void initViews(View view) {
         getAttrs();
 
-        new IssuesPresenter(getContext(), this);
+        new IssuesOrPullRequestsPresenter(getContext(), this);
 
         mRefreshView = (RefreshView) view.findViewById(R.id.issue_RefreshView);
         mSRLayout = (SwipeRefreshLayout) view.findViewById(R.id.issue_SRLayout);
@@ -199,7 +273,7 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
         setViewManager(new LoadMoreInSwipeRefreshLayoutMoreManager(mIssuesRV, mSRLayout) {
             @Override
             public void load() {
-                getIssues();
+                getData();
             }
         }, new RefreshViewManager(mRefreshView, mSRLayout) {
             @Override
@@ -212,14 +286,14 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
                 refreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
                     @Override
                     public void beforeRefreshing() {
-                        getIssues();
+                        getData();
                     }
 
                     @Override
                     public void onRefreshSuccess() {
                         refreshView.setVisibility(View.GONE);
                         mSRLayout.setVisibility(View.VISIBLE);
-                        if (!(issueType == IssuesActivity.USER_ISSUES))
+                        if (dataType == IssuesOrPullRequestsActivity.REPO_ISSUES)
                             mIssueCreateFAB.setVisibility(View.VISIBLE);
                     }
 
@@ -227,7 +301,7 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
                     public void onRefreshFail() {
                         refreshView.setVisibility(View.VISIBLE);
                         mSRLayout.setVisibility(View.GONE);
-                        if (!(issueType == IssuesActivity.USER_ISSUES))
+                        if (dataType == IssuesOrPullRequestsActivity.REPO_ISSUES)
                             mIssueCreateFAB.setVisibility(View.GONE);
                     }
                 });
@@ -246,10 +320,18 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
     private void getAttrs() {
         Bundle bundle = getArguments();
         if (bundle != null) {
-            issueType = bundle.getInt(IssuesActivity.ISSUE_TYPE);
-            username = bundle.getString(IssuesActivity.USERNAME);
-            repoName = bundle.getString(IssuesActivity.REPO_NAME);
-            orgName = bundle.getString(IssuesActivity.ORG_NAME);
+            dataType = bundle.getInt(IssuesOrPullRequestsActivity.DATA_TYPE);
+            username = bundle.getString(IssuesOrPullRequestsActivity.USERNAME);
+            repoName = bundle.getString(IssuesOrPullRequestsActivity.REPO_NAME);
+            orgName = bundle.getString(IssuesOrPullRequestsActivity.ORG_NAME);
+            if (dataType == IssuesOrPullRequestsActivity.USER_ISSUES ||
+                    dataType == IssuesOrPullRequestsActivity.ORG_ISSUES ||
+                    dataType == IssuesOrPullRequestsActivity.REPO_ISSUES) {
+                isIssues = true;
+            } else if (dataType == IssuesOrPullRequestsActivity.USER_PULL_REQUESTS ||
+                    dataType == IssuesOrPullRequestsActivity.REPO_PULL_REQUESTS) {
+                isIssues = false;
+            }
         }
     }
 
@@ -275,26 +357,27 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
     }
 
     private void setupRecyclerView() {
-        mIssuesAdapter = new IssuesRecyclerViewAdapter(getContext());
-        mIssuesAdapter.setOwner(username);
         mIssuesRV.setLayoutManager(new LinearLayoutManager(getContext()));
-        mIssuesRV.setAdapter(mIssuesAdapter);
+        if (isIssues) {
+            mIssuesAdapter = new IssuesRecyclerViewAdapter(getContext());
+            mIssuesAdapter.setOwner(username);
+            mIssuesRV.setAdapter(mIssuesAdapter);
+        } else {
+            mPullRequestsAdapter = new PullRequestsRecyclerViewAdapter(getContext());
+            mIssuesRV.setAdapter(mPullRequestsAdapter);
+        }
+    }
 
-//        final LinearLayoutManager manager = (LinearLayoutManager) mIssuesRV.getLayoutManager();
-//        mIssuesRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//                int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
-//                if (lastItemPosition == mIssuesAdapter.getItemCount() - 1
-//                        && mIssuesAdapter.isHasMoreData()) {
-//                    if (!mSRLayout.isRefreshing()) {
-//                        Log.i(TAG, "load more");
-//                        getIssues();
-//                    }
-//                }
-//            }
-//        });
+    private void getData() {
+        if (isIssues) {
+            getIssues();
+        } else {
+            getPullRequests();
+        }
+    }
+
+    private void getPullRequests() {
+        mPresenter.getPullRequests();
     }
 
     private void getIssues() {
@@ -303,7 +386,11 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
 
     @Override
     public String getState() {
-        return state;
+        if (isIssues) {
+            return state;
+        } else {
+            return pull_request_state;
+        }
     }
 
     @Override
@@ -313,17 +400,25 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
 
     @Override
     public String getSort() {
-        return sort;
+        if (isIssues) {
+            return sort;
+        } else {
+            return pull_request_sort;
+        }
     }
 
     @Override
     public String getDirection() {
-        return direction;
+        if (isIssues) {
+            return direction;
+        } else {
+            return pull_request_direction;
+        }
     }
 
     @Override
     public int getIssueType() {
-        return issueType;
+        return dataType;
     }
 
     @Override
@@ -344,7 +439,7 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
     @Override
     public void getIssueSuccess() {
         mSRLayout.setRefreshing(false);
-        mIssuesAdapter.swapAllData(list);
+        mIssuesAdapter.swapAllData(issueList);
         if (!mRefreshView.isRefreshSuccess()) {
             mRefreshView.refreshSuccess();
         }
@@ -362,15 +457,43 @@ public class IssuesFragment extends ToolbarMenuFragment implements IssuesContrac
     @Override
     public void gettingIssues(List<IssueBean> list) {
         if (mSRLayout.isRefreshing()) {
-            this.list.clear();
+            this.issueList.clear();
         }
         Log.i(TAG, String.valueOf(list.size()));
         loadMoreInSwipeRefreshLayoutMoreManager.hasNoMoreData(list, mIssuesAdapter);
-        this.list.addAll(list);
+        this.issueList.addAll(list);
     }
 
     @Override
-    public void setPresenter(IssuesContract.Presenter presenter) {
+    public void getPullRequestsSuccess() {
+        mSRLayout.setRefreshing(false);
+        mPullRequestsAdapter.swapAllData(pullRequestList);
+        if (!mRefreshView.isRefreshSuccess()) {
+            mRefreshView.refreshSuccess();
+        }
+    }
+
+    @Override
+    public void getPullRequestsFail() {
+        mSRLayout.setRefreshing(false);
+        mRefreshView.refreshFail();
+        if (!mRefreshView.isRefreshSuccess()) {
+            mPresenter.setPageId(1);
+        }
+    }
+
+    @Override
+    public void gettingPullRequests(List<Payload.PullRequestBean> pullRequestBeen) {
+        if (mSRLayout.isRefreshing()) {
+            this.pullRequestList.clear();
+        }
+        Log.i(TAG, String.valueOf(pullRequestBeen.size()));
+        loadMoreInSwipeRefreshLayoutMoreManager.hasNoMoreData(pullRequestBeen, mPullRequestsAdapter);
+        this.pullRequestList.addAll(pullRequestBeen);
+    }
+
+    @Override
+    public void setPresenter(IssuesOrPullRequestsContract.Presenter presenter) {
         this.mPresenter = presenter;
     }
 }

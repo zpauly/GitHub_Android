@@ -1,6 +1,5 @@
 package com.zpauly.githubapp.view.repositories;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -8,8 +7,6 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
-import android.text.Html;
-import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.Menu;
@@ -33,13 +30,11 @@ import com.zpauly.githubapp.presenter.repos.RepoContentPresenter;
 import com.zpauly.githubapp.service.DownloadSevice;
 import com.zpauly.githubapp.ui.RefreshView;
 import com.zpauly.githubapp.utils.HtmlImageGetter;
-import com.zpauly.githubapp.utils.HtmlUtil;
 import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.RightDrawerActivity;
-import com.zpauly.githubapp.view.ToolbarActivity;
 import com.zpauly.githubapp.view.files.FilesActivity;
-import com.zpauly.githubapp.view.issues.IssuesActivity;
+import com.zpauly.githubapp.view.issues.IssuesOrPullRequestsActivity;
 import com.zpauly.githubapp.view.profile.OthersActivity;
 
 import java.util.ArrayList;
@@ -83,6 +78,7 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
     private AppCompatTextView mReadMeTV;
     private AppCompatTextView mLoadAgainTV;
     private AppCompatTextView mViewFilesTV;
+    private AppCompatTextView mPullRequestsTV;
     private ProgressBar mReadMePB;
 
     private MenuItem mMenuItemStar;
@@ -106,7 +102,7 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
     private String preRef;
     private String ref = preRef;
 
-    private boolean isRefChanged = false;
+    private boolean isFirstLoad = true;
 
     @Override
     protected void onStop() {
@@ -137,6 +133,7 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
         mIssuesTV = (AppCompatTextView) findViewById(R.id.repo_content_issues_TV);
         mReadMeTV = (AppCompatTextView) findViewById(R.id.repo_content_readme_TV);
         mViewFilesTV = (AppCompatTextView) findViewById(R.id.repo_content_view_files_TV);
+        mPullRequestsTV = (AppCompatTextView) findViewById(R.id.repo_content_pull_requests_TV);
         mLoadAgainTV = (AppCompatTextView) findViewById(R.id.repo_content_readme_load_again_TV);
         mReadMePB = (ProgressBar) findViewById(R.id.repo_content_readme_PB);
 
@@ -246,13 +243,20 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
                 .cancelable(false)
                 .positiveText(R.string.ok)
                 .negativeText(R.string.cancel)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Log.i(TAG, "ref = " + ref);
-                        if (isRefChanged) {
-                            loadRepo();
+                    public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                        if (which < branches.size() && which >= 0) {
+                            preBranch = branch;
+                            branch = branches.get(which);
+                            if (!branches.get(which).equals(ref)) {
+                                preRef = ref;
+                                ref = branches.get(which);
+                                mSRLayout.setRefreshing(true);
+                                loadRepo();
+                            }
                         }
+                        return true;
                     }
                 })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -260,23 +264,6 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         branch = preBranch;
                         ref = preRef;
-                    }
-                })
-                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
-                    @Override
-                    public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                        if (which > branches.size() && which >= 0) {
-                            preBranch = branch;
-                            branch = branches.get(which);
-                            if (!branches.get(which).equals(ref)) {
-                                preRef = ref;
-                                ref = branches.get(which);
-                                isRefChanged = true;
-                            } else {
-                                isRefChanged = false;
-                            }
-                        }
-                        return false;
                     }
                 })
                 .build();
@@ -289,34 +276,24 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
                 .cancelable(false)
                 .positiveText(R.string.ok)
                 .negativeText(R.string.cancel)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Log.i(TAG, "ref = " + ref);
-                        if (isRefChanged) {
-                            loadRepo();
+                    public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                        if (which < tags.size() && which >= 0) {
+                            if (!tags.get(which).equals(ref)) {
+                                preRef = ref;
+                                ref = tags.get(which);
+                                mSRLayout.setRefreshing(true);
+                                loadRepo();
+                            }
                         }
+                        return true;
                     }
                 })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         ref = preRef;
-                    }
-                })
-                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
-                    @Override
-                    public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                        if (which < tags.size() && which >= 0) {
-                            if (tags.get(which).equals(ref)) {
-                                preRef = ref;
-                                ref = tags.get(which);
-                                isRefChanged = true;
-                            } else {
-                                isRefChanged = false;
-                            }
-                        }
-                        return false;
                     }
                 })
                 .build();
@@ -345,7 +322,14 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
         mIssuesTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                IssuesActivity.launchRepoIssuesActivity(RepoContentActivity.this, repoBean.getOwner().getLogin(), repoBean.getName());
+                IssuesOrPullRequestsActivity.launchRepoIssuesActivity(RepoContentActivity.this, repoBean.getOwner().getLogin(), repoBean.getName());
+            }
+        });
+        mPullRequestsTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IssuesOrPullRequestsActivity.launchPullRequestsActivity(RepoContentActivity.this,
+                        repoBean.getOwner().getLogin(), repoBean.getName());
             }
         });
         mWatchersLayout.setOnClickListener(new View.OnClickListener() {
@@ -392,6 +376,7 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
     }
 
     private void loadRepo() {
+        Log.i(TAG, "in load ref = " + ref);
         mPresenter.loadRepo();
     }
 
@@ -502,8 +487,11 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
                         ref, branch, repoBean.getHtml_url());
             }
         });
-        preBranch = branch = repoBean.getDefault_branch();
-        preRef = ref = repoBean.getDefault_branch();
+        if (isFirstLoad) {
+            preBranch = branch = repoBean.getDefault_branch();
+            preRef = ref = repoBean.getDefault_branch();
+            isFirstLoad = false;
+        }
     }
 
     @Override

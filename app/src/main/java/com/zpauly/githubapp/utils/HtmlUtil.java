@@ -14,7 +14,7 @@ import org.xml.sax.XMLReader;
  */
 
 public class HtmlUtil {
-    public static final String SPACE = "&nbsp";
+    public static final String SPACE = "&nbsp;";
 
     public static final String BREAK = "<br>";
 
@@ -39,7 +39,29 @@ public class HtmlUtil {
 
         formatSpan(formatted);
 
+        trim(formatted);
+
         return formatted.toString();
+    }
+
+    private static void trim(StringBuilder html) {
+        int length = html.length();
+        int breakLength = BREAK.length();
+
+        while (length > 0) {
+            if (html.indexOf(BREAK) == 0)
+                html.delete(0, breakLength);
+            else if (length >= breakLength
+                    && html.lastIndexOf(BREAK) == length - breakLength)
+                html.delete(length - breakLength, length);
+            else if (Character.isWhitespace(html.charAt(0)))
+                html.deleteCharAt(0);
+            else if (Character.isWhitespace(html.charAt(length - 1)))
+                html.deleteCharAt(length - 1);
+            else
+                break;
+            length = html.length();
+        }
     }
 
     public static void formatSpan(StringBuilder html) {

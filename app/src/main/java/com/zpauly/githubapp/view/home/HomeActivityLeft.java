@@ -20,7 +20,7 @@ import com.zpauly.githubapp.view.events.EventsActivity;
 import com.zpauly.githubapp.view.events.EventsFragment;
 import com.zpauly.githubapp.view.explore.ExploreFragment;
 import com.zpauly.githubapp.view.gists.GistsFragment;
-import com.zpauly.githubapp.view.issues.IssuesFragment;
+import com.zpauly.githubapp.view.issues.IssuesOrPullRequestsFragment;
 import com.zpauly.githubapp.view.login.LoginActivity;
 import com.zpauly.githubapp.view.profile.ProfileActivity;
 import com.zpauly.githubapp.view.stars.StarsFragment;
@@ -52,7 +52,7 @@ public class HomeActivityLeft extends LeftDrawerActivity {
     @Override
     public void initViews() {
         fragments = new BaseFragment[]{ new EventsFragment(), new StarsFragment()
-                , new ExploreFragment(), new GistsFragment(), new GistsFragment(), new GistsFragment(), new IssuesFragment()};
+                , new ExploreFragment(), new GistsFragment(), new GistsFragment(), new GistsFragment(), new IssuesOrPullRequestsFragment()};
 
         Bundle eventsBundle = new Bundle();
         eventsBundle.putInt(EventsActivity.EVENTS_ID, EventsActivity.RECEIVED_EVENTS);
