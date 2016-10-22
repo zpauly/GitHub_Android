@@ -1,16 +1,13 @@
 package com.zpauly.githubapp.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.zpauly.githubapp.R;
-import com.zpauly.githubapp.entity.response.issues.MilestoneBean;
+import com.zpauly.githubapp.entity.response.MilestoneBean;
 import com.zpauly.githubapp.utils.TextUtil;
-import com.zpauly.githubapp.view.ToolbarActivity;
-import com.zpauly.githubapp.view.login.LoginActivity;
 import com.zpauly.githubapp.view.viewholder.MilestoneViewHolder;
 
 /**

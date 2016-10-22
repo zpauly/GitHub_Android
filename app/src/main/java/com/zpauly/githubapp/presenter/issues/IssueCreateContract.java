@@ -3,10 +3,10 @@ package com.zpauly.githubapp.presenter.issues;
 import com.zpauly.githubapp.base.BasePresenter;
 import com.zpauly.githubapp.base.BaseView;
 import com.zpauly.githubapp.entity.request.IssueRequestBean;
-import com.zpauly.githubapp.entity.response.issues.AssigneeBean;
+import com.zpauly.githubapp.entity.response.AssigneeBean;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
 import com.zpauly.githubapp.entity.response.issues.LabelBean;
-import com.zpauly.githubapp.entity.response.issues.MilestoneBean;
+import com.zpauly.githubapp.entity.response.MilestoneBean;
 
 import java.util.List;
 

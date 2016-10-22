@@ -3,7 +3,7 @@ package com.zpauly.githubapp.presenter.issues;
 import android.content.Context;
 
 import com.zpauly.githubapp.base.NetPresenter;
-import com.zpauly.githubapp.entity.response.issues.MilestoneBean;
+import com.zpauly.githubapp.entity.response.MilestoneBean;
 import com.zpauly.githubapp.network.issues.IssuesMethod;
 
 import java.util.List;

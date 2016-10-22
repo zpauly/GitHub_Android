@@ -5,11 +5,11 @@ import android.support.annotation.Nullable;
 
 import com.zpauly.githubapp.entity.request.IssueCommentRequestBean;
 import com.zpauly.githubapp.entity.request.IssueRequestBean;
-import com.zpauly.githubapp.entity.response.issues.AssigneeBean;
+import com.zpauly.githubapp.entity.response.AssigneeBean;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
 import com.zpauly.githubapp.entity.response.CommentBean;
 import com.zpauly.githubapp.entity.response.issues.LabelBean;
-import com.zpauly.githubapp.entity.response.issues.MilestoneBean;
+import com.zpauly.githubapp.entity.response.MilestoneBean;
 
 import java.util.List;
 

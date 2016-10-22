@@ -1,6 +1,8 @@
 package com.zpauly.githubapp.network.pullRequests;
 
+import com.zpauly.githubapp.entity.response.CommentBean;
 import com.zpauly.githubapp.entity.response.events.Payload;
+import com.zpauly.githubapp.entity.response.repos.CommitBean;
 
 import java.util.List;
 
@@ -43,4 +45,34 @@ public interface PullRequestsService {
                                                               @Query("sort") String sort,
                                                               @Query("direction") String direction,
                                                               @Query("page") int pageId);
+
+    /**
+     * List comments on a pull request
+     * @param auth
+     * @param owner
+     * @param repo
+     * @param number
+     * @return
+     */
+    @GET("/repos/{owner}/{repo}/pulls/{number}/comments")
+    Observable<List<CommentBean>> getAPullComments(@Header("Authorization") String auth,
+                                                   @Path("owner") String owner,
+                                                   @Path("repo") String repo,
+                                                   @Path("number") int number,
+                                                   @Query("page") int pageId);
+
+    /**
+     * List commits on a pull request
+     * @param auth
+     * @param owner
+     * @param repo
+     * @param number
+     * @return
+     */
+    @GET("/repos/{owner}/{repo}/pulls/{number}/commits")
+    Observable<List<CommitBean>> getAPullCommits(@Header("Authorization") String auth,
+                                                  @Path("owner") String owner,
+                                                  @Path("repo") String repo,
+                                                  @Path("number") int number,
+                                                  @Query("page") int pageId);
 }

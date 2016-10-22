@@ -4,12 +4,11 @@ import android.content.Context;
 import android.util.Log;
 
 import com.zpauly.githubapp.base.NetPresenter;
-import com.zpauly.githubapp.entity.response.issues.AssigneeBean;
+import com.zpauly.githubapp.entity.response.AssigneeBean;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
 import com.zpauly.githubapp.entity.response.issues.LabelBean;
-import com.zpauly.githubapp.entity.response.issues.MilestoneBean;
+import com.zpauly.githubapp.entity.response.MilestoneBean;
 import com.zpauly.githubapp.network.issues.IssuesMethod;
-import com.zpauly.githubapp.network.issues.IssuesService;
 
 import java.util.List;
 

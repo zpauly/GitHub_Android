@@ -3,6 +3,8 @@ package com.zpauly.githubapp.entity.response.issues;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.zpauly.githubapp.entity.response.AssigneeBean;
+import com.zpauly.githubapp.entity.response.MilestoneBean;
 import com.zpauly.githubapp.entity.response.UserBean;
 
 import java.util.List;

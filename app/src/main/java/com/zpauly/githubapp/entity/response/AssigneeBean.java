@@ -1,4 +1,4 @@
-package com.zpauly.githubapp.entity.response.issues;
+package com.zpauly.githubapp.entity.response;
 
 import android.os.Parcel;
 import android.os.Parcelable;

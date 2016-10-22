@@ -2,7 +2,9 @@ package com.zpauly.githubapp.network.pullRequests;
 
 import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.base.BaseNetMethod;
+import com.zpauly.githubapp.entity.response.CommentBean;
 import com.zpauly.githubapp.entity.response.events.Payload;
+import com.zpauly.githubapp.entity.response.repos.CommitBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
 
 import java.util.List;
@@ -39,6 +41,24 @@ public class PullRequestsMethod extends BaseNetMethod {
                                  String state, String head, String base,
                                  String sort, String direction, int pageId) {
         service.getPullRequests(auth, owner, repo, state, head, base, sort, direction, pageId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getAPullComments(Observer<List<CommentBean>> observer,
+                                 String auth, String owner, String repo,
+                                 int number, int pageId) {
+        service.getAPullComments(auth, owner, repo, number, pageId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getAPullCommits(Observer<List<CommitBean>> observer,
+                                String auth, String owner, String repo,
+                                int number, int pageId) {
+        service.getAPullCommits(auth, owner, repo, number, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

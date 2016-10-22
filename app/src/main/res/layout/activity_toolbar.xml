@@ -14,11 +14,25 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <FrameLayout
-        android:id="@+id/toolbar_layout_content"
+    <LinearLayout
+        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </FrameLayout>
+        android:layout_height="match_parent">
+
+        <com.zpauly.githubapp.ui.RefreshView
+            android:id="@+id/RefreshView"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <FrameLayout
+            android:id="@+id/toolbar_layout_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+
 
 </android.support.design.widget.CoordinatorLayout>

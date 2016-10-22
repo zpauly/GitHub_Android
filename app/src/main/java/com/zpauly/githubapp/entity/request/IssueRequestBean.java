@@ -3,7 +3,7 @@ package com.zpauly.githubapp.entity.request;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.zpauly.githubapp.entity.response.issues.AssigneeBean;
+import com.zpauly.githubapp.entity.response.AssigneeBean;
 
 import java.util.List;
 

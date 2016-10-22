@@ -2,7 +2,7 @@ package com.zpauly.githubapp.presenter.issues;
 
 import com.zpauly.githubapp.base.BasePresenter;
 import com.zpauly.githubapp.base.BaseView;
-import com.zpauly.githubapp.entity.response.issues.MilestoneBean;
+import com.zpauly.githubapp.entity.response.MilestoneBean;
 
 import java.util.List;
 

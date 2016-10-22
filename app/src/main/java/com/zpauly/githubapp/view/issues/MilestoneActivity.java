@@ -12,7 +12,7 @@ import android.view.View;
 
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.MilestonesRecyclerViewAdapter;
-import com.zpauly.githubapp.entity.response.issues.MilestoneBean;
+import com.zpauly.githubapp.entity.response.MilestoneBean;
 import com.zpauly.githubapp.listener.OnMenuItemSelectedListener;
 import com.zpauly.githubapp.network.issues.IssuesService;
 import com.zpauly.githubapp.presenter.issues.MilestoneContract;

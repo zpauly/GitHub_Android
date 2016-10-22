@@ -1,9 +1,7 @@
-package com.zpauly.githubapp.entity.response.issues;
+package com.zpauly.githubapp.entity.response;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import com.zpauly.githubapp.entity.response.UserBean;
 
 /**
  * Created by zpauly on 16/9/1.
