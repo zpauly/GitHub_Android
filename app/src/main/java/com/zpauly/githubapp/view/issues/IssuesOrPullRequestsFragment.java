@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.IssuesRecyclerViewAdapter;
 import com.zpauly.githubapp.adapter.PullRequestsRecyclerViewAdapter;
-import com.zpauly.githubapp.entity.response.events.Payload;
+import com.zpauly.githubapp.entity.response.PullRequestBean;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
 import com.zpauly.githubapp.listener.OnMenuItemSelectedListener;
 import com.zpauly.githubapp.network.issues.IssuesService;
@@ -66,7 +66,7 @@ public class IssuesOrPullRequestsFragment extends ToolbarMenuFragment implements
     private PullRequestsRecyclerViewAdapter mPullRequestsAdapter;
 
     private List<IssueBean> issueList = new ArrayList<>();
-    private List<Payload.PullRequestBean> pullRequestList = new ArrayList<>();
+    private List<PullRequestBean> pullRequestList = new ArrayList<>();
 
     private int dataType = IssuesOrPullRequestsActivity.USER_ISSUES;
     private String username;
@@ -483,7 +483,7 @@ public class IssuesOrPullRequestsFragment extends ToolbarMenuFragment implements
     }
 
     @Override
-    public void gettingPullRequests(List<Payload.PullRequestBean> pullRequestBeen) {
+    public void gettingPullRequests(List<PullRequestBean> pullRequestBeen) {
         if (mSRLayout.isRefreshing()) {
             this.pullRequestList.clear();
         }

@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zpauly.githubapp.R;
-import com.zpauly.githubapp.base.BaseAdapter;
 import com.zpauly.githubapp.entity.response.repos.FileBean;
 import com.zpauly.githubapp.view.commit.CommitFilePatchActivity;
 import com.zpauly.githubapp.view.viewholder.PatchesViewHolder;
@@ -15,7 +14,7 @@ import com.zpauly.githubapp.view.viewholder.PatchesViewHolder;
  * Created by zpauly on 16/9/22.
  */
 
-public class PatchRecyclerViewAdapter extends BaseAdapter<FileBean, PatchesViewHolder> {
+public class PatchRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<FileBean, PatchesViewHolder> {
     private final String TAG = getClass().getName();
 
     public PatchRecyclerViewAdapter(Context context) {
@@ -23,14 +22,14 @@ public class PatchRecyclerViewAdapter extends BaseAdapter<FileBean, PatchesViewH
     }
 
     @Override
-    public PatchesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PatchesViewHolder createContentViewHolder(ViewGroup parent, int viewType) {
         View mView = LayoutInflater.from(getContext()).inflate(R.layout.item_recyclerview_patch, parent, false);
         PatchesViewHolder viewHolder = new PatchesViewHolder(mView);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(PatchesViewHolder holder, int position) {
+    public void bindContentViewHolder(PatchesViewHolder holder, int position) {
         final FileBean data = getData().get(position);
         holder.mFilenameTV.setText(data.getFilename());
         holder.mAdditionCountTV.setText(String.valueOf(data.getAdditions()));

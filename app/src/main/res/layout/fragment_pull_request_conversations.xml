@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:expandableTextView="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.zpauly.githubapp.ui.RefreshView
+        android:id="@+id/RefreshView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:visibility="gone"
+        android:id="@+id/SRLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.NestedScrollView
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.CardView
+                    style="@style/CardView"
+                    android:layout_margin="@dimen/card_margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:padding="@dimen/components_padding"
+                        android:orientation="vertical"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/pull_request_title_TV"
+                            android:textColor="@color/colorPrimary"
+                            style="@style/Base.TextAppearance.AppCompat.Title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_marginTop="@dimen/components_margin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.v7.widget.AppCompatButton
+                                android:id="@+id/pull_request_state_BTN"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_marginLeft="@dimen/components_margin"
+                                android:id="@+id/pull_request_description_TV"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:gravity="center_vertical"
+                            android:layout_marginTop="@dimen/components_margin"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/pull_request_avatar_TV"
+                                android:layout_width="@dimen/list_item_avatar_size"
+                                android:layout_height="@dimen/list_item_avatar_size" />
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_marginLeft="@dimen/components_margin"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    style="@style/Base.TextAppearance.AppCompat.Small"
+                                    android:id="@+id/pull_request_username_TV"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:layout_marginTop="@dimen/components_margin"
+                                    android:id="@+id/pull_request_time_TV"
+                                    style="@style/Base.TextAppearance.AppCompat.Body1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <com.ms.square.android.expandabletextview.ExpandableTextView
+                            android:id="@+id/pull_request_body_ETV"
+                            expandableTextView:maxCollapsedLines="4"
+                            expandableTextView:animDuration="200"
+                            android:background="@color/colorPrimaryLight"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/expandable_text"
+                                android:padding="@dimen/components_padding"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                            <android.support.v7.widget.AppCompatImageButton
+                                android:layout_margin="@dimen/components_padding"
+                                android:layout_gravity="bottom|center_horizontal"
+                                android:id="@+id/expand_collapse"
+                                android:background="@null"
+                                android:src="@drawable/ic_expand"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                        </com.ms.square.android.expandabletextview.ExpandableTextView>
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.RecyclerView
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    android:id="@+id/pull_request_comments_RV"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</android.support.design.widget.CoordinatorLayout>

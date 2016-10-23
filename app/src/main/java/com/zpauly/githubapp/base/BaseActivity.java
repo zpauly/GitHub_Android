@@ -81,6 +81,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    public void addViewManager(ViewManager viewManager) {
+        String key;
+        key = getKey(viewManager);
+        viewManagerMap.put(key, viewManager);
+    }
+
     private String getKey(ViewManager viewManager) {
         if (viewManager instanceof LoadMoreInSwipeRefreshLayoutMoreManager) {
             return LoadMoreInSwipeRefreshLayoutMoreManager.class.getCanonicalName();

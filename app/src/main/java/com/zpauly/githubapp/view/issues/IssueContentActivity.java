@@ -170,7 +170,11 @@ public class IssueContentActivity extends ToolbarActivity implements IssueConten
         mTitleTV.setText(issueBean.getTitle());
         ImageUtil.loadAvatarImageFromUrl(IssueContentActivity.this, issueBean.getUser().getAvatar_url(), mUserAvatarIV);
         mUsernameTV.setText(issueBean.getUser().getLogin());
-        mOpenTimeTV.setText("at " + TextUtil.timeConverter(issueBean.getCreated_at()));
+        if (issueBean.getClosed_at() == null) {
+            mOpenTimeTV.setText("opened at " + TextUtil.timeConverter(issueBean.getCreated_at()));
+        } else {
+            mOpenTimeTV.setText("closed at " + TextUtil.timeConverter(issueBean.getClosed_at()));
+        }
         mBodyTV.setText(issueBean.getBody());
         mUserAvatarIV.setOnClickListener(new View.OnClickListener() {
             @Override

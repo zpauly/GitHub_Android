@@ -1,8 +1,9 @@
 package com.zpauly.githubapp.network.pullRequests;
 
 import com.zpauly.githubapp.entity.response.CommentBean;
-import com.zpauly.githubapp.entity.response.events.Payload;
-import com.zpauly.githubapp.entity.response.repos.CommitBean;
+import com.zpauly.githubapp.entity.response.PullRequestBean;
+import com.zpauly.githubapp.entity.response.repos.FileBean;
+import com.zpauly.githubapp.entity.response.repos.SingleCommitBean;
 
 import java.util.List;
 
@@ -36,15 +37,15 @@ public interface PullRequestsService {
     String ASC = "asc";
 
     @GET("/repos/{owner}/{repo}/pulls")
-    Observable<List<Payload.PullRequestBean>> getPullRequests(@Header("Authorzation") String auth,
-                                                              @Path("owner") String owner,
-                                                              @Path("repo") String repo,
-                                                              @Query("state") String state,
-                                                              @Query("head") String head,
-                                                              @Query("base") String base,
-                                                              @Query("sort") String sort,
-                                                              @Query("direction") String direction,
-                                                              @Query("page") int pageId);
+    Observable<List<PullRequestBean>> getPullRequests(@Header("Authorzation") String auth,
+                                                      @Path("owner") String owner,
+                                                      @Path("repo") String repo,
+                                                      @Query("state") String state,
+                                                      @Query("head") String head,
+                                                      @Query("base") String base,
+                                                      @Query("sort") String sort,
+                                                      @Query("direction") String direction,
+                                                      @Query("page") int pageId);
 
     /**
      * List comments on a pull request
@@ -70,9 +71,25 @@ public interface PullRequestsService {
      * @return
      */
     @GET("/repos/{owner}/{repo}/pulls/{number}/commits")
-    Observable<List<CommitBean>> getAPullCommits(@Header("Authorization") String auth,
-                                                  @Path("owner") String owner,
-                                                  @Path("repo") String repo,
-                                                  @Path("number") int number,
-                                                  @Query("page") int pageId);
+    Observable<List<SingleCommitBean>> getAPullCommits(@Header("Authorization") String auth,
+                                                       @Path("owner") String owner,
+                                                       @Path("repo") String repo,
+                                                       @Path("number") int number,
+                                                       @Query("page") int pageId);
+
+    /**
+     * List pull requests files
+     * @param auth
+     * @param owner
+     * @param repo
+     * @param number
+     * @param pageId
+     * @return
+     */
+    @GET("/repos/{owner}/{repo}/pulls/{number}/files")
+    Observable<List<FileBean>> getAPullFiles(@Header("Authorization") String auth,
+                                             @Path("owner") String owner,
+                                             @Path("repo") String repo,
+                                             @Path("number") int number,
+                                             @Query("page") int pageId);
 }

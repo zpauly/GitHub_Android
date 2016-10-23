@@ -3,7 +3,7 @@ package com.zpauly.githubapp.presenter.issues;
 import android.content.Context;
 
 import com.zpauly.githubapp.base.NetPresenter;
-import com.zpauly.githubapp.entity.response.events.Payload;
+import com.zpauly.githubapp.entity.response.PullRequestBean;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
 import com.zpauly.githubapp.network.issues.IssuesMethod;
 import com.zpauly.githubapp.network.pullRequests.PullRequestsMethod;
@@ -27,7 +27,7 @@ public class IssuesOrPullRequestsPresenter extends NetPresenter implements Issue
     private PullRequestsMethod pullRequestsMethod;
 
     private Subscriber<List<IssueBean>> issuesSubscriber;
-    private Subscriber<List<Payload.PullRequestBean>> pullRequestsSubscrber;
+    private Subscriber<List<PullRequestBean>> pullRequestsSubscrber;
 
     private int pageId = 1;
 
@@ -86,7 +86,7 @@ public class IssuesOrPullRequestsPresenter extends NetPresenter implements Issue
 
     @Override
     public void getPullRequests() {
-        pullRequestsSubscrber = new Subscriber<List<Payload.PullRequestBean>>() {
+        pullRequestsSubscrber = new Subscriber<List<PullRequestBean>>() {
             @Override
             public void onCompleted() {
                 mIssuesView.getPullRequestsSuccess();
@@ -99,7 +99,7 @@ public class IssuesOrPullRequestsPresenter extends NetPresenter implements Issue
             }
 
             @Override
-            public void onNext(List<Payload.PullRequestBean> pullRequestBeen) {
+            public void onNext(List<PullRequestBean> pullRequestBeen) {
                 mIssuesView.gettingPullRequests(pullRequestBeen);
             }
         };

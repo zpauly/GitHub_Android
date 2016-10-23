@@ -31,7 +31,7 @@ public class CommitsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Sing
 
     @Override
     public void bindContentViewHolder(CommitViewHolder holder, final int position) {
-        SingleCommitBean data = getData().get(position);
+        final SingleCommitBean data = getData().get(position);
         if (data.getAuthor() != null) {
             ImageUtil.loadAvatarImageFromUrl(getContext(), data.getAuthor().getAvatar_url(),
                     holder.mAvatarIV);

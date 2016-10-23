@@ -1,13 +1,15 @@
 package com.zpauly.githubapp.entity.response;
 
-import com.google.gson.annotations.SerializedName;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 
 /**
  * Created by zpauly on 2016/10/22.
  */
 
-public class PullRequestsBean {
+public class PullRequestBean implements Parcelable {
     /**
      * id : 1
      * url : https://api.github.com/repos/octocat/Hello-World/pulls/1347
@@ -467,144 +469,7 @@ public class PullRequestsBean {
         this.changed_files = changed_files;
     }
 
-    public static class HeadBean {
-        private String label;
-        private String ref;
-        private String sha;
-        /**
-         * login : octocat
-         * id : 1
-         * avatar_url : https://github.com/images/error/octocat_happy.gif
-         * gravatar_id :
-         * url : https://api.github.com/users/octocat
-         * html_url : https://github.com/octocat
-         * followers_url : https://api.github.com/users/octocat/followers
-         * following_url : https://api.github.com/users/octocat/following{/other_user}
-         * gists_url : https://api.github.com/users/octocat/gists{/gist_id}
-         * starred_url : https://api.github.com/users/octocat/starred{/owner}{/repo}
-         * subscriptions_url : https://api.github.com/users/octocat/subscriptions
-         * organizations_url : https://api.github.com/users/octocat/orgs
-         * repos_url : https://api.github.com/users/octocat/repos
-         * events_url : https://api.github.com/users/octocat/events{/privacy}
-         * received_events_url : https://api.github.com/users/octocat/received_events
-         * type : User
-         * site_admin : false
-         */
-
-        private UserBean user;
-        /**
-         * id : 1296269
-         * owner : {"login":"octocat","id":1,"avatar_url":"https://github.com/images/error/octocat_happy.gif","gravatar_id":"","url":"https://api.github.com/users/octocat","html_url":"https://github.com/octocat","followers_url":"https://api.github.com/users/octocat/followers","following_url":"https://api.github.com/users/octocat/following{/other_user}","gists_url":"https://api.github.com/users/octocat/gists{/gist_id}","starred_url":"https://api.github.com/users/octocat/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/octocat/subscriptions","organizations_url":"https://api.github.com/users/octocat/orgs","repos_url":"https://api.github.com/users/octocat/repos","events_url":"https://api.github.com/users/octocat/events{/privacy}","received_events_url":"https://api.github.com/users/octocat/received_events","type":"User","site_admin":false}
-         * name : Hello-World
-         * full_name : octocat/Hello-World
-         * description : This your first repo!
-         * private : false
-         * fork : false
-         * url : https://api.github.com/repos/octocat/Hello-World
-         * html_url : https://github.com/octocat/Hello-World
-         * archive_url : http://api.github.com/repos/octocat/Hello-World/{archive_format}{/ref}
-         * assignees_url : http://api.github.com/repos/octocat/Hello-World/assignees{/user}
-         * blobs_url : http://api.github.com/repos/octocat/Hello-World/git/blobs{/sha}
-         * branches_url : http://api.github.com/repos/octocat/Hello-World/branches{/branch}
-         * clone_url : https://github.com/octocat/Hello-World.git
-         * collaborators_url : http://api.github.com/repos/octocat/Hello-World/collaborators{/collaborator}
-         * comments_url : http://api.github.com/repos/octocat/Hello-World/comments{/number}
-         * commits_url : http://api.github.com/repos/octocat/Hello-World/commits{/sha}
-         * compare_url : http://api.github.com/repos/octocat/Hello-World/compare/{base}...{head}
-         * contents_url : http://api.github.com/repos/octocat/Hello-World/contents/{+path}
-         * contributors_url : http://api.github.com/repos/octocat/Hello-World/contributors
-         * deployments_url : http://api.github.com/repos/octocat/Hello-World/deployments
-         * downloads_url : http://api.github.com/repos/octocat/Hello-World/downloads
-         * events_url : http://api.github.com/repos/octocat/Hello-World/events
-         * forks_url : http://api.github.com/repos/octocat/Hello-World/forks
-         * git_commits_url : http://api.github.com/repos/octocat/Hello-World/git/commits{/sha}
-         * git_refs_url : http://api.github.com/repos/octocat/Hello-World/git/refs{/sha}
-         * git_tags_url : http://api.github.com/repos/octocat/Hello-World/git/tags{/sha}
-         * git_url : git:github.com/octocat/Hello-World.git
-         * hooks_url : http://api.github.com/repos/octocat/Hello-World/hooks
-         * issue_comment_url : http://api.github.com/repos/octocat/Hello-World/issues/comments{/number}
-         * issue_events_url : http://api.github.com/repos/octocat/Hello-World/issues/events{/number}
-         * issues_url : http://api.github.com/repos/octocat/Hello-World/issues{/number}
-         * keys_url : http://api.github.com/repos/octocat/Hello-World/keys{/key_id}
-         * labels_url : http://api.github.com/repos/octocat/Hello-World/labels{/name}
-         * languages_url : http://api.github.com/repos/octocat/Hello-World/languages
-         * merges_url : http://api.github.com/repos/octocat/Hello-World/merges
-         * milestones_url : http://api.github.com/repos/octocat/Hello-World/milestones{/number}
-         * mirror_url : git:git.example.com/octocat/Hello-World
-         * notifications_url : http://api.github.com/repos/octocat/Hello-World/notifications{?since, all, participating}
-         * pulls_url : http://api.github.com/repos/octocat/Hello-World/pulls{/number}
-         * releases_url : http://api.github.com/repos/octocat/Hello-World/releases{/id}
-         * ssh_url : git@github.com:octocat/Hello-World.git
-         * stargazers_url : http://api.github.com/repos/octocat/Hello-World/stargazers
-         * statuses_url : http://api.github.com/repos/octocat/Hello-World/statuses/{sha}
-         * subscribers_url : http://api.github.com/repos/octocat/Hello-World/subscribers
-         * subscription_url : http://api.github.com/repos/octocat/Hello-World/subscription
-         * svn_url : https://svn.github.com/octocat/Hello-World
-         * tags_url : http://api.github.com/repos/octocat/Hello-World/tags
-         * teams_url : http://api.github.com/repos/octocat/Hello-World/teams
-         * trees_url : http://api.github.com/repos/octocat/Hello-World/git/trees{/sha}
-         * homepage : https://github.com
-         * language : null
-         * forks_count : 9
-         * stargazers_count : 80
-         * watchers_count : 80
-         * size : 108
-         * default_branch : master
-         * open_issues_count : 0
-         * has_issues : true
-         * has_wiki : true
-         * has_pages : false
-         * has_downloads : true
-         * pushed_at : 2011-01-26T19:06:43Z
-         * created_at : 2011-01-26T19:01:12Z
-         * updated_at : 2011-01-26T19:14:43Z
-         * permissions : {"admin":false,"push":false,"pull":true}
-         */
-
-        private RepositoriesBean repo;
-
-        public String getLabel() {
-            return label;
-        }
-
-        public void setLabel(String label) {
-            this.label = label;
-        }
-
-        public String getRef() {
-            return ref;
-        }
-
-        public void setRef(String ref) {
-            this.ref = ref;
-        }
-
-        public String getSha() {
-            return sha;
-        }
-
-        public void setSha(String sha) {
-            this.sha = sha;
-        }
-
-        public UserBean getUser() {
-            return user;
-        }
-
-        public void setUser(UserBean user) {
-            this.user = user;
-        }
-
-        public RepositoriesBean getRepo() {
-            return repo;
-        }
-
-        public void setRepo(RepositoriesBean repo) {
-            this.repo = repo;
-        }
-    }
-
-    public static class BaseBean {
+    public static class HeadBean implements Parcelable {
         private String label;
         private String ref;
         private String sha;
@@ -740,9 +605,219 @@ public class PullRequestsBean {
             this.repo = repo;
         }
 
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.label);
+            dest.writeString(this.ref);
+            dest.writeString(this.sha);
+            dest.writeParcelable(this.user, flags);
+            dest.writeParcelable(this.repo, flags);
+        }
+
+        public HeadBean() {
+        }
+
+        protected HeadBean(Parcel in) {
+            this.label = in.readString();
+            this.ref = in.readString();
+            this.sha = in.readString();
+            this.user = in.readParcelable(UserBean.class.getClassLoader());
+            this.repo = in.readParcelable(RepositoriesBean.class.getClassLoader());
+        }
+
+        public static final Creator<HeadBean> CREATOR = new Creator<HeadBean>() {
+            @Override
+            public HeadBean createFromParcel(Parcel source) {
+                return new HeadBean(source);
+            }
+
+            @Override
+            public HeadBean[] newArray(int size) {
+                return new HeadBean[size];
+            }
+        };
     }
 
-    public static class LinksBean {
+    public static class BaseBean implements Parcelable {
+        private String label;
+        private String ref;
+        private String sha;
+        /**
+         * login : octocat
+         * id : 1
+         * avatar_url : https://github.com/images/error/octocat_happy.gif
+         * gravatar_id :
+         * url : https://api.github.com/users/octocat
+         * html_url : https://github.com/octocat
+         * followers_url : https://api.github.com/users/octocat/followers
+         * following_url : https://api.github.com/users/octocat/following{/other_user}
+         * gists_url : https://api.github.com/users/octocat/gists{/gist_id}
+         * starred_url : https://api.github.com/users/octocat/starred{/owner}{/repo}
+         * subscriptions_url : https://api.github.com/users/octocat/subscriptions
+         * organizations_url : https://api.github.com/users/octocat/orgs
+         * repos_url : https://api.github.com/users/octocat/repos
+         * events_url : https://api.github.com/users/octocat/events{/privacy}
+         * received_events_url : https://api.github.com/users/octocat/received_events
+         * type : User
+         * site_admin : false
+         */
+
+        private UserBean user;
+        /**
+         * id : 1296269
+         * owner : {"login":"octocat","id":1,"avatar_url":"https://github.com/images/error/octocat_happy.gif","gravatar_id":"","url":"https://api.github.com/users/octocat","html_url":"https://github.com/octocat","followers_url":"https://api.github.com/users/octocat/followers","following_url":"https://api.github.com/users/octocat/following{/other_user}","gists_url":"https://api.github.com/users/octocat/gists{/gist_id}","starred_url":"https://api.github.com/users/octocat/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/octocat/subscriptions","organizations_url":"https://api.github.com/users/octocat/orgs","repos_url":"https://api.github.com/users/octocat/repos","events_url":"https://api.github.com/users/octocat/events{/privacy}","received_events_url":"https://api.github.com/users/octocat/received_events","type":"User","site_admin":false}
+         * name : Hello-World
+         * full_name : octocat/Hello-World
+         * description : This your first repo!
+         * private : false
+         * fork : false
+         * url : https://api.github.com/repos/octocat/Hello-World
+         * html_url : https://github.com/octocat/Hello-World
+         * archive_url : http://api.github.com/repos/octocat/Hello-World/{archive_format}{/ref}
+         * assignees_url : http://api.github.com/repos/octocat/Hello-World/assignees{/user}
+         * blobs_url : http://api.github.com/repos/octocat/Hello-World/git/blobs{/sha}
+         * branches_url : http://api.github.com/repos/octocat/Hello-World/branches{/branch}
+         * clone_url : https://github.com/octocat/Hello-World.git
+         * collaborators_url : http://api.github.com/repos/octocat/Hello-World/collaborators{/collaborator}
+         * comments_url : http://api.github.com/repos/octocat/Hello-World/comments{/number}
+         * commits_url : http://api.github.com/repos/octocat/Hello-World/commits{/sha}
+         * compare_url : http://api.github.com/repos/octocat/Hello-World/compare/{base}...{head}
+         * contents_url : http://api.github.com/repos/octocat/Hello-World/contents/{+path}
+         * contributors_url : http://api.github.com/repos/octocat/Hello-World/contributors
+         * deployments_url : http://api.github.com/repos/octocat/Hello-World/deployments
+         * downloads_url : http://api.github.com/repos/octocat/Hello-World/downloads
+         * events_url : http://api.github.com/repos/octocat/Hello-World/events
+         * forks_url : http://api.github.com/repos/octocat/Hello-World/forks
+         * git_commits_url : http://api.github.com/repos/octocat/Hello-World/git/commits{/sha}
+         * git_refs_url : http://api.github.com/repos/octocat/Hello-World/git/refs{/sha}
+         * git_tags_url : http://api.github.com/repos/octocat/Hello-World/git/tags{/sha}
+         * git_url : git:github.com/octocat/Hello-World.git
+         * hooks_url : http://api.github.com/repos/octocat/Hello-World/hooks
+         * issue_comment_url : http://api.github.com/repos/octocat/Hello-World/issues/comments{/number}
+         * issue_events_url : http://api.github.com/repos/octocat/Hello-World/issues/events{/number}
+         * issues_url : http://api.github.com/repos/octocat/Hello-World/issues{/number}
+         * keys_url : http://api.github.com/repos/octocat/Hello-World/keys{/key_id}
+         * labels_url : http://api.github.com/repos/octocat/Hello-World/labels{/name}
+         * languages_url : http://api.github.com/repos/octocat/Hello-World/languages
+         * merges_url : http://api.github.com/repos/octocat/Hello-World/merges
+         * milestones_url : http://api.github.com/repos/octocat/Hello-World/milestones{/number}
+         * mirror_url : git:git.example.com/octocat/Hello-World
+         * notifications_url : http://api.github.com/repos/octocat/Hello-World/notifications{?since, all, participating}
+         * pulls_url : http://api.github.com/repos/octocat/Hello-World/pulls{/number}
+         * releases_url : http://api.github.com/repos/octocat/Hello-World/releases{/id}
+         * ssh_url : git@github.com:octocat/Hello-World.git
+         * stargazers_url : http://api.github.com/repos/octocat/Hello-World/stargazers
+         * statuses_url : http://api.github.com/repos/octocat/Hello-World/statuses/{sha}
+         * subscribers_url : http://api.github.com/repos/octocat/Hello-World/subscribers
+         * subscription_url : http://api.github.com/repos/octocat/Hello-World/subscription
+         * svn_url : https://svn.github.com/octocat/Hello-World
+         * tags_url : http://api.github.com/repos/octocat/Hello-World/tags
+         * teams_url : http://api.github.com/repos/octocat/Hello-World/teams
+         * trees_url : http://api.github.com/repos/octocat/Hello-World/git/trees{/sha}
+         * homepage : https://github.com
+         * language : null
+         * forks_count : 9
+         * stargazers_count : 80
+         * watchers_count : 80
+         * size : 108
+         * default_branch : master
+         * open_issues_count : 0
+         * has_issues : true
+         * has_wiki : true
+         * has_pages : false
+         * has_downloads : true
+         * pushed_at : 2011-01-26T19:06:43Z
+         * created_at : 2011-01-26T19:01:12Z
+         * updated_at : 2011-01-26T19:14:43Z
+         * permissions : {"admin":false,"push":false,"pull":true}
+         */
+
+        private RepositoriesBean repo;
+
+        public String getLabel() {
+            return label;
+        }
+
+        public void setLabel(String label) {
+            this.label = label;
+        }
+
+        public String getRef() {
+            return ref;
+        }
+
+        public void setRef(String ref) {
+            this.ref = ref;
+        }
+
+        public String getSha() {
+            return sha;
+        }
+
+        public void setSha(String sha) {
+            this.sha = sha;
+        }
+
+        public UserBean getUser() {
+            return user;
+        }
+
+        public void setUser(UserBean user) {
+            this.user = user;
+        }
+
+        public RepositoriesBean getRepo() {
+            return repo;
+        }
+
+        public void setRepo(RepositoriesBean repo) {
+            this.repo = repo;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.label);
+            dest.writeString(this.ref);
+            dest.writeString(this.sha);
+            dest.writeParcelable(this.user, flags);
+            dest.writeParcelable(this.repo, flags);
+        }
+
+        public BaseBean() {
+        }
+
+        protected BaseBean(Parcel in) {
+            this.label = in.readString();
+            this.ref = in.readString();
+            this.sha = in.readString();
+            this.user = in.readParcelable(UserBean.class.getClassLoader());
+            this.repo = in.readParcelable(RepositoriesBean.class.getClassLoader());
+        }
+
+        public static final Creator<BaseBean> CREATOR = new Creator<BaseBean>() {
+            @Override
+            public BaseBean createFromParcel(Parcel source) {
+                return new BaseBean(source);
+            }
+
+            @Override
+            public BaseBean[] newArray(int size) {
+                return new BaseBean[size];
+            }
+        };
+    }
+
+    public static class LinksBean implements Parcelable {
         /**
          * href : https://api.github.com/repos/octocat/Hello-World/pulls/1347
          */
@@ -848,7 +923,7 @@ public class PullRequestsBean {
             this.statuses = statuses;
         }
 
-        public static class HrefBean {
+        public static class HrefBean implements Parcelable {
             private String href;
 
             public void setHref(String href) {
@@ -858,6 +933,175 @@ public class PullRequestsBean {
             public String getHref() {
                 return href;
             }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(this.href);
+            }
+
+            public HrefBean() {
+            }
+
+            protected HrefBean(Parcel in) {
+                this.href = in.readString();
+            }
+
+            public static final Creator<HrefBean> CREATOR = new Creator<HrefBean>() {
+                @Override
+                public HrefBean createFromParcel(Parcel source) {
+                    return new HrefBean(source);
+                }
+
+                @Override
+                public HrefBean[] newArray(int size) {
+                    return new HrefBean[size];
+                }
+            };
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeParcelable(this.self, flags);
+            dest.writeParcelable(this.html, flags);
+            dest.writeParcelable(this.issue, flags);
+            dest.writeParcelable(this.comments, flags);
+            dest.writeParcelable(this.review_comments, flags);
+            dest.writeParcelable(this.review_comment, flags);
+            dest.writeParcelable(this.commits, flags);
+            dest.writeParcelable(this.statuses, flags);
+        }
+
+        public LinksBean() {
+        }
+
+        protected LinksBean(Parcel in) {
+            this.self = in.readParcelable(HrefBean.class.getClassLoader());
+            this.html = in.readParcelable(HrefBean.class.getClassLoader());
+            this.issue = in.readParcelable(HrefBean.class.getClassLoader());
+            this.comments = in.readParcelable(HrefBean.class.getClassLoader());
+            this.review_comments = in.readParcelable(HrefBean.class.getClassLoader());
+            this.review_comment = in.readParcelable(HrefBean.class.getClassLoader());
+            this.commits = in.readParcelable(HrefBean.class.getClassLoader());
+            this.statuses = in.readParcelable(HrefBean.class.getClassLoader());
+        }
+
+        public static final Creator<LinksBean> CREATOR = new Creator<LinksBean>() {
+            @Override
+            public LinksBean createFromParcel(Parcel source) {
+                return new LinksBean(source);
+            }
+
+            @Override
+            public LinksBean[] newArray(int size) {
+                return new LinksBean[size];
+            }
+        };
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.url);
+        dest.writeString(this.html_url);
+        dest.writeString(this.diff_url);
+        dest.writeString(this.patch_url);
+        dest.writeString(this.issue_url);
+        dest.writeString(this.commits_url);
+        dest.writeString(this.review_comments_url);
+        dest.writeString(this.review_comment_url);
+        dest.writeString(this.comments_url);
+        dest.writeString(this.statuses_url);
+        dest.writeInt(this.number);
+        dest.writeString(this.state);
+        dest.writeString(this.title);
+        dest.writeString(this.body);
+        dest.writeParcelable(this.assignee, flags);
+        dest.writeParcelable(this.milestone, flags);
+        dest.writeByte(this.locked ? (byte) 1 : (byte) 0);
+        dest.writeString(this.created_at);
+        dest.writeString(this.updated_at);
+        dest.writeString(this.closed_at);
+        dest.writeString(this.merged_at);
+        dest.writeParcelable(this.head, flags);
+        dest.writeParcelable(this.base, flags);
+        dest.writeParcelable(this._links, flags);
+        dest.writeParcelable(this.user, flags);
+        dest.writeString(this.merge_commit_sha);
+        dest.writeByte(this.merged ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.mergeable ? (byte) 1 : (byte) 0);
+        dest.writeParcelable(this.merged_by, flags);
+        dest.writeInt(this.comments);
+        dest.writeInt(this.commits);
+        dest.writeInt(this.additions);
+        dest.writeInt(this.deletions);
+        dest.writeInt(this.changed_files);
+    }
+
+    public PullRequestBean() {
+    }
+
+    protected PullRequestBean(Parcel in) {
+        this.id = in.readInt();
+        this.url = in.readString();
+        this.html_url = in.readString();
+        this.diff_url = in.readString();
+        this.patch_url = in.readString();
+        this.issue_url = in.readString();
+        this.commits_url = in.readString();
+        this.review_comments_url = in.readString();
+        this.review_comment_url = in.readString();
+        this.comments_url = in.readString();
+        this.statuses_url = in.readString();
+        this.number = in.readInt();
+        this.state = in.readString();
+        this.title = in.readString();
+        this.body = in.readString();
+        this.assignee = in.readParcelable(AssigneeBean.class.getClassLoader());
+        this.milestone = in.readParcelable(MilestoneBean.class.getClassLoader());
+        this.locked = in.readByte() != 0;
+        this.created_at = in.readString();
+        this.updated_at = in.readString();
+        this.closed_at = in.readString();
+        this.merged_at = in.readString();
+        this.head = in.readParcelable(HeadBean.class.getClassLoader());
+        this.base = in.readParcelable(BaseBean.class.getClassLoader());
+        this._links = in.readParcelable(LinksBean.class.getClassLoader());
+        this.user = in.readParcelable(UserBean.class.getClassLoader());
+        this.merge_commit_sha = in.readString();
+        this.merged = in.readByte() != 0;
+        this.mergeable = in.readByte() != 0;
+        this.merged_by = in.readParcelable(UserBean.class.getClassLoader());
+        this.comments = in.readInt();
+        this.commits = in.readInt();
+        this.additions = in.readInt();
+        this.deletions = in.readInt();
+        this.changed_files = in.readInt();
+    }
+
+    public static final Parcelable.Creator<PullRequestBean> CREATOR = new Parcelable.Creator<PullRequestBean>() {
+        @Override
+        public PullRequestBean createFromParcel(Parcel source) {
+            return new PullRequestBean(source);
+        }
+
+        @Override
+        public PullRequestBean[] newArray(int size) {
+            return new PullRequestBean[size];
+        }
+    };
 }

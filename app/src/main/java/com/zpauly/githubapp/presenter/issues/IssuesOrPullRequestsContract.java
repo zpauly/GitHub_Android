@@ -2,7 +2,7 @@ package com.zpauly.githubapp.presenter.issues;
 
 import com.zpauly.githubapp.base.BasePresenter;
 import com.zpauly.githubapp.base.BaseView;
-import com.zpauly.githubapp.entity.response.events.Payload;
+import com.zpauly.githubapp.entity.response.PullRequestBean;
 import com.zpauly.githubapp.entity.response.issues.IssueBean;
 
 import java.util.List;
@@ -48,6 +48,6 @@ public class IssuesOrPullRequestsContract {
 
         void getPullRequestsFail();
 
-        void gettingPullRequests(List<Payload.PullRequestBean> pullRequestBeen);
+        void gettingPullRequests(List<PullRequestBean> pullRequestBeen);
     }
 }

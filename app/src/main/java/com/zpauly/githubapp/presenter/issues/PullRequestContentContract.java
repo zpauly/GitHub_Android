@@ -3,7 +3,8 @@ package com.zpauly.githubapp.presenter.issues;
 import com.zpauly.githubapp.base.BasePresenter;
 import com.zpauly.githubapp.base.BaseView;
 import com.zpauly.githubapp.entity.response.CommentBean;
-import com.zpauly.githubapp.entity.response.repos.CommitBean;
+import com.zpauly.githubapp.entity.response.repos.FileBean;
+import com.zpauly.githubapp.entity.response.repos.SingleCommitBean;
 
 import java.util.List;
 
@@ -16,6 +17,8 @@ public class PullRequestContentContract {
         void getComments();
 
         void getCommits();
+
+        void getFiles();
 
         void setPageId(int pageId);
     }
@@ -31,7 +34,13 @@ public class PullRequestContentContract {
 
         void getCommitsFail();
 
-        void gettingCommits(List<CommitBean> commitBeen);
+        void gettingCommits(List<SingleCommitBean> commitBeen);
+
+        void getFilesSuccess();
+
+        void getFilsFail();
+
+        void gettingFiles(List<FileBean> fileBeen);
 
         String getOwner();
 

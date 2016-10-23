@@ -137,6 +137,7 @@ public class CommitContentActivity extends ToolbarActivity implements CommitCont
         mPatchAdapter = new PatchRecyclerViewAdapter(this);
         mPatchRV.setLayoutManager(new LinearLayoutManager(this));
         mPatchRV.setAdapter(mPatchAdapter);
+        mPatchAdapter.hideLoadingView();
     }
 
     @Override

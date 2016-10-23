@@ -6,33 +6,29 @@
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/ABLayout"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:layout_scrollFlags="scroll|enterAlways|snap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <include
             layout="@layout/toolbar" />
 
-    </android.support.design.widget.AppBarLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.zpauly.githubapp.ui.RefreshView
-            android:id="@+id/RefreshView"
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tablayout"
+            app:tabMode="scrollable"
             android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"/>
 
-        <FrameLayout
-            android:id="@+id/toolbar_layout_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+    </android.support.design.widget.AppBarLayout>
 
-    </LinearLayout>
-
-
+    <FrameLayout
+        android:id="@+id/toolbar_layout_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>

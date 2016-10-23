@@ -4,7 +4,8 @@ import android.content.Context;
 
 import com.zpauly.githubapp.base.NetPresenter;
 import com.zpauly.githubapp.entity.response.CommentBean;
-import com.zpauly.githubapp.entity.response.repos.CommitBean;
+import com.zpauly.githubapp.entity.response.repos.FileBean;
+import com.zpauly.githubapp.entity.response.repos.SingleCommitBean;
 import com.zpauly.githubapp.network.pullRequests.PullRequestsMethod;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import rx.Subscriber;
  * Created by zpauly on 2016/10/22.
  */
 
-public class PullRequestPresenter extends NetPresenter implements PullRequestContentContract.Presenter {
+public class PullRequestContentPresenter extends NetPresenter implements PullRequestContentContract.Presenter {
     private final String TAG = getClass().getName();
 
     private Context mContext;
@@ -27,11 +28,12 @@ public class PullRequestPresenter extends NetPresenter implements PullRequestCon
     private PullRequestsMethod pullRequestsMethod;
 
     private Subscriber<List<CommentBean>> commentsSubscriber;
-    private Subscriber<List<CommitBean>> commitsSubscriber;
+    private Subscriber<List<SingleCommitBean>> commitsSubscriber;
+    private Subscriber<List<FileBean>> filesSubscriber;
 
     private int pageId = 1;
 
-    public PullRequestPresenter(Context context, PullRequestContentContract.View view) {
+    public PullRequestContentPresenter(Context context, PullRequestContentContract.View view) {
         this.mContext = context;
         mPullRequestContentView = view;
         mPullRequestContentView.setPresenter(this);
@@ -66,7 +68,7 @@ public class PullRequestPresenter extends NetPresenter implements PullRequestCon
 
     @Override
     public void getCommits() {
-        commitsSubscriber = new Subscriber<List<CommitBean>>() {
+        commitsSubscriber = new Subscriber<List<SingleCommitBean>>() {
             @Override
             public void onCompleted() {
                 mPullRequestContentView.getCommitsSuccess();
@@ -79,7 +81,7 @@ public class PullRequestPresenter extends NetPresenter implements PullRequestCon
             }
 
             @Override
-            public void onNext(List<CommitBean> commitBeen) {
+            public void onNext(List<SingleCommitBean> commitBeen) {
                 mPullRequestContentView.gettingCommits(commitBeen);
             }
         };
@@ -88,6 +90,30 @@ public class PullRequestPresenter extends NetPresenter implements PullRequestCon
                 mPullRequestContentView.getRepo(),
                 mPullRequestContentView.getNumber(),
                 pageId++);
+    }
+
+    @Override
+    public void getFiles() {
+        filesSubscriber = new Subscriber<List<FileBean>>() {
+            @Override
+            public void onCompleted() {
+                mPullRequestContentView.getFilesSuccess();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                mPullRequestContentView.getFilsFail();
+            }
+
+            @Override
+            public void onNext(List<FileBean> fileBeen) {
+                mPullRequestContentView.gettingFiles(fileBeen);
+            }
+        };
+        pullRequestsMethod.getAPullFiles(filesSubscriber, auth,
+                mPullRequestContentView.getOwner(), mPullRequestContentView.getRepo(),
+                mPullRequestContentView.getNumber(), pageId++);
     }
 
     @Override
@@ -103,6 +129,6 @@ public class PullRequestPresenter extends NetPresenter implements PullRequestCon
 
     @Override
     public void stop() {
-        unsubscribe(commentsSubscriber, commitsSubscriber);
+        unsubscribe(commentsSubscriber, commitsSubscriber, filesSubscriber);
     }
 }

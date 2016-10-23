@@ -19,4 +19,7 @@
     <color name="commitColor">#f8f8ff</color>
     <color name="commitDeletionColor">#ffe4e4</color>
     <color name="commitAdditionColor">#e2fde3</color>
+    
+    <color name="open_state_color">#6FC44C</color>
+    <color name="merge_state_color">#6E5692</color>
 </resources>

@@ -104,6 +104,7 @@
     <string name="additions">Additions</string>
     <string name="deletions">Deletions</string>
     <string name="changes">Changes</string>
+    <string name="conversations">Conversations</string>
 
     <string name="no_due_date">No due date</string>
 
