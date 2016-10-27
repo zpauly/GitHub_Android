@@ -29,7 +29,6 @@ public abstract class BaseFragment extends Fragment {
     protected View mView;
     protected Map<String, ViewManager> viewManagerMap = new HashMap<>();
 
-    protected UserModel userInfo;
     protected String username;
 
     private Context context;
@@ -38,7 +37,6 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = setContentView(inflater, container);
-        userInfo = UserDao.queryUser();
         if (getArguments() != null) {
             username = getArguments().getString(OthersActivity.USERNAME, null);
         }

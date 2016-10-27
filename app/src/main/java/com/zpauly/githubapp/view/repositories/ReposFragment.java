@@ -12,10 +12,14 @@ import com.zpauly.githubapp.adapter.ReposRecyclerViewAdapter;
 import com.zpauly.githubapp.base.BaseFragment;
 import com.zpauly.githubapp.db.ReposDao;
 import com.zpauly.githubapp.db.ReposModel;
-import com.zpauly.githubapp.ui.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by root on 16-7-18.
@@ -56,27 +60,49 @@ public class ReposFragment extends BaseFragment {
     }
 
     private void loadData() {
-        List<ReposModel> list = new ArrayList<>();
-        switch (fragmentTag) {
-            case ALL:
-                list = ReposDao.queryRepos();
-                break;
-            case PUBLIC:
-                list = ReposDao.queryRepos("privatex", String.valueOf(0));
-                break;
-            case PRIVATE:
-                list = ReposDao.queryRepos("privatex", String.valueOf(1));
-                break;
-            case SOURCE:
-                list = ReposDao.queryRepos("fork", String.valueOf(0));
-                break;
-            case FORK:
-                list = ReposDao.queryRepos("fork", String.valueOf(1));
-                break;
-            default:
-                break;
-        }
-        mReposRVAdapter.addAllData(list);
+        Observable.create(new Observable.OnSubscribe<List<ReposModel>>() {
+            @Override
+            public void call(Subscriber<? super List<ReposModel>> subscriber) {
+                List<ReposModel> list = new ArrayList<>();
+                switch (fragmentTag) {
+                    case ALL:
+                        list = ReposDao.queryRepos();
+                        break;
+                    case PUBLIC:
+                        list = ReposDao.queryRepos("privatex", String.valueOf(0));
+                        break;
+                    case PRIVATE:
+                        list = ReposDao.queryRepos("privatex", String.valueOf(1));
+                        break;
+                    case SOURCE:
+                        list = ReposDao.queryRepos("fork", String.valueOf(0));
+                        break;
+                    case FORK:
+                        list = ReposDao.queryRepos("fork", String.valueOf(1));
+                        break;
+                    default:
+                        break;
+                }
+                subscriber.onNext(list);
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<List<ReposModel>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<ReposModel> reposModels) {
+                        mReposRVAdapter.addAllData(reposModels);
+                    }
+                });
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 import com.zpauly.githubapp.entity.response.UserBean;
@@ -17,6 +18,7 @@ import com.zpauly.githubapp.presenter.profile.ProfileContract;
 import com.zpauly.githubapp.presenter.profile.ProfilePresenter;
 import com.zpauly.githubapp.ui.RefreshView;
 import com.zpauly.githubapp.utils.ImageUtil;
+import com.zpauly.githubapp.utils.SPUtil;
 import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.ToolbarActivity;
 import com.zpauly.githubapp.view.events.EventsActivity;
@@ -149,7 +151,8 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
         if (username != null) {
             setToolbarTitle(username);
         } else {
-            setToolbarTitle(userInfo.getLogin());
+            setToolbarTitle(SPUtil.getString(this,
+                    Constants.USER_INFO, Constants.USER_USERNAME, null));
         }
         setOnToolbarNavClickedListener(new View.OnClickListener() {
             @Override

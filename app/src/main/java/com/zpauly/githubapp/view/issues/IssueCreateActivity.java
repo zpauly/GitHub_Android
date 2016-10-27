@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.request.IssueRequestBean;
 import com.zpauly.githubapp.entity.response.AssigneeBean;
@@ -21,6 +22,7 @@ import com.zpauly.githubapp.presenter.issues.IssueCreateContract;
 import com.zpauly.githubapp.presenter.issues.IssueCreatePresenter;
 import com.zpauly.githubapp.ui.FloatingActionButton;
 import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.utils.SPUtil;
 import com.zpauly.githubapp.view.ToolbarActivity;
 
 import java.util.ArrayList;
@@ -313,7 +315,8 @@ public class IssueCreateActivity extends ToolbarActivity implements IssueCreateC
                 if (mBodyET.getText() != null) {
                     body = mBodyET.getText().toString();
                 }
-                createdIssueRequestBean.setAssignee(userInfo.getLogin());
+                createdIssueRequestBean.setAssignee(SPUtil.getString(IssueCreateActivity.this,
+                        Constants.USER_INFO, Constants.USER_USERNAME, null));
                 createdIssueRequestBean.setTitle(title);
                 createdIssueRequestBean.setBody(body);
                 mUploadingDialog.show();
@@ -477,7 +480,8 @@ public class IssueCreateActivity extends ToolbarActivity implements IssueCreateC
 
     @Override
     public String getUsername() {
-        return userInfo.getLogin();
+        return SPUtil.getString(IssueCreateActivity.this,
+                Constants.USER_INFO, Constants.USER_USERNAME, null);
     }
 
     @Override

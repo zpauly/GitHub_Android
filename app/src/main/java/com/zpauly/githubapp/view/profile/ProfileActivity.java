@@ -112,27 +112,34 @@ public class ProfileActivity extends ToolbarActivity implements ProfileContract.
 
         setUserInfo();
 
-        setupSwpieRefreshLayout();
+        if (userInfo != null) {
+            mRefreshView.setVisibility(View.GONE);
+            mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+            mSwipeRefreshLayout.setEnabled(false);
+            setClickListener();
+        } else {
+            setupSwpieRefreshLayout();
 
-        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
-            @Override
-            public void beforeRefreshing() {
-                loadUserInfo();
-            }
+            mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
+                @Override
+                public void beforeRefreshing() {
+                    loadUserInfo();
+                }
 
-            @Override
-            public void onRefreshSuccess() {
-                mRefreshView.setVisibility(View.GONE);
-                mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-            }
+                @Override
+                public void onRefreshSuccess() {
+                    mRefreshView.setVisibility(View.GONE);
+                    mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+                }
 
-            @Override
-            public void onRefreshFail() {
-                mRefreshView.setVisibility(View.VISIBLE);
-                mSwipeRefreshLayout.setVisibility(View.GONE);
-            }
-        });
-        mRefreshView.startRefresh();
+                @Override
+                public void onRefreshFail() {
+                    mRefreshView.setVisibility(View.VISIBLE);
+                    mSwipeRefreshLayout.setVisibility(View.GONE);
+                }
+            });
+            mRefreshView.startRefresh();
+        }
     }
 
     @Override
