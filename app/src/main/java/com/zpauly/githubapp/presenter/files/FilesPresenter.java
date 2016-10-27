@@ -4,19 +4,13 @@ import android.content.Context;
 import android.util.Log;
 
 import com.zpauly.githubapp.base.NetPresenter;
-import com.zpauly.githubapp.db.FileDirDao;
-import com.zpauly.githubapp.db.FileDirModel;
 import com.zpauly.githubapp.entity.response.repos.RepositoryContentBean;
 import com.zpauly.githubapp.network.gitdata.GitDataMethod;
 import com.zpauly.githubapp.network.repositories.RepositoriesMethod;
 
 import java.util.List;
 
-import rx.Observable;
-import rx.Observer;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by zpauly on 16-8-1.
@@ -31,7 +25,6 @@ public class FilesPresenter extends NetPresenter implements FilesContract.Presen
 
     private Subscriber<List<RepositoryContentBean>> contentSubscriber;
     private Subscriber<String> fileSubscriber;
-    private Observer<List<FileDirModel>> observer;
 
     private String auth;
     private RepositoriesMethod method;
@@ -51,7 +44,6 @@ public class FilesPresenter extends NetPresenter implements FilesContract.Presen
 
     @Override
     public void stop() {
-        FileDirDao.delete();
         unsubscribe(contentSubscriber, fileSubscriber);
     }
 
@@ -76,36 +68,6 @@ public class FilesPresenter extends NetPresenter implements FilesContract.Presen
         };
         Log.i(TAG, auth);
         method.getRepositoryContent(contentSubscriber, auth, null, owner, repo, path, mFilesView.getRef());
-    }
-
-    @Override
-    public void getContentFromCache(final String path) {
-        observer = new Observer<List<FileDirModel>>() {
-            @Override
-            public void onCompleted() {
-                mFilesView.getContentSuccess();
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                e.printStackTrace();
-                mFilesView.getContentFail();
-            }
-
-            @Override
-            public void onNext(List<FileDirModel> fileDirModels) {
-                mFilesView.gettingContent(fileDirModels);
-            }
-        };
-        Observable.create(new Observable.OnSubscribe<List<FileDirModel>>() {
-            @Override
-            public void call(Subscriber<? super List<FileDirModel>> subscriber) {
-                subscriber.onNext(FileDirDao.query("parentPath", path));
-                subscriber.onCompleted();
-            }
-        }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
     }
 
     @Override

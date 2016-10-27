@@ -7,18 +7,15 @@ import android.view.ViewGroup;
 
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.base.BaseAdapter;
-import com.zpauly.githubapp.db.FileDirModel;
+import com.zpauly.githubapp.entity.response.repos.RepositoryContentBean;
 import com.zpauly.githubapp.listener.OnDirItemClickListener;
 import com.zpauly.githubapp.view.viewholder.FileDirViewHolder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by root on 16-8-1.
  */
 
-public class FileDirRecyclerViewAdapter extends BaseAdapter<FileDirModel, FileDirViewHolder> {
+public class FileDirRecyclerViewAdapter extends BaseAdapter<RepositoryContentBean, FileDirViewHolder> {
     private final String TAG = getClass().getName();
 
     private OnDirItemClickListener mOnDirItemClickListener;
@@ -40,7 +37,7 @@ public class FileDirRecyclerViewAdapter extends BaseAdapter<FileDirModel, FileDi
 
     @Override
     public void onBindViewHolder(FileDirViewHolder holder, int position) {
-        final FileDirModel data = getData().get(position);
+        final RepositoryContentBean data = getData().get(position);
         String[] strs = data.getPath().split("/");
         holder.mFileNameTV.setText(strs[strs.length - 1]);
         if (data.getType().equals("dir")) {

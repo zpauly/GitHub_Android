@@ -11,7 +11,6 @@ import android.view.View;
 import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.base.BaseFragment;
-import com.zpauly.githubapp.db.UserDao;
 import com.zpauly.githubapp.listener.OnNavHeaderAvatarClickListener;
 import com.zpauly.githubapp.listener.OnNavItemClickListener;
 import com.zpauly.githubapp.utils.SPUtil;
@@ -175,7 +174,6 @@ public class HomeActivity extends LeftDrawerActivity {
     private void exit() {
         SPUtil.clearAllField(this, Constants.USER_INFO);
         SPUtil.clearAllField(this, Constants.LOCAL_CONFIGURATION);
-        UserDao.deleteUser();
         Intent intent = new Intent();
         intent.setClass(this, LoginActivity.class);
         startActivity(intent);

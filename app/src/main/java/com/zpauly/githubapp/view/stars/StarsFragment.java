@@ -4,7 +4,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,8 +13,6 @@ import android.view.ViewGroup;
 
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.ReposRecyclerViewAdapter;
-import com.zpauly.githubapp.db.ReposDao;
-import com.zpauly.githubapp.db.ReposModel;
 import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.listener.OnMenuItemSelectedListener;
 import com.zpauly.githubapp.network.activity.ActivityService;
@@ -45,7 +42,7 @@ public class StarsFragment extends ToolbarMenuFragment implements StarContract.V
 
     private ReposRecyclerViewAdapter mAdapter;
 
-    private List<ReposModel> list = new ArrayList<>();
+    private List<RepositoriesBean> list = new ArrayList<>();
 
     private String sort = ActivityService.SORT_CREATED;
     private String direction = ActivityService.DIRECTION_DESC;
@@ -81,34 +78,12 @@ public class StarsFragment extends ToolbarMenuFragment implements StarContract.V
         }, new RefreshViewManager(mRefreshView, mStarredReposSRLayout) {
             @Override
             public void load() {
-                ReposDao.deleteRepos();
                 loadStarredRepositories();
             }
         });
 
         loadMoreInSwipeRefreshLayoutMoreManager = getViewManager(LoadMoreInSwipeRefreshLayoutMoreManager.class);
         refreshViewManager = getViewManager(RefreshViewManager.class);
-
-//        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
-//            @Override
-//            public void beforeRefreshing() {
-//                ReposDao.deleteRepos();
-//                loadStarredRepositories();
-//            }
-//
-//            @Override
-//            public void onRefreshSuccess() {
-//                mRefreshView.setVisibility(View.GONE);
-//                mStarredReposSRLayout.setVisibility(View.VISIBLE);
-//            }
-//
-//            @Override
-//            public void onRefreshFail() {
-//                mRefreshView.setVisibility(View.VISIBLE);
-//                mStarredReposSRLayout.setVisibility(View.GONE);
-//            }
-//        });
-//        mRefreshView.startRefresh();
     }
 
     private void setupSwipeRefreshLayout() {
@@ -159,7 +134,6 @@ public class StarsFragment extends ToolbarMenuFragment implements StarContract.V
     }
 
     private void setSwipeRefreshLayoutRefreshing() {
-        ReposDao.deleteRepos();
         StarPresenter presenter = (StarPresenter) mPresenter;
         presenter.setPageId(1);
         loadMoreInSwipeRefreshLayoutMoreManager.setSwipeRefreshLayoutRefreshing(mAdapter);
@@ -169,24 +143,6 @@ public class StarsFragment extends ToolbarMenuFragment implements StarContract.V
         mAdapter = new ReposRecyclerViewAdapter(getContext());
         mStarredReposRV.setLayoutManager(new LinearLayoutManager(getContext()));
         mStarredReposRV.setAdapter(mAdapter);
-
-//        final LinearLayoutManager manager = (LinearLayoutManager) mStarredReposRV.getLayoutManager();
-//        mStarredReposRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//                int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
-//                int firstItemPosition = manager.findFirstCompletelyVisibleItemPosition();
-//                if (lastItemPosition == mAdapter.getItemCount() - 1
-//                        && firstItemPosition != mAdapter.getItemCount() - 1
-//                        && mAdapter.isHasMoreData()) {
-//                    if (!mStarredReposSRLayout.isRefreshing()) {
-//                        mAdapter.setHasLoading(true);
-//                        loadStarredRepositories();
-//                    }
-//                }
-//            }
-//        });
     }
 
     private void loadStarredRepositories() {
@@ -205,13 +161,11 @@ public class StarsFragment extends ToolbarMenuFragment implements StarContract.V
 
     @Override
     public void loading(List<RepositoriesBean> starredRepositories) {
-        for (RepositoriesBean repo : starredRepositories) {
-            ReposDao.insertRepo(repo);
-        }
-        Log.i(TAG, String.valueOf(starredRepositories.size()));
         loadMoreInSwipeRefreshLayoutMoreManager.hasNoMoreData(starredRepositories, mAdapter);
-        list.clear();
-        list.addAll(ReposDao.queryRepos());
+        if (mStarredReposSRLayout.isRefreshing()) {
+            list.clear();
+        }
+        list.addAll(starredRepositories);
     }
 
     @Override
@@ -222,9 +176,6 @@ public class StarsFragment extends ToolbarMenuFragment implements StarContract.V
 
     @Override
     public void loadSuccess() {
-        if (mStarredReposSRLayout.isRefreshing()) {
-            mAdapter.swapAllData(new ArrayList<ReposModel>());
-        }
         mAdapter.swapAllData(list);
         mStarredReposSRLayout.setRefreshing(false);
         if (!mRefreshView.isRefreshSuccess()) {

@@ -12,7 +12,6 @@ import android.view.View;
 
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.ViewPagerAdapter;
-import com.zpauly.githubapp.db.ReposDao;
 import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.presenter.repos.ReposContract;
 import com.zpauly.githubapp.presenter.repos.ReposPresenter;
@@ -29,6 +28,8 @@ import java.util.List;
 public class ReposActivity extends ToolbarActivity implements ReposContract.View {
     private final String TAG = getClass().getName();
 
+    public static final String REPOS = "REPOS";
+
     private ReposContract.Presenter mPresenter;
 
     private AppBarLayout mReposABLayout;
@@ -41,6 +42,8 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
     private ViewPagerAdapter adapter;
 
     private List<ReposFragment> mFragmentList = new ArrayList<>();
+
+    private ArrayList<RepositoriesBean> repoList = new ArrayList<>();
 
     @Override
     protected void onStop() {
@@ -117,6 +120,7 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
     private Fragment createFragment(int tag) {
         Bundle bundle = new Bundle();
         bundle.putInt(ReposFragment.FRAGMENT_TAG, tag);
+        bundle.putParcelableArrayList(REPOS, repoList);
         ReposFragment fragment = new ReposFragment();
         fragment.setArguments(bundle);
         mFragmentList.add(fragment);
@@ -145,7 +149,6 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
     }
 
     private void loadOwnerRepos() {
-        ReposDao.deleteRepos();
         mPresenter.loadUserRepositories();
     }
 
@@ -161,9 +164,7 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
 
     @Override
     public void loadingRepos(List<RepositoriesBean> list) {
-        for (RepositoriesBean repo : list) {
-            ReposDao.insertRepo(repo);
-        }
+        repoList.addAll(list);
     }
 
     @Override

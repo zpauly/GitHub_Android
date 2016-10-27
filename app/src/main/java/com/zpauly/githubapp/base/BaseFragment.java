@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.zpauly.githubapp.db.UserDao;
-import com.zpauly.githubapp.db.UserModel;
 import com.zpauly.githubapp.utils.viewmanager.LoadMoreInSwipeRefreshLayoutMoreManager;
 import com.zpauly.githubapp.utils.viewmanager.LoadMoreManager;
 import com.zpauly.githubapp.utils.viewmanager.RefreshViewManager;

@@ -7,9 +7,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
-import android.text.Spanned;
-import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
@@ -20,8 +17,6 @@ import com.protectsoft.webviewcode.Settings;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.FileDirRecyclerViewAdapter;
 import com.zpauly.githubapp.adapter.PathRecyclerViewAdapter;
-import com.zpauly.githubapp.db.FileDirDao;
-import com.zpauly.githubapp.db.FileDirModel;
 import com.zpauly.githubapp.entity.response.repos.RepositoryContentBean;
 import com.zpauly.githubapp.listener.OnDirItemClickListener;
 import com.zpauly.githubapp.presenter.files.FilesContract;
@@ -62,7 +57,6 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
     private FileDirRecyclerViewAdapter mDirAdapter;
     private PathRecyclerViewAdapter mPathAdapter;
 
-    private List<FileDirModel> list;
     private String fileContent;
     private boolean isFileLoading = false;
 
@@ -73,6 +67,8 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
     private LinearLayout mContentLayout;
     private NestedScrollView mFileLayout;
     private AppCompatTextView mFileTV;
+
+    private List<RepositoryContentBean> contentList = new ArrayList<>();
 
     @Override
     protected void onStop() {
@@ -101,7 +97,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         setupSwipeRefreshLayout();
 
         mSRLayout.setRefreshing(true);
-        getContents();
+        loadContents();
     }
 
 
@@ -146,7 +142,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
             @Override
             public void onRefresh() {
                 if (isFileLoading) {
-                    getContents();
+                    loadContents();
                 } else {
                     loadFile();
                 }
@@ -175,7 +171,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
                 mContentLayout.setVisibility(View.GONE);
                 path = p;
                 mSRLayout.setRefreshing(true);
-                getContents();
+                loadContents();
             }
         });
         mDirAdapter.setOnItemClickListener(new OnDirItemClickListener() {
@@ -193,7 +189,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
                     mSRLayout.setRefreshing(true);
                     if (type.equals("dir")) {
                         isFileLoading = false;
-                        getContents();
+                        loadContents();
                     } else if (type.equals("file")) {
                         isFileLoading = true;
                         loadFile();
@@ -226,24 +222,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
     }
 
     private void loadContents() {
-        if (list == null || list.size() == 0) {
-            mPresenter.loadContent(owner, repo, path);
-        } else {
-            String[] strs = list.get(0).getPath().split("/");
-            List<String> paths = new ArrayList<>();
-            for (int i = 0; i < strs.length - 1; i ++) {
-                paths.add(strs[i]);
-            }
-            mContentRV.setVisibility(View.VISIBLE);
-            mPathAdapter.swapAllData(paths);
-            mDirAdapter.swapAllData(list);
-            mSRLayout.setRefreshing(false);
-            mSRLayout.setEnabled(false);
-        }
-    }
-
-    private void getContents() {
-        mPresenter.getContentFromCache("root system/" + path);
+        mPresenter.loadContent(owner, repo, path);
     }
 
     private void loadFile() {
@@ -257,7 +236,16 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
 
     @Override
     public void loadContentSuccess() {
-        getContents();
+        String[] strs = contentList.get(0).getPath().split("/");
+            List<String> paths = new ArrayList<>();
+            for (int i = 0; i < strs.length - 1; i ++) {
+                paths.add(strs[i]);
+            }
+            mContentRV.setVisibility(View.VISIBLE);
+            mPathAdapter.swapAllData(paths);
+            mDirAdapter.swapAllData(contentList);
+            mSRLayout.setRefreshing(false);
+            mSRLayout.setEnabled(false);
     }
 
     @Override
@@ -267,24 +255,8 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
 
     @Override
     public void loadingContent(List<RepositoryContentBean> beanList) {
-        for (RepositoryContentBean bean : beanList) {
-            FileDirDao.insert(bean, path);
-        }
-    }
-
-    @Override
-    public void getContentSuccess() {
-        loadContents();
-    }
-
-    @Override
-    public void getContentFail() {
-        mSRLayout.setRefreshing(false);
-    }
-
-    @Override
-    public void gettingContent(List<FileDirModel> list) {
-        this.list = arrangeList(list);
+        contentList.clear();
+        contentList.addAll(arrangeList(beanList));
     }
 
     @Override
@@ -315,11 +287,11 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         return branch;
     }
 
-    private List<FileDirModel> arrangeList(List<FileDirModel> list) {
-        List<FileDirModel> dirs = new ArrayList<>();
-        List<FileDirModel> files = new ArrayList<>();
-        List<FileDirModel> symlinks = new ArrayList<>();
-        for (FileDirModel model : list) {
+    private List<RepositoryContentBean> arrangeList(List<RepositoryContentBean> list) {
+        List<RepositoryContentBean> dirs = new ArrayList<>();
+        List<RepositoryContentBean> files = new ArrayList<>();
+        List<RepositoryContentBean> symlinks = new ArrayList<>();
+        for (RepositoryContentBean model : list) {
             if (model.getType().equals("dir")) {
                 dirs.add(model);
             } else if (model.getType().equals("file")) {
@@ -328,7 +300,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
                 symlinks.add(model);
             }
         }
-        List<FileDirModel> newList = new ArrayList<>();
+        List<RepositoryContentBean> newList = new ArrayList<>();
         newList.addAll(dirs);
         newList.addAll(files);
         newList.addAll(symlinks);

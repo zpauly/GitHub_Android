@@ -2,7 +2,6 @@ package com.zpauly.githubapp.presenter.files;
 
 import com.zpauly.githubapp.base.BasePresenter;
 import com.zpauly.githubapp.base.BaseView;
-import com.zpauly.githubapp.db.FileDirModel;
 import com.zpauly.githubapp.entity.response.repos.RepositoryContentBean;
 
 import java.util.List;
@@ -15,8 +14,6 @@ public class FilesContract {
     public interface Presenter extends BasePresenter {
         void loadContent(String owner, String repo, String path);
 
-        void getContentFromCache(String path);
-
         void loadFile(String owner, String repo, String path, String sha);
     }
 
@@ -26,12 +23,6 @@ public class FilesContract {
         void loadContentFail();
 
         void loadingContent(List<RepositoryContentBean> beanList);
-
-        void getContentSuccess();
-
-        void getContentFail();
-
-        void gettingContent(List<FileDirModel> list);
 
         void loadFileSuccess();
 

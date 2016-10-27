@@ -1,20 +1,15 @@
 package com.zpauly.githubapp.base;
 
-import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.Fade;
 import android.transition.Slide;
-import android.transition.Transition;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 
-import com.zpauly.githubapp.db.UserDao;
-import com.zpauly.githubapp.db.UserModel;
 import com.zpauly.githubapp.utils.viewmanager.LoadMoreInSwipeRefreshLayoutMoreManager;
 import com.zpauly.githubapp.utils.viewmanager.LoadMoreManager;
 import com.zpauly.githubapp.utils.viewmanager.RefreshViewManager;
@@ -30,7 +25,6 @@ import java.util.Map;
 public abstract class BaseActivity extends AppCompatActivity {
     private final String TAG = getClass().getName();
 
-    protected UserModel userInfo;
     protected String username;
 
     protected View mView;
@@ -45,7 +39,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        userInfo = UserDao.queryUser();
         username = getIntent().getStringExtra(OthersActivity.USERNAME);
 
         initContent();

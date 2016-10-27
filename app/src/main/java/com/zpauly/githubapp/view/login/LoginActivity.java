@@ -13,7 +13,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.base.BaseActivity;
-import com.zpauly.githubapp.db.UserDao;
 import com.zpauly.githubapp.entity.response.AppAuthorizationBean;
 import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 import com.zpauly.githubapp.presenter.login.LoginContract;
@@ -211,8 +210,9 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     public void loadUserInfo(AuthenticatedUserBean user) {
-        UserDao.deleteUser();
-        UserDao.insertUser(user);
+        SPUtil.putString(this, Constants.USER_INFO, Constants.USER_EMAIL, user.getEmail());
+        SPUtil.putString(this, Constants.USER_INFO, Constants.USER_AVATAR, user.getAvatar_url());
+        SPUtil.putString(this, Constants.USER_INFO, Constants.USER_LOGIN, user.getLogin());
     }
 
     @Override

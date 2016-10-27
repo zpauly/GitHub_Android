@@ -1,5 +1,6 @@
 package com.zpauly.githubapp.base;
 
+import android.app.Application;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
@@ -9,12 +10,10 @@ import com.zpauly.githubapp.utils.LanguageUtil;
 import com.zpauly.githubapp.utils.RetrofitUtil;
 import com.zpauly.githubapp.utils.SPUtil;
 
-import org.litepal.LitePalApplication;
-
 /**
  * Created by zpauly on 16-6-10.
  */
-public class BaseApplication extends LitePalApplication {
+public class BaseApplication extends Application {
     private static BaseApplication instance;
 
     @Override

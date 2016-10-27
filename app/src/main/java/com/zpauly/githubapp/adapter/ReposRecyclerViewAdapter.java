@@ -1,27 +1,21 @@
 package com.zpauly.githubapp.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.zpauly.githubapp.R;
-import com.zpauly.githubapp.db.ReposModel;
-import com.zpauly.githubapp.presenter.repos.RepoContentPresenter;
+import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.repositories.RepoContentActivity;
 import com.zpauly.githubapp.view.viewholder.ReposViewHolder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by zpauly on 16-7-15.
  */
 
-public class ReposRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<ReposModel, ReposViewHolder> {
+public class ReposRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<RepositoriesBean, ReposViewHolder> {
     public ReposRecyclerViewAdapter(Context context) {
         super(context);
     }
@@ -34,7 +28,7 @@ public class ReposRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<ReposM
 
     @Override
     public void bindContentViewHolder(ReposViewHolder holder, int position) {
-        final ReposModel repo = getData().get(position);
+        final RepositoriesBean repo = getData().get(position);
         holder.mReposForksTV.setText(String.valueOf(repo.getForks_count()));
         holder.mReposStarsTV.setText(String.valueOf(repo.getStargazers_count()));
         holder.mReposTechLanguageTV.setText(repo.getLanguage());
@@ -44,7 +38,7 @@ public class ReposRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<ReposM
             @Override
             public void onClick(View v) {
                 RepoContentActivity.launchActivity(getContext(), repo.getFull_name(), repo.getName(),
-                        repo.getUrl(), repo.getLogin());
+                        repo.getUrl(), repo.getOwner().getLogin());
             }
         });
     }

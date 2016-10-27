@@ -39,8 +39,17 @@ public interface Constants {
     //user id
     String USER_ID = "USER_ID";
 
+    //user email
+    String USER_EMAIL = "USER_EMAIL";
+
+    //user_avatar
+    String USER_AVATAR = "USER_AVATAR";
+
     //user auth
     String USER_AUTH = "USER_AUTH";
+
+    //user login
+    String USER_LOGIN = "USER_LOGIN";
 
     /**
      * net

@@ -12,11 +12,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.R;
-import com.zpauly.githubapp.db.UserDao;
-import com.zpauly.githubapp.db.UserModel;
 import com.zpauly.githubapp.listener.OnNavHeaderAvatarClickListener;
 import com.zpauly.githubapp.listener.OnNavItemClickListener;
+import com.zpauly.githubapp.utils.SPUtil;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -25,8 +25,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public abstract class LeftDrawerActivity extends ToolbarActivity {
     private final String TAG = getClass().getName();
-
-    private UserModel userInfo;
 
     protected DrawerLayout mDrawerLayout;
     protected NavigationView mLeftNavigationView;
@@ -53,10 +51,6 @@ public abstract class LeftDrawerActivity extends ToolbarActivity {
         super.onCreate(savedInstanceState);
 
         initNavDrawer();
-    }
-
-    private void getUserInfo() {
-        userInfo = UserDao.queryUser();
     }
 
     private void initNavDrawer() {
@@ -108,17 +102,18 @@ public abstract class LeftDrawerActivity extends ToolbarActivity {
                 return false;
             }
         });
-        getUserInfo();
-        if (userInfo != null) {
-            Glide.with(this)
-                    .load(userInfo.getAvatar_url())
-                    .centerCrop()
-                    .crossFade()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(mDrawerAvatar);
-            mDrawerName.setText(userInfo.getName());
-            mDrawerEmail.setText(userInfo.getEmail());
-        }
+
+        String avatar = SPUtil.getString(this, Constants.USER_INFO, Constants.USER_AVATAR, null);
+        String email = SPUtil.getString(this, Constants.USER_INFO, Constants.USER_EMAIL, null);
+        String username = SPUtil.getString(this, Constants.USER_INFO, Constants.USER_LOGIN, null);
+        Glide.with(this)
+                .load(avatar)
+                .centerCrop()
+                .crossFade()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(mDrawerAvatar);
+        mDrawerName.setText(username);
+        mDrawerEmail.setText(email);
     }
 
     @Override

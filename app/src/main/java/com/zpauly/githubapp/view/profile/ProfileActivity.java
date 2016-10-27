@@ -3,21 +3,21 @@ package com.zpauly.githubapp.view.profile;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.R;
-import com.zpauly.githubapp.db.UserDao;
 import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.presenter.profile.ProfileContract;
 import com.zpauly.githubapp.presenter.profile.ProfilePresenter;
 import com.zpauly.githubapp.ui.RefreshView;
 import com.zpauly.githubapp.utils.ImageUtil;
+import com.zpauly.githubapp.utils.SPUtil;
 import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.ToolbarActivity;
 import com.zpauly.githubapp.view.events.EventsActivity;
@@ -66,6 +66,8 @@ public class ProfileActivity extends ToolbarActivity implements ProfileContract.
 
     private RefreshView mRefreshView;
 
+    private AuthenticatedUserBean userBean;
+
     @Override
     public void initViews() {
         setContent(R.layout.fragment_profile);
@@ -112,34 +114,27 @@ public class ProfileActivity extends ToolbarActivity implements ProfileContract.
 
         setUserInfo();
 
-        if (userInfo != null) {
-            mRefreshView.setVisibility(View.GONE);
-            mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-            mSwipeRefreshLayout.setEnabled(false);
-            setClickListener();
-        } else {
-            setupSwpieRefreshLayout();
+        setupSwpieRefreshLayout();
 
-            mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
-                @Override
-                public void beforeRefreshing() {
-                    loadUserInfo();
-                }
+        mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
+            @Override
+            public void beforeRefreshing() {
+                loadUserInfo();
+            }
 
-                @Override
-                public void onRefreshSuccess() {
-                    mRefreshView.setVisibility(View.GONE);
-                    mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-                }
+            @Override
+            public void onRefreshSuccess() {
+                mRefreshView.setVisibility(View.GONE);
+                mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+            }
 
-                @Override
-                public void onRefreshFail() {
-                    mRefreshView.setVisibility(View.VISIBLE);
-                    mSwipeRefreshLayout.setVisibility(View.GONE);
-                }
-            });
-            mRefreshView.startRefresh();
-        }
+            @Override
+            public void onRefreshFail() {
+                mRefreshView.setVisibility(View.VISIBLE);
+                mSwipeRefreshLayout.setVisibility(View.GONE);
+            }
+        });
+        mRefreshView.startRefresh();
     }
 
     @Override
@@ -161,36 +156,36 @@ public class ProfileActivity extends ToolbarActivity implements ProfileContract.
     }
 
     private void setUserInfo() {
-        if (userInfo == null)
+        if (userBean == null)
             return;
-        ImageUtil.loadAvatarImageFromUrl(this, userInfo.getAvatar_url(), mAvatarIV);
-        mFollowersTV.setText(String.valueOf(userInfo.getFollowers()));
-        mFollowingTV.setText(String.valueOf(userInfo.getFollowing()));
-        mLoginTV.setText(userInfo.getLogin());
-        mNameTV.setText(userInfo.getName());
-        mBioTV.setText(userInfo.getBio());
-        mLocationTV.setText(userInfo.getLocation());
-        mEmailTV.setText(userInfo.getEmail());
-        mCompanyTV.setText(userInfo.getCompany());
-        mBlogTV.setText(userInfo.getBlog());
-        mJoinTimeTV.setText(TextUtil.timeConverter(userInfo.getCreated_at()));
-        if (userInfo.getEmail() == null || userInfo.getEmail().equals("")) {
+        ImageUtil.loadAvatarImageFromUrl(this, userBean.getAvatar_url(), mAvatarIV);
+        mFollowersTV.setText(String.valueOf(userBean.getFollowers()));
+        mFollowingTV.setText(String.valueOf(userBean.getFollowing()));
+        mLoginTV.setText(userBean.getLogin());
+        mNameTV.setText(userBean.getName());
+        mBioTV.setText(userBean.getBio());
+        mLocationTV.setText(userBean.getLocation());
+        mEmailTV.setText(userBean.getEmail());
+        mCompanyTV.setText(userBean.getCompany());
+        mBlogTV.setText(userBean.getBlog());
+        mJoinTimeTV.setText(TextUtil.timeConverter(userBean.getCreated_at()));
+        if (userBean.getEmail() == null || userBean.getEmail().equals("")) {
             mEmailLayout.setVisibility(View.GONE);
             mEmailDividerIV.setVisibility(View.GONE);
         }
-        if (userInfo.getLocation() == null || userInfo.getLocation().equals("")) {
+        if (userBean.getLocation() == null || userBean.getLocation().equals("")) {
             mLocationLayout.setVisibility(View.GONE);
             mLocationDividerIV.setVisibility(View.GONE);
         }
-        if (userInfo.getCreated_at() == null || userInfo.getCreated_at().equals("")) {
+        if (userBean.getCreated_at() == null || userBean.getCreated_at().equals("")) {
             mTimeLayout.setVisibility(View.GONE);
             mTimeDividerIV.setVisibility(View.GONE);
         }
-        if (userInfo.getCompany() == null || userInfo.getCompany().equals("")) {
+        if (userBean.getCompany() == null || userBean.getCompany().equals("")) {
             mCompanyLayout.setVisibility(View.GONE);
             mCompanyDividerIV.setVisibility(View.GONE);
         }
-        if (userInfo.getBlog() == null || userInfo.getBlog().equals("")) {
+        if (userBean.getBlog() == null || userBean.getBlog().equals("")) {
             mBlogLayout.setVisibility(View.GONE);
             mBlogDividerTV.setVisibility(View.GONE);
         }
@@ -259,6 +254,7 @@ public class ProfileActivity extends ToolbarActivity implements ProfileContract.
     @Override
     public void loadInfoSuccess() {
         mSwipeRefreshLayout.setRefreshing(false);
+        setUserInfo();
         setClickListener();
         if (!mRefreshView.isRefreshSuccess()) {
             mRefreshView.refreshSuccess();
@@ -273,14 +269,7 @@ public class ProfileActivity extends ToolbarActivity implements ProfileContract.
 
     @Override
     public void loadInfo(AuthenticatedUserBean user) {
-        UserDao.deleteUser();
-        UserDao.insertUser(user);
-        if (UserDao.queryUser() == null) {
-            Log.i(TAG, "data save fail");
-        } else {
-            userInfo = UserDao.queryUser();
-            setUserInfo();
-        }
+        userBean = user;
     }
 
     @Override
@@ -290,7 +279,7 @@ public class ProfileActivity extends ToolbarActivity implements ProfileContract.
 
     @Override
     public String getUsername() {
-        return userInfo.getLogin();
+        return SPUtil.getString(this, Constants.USER_INFO, Constants.USER_USERNAME, null);
     }
 
     @Override
