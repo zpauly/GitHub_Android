@@ -142,7 +142,6 @@ public class CommitContentActivity extends ToolbarActivity implements CommitCont
 
     @Override
     public void getCommitSuccess() {
-        Log.i(TAG, "success");
         mMessageTV.setText(singleCommitBean.getCommit().getMessage());
         mUsernameTV.setText(singleCommitBean.getCommit().getCommitter().getName());
         mTimeTV.setText(TextUtil.timeConverter(singleCommitBean.getCommit().getCommitter().getDate()));

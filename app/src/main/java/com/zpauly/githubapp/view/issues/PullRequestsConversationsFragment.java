@@ -117,10 +117,10 @@ public class PullRequestsConversationsFragment extends BaseFragment implements P
         mUsernameTV.setText(pullRequestBean.getUser().getLogin());
         if (pullRequestBean.getState().equals("open")) {
             mTimeTV.setText("opened at " + TextUtil.timeConverter(pullRequestBean.getCreated_at()));
-            mStateBTN.setBackgroundColor(getResources().getColor(R.color.open_state_color));
+            mStateBTN.setBackgroundColor(getResources().getColor(R.color.openStateColor));
         } else {
             mTimeTV.setText("closed at " + TextUtil.timeConverter(pullRequestBean.getClosed_at()));
-            mStateBTN.setBackgroundColor(getResources().getColor(R.color.merge_state_color));
+            mStateBTN.setBackgroundColor(getResources().getColor(R.color.mergeStateColor));
         }
         mBodyTV.setText(pullRequestBean.getBody());
     }

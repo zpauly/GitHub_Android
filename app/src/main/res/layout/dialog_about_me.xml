@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+<LinearLayout
+    android:orientation="vertical"
+    android:clickable="true"
+    android:background="?attr/selectableItemBackground"
+    android:padding="@dimen/components_padding"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:text="@string/about_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:text="@string/contract_me_details"
+        android:layout_marginTop="@dimen/components_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/my_email_TV"
+        android:autoLink="email"
+        android:text="@string/my_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/my_github_TV"
+        android:autoLink="web"
+        android:text="@string/my_github"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

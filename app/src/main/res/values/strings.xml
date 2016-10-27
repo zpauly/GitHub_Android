@@ -148,6 +148,39 @@
 
     <string name="more">More</string>
 
+    <string name="about">About</string>
+    <string name="contract_me">Contract Me</string>
+    <string name="open_source_components">Open Source Components</string>
+    
+    <string name="about_details">Created By Zhang Yu</string>
+    <string name="my_email">zpauly1996@gmail.com</string>
+    <string name="my_github">https://github.com/zpauly/GitHub_Android</string>
+
+    <string name="glide">bumptech/glide</string>
+    <string name="glide_link">https://github.com/bumptech/glide</string>
+    <string name="retrofit">square/retrofit</string>
+    <string name="retrofit_link">https://github.com/square/retrofit</string>
+    <string name="rxandroid">ReactiveX/RxAndroid</string>
+    <string name="rxandroid_link">https://github.com/ReactiveX/RxAndroid</string>
+    <string name="rxjava">ReactiveX/RxJava</string>
+    <string name="rxjava_link">https://github.com/ReactiveX/RxJava</string>
+    <string name="nineoldandroids">JakeWharton/NineOldAndroids</string>
+    <string name="nineoldandroids_link">https://github.com/JakeWharton/NineOldAndroids</string>
+    <string name="circleimageview">hdodenhof/CircleImageView</string>
+    <string name="circleimageview_link">https://github.com/hdodenhof/CircleImageView</string>
+    <string name="materialdialogs">afollestad/material-dialogs</string>
+    <string name="materialdialogs_link">https://github.com/afollestad/material-dialogs</string>
+    <string name="gifdrawable">android-gif-drawable</string>
+    <string name="gifdrawable_link">https://github.com/koral--/android-gif-drawable</string>
+    <string name="androidsvg">BigBadaboom/androidsvg</string>
+    <string name="androidsvg_link">https://github.com/BigBadaboom/androidsvg</string>
+    <string name="codeview">avraampiperidis/Codeview</string>
+    <string name="codeview_link">https://github.com/avraampiperidis/Codeview</string>
+    <string name="expandabletextview">Manabu-GT/ExpandableTextView</string>
+    <string name="expandabletextview_link">https://github.com/Manabu-GT/ExpandableTextView</string>
+
+    <string name="contract_me_details">If you have any issues or suggestions,welcome to contract me.Any kind of feedback is greatly appreciated.</string>
+
     <string name="exit">Sign out</string>
 
     <string name="double_click_to_exit">Click Again to Exit</string>

@@ -23,12 +23,13 @@ import com.zpauly.githubapp.view.gists.GistsFragment;
 import com.zpauly.githubapp.view.issues.IssuesOrPullRequestsFragment;
 import com.zpauly.githubapp.view.login.LoginActivity;
 import com.zpauly.githubapp.view.profile.ProfileActivity;
+import com.zpauly.githubapp.view.settings.SettingsActivity;
 import com.zpauly.githubapp.view.stars.StarsFragment;
 
 /**
  * Created by zpauly on 16-6-9.
  */
-public class HomeActivityLeft extends LeftDrawerActivity {
+public class HomeActivity extends LeftDrawerActivity {
     private final String TAG = getClass().getName();
 
     private long lastPressTime = System.currentTimeMillis();
@@ -82,7 +83,7 @@ public class HomeActivityLeft extends LeftDrawerActivity {
         setOnNavHeaderAvatarClickListener(new OnNavHeaderAvatarClickListener() {
             @Override
             public void onClick(View v) {
-                ProfileActivity.launchActivity(HomeActivityLeft.this);
+                ProfileActivity.launchActivity(HomeActivity.this);
 //                finish();
             }
         });
@@ -145,6 +146,7 @@ public class HomeActivityLeft extends LeftDrawerActivity {
                         }
                         break;
                     case R.id.navigation_settings:
+                        SettingsActivity.launchActivity(HomeActivity.this);
                         break;
                     case R.id.navigation_exit:
                         exit();
