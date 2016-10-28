@@ -19,6 +19,7 @@ import com.zpauly.githubapp.view.events.EventsActivity;
 import com.zpauly.githubapp.view.events.EventsFragment;
 import com.zpauly.githubapp.view.explore.ExploreFragment;
 import com.zpauly.githubapp.view.gists.GistsFragment;
+import com.zpauly.githubapp.view.issues.IssuesOrPullRequestsActivity;
 import com.zpauly.githubapp.view.issues.IssuesOrPullRequestsFragment;
 import com.zpauly.githubapp.view.login.LoginActivity;
 import com.zpauly.githubapp.view.profile.ProfileActivity;
@@ -56,19 +57,23 @@ public class HomeActivity extends LeftDrawerActivity {
 
         Bundle eventsBundle = new Bundle();
         eventsBundle.putInt(EventsActivity.EVENTS_ID, EventsActivity.RECEIVED_EVENTS);
-        fragments[0].setArguments(eventsBundle);
+        fragments[EVENTS].setArguments(eventsBundle);
 
         Bundle gistsBundle = new Bundle();
         gistsBundle.putInt(GistsFragment.GISTS_ID, GistsFragment.GISTS);
-        fragments[3].setArguments(gistsBundle);
+        fragments[GISTS].setArguments(gistsBundle);
 
         Bundle publicGistsBundle = new Bundle();
         publicGistsBundle.putInt(GistsFragment.GISTS_ID, GistsFragment.PUBLIC_GISTS);
-        fragments[4].setArguments(publicGistsBundle);
+        fragments[All_GISTS].setArguments(publicGistsBundle);
 
         Bundle starredGistsBundle = new Bundle();
         starredGistsBundle.putInt(GistsFragment.GISTS_ID, GistsFragment.STARRED_GISTS);
-        fragments[5].setArguments(starredGistsBundle);
+        fragments[STARRED_GISTS].setArguments(starredGistsBundle);
+
+        Bundle issuesBundle = new Bundle();
+        issuesBundle.putInt(IssuesOrPullRequestsActivity.DATA_TYPE, IssuesOrPullRequestsActivity.USER_ISSUES);
+        fragments[ISSUES].setArguments(issuesBundle);
 
         setListener();
         mFragmentManager = getSupportFragmentManager();

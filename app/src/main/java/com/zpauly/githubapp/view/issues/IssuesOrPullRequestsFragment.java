@@ -320,7 +320,7 @@ public class IssuesOrPullRequestsFragment extends ToolbarMenuFragment implements
     private void getAttrs() {
         Bundle bundle = getArguments();
         if (bundle != null) {
-            dataType = bundle.getInt(IssuesOrPullRequestsActivity.DATA_TYPE);
+            dataType = bundle.getInt(IssuesOrPullRequestsActivity.DATA_TYPE, IssuesOrPullRequestsActivity.USER_ISSUES);
             username = bundle.getString(IssuesOrPullRequestsActivity.USERNAME);
             repoName = bundle.getString(IssuesOrPullRequestsActivity.REPO_NAME);
             orgName = bundle.getString(IssuesOrPullRequestsActivity.ORG_NAME);
