@@ -24,6 +24,15 @@ public interface Constants {
     //languages value:simplified chinese
     int LANGUAGE_SIMPLIFIED_CHINESE = 1;
 
+    //day night mode key
+    String DAY_NIGHT_MODE = "DAY_NIGHT_MODE";
+
+    //day mode
+    int DAY_MODE = 0;
+
+    //night_mode
+    int NIGHT_MODE = 1;
+
     /**
      * local user information in sharedprefrences
      */

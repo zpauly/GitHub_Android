@@ -1,4 +1,9 @@
 <resources>
+    <style name="CardView" parent="CardView.Light"></style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColorPrimary">@color/abc_primary_text_material_dark</item>
+    </style>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="BaseTheme">
@@ -6,9 +11,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/bg</item>
     </style>
     
-    <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="BaseTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
     </style>

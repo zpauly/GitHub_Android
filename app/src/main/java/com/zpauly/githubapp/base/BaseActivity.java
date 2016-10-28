@@ -1,9 +1,11 @@
 package com.zpauly.githubapp.base;
 
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.transition.Fade;
 import android.transition.Slide;
 import android.util.Log;
@@ -35,6 +37,13 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        if (BaseApplication.getDayNightMode() == BaseApplication.DAY_MODE) {
+            Log.i(TAG, "day mode");
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        } else if (BaseApplication.getDayNightMode() == BaseApplication.NIGHT_MODE) {
+            Log.i(TAG, "night mode");
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);

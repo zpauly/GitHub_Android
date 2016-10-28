@@ -118,6 +118,6 @@ public abstract class LeftDrawerActivity extends ToolbarActivity {
 
     @Override
     public void initContent() {
-        setContentView(R.layout.left_drawer_layout);
+        setContentView(R.layout.activity_left_drawer);
     }
 }

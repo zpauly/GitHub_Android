@@ -1,8 +1,10 @@
 package com.zpauly.githubapp.base;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.DisplayMetrics;
 
 import com.zpauly.githubapp.Constants;
@@ -16,9 +18,28 @@ import com.zpauly.githubapp.utils.SPUtil;
 public class BaseApplication extends Application {
     private static BaseApplication instance;
 
+    public static final int DAY_MODE = 0;
+    public static final int NIGHT_MODE = 1;
+
+    private static int dayNightMode;
+
+    static {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
+    }
+
+    public static void setDayNightMode(int mode, Context context) {
+        dayNightMode = mode;
+        SPUtil.putInt(context, Constants.LOCAL_CONFIGURATION, Constants.DAY_NIGHT_MODE, mode);
+    }
+
+    public static int getDayNightMode() {
+        return dayNightMode;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
+        dayNightMode = SPUtil.getInt(this, Constants.LOCAL_CONFIGURATION, Constants.DAY_NIGHT_MODE, DAY_MODE);
 
         RetrofitUtil.setupContext(getApplicationContext());
 

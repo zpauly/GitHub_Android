@@ -15,7 +15,55 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:clickable="true"
+                    android:background="?attr/selectableItemBackground"
+                    style="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/colorPrimary"
+                    android:text="@string/settings"
+                    android:padding="@dimen/components_padding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <RelativeLayout
+                    android:padding="@dimen/components_padding"
+                    android:clickable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        style="@style/Base.TextAppearance.AppCompat.Subhead"
+                        android:layout_centerVertical="true"
+                        android:text="@string/night_theme"
+                        android:layout_alignParentLeft="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <android.support.v7.widget.AppCompatCheckBox
+                        android:id="@+id/night_theme_CB"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_marginRight="@dimen/components_margin"
+                    android:layout_marginLeft="@dimen/components_margin"
+                    android:background="@drawable/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <android.support.v7.widget.AppCompatTextView
                     android:clickable="true"

@@ -1,8 +1,6 @@
 package com.zpauly.githubapp.view;
 
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -83,7 +81,7 @@ public abstract class RightDrawerActivity extends ToolbarActivity {
 
     @Override
     public void initContent() {
-        setContentView(R.layout.right_drawer_layout);
+        setContentView(R.layout.activity_right_drawer);
         mContentRoot = (ViewGroup) findViewById(R.id.nav_content);
         initNavDrawer();
     }
