@@ -1,5 +1,7 @@
 <resources>
-    <style name="CardView" parent="CardView.Light"></style>
+    <style name="CardView" parent="Base.CardView">
+        <item name="cardBackgroundColor">@color/cardview_light_background</item>
+    </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:textColorPrimary">@color/abc_primary_text_material_dark</item>

@@ -34,6 +34,7 @@ public class RepoContentPresenter extends NetPresenter implements Presenter {
     private Subscriber<String> starSubscriber;
     private Subscriber<List<BranchBean>> branchesSubscriber;
     private Subscriber<List<TagBean>> tagsSubscriber;
+    private Subscriber<String> watchSubscriber;
 
     public RepoContentPresenter(Context context, RepoContentContract.View view) {
         mContext = context;
@@ -51,9 +52,7 @@ public class RepoContentPresenter extends NetPresenter implements Presenter {
 
     @Override
     public void stop() {
-        unsubscribe(repoSubscriber);
-        unsubscribe(repoContentSubscriber);
-        unsubscribe(starSubscriber);
+        unsubscribe(repoSubscriber, repoContentSubscriber, starSubscriber, watchSubscriber);
     }
 
     @Override
@@ -168,7 +167,8 @@ public class RepoContentPresenter extends NetPresenter implements Presenter {
                 e.printStackTrace();
                 if (e.toString().contains("404"))
                     mRepoContentView.isUnstarred();
-                mRepoContentView.checkStarredFail();
+                else
+                    mRepoContentView.checkStarredFail();
             }
 
             @Override
@@ -228,5 +228,77 @@ public class RepoContentPresenter extends NetPresenter implements Presenter {
         };
         activityMethod.unstarRepo(starSubscriber, auth, mRepoContentView.getUsername(),
                 mRepoContentView.getRepoName());
+    }
+
+    @Override
+    public void checkWatched() {
+        watchSubscriber = new Subscriber<String>() {
+            @Override
+            public void onCompleted() {
+                mRepoContentView.isWatched();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                if (e.getMessage().contains("404")) {
+                    mRepoContentView.isUnwatched();
+                } else {
+                    mRepoContentView.checkWatchedFail();
+                }
+            }
+
+            @Override
+            public void onNext(String s) {
+            }
+        };
+        activityMethod.isRepoWatching(watchSubscriber, auth,
+                mRepoContentView.getUsername(), mRepoContentView.getRepoName());
+    }
+
+    @Override
+    public void watchRepo() {
+        watchSubscriber = new Subscriber<String>() {
+            @Override
+            public void onCompleted() {
+                mRepoContentView.watchSuccess();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                mRepoContentView.watchFail();
+            }
+
+            @Override
+            public void onNext(String s) {
+
+            }
+        };
+        activityMethod.watchARepo(watchSubscriber, auth,
+                mRepoContentView.getUsername(), mRepoContentView.getRepoName());
+    }
+
+    @Override
+    public void unwatchRepo() {
+        watchSubscriber = new Subscriber<String>() {
+            @Override
+            public void onCompleted() {
+                mRepoContentView.unwatchSuccess();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                mRepoContentView.unwatchFail();
+            }
+
+            @Override
+            public void onNext(String s) {
+
+            }
+        };
+        activityMethod.unwatchARepo(watchSubscriber, auth,
+                mRepoContentView.getUsername(), mRepoContentView.getRepoName());
     }
 }

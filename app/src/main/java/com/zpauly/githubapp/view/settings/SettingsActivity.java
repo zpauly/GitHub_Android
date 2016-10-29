@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.widget.CompoundButton;
 
@@ -24,7 +24,7 @@ public class SettingsActivity extends ToolbarActivity {
 
     private AppCompatTextView mAboutMeTV;
     private AppCompatTextView mOpenSourceComponentsTV;
-    private AppCompatCheckBox mNightCB;
+    private SwitchCompat mNightSC;
 
     @Override
     public void initViews() {
@@ -32,7 +32,7 @@ public class SettingsActivity extends ToolbarActivity {
 
         mAboutMeTV = (AppCompatTextView) findViewById(R.id.settings_about_me_TV);
         mOpenSourceComponentsTV = (AppCompatTextView) findViewById(R.id.settings_open_source_TV);
-        mNightCB = (AppCompatCheckBox) findViewById(R.id.night_theme_CB);
+        mNightSC = (SwitchCompat) findViewById(R.id.night_theme_SC);
 
         setupViews();
     }
@@ -63,11 +63,11 @@ public class SettingsActivity extends ToolbarActivity {
             }
         });
         if (BaseApplication.getDayNightMode() == BaseApplication.DAY_MODE) {
-            mNightCB.setChecked(false);
+            mNightSC.setChecked(false);
         } else if (BaseApplication.getDayNightMode() == BaseApplication.NIGHT_MODE) {
-            mNightCB.setChecked(true);
+            mNightSC.setChecked(true);
         }
-        mNightCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mNightSC.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {

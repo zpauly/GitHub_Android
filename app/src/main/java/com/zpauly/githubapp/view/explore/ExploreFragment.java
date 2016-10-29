@@ -181,21 +181,21 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
                 order = SearchService.ORDER_ASC;
                 break;
             //---------------------------------------------------
-            case R.id.explore_code:
-                typeTag = TYPE_CODE;
-                break;
-            case R.id.explore_code_sort_best_match:
-                sort = null;
-                order = null;
-                break;
-            case R.id.explore_code_sort_recently_indexed:
-                sort = SearchService.SORT_INDEXED;
-                order = SearchService.ORDER_DESC;
-                break;
-            case R.id.explore_code_sort_least_recently_indexed:
-                sort = SearchService.SORT_INDEXED;
-                order = SearchService.ORDER_ASC;
-                break;
+//            case R.id.explore_code:
+//                typeTag = TYPE_CODE;
+//                break;
+//            case R.id.explore_code_sort_best_match:
+//                sort = null;
+//                order = null;
+//                break;
+//            case R.id.explore_code_sort_recently_indexed:
+//                sort = SearchService.SORT_INDEXED;
+//                order = SearchService.ORDER_DESC;
+//                break;
+//            case R.id.explore_code_sort_least_recently_indexed:
+//                sort = SearchService.SORT_INDEXED;
+//                order = SearchService.ORDER_ASC;
+//                break;
             //---------------------------------------------------
             case R.id.explore_users:
                 typeTag = TYPE_USERS;
@@ -246,6 +246,8 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                reposList.clear();
+                usersList.clear();
                 ExploreFragment.this.query = query;
                 mExploreSRLayout.setRefreshing(true);
                 switch (typeTag) {

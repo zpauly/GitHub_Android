@@ -75,6 +75,22 @@
     <string name="download_fail">Download fail</string>
     <string name="no_free_space">No free space</string>
 
+    <string name="follow">Follow</string>
+    <string name="unfollow">Unfollow</string>
+
+    <string name="watch">Watch</string>
+    <string name="not_watching">Not watching</string>
+    <string name="watching">Watching</string>
+    
+    <string name="watch_success">Watch Success</string>
+    <string name="watch_fail">Watch Fail</string>
+    <string name="stop_watch_success">Stop Watch Success</string>
+    <string name="stop_watch_fail">Stop Watch Fail</string>
+    <string name="follow_success">Follow Success</string>
+    <string name="follow_fail">Follow Success</string>
+    <string name="unfollow_success">Unfollow Success</string>
+    <string name="unfollow_fail">Unfollow Fail</string>
+
     <string name="language_setting">LANGUAEG SETTING</string>
     <string name="simplified_chinese">中文</string>
     <string name="english">English</string>

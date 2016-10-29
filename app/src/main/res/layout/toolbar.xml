@@ -6,4 +6,15 @@
     android:layout_height="?attr/actionBarSize"
     android:background="?attr/colorPrimary"
     app:popupTheme="@style/AppTheme"
-    android:fitsSystemWindows="true"/>
+    android:fitsSystemWindows="true">
+
+    <ProgressBar
+        android:indeterminate="true"
+        android:layout_marginRight="@dimen/components_margin"
+        android:id="@+id/toolbar_progress_bar"
+        android:layout_width="@dimen/medium_image_size"
+        android:layout_height="@dimen/medium_image_size"
+        android:progressDrawable="@android:color/white"
+        android:layout_gravity="right" />
+
+</android.support.v7.widget.Toolbar>

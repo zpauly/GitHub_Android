@@ -278,6 +278,41 @@ public class ProfileActivity extends ToolbarActivity implements ProfileContract.
     }
 
     @Override
+    public void checkFollowFail() {
+
+    }
+
+    @Override
+    public void isFollowed() {
+
+    }
+
+    @Override
+    public void isUnfollowed() {
+
+    }
+
+    @Override
+    public void followFail() {
+
+    }
+
+    @Override
+    public void followSuccess() {
+
+    }
+
+    @Override
+    public void unfollowSuccess() {
+
+    }
+
+    @Override
+    public void unfollowFail() {
+
+    }
+
+    @Override
     public String getUsername() {
         return SPUtil.getString(this, Constants.USER_INFO, Constants.USER_USERNAME, null);
     }

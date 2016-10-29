@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.base.BaseActivity;
@@ -34,6 +35,8 @@ public abstract class ToolbarActivity extends BaseActivity {
 
     protected OnMenuItemSelectedListener mOnMenuItemSelectedListener;
 
+    protected ProgressBar mToolbarPB;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +47,8 @@ public abstract class ToolbarActivity extends BaseActivity {
     private void initToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         if (mToolbar != null) {
+            mToolbarPB = (ProgressBar) mToolbar.findViewById(R.id.toolbar_progress_bar);
+            mToolbarPB.setVisibility(View.GONE);
             setSupportActionBar(mToolbar);
 
             //back down when click nav by default

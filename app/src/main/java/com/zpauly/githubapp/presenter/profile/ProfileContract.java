@@ -13,6 +13,12 @@ public class ProfileContract {
         void loadUserInfo();
 
         void loadOtherInfo();
+
+        void checkUserFollowed();
+
+        void follow();
+
+        void unfollow();
     }
 
     public interface View extends BaseView<Presenter> {
@@ -23,6 +29,20 @@ public class ProfileContract {
         void loadInfo(AuthenticatedUserBean user);
 
         void loadOtherInfo(UserBean user);
+
+        void checkFollowFail();
+
+        void isFollowed();
+
+        void isUnfollowed();
+
+        void followFail();
+
+        void followSuccess();
+
+        void unfollowSuccess();
+
+        void unfollowFail();
 
         String getUsername();
     }

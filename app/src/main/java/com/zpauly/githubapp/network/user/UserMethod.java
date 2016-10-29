@@ -5,10 +5,12 @@ import com.zpauly.githubapp.base.BaseNetMethod;
 import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
+import com.zpauly.githubapp.utils.StringConverterFactory;
 
 import java.util.List;
 
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -71,6 +73,36 @@ public class UserMethod extends BaseNetMethod {
 
     public void getUser(Observer<UserBean> observer, String username) {
         service.getUser(username)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void isUserFollowed(Observer<String> observer, String auth, String username) {
+        Retrofit retrofit = RetrofitUtil.initCustomRetrofit(Api.GitHubApi, StringConverterFactory.create(),
+                RxJavaCallAdapterFactory.create());
+        UserService service = retrofit.create(UserService.class);
+        service.isUserFollowed(auth, username)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void followAUser(Observer<String> observer, String auth, String username) {
+        Retrofit retrofit = RetrofitUtil.initCustomRetrofit(Api.GitHubApi, StringConverterFactory.create(),
+                RxJavaCallAdapterFactory.create());
+        UserService service = retrofit.create(UserService.class);
+        service.followAUser(auth, username)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void unfollowAUser(Observer<String> observer, String auth, String username) {
+        Retrofit retrofit = RetrofitUtil.initCustomRetrofit(Api.GitHubApi, StringConverterFactory.create(),
+                RxJavaCallAdapterFactory.create());
+        UserService service = retrofit.create(UserService.class);
+        service.unfollowAUser(auth, username)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

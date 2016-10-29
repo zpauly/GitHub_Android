@@ -46,26 +46,26 @@
                         </group>
                     </menu>
                 </item>
-                <item
-                    android:id="@+id/explore_code"
-                    android:title="@string/code"
-                    android:icon="@mipmap/ic_code">
-                    <menu>
-                        <group android:id="@+id/explore_code_sort_grp"
-                            android:checkableBehavior="single">
-                            <item
-                                android:id="@+id/explore_code_sort_best_match"
-                                android:checked="true"
-                                android:title="@string/best_match" />
-                            <item
-                                android:id="@+id/explore_code_sort_recently_indexed"
-                                android:title="@string/recently_indexed" />
-                            <item
-                                android:id="@+id/explore_code_sort_least_recently_indexed"
-                                android:title="@string/least_recently_updated" />
-                        </group>
-                    </menu>
-                </item>
+                <!--<item-->
+                    <!--android:id="@+id/explore_code"-->
+                    <!--android:title="@string/code"-->
+                    <!--android:icon="@mipmap/ic_code">-->
+                    <!--<menu>-->
+                        <!--<group android:id="@+id/explore_code_sort_grp"-->
+                            <!--android:checkableBehavior="single">-->
+                            <!--<item-->
+                                <!--android:id="@+id/explore_code_sort_best_match"-->
+                                <!--android:checked="true"-->
+                                <!--android:title="@string/best_match" />-->
+                            <!--<item-->
+                                <!--android:id="@+id/explore_code_sort_recently_indexed"-->
+                                <!--android:title="@string/recently_indexed" />-->
+                            <!--<item-->
+                                <!--android:id="@+id/explore_code_sort_least_recently_indexed"-->
+                                <!--android:title="@string/least_recently_updated" />-->
+                        <!--</group>-->
+                    <!--</menu>-->
+                <!--</item>-->
                 <item
                     android:id="@+id/explore_users"
                     android:title="@string/users"

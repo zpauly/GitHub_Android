@@ -5,12 +5,15 @@ import com.zpauly.githubapp.entity.response.UserBean;
 
 import java.util.List;
 
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
+import rx.Observer;
 
 /**
  * Created by zpauly on 16-6-10.
@@ -62,4 +65,34 @@ public interface UserService {
     Observable<List<UserBean>> getUserFollowing(@Header("Authorization") String auth,
                                                      @Path("username") String username,
                                                      @Query("page") int pageId);
+
+    /**
+     * Check if you are following a user
+     * @param auth
+     * @param username
+     * @return
+     */
+    @GET("/user/following/{username}")
+    Observable<String> isUserFollowed(@Header("Authorization") String auth,
+                                      @Path("username") String username);
+
+    /**
+     * Follow a user
+     * @param auth
+     * @param username
+     * @return
+     */
+    @PUT("/user/following/{username}")
+    Observable<String> followAUser(@Header("Authorization") String auth,
+                                   @Path("username") String username);
+
+    /**
+     * Unfollow a user
+     * @param auth
+     * @param username
+     * @return
+     */
+    @DELETE("/user/following/{username}")
+    Observable<String> unfollowAUser(@Header("Authorization") String auth,
+                                   @Path("username") String username);
 }

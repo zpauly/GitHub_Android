@@ -23,6 +23,7 @@ public class ProfilePresenter extends NetPresenter implements ProfileContract.Pr
 
     private Subscriber<AuthenticatedUserBean> authenticatedUserSubscriber;
     private Subscriber<UserBean> userSubscriber;
+    private Subscriber<String> followSubscriber;
 
     public ProfilePresenter(ProfileContract.View view, Context context) {
         mHomeView = view;
@@ -39,7 +40,7 @@ public class ProfilePresenter extends NetPresenter implements ProfileContract.Pr
 
     @Override
     public void stop() {
-        unsubscribe(authenticatedUserSubscriber, userSubscriber);
+        unsubscribe(authenticatedUserSubscriber, userSubscriber, followSubscriber);
     }
 
     @Override
@@ -84,5 +85,75 @@ public class ProfilePresenter extends NetPresenter implements ProfileContract.Pr
             }
         };
         method.getUser(userSubscriber, mHomeView.getUsername());
+    }
+
+    @Override
+    public void checkUserFollowed() {
+        followSubscriber = new Subscriber<String>() {
+            @Override
+            public void onCompleted() {
+                mHomeView.isFollowed();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                if (e.getMessage().contains("404")) {
+                    mHomeView.isUnfollowed();
+                } else {
+                    mHomeView.checkFollowFail();
+                }
+            }
+
+            @Override
+            public void onNext(String s) {
+
+            }
+        };
+        method.isUserFollowed(followSubscriber, auth, mHomeView.getUsername());
+    }
+
+    @Override
+    public void follow() {
+        followSubscriber = new Subscriber<String>() {
+            @Override
+            public void onCompleted() {
+                mHomeView.followSuccess();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                mHomeView.followFail();
+            }
+
+            @Override
+            public void onNext(String s) {
+
+            }
+        };
+        method.followAUser(followSubscriber, auth, mHomeView.getUsername());
+    }
+
+    @Override
+    public void unfollow() {
+        followSubscriber = new Subscriber<String>() {
+            @Override
+            public void onCompleted() {
+                mHomeView.unfollowSuccess();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                mHomeView.unfollowFail();
+            }
+
+            @Override
+            public void onNext(String s) {
+
+            }
+        };
+        method.unfollowAUser(followSubscriber, auth, mHomeView.getUsername());
     }
 }

@@ -3,7 +3,12 @@ package com.zpauly.githubapp.view.profile;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.Snackbar;
+import android.support.v4.view.ActionProvider;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,6 +19,7 @@ import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 import com.zpauly.githubapp.entity.response.UserBean;
+import com.zpauly.githubapp.listener.OnMenuItemSelectedListener;
 import com.zpauly.githubapp.presenter.profile.ProfileContract;
 import com.zpauly.githubapp.presenter.profile.ProfilePresenter;
 import com.zpauly.githubapp.ui.RefreshView;
@@ -71,6 +77,10 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
     private RefreshView mRefreshView;
 
     private UserBean user;
+
+    private MenuItem mMenuItemFollow;
+
+    private boolean isFollowed;
 
     @Override
     protected void onStop() {
@@ -148,6 +158,7 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
     @Override
     protected void setToolbar() {
         super.setToolbar();
+        mToolbarPB.setVisibility(View.VISIBLE);
         if (username != null) {
             setToolbarTitle(username);
         } else {
@@ -226,6 +237,18 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
         mPresenter.loadOtherInfo();
     }
 
+    private void checkUserFollow() {
+        mPresenter.checkUserFollowed();
+    }
+
+    private void follow() {
+        mPresenter.follow();
+    }
+
+    private void unfollow() {
+        mPresenter.unfollow();
+    }
+
     @Override
     public void loadInfoSuccess() {
         if (user != null) {
@@ -292,6 +315,51 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
     }
 
     @Override
+    public void checkFollowFail() {
+        Snackbar.make(getCurrentFocus(), R.string.error_occurred, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void isFollowed() {
+        mMenuItemFollow.setVisible(true);
+        mMenuItemFollow.setTitle(R.string.unfollow);
+        mToolbarPB.setVisibility(View.GONE);
+        isFollowed = true;
+    }
+
+    @Override
+    public void isUnfollowed() {
+        mMenuItemFollow.setVisible(true);
+        mMenuItemFollow.setTitle(R.string.follow);
+        mToolbarPB.setVisibility(View.GONE);
+        isFollowed = false;
+    }
+
+    @Override
+    public void followFail() {
+        Snackbar.make(getCurrentFocus(), R.string.follow_fail, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void followSuccess() {
+        isFollowed = true;
+        mMenuItemFollow.setTitle(R.string.unfollow);
+        Snackbar.make(getCurrentFocus(), R.string.follow_success, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void unfollowSuccess() {
+        isFollowed = false;
+        mMenuItemFollow.setTitle(R.string.follow);
+        Snackbar.make(getCurrentFocus(), R.string.unfollow_success, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void unfollowFail() {
+        Snackbar.make(getCurrentFocus(), R.string.unfollow_fail, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
     public String getUsername() {
         return username;
     }
@@ -299,5 +367,34 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
     @Override
     public void setPresenter(ProfileContract.Presenter presenter) {
         this.mPresenter = presenter;
+    }
+
+    @Override
+    public void inflateMenu(MenuInflater inflater, Menu menu) {
+        inflater.inflate(R.menu.others_toolbar_menu, menu);
+    }
+
+    @Override
+    public void createMenu(Menu menu) {
+        super.createMenu(menu);
+        mMenuItemFollow = menu.findItem(R.id.others_toolbar_follow);
+        mMenuItemFollow.setVisible(false);
+        checkUserFollow();
+        setOnMenuItemSelectedListener(new OnMenuItemSelectedListener() {
+            @Override
+            public void onItemSelected(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.others_toolbar_follow:
+                        if (isFollowed) {
+                            unfollow();
+                        } else {
+                            follow();
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
     }
 }

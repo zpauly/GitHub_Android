@@ -2,6 +2,7 @@ package com.zpauly.githubapp.network.activity;
 
 import android.support.annotation.Nullable;
 
+import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.entity.response.events.EventsBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 
@@ -120,4 +121,69 @@ public interface ActivityService {
     Observable<List<EventsBean>> getUserEvents(@Header("Authorization") String auth,
                                                @Path("username") String username,
                                                @Query("page") int pageId);
+
+    /**
+     * List watchers
+     * @param auth
+     * @param owner
+     * @param repo
+     * @return
+     */
+    @Headers("Cache-Control: public, max-age=600")
+    @GET("/repos/{owner}/{repo}/subscribers")
+    Observable<List<UserBean>> getWatchers(@Header("Authorizaion") String auth,
+                                           @Path("owner") String owner,
+                                           @Path("repo") String repo,
+                                           @Query("page") int pageId);
+
+    /**
+     * List Stargazers
+     * @param auth
+     * @param owner
+     * @param repo
+     * @param pageId
+     * @return
+     */
+    @Headers("Cache-Control:public, max-age=600")
+    @GET("/repos/{owner}/{repo}/stargazers")
+    Observable<List<UserBean>> getStargazers(@Header("Authorization") String auth,
+                                             @Path("owner") String owner,
+                                             @Path("repo") String repo,
+                                             @Query("page") int pageId);
+
+    /**
+     * Check if you are watching a repository
+     * @param auth
+     * @param owner
+     * @param repo
+     * @return
+     */
+    @GET("/user/subscriptions/{owner}/{repo}")
+    Observable<String> isRepoWatching(@Header("Authorization") String auth,
+                                      @Path("owner") String owner,
+                                      @Path("repo") String repo);
+
+    /**
+     * Watch a repository
+     * @param auth
+     * @param owner
+     * @param repo
+     * @return
+     */
+    @PUT("/user/subscriptions/{owner}/{repo}")
+    Observable<String> watchARepo(@Header("Authorization") String auth,
+                                  @Path("owner") String owner,
+                                  @Path("repo") String repo);
+
+    /**
+     * Stop watching a repository
+     * @param auth
+     * @param owner
+     * @param repo
+     * @return
+     */
+    @DELETE("/user/subscriptions/{owner}/{repo}")
+    Observable<String> unwatchARepo(@Header("Authorization") String auth,
+                                    @Path("owner") String owner,
+                                    @Path("repo") String repo);
 }

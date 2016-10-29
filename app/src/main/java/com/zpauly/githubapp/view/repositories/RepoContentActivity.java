@@ -82,12 +82,14 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
     private ProgressBar mReadMePB;
 
     private MenuItem mMenuItemStar;
+    private MenuItem mMenuWatch;
 
     private RefreshView mRefreshView;
 
     private String content;
     private RepositoriesBean repoBean;
     private boolean isStarred;
+    private boolean isWatched;
 
     private MaterialDialog mDownloadDialog;
     private MaterialDialog mLoadingDialog;
@@ -103,6 +105,9 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
     private String ref = preRef;
 
     private boolean isFirstLoad = true;
+
+    private boolean isStarChecked;
+    private boolean isWatchChecked;
 
     @Override
     protected void onStop() {
@@ -179,6 +184,7 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
     @Override
     protected void setToolbar() {
         super.setToolbar();
+        mToolbarPB.setVisibility(View.VISIBLE);
         setToolbarTitle(name);
         setOnToolbarNavClickedListener(new View.OnClickListener() {
             @Override
@@ -384,12 +390,28 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
         mPresenter.checkStarred();
     }
 
+    private void checkWatched() {
+        mPresenter.checkWatched();
+    }
+
     private void starRepo() {
         mPresenter.starRepo();
+        mLoadingDialog.show();
     }
 
     private void unstarRepo() {
         mPresenter.unstarRepo();
+        mLoadingDialog.show();
+    }
+
+    private void watchRepo() {
+        mPresenter.watchRepo();
+        mLoadingDialog.show();
+    }
+
+    private void unwatchRepo() {
+        mPresenter.unwatchRepo();
+        mLoadingDialog.show();
     }
 
     @Override
@@ -508,26 +530,29 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
 
     @Override
     public void checkStarredFail() {
-
+        Snackbar.make(getCurrentFocus(), R.string.error_occurred, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void isStarred() {
-        mMenuItemStar.setVisible(true);
         mMenuItemStar.setIcon(R.drawable.ic_star_white_24dp);
         isStarred = true;
+        isStarChecked = true;
+        showStarAndWatch();
     }
 
     @Override
     public void isUnstarred() {
-        mMenuItemStar.setVisible(true);
         mMenuItemStar.setIcon(R.drawable.ic_star_border_white_24dp);
         isStarred = false;
+        isStarChecked = true;
+        showStarAndWatch();
     }
 
     @Override
     public void starSuccess() {
         mMenuItemStar.setIcon(R.drawable.ic_star_white_24dp);
+        mLoadingDialog.dismiss();
         Snackbar.make(getCurrentFocus(), R.string.starred, Snackbar.LENGTH_SHORT).show();
         isStarred = true;
         mMenuItemStar.setEnabled(true);
@@ -535,12 +560,14 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
 
     @Override
     public void starFail() {
+        mLoadingDialog.dismiss();
         Snackbar.make(getCurrentFocus(), R.string.error_occurred, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void unstarSuccess() {
         mMenuItemStar.setIcon(R.drawable.ic_star_border_white_24dp);
+        mLoadingDialog.dismiss();
         Snackbar.make(getCurrentFocus(), R.string.unstarred, Snackbar.LENGTH_SHORT).show();
         isStarred = false;
         mMenuItemStar.setEnabled(true);
@@ -549,6 +576,56 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
     @Override
     public void unstarFail() {
         Snackbar.make(getCurrentFocus(), R.string.error_occurred, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void isWatched() {
+        Log.i(TAG, "is watched");
+        mMenuWatch.setIcon(R.drawable.ic_visibility_white_24dp);
+        isWatched = true;
+        isWatchChecked = true;
+        showStarAndWatch();
+    }
+
+    @Override
+    public void isUnwatched() {
+        Log.i(TAG, "is unwatched");
+        mMenuWatch.setIcon(R.drawable.ic_visibility_off_white_24dp);
+        isWatched = false;
+        isWatchChecked = true;
+        showStarAndWatch();
+    }
+
+    @Override
+    public void checkWatchedFail() {
+        Log.i(TAG, "check watch failed");
+        Snackbar.make(getCurrentFocus(), R.string.error_occurred, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void watchSuccess() {
+        mMenuWatch.setIcon(R.drawable.ic_visibility_white_24dp);
+        mLoadingDialog.dismiss();
+        Snackbar.make(getCurrentFocus(), R.string.watch_success, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void watchFail() {
+        mLoadingDialog.dismiss();
+        Snackbar.make(getCurrentFocus(), R.string.watch_fail, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void unwatchSuccess() {
+        mMenuWatch.setIcon(R.drawable.ic_visibility_off_white_24dp);
+        mLoadingDialog.dismiss();
+        Snackbar.make(getCurrentFocus(), R.string.stop_watch_success, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void unwatchFail() {
+        mLoadingDialog.dismiss();
+        Snackbar.make(getCurrentFocus(), R.string.stop_watch_fail, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -576,7 +653,10 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
     public void createMenu(Menu menu) {
         mMenuItemStar = menu.findItem(R.id.repo_menu_star);
         mMenuItemStar.setVisible(false);
+        mMenuWatch = menu.findItem(R.id.repo_menu_watch);
+        mMenuWatch.setVisible(false);
         checkStarred();
+        checkWatched();
         setOnMenuItemSelectedListener(new OnMenuItemSelectedListener() {
             @Override
             public void onItemSelected(MenuItem item) {
@@ -587,6 +667,13 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
                             unstarRepo();
                         } else {
                             starRepo();
+                        }
+                        break;
+                    case R.id.repo_menu_watch:
+                        if (isWatched) {
+                            unwatchRepo();
+                        } else {
+                            watchRepo();
                         }
                         break;
                     case R.id.repo_menu_choose:
@@ -646,5 +733,13 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
                 }
             }
         });
+    }
+
+    private void showStarAndWatch() {
+        if (isStarChecked && isWatchChecked) {
+            mToolbarPB.setVisibility(View.GONE);
+            mMenuWatch.setVisible(true);
+            mMenuItemStar.setVisible(true);
+        }
     }
 }

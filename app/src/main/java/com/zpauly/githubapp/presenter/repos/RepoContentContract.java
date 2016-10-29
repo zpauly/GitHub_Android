@@ -27,6 +27,12 @@ public class RepoContentContract {
         void starRepo();
 
         void unstarRepo();
+
+        void checkWatched();
+
+        void watchRepo();
+
+        void unwatchRepo();
     }
 
     public interface View extends BaseView<Presenter> {
@@ -69,6 +75,20 @@ public class RepoContentContract {
         void unstarSuccess();
 
         void unstarFail();
+
+        void isWatched();
+
+        void isUnwatched();
+
+        void checkWatchedFail();
+
+        void watchSuccess();
+
+        void watchFail();
+
+        void unwatchSuccess();
+
+        void unwatchFail();
 
         String getUsername();
 
