@@ -15,7 +15,8 @@ import com.zpauly.githubapp.view.viewholder.ReposViewHolder;
  * Created by zpauly on 16-7-15.
  */
 
-public class ReposRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<RepositoriesBean, ReposViewHolder> {
+public class ReposRecyclerViewAdapter extends
+        LoadMoreRecyclerViewAdapter<RepositoriesBean, ReposViewHolder> {
     public ReposRecyclerViewAdapter(Context context) {
         super(context);
     }

@@ -31,11 +31,17 @@ public class UsersActivity extends ToolbarActivity implements FollowContract.Vie
     private final String TAG = getClass().getName();
 
     public static final String USERS_ID = "USERS_ID";
+    public static final String OWNER = "OWNER";
+    public static final String REPO = "REPO";
     public static final int FOLLOWERS = 0;
     public static final int FOLLOWING = 1;
     public static final int ORGS = 2;
+    public static final int WATCHERS = 3;
+    public static final int STARGAZERS = 4;
 
     private int userId;
+    private String owner;
+    private String repo;
 
     private FollowContract.Presenter mPresenter;
     private List<UserBean> list = new ArrayList<>();
@@ -61,6 +67,8 @@ public class UsersActivity extends ToolbarActivity implements FollowContract.Vie
     @Override
     public void initViews() {
         userId = getIntent().getIntExtra(USERS_ID, -1);
+        owner = getIntent().getStringExtra(OWNER);
+        repo = getIntent().getStringExtra(REPO);
 
         setContent(R.layout.content_followers);
 
@@ -99,6 +107,10 @@ public class UsersActivity extends ToolbarActivity implements FollowContract.Vie
             setToolbarTitle(R.string.following);
         } else if (userId == ORGS) {
             setToolbarTitle(R.string.orgs);
+        } else if (userId == WATCHERS) {
+            setToolbarTitle(R.string.watchers);
+        } else if (userId == STARGAZERS) {
+            setToolbarTitle(R.string.stargazers);
         }
         setOnToolbarNavClickedListener(new View.OnClickListener() {
             @Override
@@ -115,6 +127,24 @@ public class UsersActivity extends ToolbarActivity implements FollowContract.Vie
         intent.setClass(context, UsersActivity.class);
         context.startActivity(intent);
 //        ((Activity) context).finish();
+    }
+
+    public static void launchWatchersActivity(Context context, String owner, String repo) {
+        Intent intent = new Intent();
+        intent.putExtra(USERS_ID, WATCHERS);
+        intent.putExtra(OWNER, owner);
+        intent.putExtra(REPO, repo);
+        intent.setClass(context, UsersActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void launchStargazersActivity(Context context, String owner, String repo) {
+        Intent intent = new Intent();
+        intent.putExtra(USERS_ID, STARGAZERS);
+        intent.putExtra(OWNER, owner);
+        intent.putExtra(REPO, repo);
+        intent.setClass(context, UsersActivity.class);
+        context.startActivity(intent);
     }
 
     private void setupSwipeRefreshLayout() {
@@ -141,14 +171,21 @@ public class UsersActivity extends ToolbarActivity implements FollowContract.Vie
 
     private void loadFollow() {
         switch (userId) {
-            case UsersActivity.FOLLOWERS:
+            case FOLLOWERS:
                 mPresenter.getFollowers();
                 break;
-            case UsersActivity.FOLLOWING:
+            case FOLLOWING:
                 mPresenter.getFollowing();
                 break;
-            case UsersActivity.ORGS:
+            case ORGS:
                 mPresenter.getOrgs();
+                break;
+            case WATCHERS:
+                mPresenter.getWatchers();
+                break;
+            case STARGAZERS:
+                mPresenter.getStargazers();
+                break;
             default:
                 break;
         }
@@ -192,6 +229,16 @@ public class UsersActivity extends ToolbarActivity implements FollowContract.Vie
     @Override
     public String getUsername() {
         return username;
+    }
+
+    @Override
+    public String getOwner() {
+        return owner;
+    }
+
+    @Override
+    public String getRepo() {
+        return repo;
     }
 
     @Override

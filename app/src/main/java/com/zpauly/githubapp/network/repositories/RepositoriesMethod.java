@@ -190,4 +190,12 @@ public class RepositoriesMethod extends BaseNetMethod {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
+
+    public void getForks(Observer<List<RepositoriesBean>> observer,
+                         String auth, String owner, String repo, String sort, int pageId) {
+        service.getForks(auth, owner, repo, sort, pageId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
 }

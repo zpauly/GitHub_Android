@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/fork_menu_sort"
+        android:icon="@drawable/ic_sort_white_24dp"
+        android:title="@string/sort"
+        app:showAsAction="always">
+        <menu>
+            <group android:id="@+id/fork_menu_sort_grp"
+                android:checkableBehavior="single">
+                <item android:id="@+id/fork_menu_sort_newest"
+                    android:title="@string/newest"
+                    android:checked="true"/>
+                <item android:id="@+id/fork_menu_sort_oldest"
+                    android:title="@string/oldest"/>
+                <item android:id="@+id/fork_menu_sort_stargazers"
+                    android:title="@string/stargazers"/>
+            </group>
+        </menu>
+    </item>
+</menu>

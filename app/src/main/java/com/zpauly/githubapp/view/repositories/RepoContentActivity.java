@@ -25,6 +25,7 @@ import com.zpauly.githubapp.entity.response.repos.TagBean;
 import com.zpauly.githubapp.listener.OnMenuItemSelectedListener;
 import com.zpauly.githubapp.listener.OnNavItemClickListener;
 import com.zpauly.githubapp.network.repositories.RepositoriesService;
+import com.zpauly.githubapp.presenter.repos.ForksActivity;
 import com.zpauly.githubapp.presenter.repos.RepoContentContract;
 import com.zpauly.githubapp.presenter.repos.RepoContentPresenter;
 import com.zpauly.githubapp.service.DownloadSevice;
@@ -36,6 +37,7 @@ import com.zpauly.githubapp.view.RightDrawerActivity;
 import com.zpauly.githubapp.view.files.FilesActivity;
 import com.zpauly.githubapp.view.issues.IssuesOrPullRequestsActivity;
 import com.zpauly.githubapp.view.profile.OthersActivity;
+import com.zpauly.githubapp.view.users.UsersActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -341,19 +343,19 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
         mWatchersLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                UsersActivity.launchWatchersActivity(RepoContentActivity.this, repoBean.getOwner().getLogin(), repoBean.getName());
             }
         });
         mStargazersLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                UsersActivity.launchStargazersActivity(RepoContentActivity.this, repoBean.getOwner().getLogin(), repoBean.getName());
             }
         });
         mForksLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                ForksActivity.launchActivity(RepoContentActivity.this, repoBean.getOwner().getLogin(), repoBean.getName());
             }
         });
         mViewFilesTV.setEnabled(false);

@@ -51,6 +51,12 @@ public interface RepositoriesService {
 
     String ZIPBALL = "zipball";
 
+    String NEWEST = "newest";
+
+    String OLDEST = "oldest";
+
+    String STARGAZERS = "stargazers";
+
     /**
      * List repositories that are accessible to the authenticated user.
      * This includes repositories owned by the authenticated user,
@@ -271,4 +277,18 @@ public interface RepositoriesService {
     Observable<List<BranchBean>> getBranches(@Header("Authorization") String auth,
                                              @Path("owner") String owner,
                                              @Path("repo") String repo);
+
+    /**
+     * List forks
+     * @param auth
+     * @param owner
+     * @param repo
+     * @return
+     */
+    @GET("/repos/{owner}/{repo}/forks")
+    Observable<List<RepositoriesBean>> getForks(@Header("Authorization") String auth,
+                                                @Path("owner") String owner,
+                                                @Path("repo") String repo,
+                                                @Query("sort") String sort,
+                                                @Query("page") int pageId);
 }

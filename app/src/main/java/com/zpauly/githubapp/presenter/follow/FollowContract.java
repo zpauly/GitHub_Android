@@ -18,6 +18,10 @@ public class FollowContract {
         void getFollowing();
 
         void getOrgs();
+
+        void getWatchers();
+
+        void getStargazers();
     }
 
     public interface View extends BaseView<Presenter> {
@@ -32,5 +36,9 @@ public class FollowContract {
         void loadSuccess();
 
         String getUsername();
+
+        String getOwner();
+
+        String getRepo();
     }
 }

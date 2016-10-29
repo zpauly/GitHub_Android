@@ -3,13 +3,12 @@ package com.zpauly.githubapp.presenter.follow;
 import android.content.Context;
 import android.util.Log;
 
-import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.base.NetPresenter;
 import com.zpauly.githubapp.entity.response.OrganizationBean;
 import com.zpauly.githubapp.entity.response.UserBean;
+import com.zpauly.githubapp.network.activity.ActivityMethod;
 import com.zpauly.githubapp.network.organizations.OrganizationsMethod;
 import com.zpauly.githubapp.network.user.UserMethod;
-import com.zpauly.githubapp.utils.SPUtil;
 
 import java.util.List;
 
@@ -28,13 +27,15 @@ public class FollowPresenter extends NetPresenter implements FollowContract.Pres
     private String auth;
     private UserMethod method;
     private OrganizationsMethod orgMethod;
+    private ActivityMethod activityMethod;
 
     private Subscriber<List<UserBean>> mFollowersSubscriber;
     private Subscriber<List<UserBean>> mFollowingSubscriber;
+    private Subscriber<List<UserBean>> mWatchersSubscriber;
+    private Subscriber<List<UserBean>> mStargazersSubscriber;
     private Subscriber<List<OrganizationBean>> mOrgsSubscriber;
 
     private int loadPageId = 1;
-    private boolean loading = false;
 
     public FollowPresenter(Context context, FollowContract.View view) {
         mContext = context;
@@ -48,11 +49,12 @@ public class FollowPresenter extends NetPresenter implements FollowContract.Pres
         auth = getAuth(mContext);
         method = getMethod(UserMethod.class);
         orgMethod = getMethod(OrganizationsMethod.class);
+        activityMethod = getMethod(ActivityMethod.class);
     }
 
     @Override
     public void stop() {
-        unsubscribe(mFollowersSubscriber, mFollowingSubscriber, mOrgsSubscriber);
+        unsubscribe(mFollowersSubscriber, mFollowingSubscriber, mOrgsSubscriber, mWatchersSubscriber, mStargazersSubscriber);
     }
 
     @Override
@@ -62,14 +64,12 @@ public class FollowPresenter extends NetPresenter implements FollowContract.Pres
             public void onCompleted() {
                 mFollowView.loadSuccess();
                 loadPageId ++;
-                loading = false;
             }
 
             @Override
             public void onError(Throwable e) {
                 mFollowView.loadFail();
                 e.printStackTrace();
-                loading = false;
             }
 
             @Override
@@ -77,11 +77,9 @@ public class FollowPresenter extends NetPresenter implements FollowContract.Pres
                 mFollowView.loading(followersBean);
             }
         };
-        if (mFollowView.getUsername() != null && !loading) {
-            loading = true;
+        if (mFollowView.getUsername() != null) {
             method.getUserFollowers(mFollowersSubscriber, auth, mFollowView.getUsername(), loadPageId);
         } else {
-            loading = true;
             method.getFollowers(mFollowersSubscriber, auth, loadPageId);
         }
     }
@@ -93,14 +91,12 @@ public class FollowPresenter extends NetPresenter implements FollowContract.Pres
             public void onCompleted() {
                 mFollowView.loadSuccess();
                 loadPageId ++;
-                loading = false;
             }
 
             @Override
             public void onError(Throwable e) {
                 mFollowView.loadFail();
                 e.printStackTrace();
-                loading = false;
             }
 
             @Override
@@ -108,11 +104,9 @@ public class FollowPresenter extends NetPresenter implements FollowContract.Pres
                 mFollowView.loading(followersBean);
             }
         };
-        if (mFollowView.getUsername() != null && !loading) {
-            loading = true;
+        if (mFollowView.getUsername() != null) {
             method.getUserFollowing(mFollowingSubscriber, auth, mFollowView.getUsername(), loadPageId);
         } else {
-            loading = true;
             method.getFollowing(mFollowingSubscriber, auth, loadPageId);
         }
     }
@@ -136,7 +130,6 @@ public class FollowPresenter extends NetPresenter implements FollowContract.Pres
                 mFollowView.loadingOrgs(organizationBeen);
             }
         };
-        if (!loading) {
             if (mFollowView.getUsername() == null) {
                 Log.i(TAG, "user orgs");
                 orgMethod.getUserOrgs(mOrgsSubscriber, auth);
@@ -144,6 +137,51 @@ public class FollowPresenter extends NetPresenter implements FollowContract.Pres
                 Log.i(TAG, "others orgs");
                 orgMethod.getUserOrgs(mOrgsSubscriber, auth, mFollowView.getUsername());
             }
-        }
+    }
+
+    @Override
+    public void getWatchers() {
+        mWatchersSubscriber = new Subscriber<List<UserBean>>() {
+            @Override
+            public void onCompleted() {
+                loadPageId++;
+                mFollowView.loadSuccess();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                mFollowView.loadFail();
+            }
+
+            @Override
+            public void onNext(List<UserBean> userBeen) {
+                mFollowView.loading(userBeen);
+            }
+        };
+        activityMethod.getWatchers(mWatchersSubscriber, auth, mFollowView.getOwner(), mFollowView.getRepo(), loadPageId);
+    }
+
+    @Override
+    public void getStargazers() {
+        mStargazersSubscriber = new Subscriber<List<UserBean>>() {
+            @Override
+            public void onCompleted() {
+                mFollowView.loadSuccess();
+                loadPageId++;
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                mFollowView.loadFail();
+            }
+
+            @Override
+            public void onNext(List<UserBean> userBeen) {
+                mFollowView.loading(userBeen);
+            }
+        };
+        activityMethod.getStargazers(mStargazersSubscriber, auth, mFollowView.getOwner(), mFollowView.getRepo(), loadPageId);
     }
 }

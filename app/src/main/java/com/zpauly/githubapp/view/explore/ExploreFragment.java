@@ -15,11 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zpauly.githubapp.R;
-import com.zpauly.githubapp.adapter.RepositoriesRecyclerViewAdapter;
+import com.zpauly.githubapp.adapter.ReposRecyclerViewAdapter;
 import com.zpauly.githubapp.adapter.UsersRecyclerViewAdapter;
 import com.zpauly.githubapp.base.BaseFragment;
-import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.UserBean;
+import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.search.SearchCodeBean;
 import com.zpauly.githubapp.entity.response.search.SearchReposBean;
 import com.zpauly.githubapp.entity.response.search.SearchUsersBean;
@@ -47,7 +47,7 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
     private SwipeRefreshLayout mExploreSRLayout;
     private RecyclerView mExploreRV;
 
-    private RepositoriesRecyclerViewAdapter mReposAdapter;
+    private ReposRecyclerViewAdapter mReposAdapter;
     private UsersRecyclerViewAdapter mUsersAdapter;
 
     private List<RepositoriesBean> reposList = new ArrayList<>();
@@ -115,7 +115,7 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
     }
 
     private void setupRecyclerView() {
-        mReposAdapter = new RepositoriesRecyclerViewAdapter(getContext());
+        mReposAdapter = new ReposRecyclerViewAdapter(getContext());
         mUsersAdapter = new UsersRecyclerViewAdapter(getContext());
         mExploreRV.setLayoutManager(new LinearLayoutManager(getContext()));
         mExploreRV.setAdapter(mReposAdapter);
@@ -193,7 +193,7 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
 //                order = SearchService.ORDER_DESC;
 //                break;
 //            case R.id.explore_code_sort_least_recently_indexed:
-//                sort = SearchService.SORT_INDEXED;
+//                sort = SeaerchService.SORT_INDEXED;
 //                order = SearchService.ORDER_ASC;
 //                break;
             //---------------------------------------------------
