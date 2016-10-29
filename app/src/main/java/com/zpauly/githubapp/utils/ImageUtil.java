@@ -36,6 +36,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
+import com.zpauly.githubapp.R;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -198,6 +199,7 @@ public class ImageUtil {
         if (!context.isDetached()) {
             Glide.with(context)
                     .load(Uri.parse(url))
+                    .placeholder(R.mipmap.avatar)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .crossFade()
                     .centerCrop()
