@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
@@ -80,6 +81,8 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
 
     private MenuItem mMenuItemFollow;
 
+    private MaterialDialog mLoadingDialog;
+
     private boolean isFollowed;
 
     @Override
@@ -131,6 +134,13 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
         mReposLayout = (RelativeLayout) findViewById(R.id.profile_repos_layout);
         mOrgsLayout = (RelativeLayout) findViewById(R.id.profile_orgs_layout);
         mRefreshView = (RefreshView) findViewById(R.id.others_RefreshView);
+
+        mLoadingDialog = new MaterialDialog.Builder(this)
+                .cancelable(false)
+                .title(R.string.loading)
+                .content(R.string.please_wait)
+                .progress(true, 0)
+                .build();
 
         setupSwipeRefreshLayout();
 
@@ -242,10 +252,12 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
     }
 
     private void follow() {
+        mLoadingDialog.show();
         mPresenter.follow();
     }
 
     private void unfollow() {
+        mLoadingDialog.show();
         mPresenter.unfollow();
     }
 
@@ -337,6 +349,7 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
 
     @Override
     public void followFail() {
+        mLoadingDialog.dismiss();
         Snackbar.make(getCurrentFocus(), R.string.follow_fail, Snackbar.LENGTH_SHORT).show();
     }
 
@@ -344,19 +357,22 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
     public void followSuccess() {
         isFollowed = true;
         mMenuItemFollow.setTitle(R.string.unfollow);
-        Snackbar.make(getCurrentFocus(), R.string.follow_success, Snackbar.LENGTH_SHORT).show();
+        mLoadingDialog.dismiss();
+        Snackbar.make(mToolbar, R.string.follow_success, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void unfollowSuccess() {
         isFollowed = false;
         mMenuItemFollow.setTitle(R.string.follow);
-        Snackbar.make(getCurrentFocus(), R.string.unfollow_success, Snackbar.LENGTH_SHORT).show();
+        mLoadingDialog.dismiss();
+        Snackbar.make(mToolbar, R.string.unfollow_success, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void unfollowFail() {
-        Snackbar.make(getCurrentFocus(), R.string.unfollow_fail, Snackbar.LENGTH_SHORT).show();
+        mLoadingDialog.dismiss();
+        Snackbar.make(mToolbar, R.string.unfollow_fail, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
