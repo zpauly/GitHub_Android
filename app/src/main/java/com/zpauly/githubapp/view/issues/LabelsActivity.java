@@ -61,7 +61,7 @@ public class LabelsActivity extends ToolbarActivity implements LabelsContract.Vi
 
         setupRecyclerView();
 
-        setViewManager(new RefreshViewManager(mRefreshView, mLabelsRV, mEditFAB) {
+        setViewManager(new RefreshViewManager(mRefreshView, mLabelsRV) {
             @Override
             public void load() {
                 getLabels();

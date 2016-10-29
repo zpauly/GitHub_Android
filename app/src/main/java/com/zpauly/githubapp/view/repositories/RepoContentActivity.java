@@ -492,6 +492,7 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
             preRef = ref = repoBean.getDefault_branch();
             isFirstLoad = false;
         }
+        initNav();
     }
 
     @Override
@@ -601,7 +602,6 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
     @Override
     public void initNavMenu() {
         inflaterNavMenu(R.menu.repo_right_nav_menu);
-        initNav();
     }
 
     private void initNav() {
@@ -614,6 +614,7 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
                         RepoCommitActivity.launchActiivty(RepoContentActivity.this, login, name);
                         break;
                     case R.id.repo_right_nav_branches:
+                        BranchesActivity.launchActivity(RepoContentActivity.this, login, name, repoBean.getDefault_branch());
                         break;
                     case R.id.repo_right_nav_releases:
                         RepoReleasesActivity.launchActivity(RepoContentActivity.this, login, name);

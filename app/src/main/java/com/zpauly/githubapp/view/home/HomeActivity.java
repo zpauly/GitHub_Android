@@ -100,6 +100,7 @@ public class HomeActivity extends LeftDrawerActivity {
                         } else {
                             changeFragment(STARS);
                             setToolbarTitle(R.string.starred);
+                            item.setChecked(true);
                         }
                         break;
                     case R.id.navigation_events:
@@ -107,6 +108,7 @@ public class HomeActivity extends LeftDrawerActivity {
                         } else {
                             changeFragment(EVENTS);
                             setToolbarTitle(R.string.events);
+                            item.setChecked(true);
                         }
                         break;
                     case R.id.navigation_explore:
@@ -115,6 +117,7 @@ public class HomeActivity extends LeftDrawerActivity {
                         } else {
                             changeFragment(EXPLORE);
                             setToolbarTitle(R.string.explore);
+                            item.setChecked(true);
                         }
                         break;
                     case R.id.navigation_gists:
@@ -123,6 +126,7 @@ public class HomeActivity extends LeftDrawerActivity {
                         } else {
                             changeFragment(GISTS);
                             setToolbarTitle(R.string.gists);
+                            item.setChecked(true);
                         }
                         break;
                     case R.id.navigation_all_gists:
@@ -131,6 +135,7 @@ public class HomeActivity extends LeftDrawerActivity {
                         } else {
                             changeFragment(All_GISTS);
                             setToolbarTitle(R.string.all_gists);
+                            item.setChecked(true);
                         }
                         break;
                     case R.id.navigation_starred_gists:
@@ -139,6 +144,7 @@ public class HomeActivity extends LeftDrawerActivity {
                         } else {
                             changeFragment(STARRED_GISTS);
                             setToolbarTitle(R.string.starred_gists);
+                            item.setChecked(true);
                         }
                         break;
                     case R.id.navigation_issue:
@@ -147,6 +153,7 @@ public class HomeActivity extends LeftDrawerActivity {
                         } else {
                             changeFragment(ISSUES);
                             setToolbarTitle(R.string.issues);
+                            item.setChecked(true);
                         }
                         break;
                     case R.id.navigation_settings:

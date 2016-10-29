@@ -86,7 +86,7 @@ public class MilestoneActivity extends ToolbarActivity implements MilestoneContr
             public void load() {
                 getMilestones();
             }
-        }, new RefreshViewManager(mRefreshView, mSRLayout, mMilestoneFAB) {
+        }, new RefreshViewManager(mRefreshView, mSRLayout) {
             @Override
             public void load() {
                 getMilestones();

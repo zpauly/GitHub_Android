@@ -97,7 +97,6 @@ public abstract class LeftDrawerActivity extends ToolbarActivity {
                 if (listener != null) {
                     listener.onItemClick(item);
                 }
-                item.setChecked(true);
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 return false;
             }

@@ -45,6 +45,7 @@
         <activity android:name=".view.issues.MilestoneActivity"/>
         <activity android:name=".view.issues.LabelsActivity" />
         <activity android:name=".view.issues.PullRequestContentActivity" />
+        <activity android:name=".view.repositories.BranchesActivity" />
         <activity android:name=".view.settings.SettingsActivity" />
 
         <service android:name=".service.DownloadSevice" />
