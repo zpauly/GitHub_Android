@@ -1,9 +1,16 @@
 package com.zpauly.githubapp.utils;
 
+import android.content.ActivityNotFoundException;
+import android.support.annotation.NonNull;
 import android.text.Html;
+import android.text.Spannable;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
+import android.view.MotionEvent;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.zpauly.githubapp.R;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -20,6 +27,18 @@ public class TextUtil {
 
     public static final int CONTENT_READY = 0;
     public static final String MESSAGE_CONTENT = "MESSAGE_CONTENT";
+
+    public static final LinkMovementMethod CHECKING_LINK_METHOD = new LinkMovementMethod() {
+        @Override
+        public boolean onTouchEvent(@NonNull TextView widget,
+                                    @NonNull Spannable buffer, @NonNull MotionEvent event) {
+            try {
+                return super.onTouchEvent(widget, buffer, event);
+            } catch (ActivityNotFoundException e) {
+                return true;
+            }
+        }
+    };
 
     public static final String timeConverter(String time) {
         return time.substring(0, 4) + "/" + time.substring(5, 7) + "/" + time.substring(8, 10);
@@ -42,7 +61,7 @@ public class TextUtil {
                     @Override
                     public void call(Spanned spanned) {
                         textView.setText(spanned);
-                        textView.setMovementMethod(new LinkMovementMethod());
+                        textView.setMovementMethod(CHECKING_LINK_METHOD);
                     }
                 });
     }
