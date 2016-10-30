@@ -1,5 +1,6 @@
 package com.zpauly.githubapp.network.overview;
 
+import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.base.BaseNetMethod;
 import com.zpauly.githubapp.entity.request.AuthorizationRequest;
@@ -24,7 +25,7 @@ public class OverviewMethod extends BaseNetMethod {
     }
 
     private OverviewMethod() {
-        retrofit = RetrofitUtil.initRetrofit(Constants.GITHUB_API_URL);
+        retrofit = RetrofitUtil.initRetrofit(Api.GitHubApi);
 
         service = retrofit.create(OverviewService.class);
     }

@@ -14,6 +14,7 @@ import com.zpauly.githubapp.entity.response.gists.GistFileMapBean;
 import com.zpauly.githubapp.entity.response.gists.GistsBean;
 import com.zpauly.githubapp.network.gists.GistsMethod;
 import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.utils.DisplayUtil;
 import com.zpauly.githubapp.utils.SPUtil;
 import com.zpauly.githubapp.view.ToolbarActivity;
 
@@ -157,13 +158,9 @@ public class GistFileActivity extends ToolbarActivity {
         } else if (fileName.endsWith(".js")) {
             lang = Settings.Lang.JAVASCRIPT;
         } else {
-            lang = Settings.MimeType.TEXT_HTML;
+            lang = Settings.MimeType.TEXT_PLAIN;
         }
 
-        Codeview.with(this)
-                .setStyle(Settings.WithStyle.GITHUBGIST)
-                .setLang(lang)
-                .withCode(content)
-                .into(mWB);
+        DisplayUtil.showCode(mWB, this, content, lang);
     }
 }

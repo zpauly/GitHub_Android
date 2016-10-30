@@ -1,5 +1,7 @@
 package com.zpauly.githubapp;
 
+import com.protectsoft.webviewcode.Settings;
+
 /**
  * Created by zpauly on 16-6-8.
  */
@@ -24,6 +26,9 @@ public interface Constants {
     //languages value:simplified chinese
     int LANGUAGE_SIMPLIFIED_CHINESE = 1;
 
+    //code style
+    String CODE_STYLE = "CODE_STYLE";
+
     //day night mode key
     String DAY_NIGHT_MODE = "DAY_NIGHT_MODE";
 
@@ -32,6 +37,50 @@ public interface Constants {
 
     //night_mode
     int NIGHT_MODE = 1;
+
+    String[] codeStyleName = {
+            "GITHUB(DEFAULT)",
+            "AGATE",
+            "ANDROIDSTUDIO",
+            "ARDUINO LIGHT",
+            "ARTA",
+            "ASCETIC",
+            "ATELIER DARK",
+            "ATELIER LIGHT",
+            "ATELIER FOREST DARK",
+            "DARKSTYLE",
+            "DARKULA",
+            "DOCCO",
+            "FAR",
+            "GITHUB GIST",
+            "GOOGLECODE",
+            "IDEA",
+            "MAGULA",
+            "OBSIDIAN",
+            "XCODE"
+    };
+
+    String[] codeStyle = {
+            Settings.WithStyle.GITHUB,
+            Settings.WithStyle.AGATE,
+            Settings.WithStyle.ANDROIDSTUDIO,
+            Settings.WithStyle.ARDUINO_LIGHT,
+            Settings.WithStyle.ARTA,
+            Settings.WithStyle.ASCETIC,
+            Settings.WithStyle.ATELIER_DARK,
+            Settings.WithStyle.ARDUINO_LIGHT,
+            Settings.WithStyle.ATELIER_FOREST_DARK,
+            Settings.WithStyle.DARKSTYLE,
+            Settings.WithStyle.DARKULA,
+            Settings.WithStyle.DOCCO,
+            Settings.WithStyle.FAR,
+            Settings.WithStyle.GITHUBGIST,
+            Settings.WithStyle.GOOGLECODE,
+            Settings.WithStyle.IDEA,
+            Settings.WithStyle.MAGULA,
+            Settings.WithStyle.OBSIDIAN,
+            Settings.WithStyle.XCODE
+    };
 
     /**
      * local user information in sharedprefrences
@@ -65,10 +114,6 @@ public interface Constants {
      */
     ///time out
     long DEFAULT_TIMEOUT = 10000;
-
-    //github api
-    String GITHUB_API_URL = "https://api.github.com/";
-
 
     long CLICK_EXIT_TIME = 2000;
 

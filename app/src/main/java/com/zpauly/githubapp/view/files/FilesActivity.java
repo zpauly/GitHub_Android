@@ -22,6 +22,7 @@ import com.zpauly.githubapp.listener.OnDirItemClickListener;
 import com.zpauly.githubapp.presenter.files.FilesContract;
 import com.zpauly.githubapp.presenter.files.FilesPresenter;
 import com.zpauly.githubapp.ui.DividerItemDecoration;
+import com.zpauly.githubapp.utils.DisplayUtil;
 import com.zpauly.githubapp.utils.HtmlImageGetter;
 import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.ToolbarActivity;
@@ -200,11 +201,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
                         }
                         mPathAdapter.swapAllData(paths);
                         mContentRV.setVisibility(View.GONE);
-                        Codeview.with(FilesActivity.this)
-                                .withCode("")
-                                .setStyle(Settings.WithStyle.GITHUB)
-                                .setLang(Settings.Lang.JAVA)
-                                .into(mCodeWB);
+                        DisplayUtil.showCode(mCodeWB, FilesActivity.this, "", Settings.Lang.JAVA);
                         mFileTV.setText("");
                     } else {
                         isFileLoading = false;
@@ -335,8 +332,9 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
             fileContent = fileContent.replaceAll("<", "&lt;");
             fileContent = fileContent.replaceAll(">", "&gt;");
             fileContent = "<div class=\"plain\"><pre>" + fileContent + "</pre></div>";
-        } else {
             language = Settings.MimeType.TEXT_HTML;
+        } else {
+            language = Settings.MimeType.TEXT_PLAIN;
         }
         setCode(language);
     }
@@ -364,10 +362,11 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         mCodeWB.setVisibility(View.VISIBLE);
         mFileLayout.setVisibility(View.GONE);
         Log.i(TAG, fileContent);
-        Codeview.with(this)
-                .withCode(fileContent)
-                .setStyle(Settings.WithStyle.GITHUB)
-                .setLang(lang)
-                .into(mCodeWB);
+        DisplayUtil.showCode(mCodeWB, this, fileContent, lang);
+//        Codeview.with(this)
+//                .withCode(fileContent)
+//                .setStyle(Settings.WithStyle.GITHUB)
+//                .setLang(lang)
+//                .into(mCodeWB);
     }
 }

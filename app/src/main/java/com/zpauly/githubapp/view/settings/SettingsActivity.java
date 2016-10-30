@@ -9,8 +9,11 @@ import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.widget.CompoundButton;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.base.BaseApplication;
+import com.zpauly.githubapp.utils.SPUtil;
 import com.zpauly.githubapp.view.ToolbarActivity;
 import com.zpauly.githubapp.view.dialog.AboutMeDialogFragment;
 import com.zpauly.githubapp.view.dialog.OpenSourceComponentsDialog;
@@ -22,19 +25,41 @@ import com.zpauly.githubapp.view.dialog.OpenSourceComponentsDialog;
 public class SettingsActivity extends ToolbarActivity {
     private final String TAG = getClass().getName();
 
+    private AppCompatTextView mCodeStyleTV;
     private AppCompatTextView mAboutMeTV;
     private AppCompatTextView mOpenSourceComponentsTV;
     private SwitchCompat mNightSC;
+
+    private MaterialDialog mCodeStyleDialog;
 
     @Override
     public void initViews() {
         setContent(R.layout.content_settings);
 
+        mCodeStyleTV = (AppCompatTextView) findViewById(R.id.settings_code_style_TV);
         mAboutMeTV = (AppCompatTextView) findViewById(R.id.settings_about_me_TV);
         mOpenSourceComponentsTV = (AppCompatTextView) findViewById(R.id.settings_open_source_TV);
         mNightSC = (SwitchCompat) findViewById(R.id.night_theme_SC);
 
+        setupCodeStyleDialog();
         setupViews();
+    }
+
+    private void setupCodeStyleDialog() {
+        int lastCodeStyle = SPUtil.getInt(this, Constants.LOCAL_CONFIGURATION, Constants.CODE_STYLE, 0);
+        mCodeStyleDialog = new MaterialDialog.Builder(this)
+                .title(R.string.choose_code_style)
+                .items(Constants.codeStyleName)
+                .itemsCallbackSingleChoice(lastCodeStyle, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                        SPUtil.putInt(SettingsActivity.this, Constants.LOCAL_CONFIGURATION,
+                                Constants.CODE_STYLE, which);
+                        return true;
+                    }
+                })
+                .positiveText(R.string.ok)
+                .build();
     }
 
     @Override
@@ -50,6 +75,12 @@ public class SettingsActivity extends ToolbarActivity {
     }
 
     private void setupViews() {
+        mCodeStyleTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCodeStyleDialog.show();
+            }
+        });
         mAboutMeTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

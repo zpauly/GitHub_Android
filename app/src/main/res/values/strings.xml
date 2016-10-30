@@ -197,6 +197,9 @@
     <string name="expandabletextview">Manabu-GT/ExpandableTextView</string>
     <string name="expandabletextview_link">https://github.com/Manabu-GT/ExpandableTextView</string>
 
+    <string name="choose_code_style">Choose A Code Style</string>
+    <string name="code_style">Code Style</string>
+
     <string name="contract_me_details">If you have any issues or suggestions,welcome to contract me.Any kind of feedback is greatly appreciated.</string>
 
     <string name="exit">Sign out</string>
