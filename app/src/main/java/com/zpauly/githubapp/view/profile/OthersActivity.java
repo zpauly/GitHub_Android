@@ -173,7 +173,7 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
             setToolbarTitle(username);
         } else {
             setToolbarTitle(SPUtil.getString(this,
-                    Constants.USER_INFO, Constants.USER_USERNAME, null));
+                    Constants.USER_INFO, Constants.USER_LOGIN, null));
         }
         setOnToolbarNavClickedListener(new View.OnClickListener() {
             @Override

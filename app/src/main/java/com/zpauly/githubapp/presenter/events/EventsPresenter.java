@@ -54,7 +54,7 @@ public class EventsPresenter extends NetPresenter implements EventsContract.Pres
 
     @Override
     public void getUserEvents() {
-        String username = SPUtil.getString(mContext, Constants.USER_INFO, Constants.USER_USERNAME, null);
+        String username = SPUtil.getString(mContext, Constants.USER_INFO, Constants.USER_LOGIN, null);
         mEventsSubscriber = new Subscriber<List<EventsBean>>() {
             @Override
             public void onCompleted() {
@@ -82,7 +82,7 @@ public class EventsPresenter extends NetPresenter implements EventsContract.Pres
 
     @Override
     public void getReceivedEvents() {
-        String username = SPUtil.getString(mContext, Constants.USER_INFO, Constants.USER_USERNAME, null);
+        String username = SPUtil.getString(mContext, Constants.USER_INFO, Constants.USER_LOGIN, null);
         mEventsSubscriber = new Subscriber<List<EventsBean>>() {
             @Override
             public void onCompleted() {

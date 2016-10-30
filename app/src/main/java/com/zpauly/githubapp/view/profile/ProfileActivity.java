@@ -314,7 +314,7 @@ public class ProfileActivity extends ToolbarActivity implements ProfileContract.
 
     @Override
     public String getUsername() {
-        return SPUtil.getString(this, Constants.USER_INFO, Constants.USER_USERNAME, null);
+        return SPUtil.getString(this, Constants.USER_INFO, Constants.USER_LOGIN, null);
     }
 
     @Override

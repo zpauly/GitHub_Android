@@ -316,7 +316,7 @@ public class IssueCreateActivity extends ToolbarActivity implements IssueCreateC
                     body = mBodyET.getText().toString();
                 }
                 createdIssueRequestBean.setAssignee(SPUtil.getString(IssueCreateActivity.this,
-                        Constants.USER_INFO, Constants.USER_USERNAME, null));
+                        Constants.USER_INFO, Constants.USER_LOGIN, null));
                 createdIssueRequestBean.setTitle(title);
                 createdIssueRequestBean.setBody(body);
                 mUploadingDialog.show();
@@ -481,7 +481,7 @@ public class IssueCreateActivity extends ToolbarActivity implements IssueCreateC
     @Override
     public String getUsername() {
         return SPUtil.getString(IssueCreateActivity.this,
-                Constants.USER_INFO, Constants.USER_USERNAME, null);
+                Constants.USER_INFO, Constants.USER_LOGIN, null);
     }
 
     @Override
