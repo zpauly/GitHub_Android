@@ -15,6 +15,7 @@ import android.view.Display;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.ui.URLDrawable;
@@ -25,7 +26,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 
 import pl.droidsonroids.gif.GifDrawable;
 
@@ -180,6 +180,7 @@ public class HtmlImageGetter implements Html.ImageGetter {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+                MobclickAgent.reportError(context, e);
                 return returnErrorDrawable();
             }
         }

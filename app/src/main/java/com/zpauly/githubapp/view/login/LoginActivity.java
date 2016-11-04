@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.umeng.analytics.MobclickAgent;
 import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.base.BaseActivity;
@@ -213,6 +214,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         SPUtil.putString(this, Constants.USER_INFO, Constants.USER_EMAIL, user.getEmail());
         SPUtil.putString(this, Constants.USER_INFO, Constants.USER_AVATAR, user.getAvatar_url());
         SPUtil.putString(this, Constants.USER_INFO, Constants.USER_LOGIN, user.getLogin());
+        MobclickAgent.onProfileSignIn(user.getLogin());
     }
 
     @Override

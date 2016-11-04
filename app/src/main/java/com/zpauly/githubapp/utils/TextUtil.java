@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.umeng.analytics.MobclickAgent;
 import com.zpauly.githubapp.R;
 
 import rx.Observable;
@@ -35,6 +36,7 @@ public class TextUtil {
             try {
                 return super.onTouchEvent(widget, buffer, event);
             } catch (ActivityNotFoundException e) {
+                MobclickAgent.reportError(widget.getContext(), e);
                 return true;
             }
         }

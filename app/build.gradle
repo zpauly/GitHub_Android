@@ -1,10 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'bugly'
-
-bugly {
-    appId = '${BUGLY_ID}'
-    appKey = '${BUGLY_KEY}'
-}
 
 android {
     compileSdkVersion 24
@@ -45,5 +39,5 @@ dependencies {
     compile 'com.caverock:androidsvg:1.2.1'
     compile 'Codeview-1.0.0:webviewcode:1.0.0'
     compile 'com.ms-square:expandableTextView:0.1.4'
-    compile 'com.tencent.bugly:crashreport:latest.release'
+    compile 'com.umeng.analytics:analytics:latest.integration'
 }

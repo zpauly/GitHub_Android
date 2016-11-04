@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 
+import com.umeng.analytics.MobclickAgent;
 import com.zpauly.githubapp.utils.viewmanager.LoadMoreInSwipeRefreshLayoutMoreManager;
 import com.zpauly.githubapp.utils.viewmanager.LoadMoreManager;
 import com.zpauly.githubapp.utils.viewmanager.RefreshViewManager;
@@ -34,6 +35,18 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private Slide slide;
     private Fade fade;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
