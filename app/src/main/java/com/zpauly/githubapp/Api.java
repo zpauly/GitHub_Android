@@ -13,4 +13,6 @@ public interface Api {
     String[] SCPOES = {"public_repo"};
 
     String NOTE = "admin script";
+
+    String BUGLY_ID = "900058702";
 }

@@ -7,6 +7,8 @@ import android.content.res.Resources;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.DisplayMetrics;
 
+import com.tencent.bugly.crashreport.CrashReport;
+import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.utils.LanguageUtil;
 import com.zpauly.githubapp.utils.RetrofitUtil;
@@ -39,6 +41,7 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        CrashReport.initCrashReport(getApplicationContext(), Api.BUGLY_ID, true);
         dayNightMode = SPUtil.getInt(this, Constants.LOCAL_CONFIGURATION, Constants.DAY_NIGHT_MODE, DAY_MODE);
 
         RetrofitUtil.setupContext(getApplicationContext());
