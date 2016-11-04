@@ -2,6 +2,7 @@ package com.zpauly.githubapp.view.repositories;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -152,7 +153,11 @@ public class RepoCommitActivity extends ToolbarActivity implements RepoCommitCon
     @Override
     public void getCommitsFail() {
         mCommitSRLayout.setRefreshing(false);
-        mRefreshView.refreshFail();
+        if (!mRefreshView.isRefreshSuccess()) {
+            mRefreshView.refreshFail();
+        } else {
+            Snackbar.make(mRefreshView, R.string.error_occurred, Snackbar.LENGTH_SHORT);
+        }
     }
 
     @Override

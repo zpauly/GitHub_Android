@@ -171,58 +171,57 @@
 
                 <android.support.v7.widget.CardView
                     android:layout_margin="@dimen/card_margin"
+                    style="@style/CardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/repo_content_issues_TV"
-                        android:textColor="@color/colorPrimaryDark"
+                    <LinearLayout
                         android:clickable="true"
                         android:background="?attr/selectableItemBackground"
-                        android:text="@string/issues"
-                        android:padding="@dimen/components_padding"
-                        style="@style/Base.TextAppearance.AppCompat.Title"
-                        android:gravity="center"
+                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content">
 
-                </android.support.v7.widget.CardView>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/repo_content_issues_TV"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:clickable="true"
+                            android:layout_weight="1"
+                            android:background="?attr/selectableItemBackground"
+                            android:text="@string/issues"
+                            android:padding="@dimen/components_padding"
+                            style="@style/Base.TextAppearance.AppCompat.Title"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
 
-                <android.support.v7.widget.CardView
-                    android:layout_margin="@dimen/card_margin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/repo_content_view_files_TV"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:clickable="true"
+                            android:layout_weight="1"
+                            android:background="?attr/selectableItemBackground"
+                            android:text="@string/view_repo_content"
+                            android:padding="@dimen/components_padding"
+                            style="@style/Base.TextAppearance.AppCompat.Title"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
 
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/repo_content_pull_requests_TV"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:clickable="true"
-                        android:background="?attr/selectableItemBackground"
-                        android:text="@string/pull_requests"
-                        android:padding="@dimen/components_padding"
-                        style="@style/Base.TextAppearance.AppCompat.Title"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/repo_content_pull_requests_TV"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:clickable="true"
+                            android:layout_weight="1"
+                            android:background="?attr/selectableItemBackground"
+                            android:text="@string/pull_requests"
+                            android:padding="@dimen/components_padding"
+                            style="@style/Base.TextAppearance.AppCompat.Title"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
 
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
-                    android:layout_margin="@dimen/card_margin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/repo_content_view_files_TV"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:clickable="true"
-                        android:background="?attr/selectableItemBackground"
-                        android:text="@string/view_repo_content"
-                        android:padding="@dimen/components_padding"
-                        style="@style/Base.TextAppearance.AppCompat.Title"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                    </LinearLayout>
 
                 </android.support.v7.widget.CardView>
 

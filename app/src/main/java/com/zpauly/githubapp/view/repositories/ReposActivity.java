@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -170,7 +171,11 @@ public class ReposActivity extends ToolbarActivity implements ReposContract.View
     @Override
     public void loadFail() {
         mReposSwLayout.setRefreshing(false);
-        mRefreshView.refreshFail();
+        if (!mRefreshView.isRefreshSuccess()) {
+            mRefreshView.refreshFail();
+        } else {
+            Snackbar.make(mRefreshView, R.string.error_occurred, Snackbar.LENGTH_SHORT);
+        }
     }
 
     @Override

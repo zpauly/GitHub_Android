@@ -1,6 +1,7 @@
 package com.zpauly.githubapp.view.stars;
 
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -171,7 +172,11 @@ public class StarsFragment extends ToolbarMenuFragment implements StarContract.V
     @Override
     public void loadFail() {
         mStarredReposSRLayout.setRefreshing(false);
-        mRefreshView.refreshFail();
+        if (!mRefreshView.isRefreshSuccess()) {
+            mRefreshView.refreshFail();
+        } else {
+            Snackbar.make(mRefreshView, R.string.error_occurred, Snackbar.LENGTH_SHORT);
+        }
     }
 
     @Override

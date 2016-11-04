@@ -6,7 +6,7 @@
     <string name="loading">Loading......</string>
     <string name="load_fail">Fail to load</string>
     <string name="please_wait">Please Wait</string>
-    <string name="error_occurred">Error Occurred</string>
+    <string name="error_occurred">Error Occurred, Please Check Your Internet</string>
 
     <string name="profile">Profile</string>
     <string name="followers">Followers</string>
@@ -40,7 +40,7 @@
     <string name="stargazers">Stargazers</string>
     <string name="forks">Forks</string>
     <string name="readme">README</string>
-    <string name="view_repo_content">View The Files</string>
+    <string name="view_repo_content">Files</string>
     <string name="click_load_again">Click To Load Again</string>
     <string name="search">Search</string>
     <string name="search_hint">Search...</string>

@@ -2,6 +2,7 @@ package com.zpauly.githubapp.view.issues;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -165,6 +166,8 @@ public class PullRequestsFilesFragment extends BaseFragment implements PullReque
         mSRLayout.setRefreshing(false);
         if (!mRefreshView.isRefreshSuccess()) {
             mRefreshView.refreshFail();
+        } else {
+            Snackbar.make(mRefreshView, R.string.error_occurred, Snackbar.LENGTH_SHORT);
         }
     }
 

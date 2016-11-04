@@ -2,6 +2,7 @@ package com.zpauly.githubapp.view.issues;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
@@ -230,9 +231,10 @@ public class IssueContentActivity extends ToolbarActivity implements IssueConten
     @Override
     public void getCommentsFail() {
         mSRLayout.setRefreshing(false);
-        mRefreshView.refreshFail();
         if (!mRefreshView.isRefreshSuccess()) {
-            mPresenter.setPageId(1);
+            mRefreshView.refreshFail();
+        } else {
+            Snackbar.make(mRefreshView, R.string.error_occurred, Snackbar.LENGTH_SHORT);
         }
     }
 

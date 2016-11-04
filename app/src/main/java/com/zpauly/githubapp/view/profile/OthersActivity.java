@@ -313,7 +313,11 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
     @Override
     public void loadInfoFail() {
         mSWLayout.setRefreshing(false);
-        mRefreshView.refreshFail();
+        if (!mRefreshView.isRefreshSuccess()) {
+            mRefreshView.refreshFail();
+        } else {
+            Snackbar.make(mRefreshView, R.string.error_occurred, Snackbar.LENGTH_SHORT);
+        }
     }
 
     @Override

@@ -143,7 +143,9 @@ public class RepoReleasesActivity extends ToolbarActivity implements ReleasesCon
     @Override
     public void getReleasesFail() {
         mReleasesSRLayout.setRefreshing(false);
-        mRefreshView.refreshFail();
+        if (mRefreshView.isRefreshSuccess()) {
+            mRefreshView.refreshFail();
+        }
     }
 
     @Override

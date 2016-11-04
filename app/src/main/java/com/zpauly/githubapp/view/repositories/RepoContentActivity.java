@@ -465,7 +465,11 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
     public void loadReadMeFail() {
         mLoadAgainTV.setVisibility(View.VISIBLE);
         mReadMePB.setVisibility(View.GONE);
-        mRefreshView.refreshFail();
+        if (!mRefreshView.isRefreshSuccess()) {
+            mRefreshView.refreshFail();
+        } else {
+            Snackbar.make(mRefreshView, R.string.error_occurred, Snackbar.LENGTH_SHORT);
+        }
     }
 
     @Override
@@ -522,7 +526,11 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
     @Override
     public void loadRepoFail() {
         mSRLayout.setRefreshing(false);
-        mRefreshView.refreshFail();
+        if (!mRefreshView.isRefreshSuccess()) {
+            mRefreshView.refreshFail();
+        } else {
+            Snackbar.make(mRefreshView, R.string.error_occurred, Snackbar.LENGTH_SHORT);
+        }
     }
 
     @Override

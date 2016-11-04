@@ -2,6 +2,7 @@ package com.zpauly.githubapp.view.issues;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -476,9 +477,10 @@ public class IssuesOrPullRequestsFragment extends ToolbarMenuFragment implements
     @Override
     public void getPullRequestsFail() {
         mSRLayout.setRefreshing(false);
-        mRefreshView.refreshFail();
         if (!mRefreshView.isRefreshSuccess()) {
-            mPresenter.setPageId(1);
+            mRefreshView.refreshFail();
+        } else {
+            Snackbar.make(mRefreshView, R.string.error_occurred, Snackbar.LENGTH_SHORT);
         }
     }
 
