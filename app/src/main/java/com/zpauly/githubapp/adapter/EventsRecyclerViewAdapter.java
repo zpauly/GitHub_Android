@@ -82,7 +82,18 @@ public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Event
         if ("WatchEvent".equals(type)) {
             holder.mActionTV.setText("starred ");
             holder.mTypeIV.setImageResource(R.mipmap.ic_star);
-        } else if ("CreateEvent".equals(type)) {
+        } else if ("RepositoryEvent".equals(type)) {
+            holder.mTypeIV.setImageResource(R.mipmap.ic_repos);
+            if (payloadBean.getAction().equals("created")) {
+                holder.mActionTV.setText("create " + payloadBean.getRef_type());
+            } else if (payloadBean.getAction().equals("deleted")) {
+                holder.mActionTV.setText("deleted " + payloadBean.getRef_type());
+            } else if (payloadBean.getAction().equals("publicized")) {
+                holder.mActionTV.setText("publicized " + payloadBean.getRef_type());
+            } else if (payloadBean.getAction().equals("privatized")) {
+                holder.mActionTV.setText("privatized " + payloadBean.getRef_type());
+            }
+        }else if ("CreateEvent".equals(type)) {
             if (payloadBean.getRef_type().equals("repository")) {
                 holder.mActionTV.setText("create " + payloadBean.getRef_type());
                 holder.mTypeIV.setImageResource(R.mipmap.ic_repos);
@@ -142,7 +153,30 @@ public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Event
         } else if ("PublicEvent".equals(type)) {
             holder.mTypeIV.setImageResource(R.mipmap.ic_repos);
             holder.mActionTV.setText("made the repository public");
+        } else if ("LabelEvent".equals(type)) {
+            holder.mTypeIV.setImageResource(R.drawable.ic_label);
+            if ("created".equals(payloadBean.getAction())) {
+                holder.mActionTV.setText("created a label at ");
+            } else if ("edited".equals(payloadBean.getAction())){
+                holder.mActionTV.setText("updated a label at ");
+            } else if ("deleted".equals(payloadBean.getAction())) {
+                holder.mActionTV.setText("deleted a label at ");
+            }
+        } else if ("MilestoneEvent".equals(type)) {
+            holder.mTypeIV.setImageResource(R.drawable.ic_milestone);
+            if ("created".equals(payloadBean.getAction())) {
+                holder.mActionTV.setText("created a milestone at ");
+            } else if ("edited".equals(payloadBean.getAction())){
+                holder.mActionTV.setText("updated a milestone at ");
+            } else if ("deleted".equals(payloadBean.getAction())) {
+                holder.mActionTV.setText("deleted a milestone at ");
+            } else if ("closed".equals(payloadBean.getAction())) {
+                holder.mActionTV.setText("closed a milestone at ");
+            } else if ("opened".equals(payloadBean.getAction())) {
+                holder.mActionTV.setText("opened a milestone at ");
+            }
         } else {
+            holder.itemView.setVisibility(View.GONE);
             Log.i(TAG, type + position);
         }
     }

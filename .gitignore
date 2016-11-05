@@ -1,5 +1,6 @@
 *.iml
 *.apk
+*.dex
 /.gradle
 /local.properties
 /.idea/libraries
