@@ -43,7 +43,7 @@ public class TextUtil {
     };
 
     public static final String timeConverter(String time) {
-        return time.substring(0, 4) + "/" + time.substring(5, 7) + "/" + time.substring(8, 10);
+        return time.substring(0, 10);
     }
 
     public static void showReadMe(final TextView textView, final String content, final Html.ImageGetter imageGetter) {

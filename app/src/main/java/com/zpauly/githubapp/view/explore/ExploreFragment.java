@@ -81,7 +81,7 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
         setViewManager(new LoadMoreInSwipeRefreshLayoutMoreManager(mExploreRV, mExploreSRLayout) {
             @Override
             public void load() {
-                searchRepos();
+                search();
             }
         });
 
@@ -124,7 +124,7 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
         mUsersAdapter.hideLoadingView();
     }
 
-    private void searchRepos() {
+    private void search() {
         switch (typeTag) {
             case TYPE_REPOS:
                 mPresenter.getSearchRepos();
@@ -233,6 +233,8 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
             default:
                 break;
         }
+        mPresenter.setPageId(1);
+        search();
         return true;
     }
 
@@ -247,21 +249,17 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                reposList.clear();
-                usersList.clear();
-                ExploreFragment.this.query = query;
-                mExploreSRLayout.setRefreshing(true);
-                switch (typeTag) {
-                    case TYPE_REPOS:
-                        break;
-                    case TYPE_CODE:
-                        break;
-                    case TYPE_USERS:
-                        break;
-                    default:
-                        break;
+                String[] strings = query.split(" ");
+                StringBuilder stringBuilder = new StringBuilder();
+                for (int i = 0; i < strings.length; i++) {
+                    stringBuilder.append(strings[i]);
+                    if (i != (strings.length - 1))
+                        stringBuilder.append("+");
                 }
-                searchRepos();
+                ExploreFragment.this.query = stringBuilder.toString();
+                mExploreSRLayout.setRefreshing(true);
+                mPresenter.setPageId(1);
+                search();
                 return false;
             }
 
@@ -289,20 +287,25 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
 
     @Override
     public void searchingUsers(SearchUsersBean bean) {
-        Log.i(TAG, String.valueOf(bean.getItems().size()));
         loadMoreInSwipeRefreshLayoutMoreManager.hasNoMoreData(bean.getItems(), mUsersAdapter);
+        if (mExploreSRLayout.isRefreshing()) {
+            usersList.clear();
+        }
         usersList.addAll(bean.getItems());
     }
 
     @Override
     public void searchingCode(SearchCodeBean bean) {
-        Log.i(TAG, String.valueOf(bean.getItems().size()));
+
     }
 
     @Override
     public void searchingRepos(SearchReposBean bean) {
-        Log.i(TAG, String.valueOf(bean.getItems().size()));
         loadMoreInSwipeRefreshLayoutMoreManager.hasNoMoreData(bean.getItems(), mReposAdapter);
+        if (mExploreSRLayout.isRefreshing()) {
+            reposList.clear();
+        }
+        Log.i(TAG, bean.getItems().get(0).getName());
         reposList.addAll(bean.getItems());
     }
 
