@@ -57,12 +57,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     public void initViews() {
-        if (!SPUtil.getBoolean(this, Constants.LOCAL_CONFIGURATION, Constants.FIRST_USED, true)) {
-            Intent intent = new Intent();
-            intent.setClass(this, HomeActivity.class);
-            startActivity(intent);
-            finish();
-        }
         new LoginPresenter(this, this);
         mPresenter.start();
 

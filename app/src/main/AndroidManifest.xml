@@ -18,13 +18,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data android:value="581c7cb8677baa60690007d2" android:name="UMENG_APPKEY"/>
-        <activity android:name=".view.login.LoginActivity">
+        <activity android:name=".view.SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.login.LoginActivity"/>
         <activity android:name=".view.home.HomeActivity" />
         <activity android:name=".view.repositories.ReposActivity" />
         <activity android:name=".view.events.EventsActivity" />

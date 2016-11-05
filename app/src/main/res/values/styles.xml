@@ -7,9 +7,11 @@
         <item name="android:textColorPrimary">@color/abc_primary_text_material_dark</item>
     </style>
 
-    <!-- Base application theme. -->
+    <style name="SplashTheme" parent="BaseTheme">
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+    </style>
+
     <style name="AppTheme" parent="BaseTheme">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
