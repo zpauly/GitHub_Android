@@ -178,20 +178,25 @@
                     <LinearLayout
                         android:clickable="true"
                         android:background="?attr/selectableItemBackground"
-                        android:orientation="horizontal"
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            style="@style/Base.TextAppearance.AppCompat.Subhead"
+                            android:padding="@dimen/components_padding"
+                            android:text="@string/details"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/repo_content_issues_TV"
                             android:textColor="@color/colorPrimaryDark"
                             android:clickable="true"
-                            android:layout_weight="1"
                             android:background="?attr/selectableItemBackground"
                             android:text="@string/issues"
                             android:padding="@dimen/components_padding"
                             style="@style/Base.TextAppearance.AppCompat.Title"
-                            android:gravity="center"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
@@ -199,12 +204,10 @@
                             android:id="@+id/repo_content_view_files_TV"
                             android:textColor="@color/colorPrimaryDark"
                             android:clickable="true"
-                            android:layout_weight="1"
                             android:background="?attr/selectableItemBackground"
                             android:text="@string/view_repo_content"
                             android:padding="@dimen/components_padding"
                             style="@style/Base.TextAppearance.AppCompat.Title"
-                            android:gravity="center"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
@@ -212,12 +215,10 @@
                             android:id="@+id/repo_content_pull_requests_TV"
                             android:textColor="@color/colorPrimaryDark"
                             android:clickable="true"
-                            android:layout_weight="1"
                             android:background="?attr/selectableItemBackground"
                             android:text="@string/pull_requests"
                             android:padding="@dimen/components_padding"
                             style="@style/Base.TextAppearance.AppCompat.Title"
-                            android:gravity="center"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
@@ -231,14 +232,14 @@
                     android:layout_height="wrap_content">
 
                     <LinearLayout
+                        android:clickable="true"
+                        android:background="?attr/selectableItemBackground"
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
                         <LinearLayout
                             android:id="@+id/repo_content_readme_title_layout"
-                            android:clickable="true"
-                            android:background="?attr/selectableItemBackground"
                             android:padding="@dimen/components_padding"
                             android:gravity="center_vertical"
                             android:layout_width="match_parent"

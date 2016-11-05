@@ -33,6 +33,8 @@ public class RepoContentContract {
         void watchRepo();
 
         void unwatchRepo();
+
+        void createAFork();
     }
 
     public interface View extends BaseView<Presenter> {
@@ -89,6 +91,12 @@ public class RepoContentContract {
         void unwatchSuccess();
 
         void unwatchFail();
+
+        void forking(RepositoriesBean repositoriesBean);
+
+        void forkSuccess();
+
+        void forkFail();
 
         String getUsername();
 

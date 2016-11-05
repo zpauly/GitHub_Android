@@ -4,7 +4,7 @@
     <string name="test">11111</string>
 
     <string name="loading">Loading......</string>
-    <string name="load_fail">Fail to load</string>
+    <string name="load_fail">Failed to load</string>
     <string name="please_wait">Please Wait</string>
     <string name="error_occurred">Error Occurred, Please Check Your Internet</string>
 
@@ -75,7 +75,10 @@
     <string name="download_fail">Download fail</string>
     <string name="no_free_space">No free space</string>
 
-
+    <string name="details">Details</string>
+    <string name="fork">Fork</string>
+    <string name="fork_success">Succeed to Fork</string>
+    <string name="fork_fail">Failed to fork</string>
     <string name="follow">Follow</string>
     <string name="unfollow">Unfollow</string>
 
@@ -83,21 +86,21 @@
     <string name="not_watching">Not watching</string>
     <string name="watching">Watching</string>
     
-    <string name="watch_success">Watch Success</string>
-    <string name="watch_fail">Watch Fail</string>
-    <string name="stop_watch_success">Stop Watch Success</string>
-    <string name="stop_watch_fail">Stop Watch Fail</string>
-    <string name="follow_success">Follow Success</string>
-    <string name="follow_fail">Follow Success</string>
-    <string name="unfollow_success">Unfollow Success</string>
-    <string name="unfollow_fail">Unfollow Fail</string>
+    <string name="watch_success">Succeed to Watch</string>
+    <string name="watch_fail">Fail to Watch</string>
+    <string name="stop_watch_success">Succeed to Stop Watch</string>
+    <string name="stop_watch_fail">Fail to Stop Watch</string>
+    <string name="follow_success">Succeed to Follow</string>
+    <string name="follow_fail">Fail to Follow</string>
+    <string name="unfollow_success">Succeed to Unfollow</string>
+    <string name="unfollow_fail">Fail to Unfollow</string>
 
     <string name="language_setting">LANGUAEG SETTING</string>
     <string name="simplified_chinese">中文</string>
     <string name="english">English</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
-    <string name="please_choose">Please Make a Choose</string>
+    <string name="please_choose">Please Make a Choice</string>
     <string name="please_input_username">Empty Username</string>
     <string name="please_input_password">Empty Password</string>
 

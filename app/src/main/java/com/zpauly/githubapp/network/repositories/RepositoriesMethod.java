@@ -198,4 +198,12 @@ public class RepositoriesMethod extends BaseNetMethod {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
+
+    public void createAFork(Observer<RepositoriesBean> observer,
+                            String auth, String owner, String repo) {
+        service.createAFork(auth, owner, repo)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
 }

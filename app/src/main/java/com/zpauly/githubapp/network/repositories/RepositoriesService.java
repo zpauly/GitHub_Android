@@ -291,4 +291,16 @@ public interface RepositoriesService {
                                                 @Path("repo") String repo,
                                                 @Query("sort") String sort,
                                                 @Query("page") int pageId);
+
+    /**
+     * Create a fork for the authenticated user.
+     * @param auth
+     * @param owner
+     * @param repo
+     * @return
+     */
+    @POST("/repos/{owner}/{repo}/forks")
+    Observable<RepositoriesBean> createAFork(@Header("Authorization") String auth,
+                                             @Path("owner") String owner,
+                                             @Path("repo") String repo);
 }

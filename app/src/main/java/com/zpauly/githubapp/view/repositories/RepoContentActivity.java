@@ -85,6 +85,7 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
 
     private MenuItem mMenuItemStar;
     private MenuItem mMenuWatch;
+    private MenuItem mMenuFork;
 
     private RefreshView mRefreshView;
 
@@ -396,6 +397,11 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
         mPresenter.checkWatched();
     }
 
+    private void createAFork() {
+        mPresenter.createAFork();
+        mLoadingDialog.show();
+    }
+
     private void starRepo() {
         mPresenter.starRepo();
         mLoadingDialog.show();
@@ -639,6 +645,23 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
     }
 
     @Override
+    public void forking(RepositoriesBean repositoriesBean) {
+
+    }
+
+    @Override
+    public void forkSuccess() {
+        mLoadingDialog.dismiss();
+        Snackbar.make(getCurrentFocus(), R.string.fork_success, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void forkFail() {
+        mLoadingDialog.dismiss();
+        Snackbar.make(getCurrentFocus(), R.string.fork_fail, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
     public String getUsername() {
         return login;
     }
@@ -665,6 +688,8 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
         mMenuItemStar.setVisible(false);
         mMenuWatch = menu.findItem(R.id.repo_menu_watch);
         mMenuWatch.setVisible(false);
+        mMenuFork = menu.findItem(R.id.repo_menu_fork);
+        mMenuFork.setVisible(false);
         checkStarred();
         checkWatched();
         setOnMenuItemSelectedListener(new OnMenuItemSelectedListener() {
@@ -685,6 +710,9 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
                         } else {
                             watchRepo();
                         }
+                        break;
+                    case R.id.repo_menu_fork:
+                        createAFork();
                         break;
                     case R.id.repo_menu_choose:
                         openDrawer();
@@ -750,6 +778,7 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
             mToolbarPB.setVisibility(View.GONE);
             mMenuWatch.setVisible(true);
             mMenuItemStar.setVisible(true);
+            mMenuFork.setVisible(true);
         }
     }
 }

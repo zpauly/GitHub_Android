@@ -35,6 +35,7 @@ public class RepoContentPresenter extends NetPresenter implements Presenter {
     private Subscriber<List<BranchBean>> branchesSubscriber;
     private Subscriber<List<TagBean>> tagsSubscriber;
     private Subscriber<String> watchSubscriber;
+    private Subscriber<RepositoriesBean> createForkSubscriber;
 
     public RepoContentPresenter(Context context, RepoContentContract.View view) {
         mContext = context;
@@ -52,7 +53,7 @@ public class RepoContentPresenter extends NetPresenter implements Presenter {
 
     @Override
     public void stop() {
-        unsubscribe(repoSubscriber, repoContentSubscriber, starSubscriber, watchSubscriber);
+        unsubscribe(repoSubscriber, repoContentSubscriber, starSubscriber, watchSubscriber, createForkSubscriber);
     }
 
     @Override
@@ -300,5 +301,28 @@ public class RepoContentPresenter extends NetPresenter implements Presenter {
         };
         activityMethod.unwatchARepo(watchSubscriber, auth,
                 mRepoContentView.getUsername(), mRepoContentView.getRepoName());
+    }
+
+    @Override
+    public void createAFork() {
+        createForkSubscriber = new Subscriber<RepositoriesBean>() {
+            @Override
+            public void onCompleted() {
+                mRepoContentView.forkSuccess();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                mRepoContentView.forkFail();
+            }
+
+            @Override
+            public void onNext(RepositoriesBean repositoriesBean) {
+                mRepoContentView.forking(repositoriesBean);
+            }
+        };
+        method.createAFork(createForkSubscriber, auth, mRepoContentView.getUsername(),
+                mRepoContentView.getRepoName());
     }
 }
