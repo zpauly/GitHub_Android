@@ -51,6 +51,11 @@ public abstract class BaseAdapter<D, VH extends RecyclerView.ViewHolder> extends
         return result;
     }
 
+    public void clearAllData() {
+        mData.clear();
+        notifyDataSetChanged();
+    }
+
     protected int getDataCount() {
         return mData.size();
     }

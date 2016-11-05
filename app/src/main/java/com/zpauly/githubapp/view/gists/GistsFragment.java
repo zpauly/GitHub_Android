@@ -80,7 +80,6 @@ public class GistsFragment extends BaseFragment implements GistsContract.View {
         }, new RefreshViewManager(mRefreshView, mSRLayout) {
             @Override
             public void load() {
-                list.clear();
                 loadGists();
             }
         });

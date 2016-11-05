@@ -9,6 +9,7 @@ import android.util.Log;
 import com.zpauly.githubapp.adapter.LoadMoreRecyclerViewAdapter;
 import com.zpauly.githubapp.listener.LoadListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +21,8 @@ public abstract class LoadMoreManager implements ViewManager, LoadListener {
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
+
+    private LinearLayoutManager manager;
 
     public LoadMoreManager(RecyclerView recyclerView, SwipeRefreshLayout swipeRefreshLayout) {
         this.recyclerView = recyclerView;
@@ -34,14 +37,19 @@ public abstract class LoadMoreManager implements ViewManager, LoadListener {
     public boolean hasNoMoreData(List<?> list, LoadMoreRecyclerViewAdapter adapter) {
         if (list == null || list.size() == 0) {
             Log.i(TAG, "has no more");
-            if (adapter.isHasMoreData()) {
                 adapter.setHasLoading(false);
                 if (recyclerView.getScrollState() == RecyclerView.SCROLL_STATE_IDLE) {
                     adapter.notifyDataSetChanged();
                 }
-            }
             return true;
         } else {
+            int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
+            int firstItemPosition = manager.findFirstCompletelyVisibleItemPosition();
+            if (lastItemPosition == adapter.getItemCount() - 1 && firstItemPosition == 0) {
+                adapter.setHasLoading(false);
+            } else {
+                adapter.setHasLoading(true);
+            }
             return false;
         }
     }
@@ -58,7 +66,7 @@ public abstract class LoadMoreManager implements ViewManager, LoadListener {
         if (!(recyclerView.getAdapter() instanceof LoadMoreRecyclerViewAdapter)) {
             return;
         }
-        final LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        manager = (LinearLayoutManager) recyclerView.getLayoutManager();
         final LoadMoreRecyclerViewAdapter adapter = (LoadMoreRecyclerViewAdapter) recyclerView.getAdapter();
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
