@@ -34,15 +34,11 @@ public abstract class LoadMoreManager implements ViewManager, LoadListener {
         setLoadMoreInRecylerView(recyclerView, swipeRefreshLayout);
     }
 
-    public boolean hasNoMoreData(List<?> list, LoadMoreRecyclerViewAdapter adapter, boolean flag) {
+    public boolean hasNoMoreData(List<?> list, LoadMoreRecyclerViewAdapter adapter) {
         if (list == null || list.size() == 0) {
             adapter.setHasLoading(false);
             return true;
         } else {
-            if (flag) {
-                adapter.setHasLoading(true);
-                return true;
-            }
             int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
 //            int firstItemPosition = manager.findFirstCompletelyVisibleItemPosition();
             if (lastItemPosition == 0) {
@@ -52,10 +48,6 @@ public abstract class LoadMoreManager implements ViewManager, LoadListener {
             }
             return false;
         }
-    }
-
-    public boolean hasNoMoreData(List<?> list, LoadMoreRecyclerViewAdapter adapter) {
-        return hasNoMoreData(list, adapter, false);
     }
 
     protected void loadMoreAction() {

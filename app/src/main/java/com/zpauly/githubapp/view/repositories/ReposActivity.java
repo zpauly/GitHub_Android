@@ -168,12 +168,8 @@ public class ReposActivity extends RightDrawerActivity implements ReposContract.
         if (mSRLayout.isRefreshing()) {
             this.list.clear();
         }
+        loadMoreInSwipeRefreshLayoutMoreManager.hasNoMoreData(list, mReposAdapter);
         this.list.addAll(getReposByFilter(list));
-        if (list == null || list.size() == 0) {
-            loadMoreInSwipeRefreshLayoutMoreManager.hasNoMoreData(list, mReposAdapter);
-        } else {
-            loadMoreInSwipeRefreshLayoutMoreManager.hasNoMoreData(list, mReposAdapter, true);
-        }
     }
 
     @Override
