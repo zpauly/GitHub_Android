@@ -208,4 +208,8 @@
     <string name="exit">Sign out</string>
 
     <string name="double_click_to_exit">Click Again to Exit</string>
+
+    <string name="YINGYONGBAO">YingYongBao</string>
+    <string name="GOOGLE_PLAY">Google Play</string>
+    <string name="KUAN">KUAN</string>
 </resources>
