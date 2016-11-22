@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -57,6 +58,12 @@ public class ReposActivity extends RightDrawerActivity implements ReposContract.
 
     private LoadMoreInSwipeRefreshLayoutMoreManager loadMoreInSwipeRefreshLayoutMoreManager;
     private RefreshViewManager refreshViewManager;
+
+    @Override
+    protected void onStop() {
+        mPresenter.stop();
+        super.onStop();
+    }
 
     @Override
     public void initViews() {
@@ -115,6 +122,12 @@ public class ReposActivity extends RightDrawerActivity implements ReposContract.
     protected void setToolbar() {
         super.setToolbar();
         setToolbarTitle(R.string.repos);
+        setOnToolbarNavClickedListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void setSwipeRefreshing() {
@@ -156,7 +169,11 @@ public class ReposActivity extends RightDrawerActivity implements ReposContract.
             this.list.clear();
         }
         this.list.addAll(getReposByFilter(list));
-        loadMoreInSwipeRefreshLayoutMoreManager.hasNoMoreData(list, mReposAdapter);
+        if (list == null || list.size() == 0) {
+            loadMoreInSwipeRefreshLayoutMoreManager.hasNoMoreData(list, mReposAdapter);
+        } else {
+            loadMoreInSwipeRefreshLayoutMoreManager.hasNoMoreData(list, mReposAdapter, true);
+        }
     }
 
     @Override
@@ -164,6 +181,8 @@ public class ReposActivity extends RightDrawerActivity implements ReposContract.
         mSRLayout.setRefreshing(false);
         if (!mRefreshView.isRefreshSuccess()) {
             mRefreshView.refreshFail();
+        } else {
+            Snackbar.make(mRefreshView, R.string.error_occurred, Snackbar.LENGTH_SHORT);
         }
     }
 

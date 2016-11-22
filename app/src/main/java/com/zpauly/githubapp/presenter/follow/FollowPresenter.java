@@ -116,7 +116,8 @@ public class FollowPresenter extends NetPresenter implements FollowContract.Pres
         mOrgsSubscriber = new Subscriber<List<OrganizationBean>>() {
             @Override
             public void onCompleted() {
-                mFollowView.loadSuccess();
+                loadPageId++;
+                mFollowView.loadOrgsSuccess();
             }
 
             @Override
@@ -132,10 +133,10 @@ public class FollowPresenter extends NetPresenter implements FollowContract.Pres
         };
             if (mFollowView.getUsername() == null) {
                 Log.i(TAG, "user orgs");
-                orgMethod.getUserOrgs(mOrgsSubscriber, auth);
+                orgMethod.getUserOrgs(mOrgsSubscriber, auth, loadPageId);
             } else {
                 Log.i(TAG, "others orgs");
-                orgMethod.getUserOrgs(mOrgsSubscriber, auth, mFollowView.getUsername());
+                orgMethod.getUserOrgs(mOrgsSubscriber, auth, mFollowView.getUsername(), loadPageId);
             }
     }
 
@@ -183,5 +184,10 @@ public class FollowPresenter extends NetPresenter implements FollowContract.Pres
             }
         };
         activityMethod.getStargazers(mStargazersSubscriber, auth, mFollowView.getOwner(), mFollowView.getRepo(), loadPageId);
+    }
+
+    @Override
+    public void setPageId(int pageId) {
+        this.loadPageId = pageId;
     }
 }

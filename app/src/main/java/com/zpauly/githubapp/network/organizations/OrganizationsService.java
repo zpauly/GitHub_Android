@@ -8,6 +8,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -22,10 +23,12 @@ public interface OrganizationsService {
      */
     @Headers("Cache-Control: public, max-age=600")
     @GET("/user/orgs")
-    Observable<List<OrganizationBean>> getUserOrgs(@Header("Authorization") String auth);
+    Observable<List<OrganizationBean>> getUserOrgs(@Header("Authorization") String auth,
+                                                   @Query("page") int pageId);
 
     @Headers("Cache-Control: public, max-age=600")
     @GET("/users/{username}/orgs")
     Observable<List<OrganizationBean>> getUserOrgs(@Header("Authorization") String auth,
-                                                 @Path("username") String username);
+                                                   @Path("username") String username,
+                                                   @Query("page") int pageId);
 }

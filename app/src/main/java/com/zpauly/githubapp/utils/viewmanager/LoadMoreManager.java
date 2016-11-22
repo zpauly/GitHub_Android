@@ -34,24 +34,28 @@ public abstract class LoadMoreManager implements ViewManager, LoadListener {
         setLoadMoreInRecylerView(recyclerView, swipeRefreshLayout);
     }
 
-    public boolean hasNoMoreData(List<?> list, LoadMoreRecyclerViewAdapter adapter) {
+    public boolean hasNoMoreData(List<?> list, LoadMoreRecyclerViewAdapter adapter, boolean flag) {
         if (list == null || list.size() == 0) {
-            Log.i(TAG, "has no more");
-                adapter.setHasLoading(false);
-                if (recyclerView.getScrollState() == RecyclerView.SCROLL_STATE_IDLE) {
-                    adapter.notifyDataSetChanged();
-                }
+            adapter.setHasLoading(false);
             return true;
         } else {
+            if (flag) {
+                adapter.setHasLoading(true);
+                return true;
+            }
             int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
-            int firstItemPosition = manager.findFirstCompletelyVisibleItemPosition();
-            if (lastItemPosition == adapter.getItemCount() - 1 && firstItemPosition == 0) {
+//            int firstItemPosition = manager.findFirstCompletelyVisibleItemPosition();
+            if (lastItemPosition == 0) {
                 adapter.setHasLoading(false);
             } else {
                 adapter.setHasLoading(true);
             }
             return false;
         }
+    }
+
+    public boolean hasNoMoreData(List<?> list, LoadMoreRecyclerViewAdapter adapter) {
+        return hasNoMoreData(list, adapter, false);
     }
 
     protected void loadMoreAction() {

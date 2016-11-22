@@ -34,15 +34,15 @@ public class OrganizationsMethod extends BaseNetMethod {
         return Nested.instance;
     }
 
-    public void getUserOrgs(Observer<List<OrganizationBean>> observer, String auth) {
-        service.getUserOrgs(auth)
+    public void getUserOrgs(Observer<List<OrganizationBean>> observer, String auth, int pageId) {
+        service.getUserOrgs(auth, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 
-    public void getUserOrgs(Observer<List<OrganizationBean>> observer, String auth, String username) {
-        service.getUserOrgs(auth, username)
+    public void getUserOrgs(Observer<List<OrganizationBean>> observer, String auth, String username, int pageId) {
+        service.getUserOrgs(auth, username, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

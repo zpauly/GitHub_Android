@@ -22,6 +22,8 @@ public class FollowContract {
         void getWatchers();
 
         void getStargazers();
+
+        void setPageId(int pageId);
     }
 
     public interface View extends BaseView<Presenter> {

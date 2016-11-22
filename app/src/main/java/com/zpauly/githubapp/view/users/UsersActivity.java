@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.zpauly.githubapp.R;
@@ -49,7 +50,7 @@ public class UsersActivity extends ToolbarActivity implements FollowContract.Vie
     private List<OrganizationBean> orgsList = new ArrayList<>();
     private LoadMoreRecyclerViewAdapter mRVAdapter;
 
-    private SwipeRefreshLayout mSWLayout;
+    private SwipeRefreshLayout mSRLayout;
     private RecyclerView mContentRV;
 
     private RefreshView mRefreshView;
@@ -77,18 +78,18 @@ public class UsersActivity extends ToolbarActivity implements FollowContract.Vie
 
         mRefreshView = (RefreshView) findViewById(R.id.followers_RefreshView);
 
-        mSWLayout = (SwipeRefreshLayout) findViewById(R.id.followers_SWLayout);
+        mSRLayout = (SwipeRefreshLayout) findViewById(R.id.followers_SWLayout);
         mContentRV = (RecyclerView) findViewById(R.id.followers_content_RV);
 
         setupSwipeRefreshLayout();
         setupRecyclerView();
 
-        setViewManager(new LoadMoreInSwipeRefreshLayoutMoreManager(mContentRV, mSWLayout) {
+        setViewManager(new LoadMoreInSwipeRefreshLayoutMoreManager(mContentRV, mSRLayout) {
             @Override
             public void load() {
                 loadFollow();
             }
-        }, new RefreshViewManager(mRefreshView, mSWLayout) {
+        }, new RefreshViewManager(mRefreshView, mSRLayout) {
             @Override
             public void load() {
                 loadFollow();
@@ -149,22 +150,23 @@ public class UsersActivity extends ToolbarActivity implements FollowContract.Vie
     }
 
     private void setupSwipeRefreshLayout() {
-        mSWLayout.measure(View.MEASURED_SIZE_MASK, View.MEASURED_HEIGHT_STATE_SHIFT);
-        mSWLayout.setColorSchemeResources(R.color.colorAccent);
-        mSWLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        mSRLayout.measure(View.MEASURED_SIZE_MASK, View.MEASURED_HEIGHT_STATE_SHIFT);
+        mSRLayout.setColorSchemeResources(R.color.colorAccent);
+        mSRLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mRVAdapter.addAllData(new ArrayList<UserBean>());
+                mPresenter.setPageId(1);
                 loadMoreInSwipeRefreshLayoutMoreManager.setSwipeRefreshLayoutRefreshing(mRVAdapter);
             }
         });
     }
 
     private void setupRecyclerView() {
-        if (userId == UsersActivity.ORGS) {
+        if (userId == ORGS) {
             mRVAdapter = new OrgsRecyclerViewAdapter(this);
+        } else {
+            mRVAdapter = new UsersRecyclerViewAdapter(this);
         }
-        mRVAdapter = new UsersRecyclerViewAdapter(this);
 
         mContentRV.setLayoutManager(new LinearLayoutManager(this));
         mContentRV.setAdapter(mRVAdapter);
@@ -194,26 +196,34 @@ public class UsersActivity extends ToolbarActivity implements FollowContract.Vie
 
     @Override
     public void loading(List<UserBean> list) {
-        this.list.clear();
+        if (mSRLayout.isRefreshing()) {
+            this.list.clear();
+        }
+        loadMoreInSwipeRefreshLayoutMoreManager.hasNoMoreData(list, mRVAdapter);
         this.list.addAll(list);
     }
 
     @Override
     public void loadingOrgs(List<OrganizationBean> list) {
-        this.orgsList.clear();
+        if (mSRLayout.isRefreshing()) {
+            this.orgsList.clear();
+        }
+        loadMoreInSwipeRefreshLayoutMoreManager.hasNoMoreData(list, mRVAdapter);
         this.orgsList.addAll(list);
     }
 
     @Override
     public void loadOrgsSuccess() {
-        mSWLayout.setRefreshing(false);
-        mRVAdapter.addAllData(orgsList);
-        mRVAdapter.setHasLoading(false);
+        mRVAdapter.swapAllData(orgsList);
+        mSRLayout.setRefreshing(false);
+        if (!mRefreshView.isRefreshSuccess()) {
+            mRefreshView.refreshSuccess();
+        }
     }
 
     @Override
     public void loadFail() {
-        mSWLayout.setRefreshing(false);
+        mSRLayout.setRefreshing(false);
         if (!mRefreshView.isRefreshSuccess()) {
             mRefreshView.refreshFail();
         } else {
@@ -223,9 +233,8 @@ public class UsersActivity extends ToolbarActivity implements FollowContract.Vie
 
     @Override
     public void loadSuccess() {
-        mRVAdapter.addAllData(list);
-        mSWLayout.setRefreshing(false);
-        loadMoreInSwipeRefreshLayoutMoreManager.hasNoMoreData(list, mRVAdapter);
+        mRVAdapter.swapAllData(list);
+        mSRLayout.setRefreshing(false);
         if (!mRefreshView.isRefreshSuccess()) {
             mRefreshView.refreshSuccess();
         }
