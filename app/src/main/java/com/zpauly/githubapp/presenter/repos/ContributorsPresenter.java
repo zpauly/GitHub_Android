@@ -40,6 +40,7 @@ public class ContributorsPresenter extends NetPresenter implements ContributorsC
         contributorsSubscriber = new Subscriber<List<ContributorBean>>() {
             @Override
             public void onCompleted() {
+                pageId++;
                 mContributorsView.getContributorsSuccess();
             }
 
@@ -55,7 +56,7 @@ public class ContributorsPresenter extends NetPresenter implements ContributorsC
             }
         };
         repositoriesMethod.getContributors(contributorsSubscriber, auth,
-                mContributorsView.getOwner(), mContributorsView.getRepo(), pageId++);
+                mContributorsView.getOwner(), mContributorsView.getRepo(), pageId);
     }
 
     @Override

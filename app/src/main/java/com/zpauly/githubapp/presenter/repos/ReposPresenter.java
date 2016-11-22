@@ -51,10 +51,10 @@ public class ReposPresenter extends NetPresenter implements ReposContract.Presen
         mReposSubscriber = new Subscriber<List<RepositoriesBean>>() {
             @Override
             public void onCompleted() {
+                pageId++;
                 if (flag) {
                     mReposView.loadSuccess();
                 } else {
-                    pageId ++;
                     loadUserRepositories();
                 }
             }
@@ -76,10 +76,10 @@ public class ReposPresenter extends NetPresenter implements ReposContract.Presen
 //        List<String> affiliation = new ArrayList<>();
 //        affiliation.add(RepositoriesService.AFFILIATION_OWNER);
         if (mReposView.getUsername() != null) {
-            mReposMethod.getRepositories(mReposSubscriber, auth, mReposView.getUsername(), mReposView.getType(), mReposView.getSort(), mReposView.getDirection(), pageId++);
+            mReposMethod.getRepositories(mReposSubscriber, auth, mReposView.getUsername(), mReposView.getType(), mReposView.getSort(), mReposView.getDirection(), pageId);
         } else {
             mReposMethod.getOwendRepositories(mReposSubscriber, auth, null, null, mReposView
-                    .getType(), mReposView.getSort(), mReposView.getDirection(), pageId++);
+                    .getType(), mReposView.getSort(), mReposView.getDirection(), pageId);
         }
     }
 

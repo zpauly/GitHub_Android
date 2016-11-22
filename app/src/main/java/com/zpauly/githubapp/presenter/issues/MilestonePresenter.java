@@ -44,6 +44,7 @@ public class MilestonePresenter extends NetPresenter implements MilestoneContrac
         milestonesSubscriber = new Subscriber<List<MilestoneBean>>() {
             @Override
             public void onCompleted() {
+                pageId++;
                 mMilestoneView.getMilestonesSuccess();
             }
 
@@ -60,7 +61,7 @@ public class MilestonePresenter extends NetPresenter implements MilestoneContrac
         issuesMethod.getMilestones(milestonesSubscriber, auth,
                 mMilestoneView.getOwner(), mMilestoneView.getRepo(),
                 mMilestoneView.getState(), mMilestoneView.getSort(), mMilestoneView.getDirection(),
-                pageId++);
+                pageId);
     }
 
     @Override

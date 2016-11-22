@@ -39,6 +39,7 @@ public class IssueContentPresenter extends NetPresenter implements IssueContentC
         commentsSubscriber = new Subscriber<List<CommentBean>>() {
             @Override
             public void onCompleted() {
+                pageId++;
                 mIssueContentView.getCommentsSuccess();
             }
 
@@ -54,7 +55,7 @@ public class IssueContentPresenter extends NetPresenter implements IssueContentC
             }
         };
         Log.i(TAG, "/repos/" + mIssueContentView.getOwner() + "/" + mIssueContentView.getRepo() + "/issues/" + mIssueContentView.getNum() + "/comments");
-        issuesMethod.getDefaultAnIssueComments(commentsSubscriber, auth, mIssueContentView.getOwner(), mIssueContentView.getRepo(), mIssueContentView.getNum(), pageId++);
+        issuesMethod.getDefaultAnIssueComments(commentsSubscriber, auth, mIssueContentView.getOwner(), mIssueContentView.getRepo(), mIssueContentView.getNum(), pageId);
     }
 
     @Override

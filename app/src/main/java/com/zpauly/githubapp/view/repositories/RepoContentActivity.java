@@ -25,7 +25,6 @@ import com.zpauly.githubapp.entity.response.repos.TagBean;
 import com.zpauly.githubapp.listener.OnMenuItemSelectedListener;
 import com.zpauly.githubapp.listener.OnNavItemClickListener;
 import com.zpauly.githubapp.network.repositories.RepositoriesService;
-import com.zpauly.githubapp.presenter.repos.ForksActivity;
 import com.zpauly.githubapp.presenter.repos.RepoContentContract;
 import com.zpauly.githubapp.presenter.repos.RepoContentPresenter;
 import com.zpauly.githubapp.service.DownloadSevice;

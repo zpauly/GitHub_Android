@@ -40,6 +40,7 @@ public class CommitCommentPresenter extends NetPresenter implements CommitCommen
             @Override
             public void onCompleted() {
                 mCommitCommentView.getCommentsSuccess();
+                pageId++;
             }
 
             @Override
@@ -55,7 +56,7 @@ public class CommitCommentPresenter extends NetPresenter implements CommitCommen
         };
         repositoriesMethod.getACommitComments(commitCommentSubscriber, auth,
                 mCommitCommentView.getOwner(), mCommitCommentView.getRepo(),
-                mCommitCommentView.getRef(), pageId++);
+                mCommitCommentView.getRef(), pageId);
     }
 
     @Override

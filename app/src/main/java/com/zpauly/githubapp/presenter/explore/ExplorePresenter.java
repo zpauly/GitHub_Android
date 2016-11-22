@@ -52,6 +52,7 @@ public class ExplorePresenter extends NetPresenter implements ExploreContract.Pr
         searchReposSubscriber = new Subscriber<SearchReposBean>() {
             @Override
             public void onCompleted() {
+                pageId++;
                 mExploreView.searchSuccess();
             }
 
@@ -67,7 +68,7 @@ public class ExplorePresenter extends NetPresenter implements ExploreContract.Pr
             }
         };
         method.getSearchRepos(searchReposSubscriber, auth, mExploreView.getQuery(),
-                mExploreView.getSort(), mExploreView.getOrder(), pageId++);
+                mExploreView.getSort(), mExploreView.getOrder(), pageId);
     }
 
     @Override
@@ -75,6 +76,7 @@ public class ExplorePresenter extends NetPresenter implements ExploreContract.Pr
         searchCodeSubscriber = new Subscriber<SearchCodeBean>() {
             @Override
             public void onCompleted() {
+                pageId++;
                 mExploreView.searchSuccess();
             }
 
@@ -90,7 +92,7 @@ public class ExplorePresenter extends NetPresenter implements ExploreContract.Pr
             }
         };
         method.getSearchCode(searchCodeSubscriber, auth, mExploreView.getQuery(),
-                mExploreView.getSort(), mExploreView.getOrder(), pageId++);
+                mExploreView.getSort(), mExploreView.getOrder(), pageId);
     }
 
     @Override
@@ -98,6 +100,7 @@ public class ExplorePresenter extends NetPresenter implements ExploreContract.Pr
         searchUsersSubscriber = new Subscriber<SearchUsersBean>() {
             @Override
             public void onCompleted() {
+                pageId++;
                 mExploreView.searchSuccess();
             }
 
@@ -113,7 +116,7 @@ public class ExplorePresenter extends NetPresenter implements ExploreContract.Pr
             }
         };
         method.getSearchUsers(searchUsersSubscriber, auth, mExploreView.getQuery(),
-                mExploreView.getSort(), mExploreView.getOrder(), pageId++);
+                mExploreView.getSort(), mExploreView.getOrder(), pageId);
     }
 
     @Override

@@ -54,7 +54,7 @@
         <activity android:name=".view.issues.PullRequestContentActivity" />
         <activity android:name=".view.repositories.BranchesActivity" />
         <activity android:name=".view.settings.SettingsActivity" />
-        <activity android:name=".presenter.repos.ForksActivity" />
+        <activity android:name=".view.repositories.ForksActivity" />
 
         <service android:name=".service.DownloadSevice" />
     </application>

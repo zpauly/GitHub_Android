@@ -51,6 +51,7 @@ public class RepoCommitPresenter extends NetPresenter implements RepoCommitContr
         commitSubscriber = new Subscriber<List<SingleCommitBean>>() {
             @Override
             public void onCompleted() {
+                pageId++;
                 mCommitView.getCommitsSuccess();
             }
 
@@ -66,7 +67,7 @@ public class RepoCommitPresenter extends NetPresenter implements RepoCommitContr
             }
         };
         repositoriesMethod.getRepositoryCommit(commitSubscriber, auth,
-                mCommitView.getOwner(), mCommitView.getRepo(), pageId++);
+                mCommitView.getOwner(), mCommitView.getRepo(), pageId);
     }
 
     @Override

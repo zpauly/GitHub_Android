@@ -45,6 +45,7 @@ public class LabelsPresenter extends NetPresenter implements LabelsContract.Pres
         labelsSubscriber = new Subscriber<List<LabelBean>>() {
             @Override
             public void onCompleted() {
+                pageId++;
                 if (isLoadComplete) {
                     mLabelsView.gettingLabels(labelList);
                     mLabelsView.getLabelsSuccess();
@@ -75,7 +76,7 @@ public class LabelsPresenter extends NetPresenter implements LabelsContract.Pres
 
     private void get() {
         issuesMethod.getLabels(labelsSubscriber, auth,
-                mLabelsView.getOwner(), mLabelsView.getRepo(), pageId++);
+                mLabelsView.getOwner(), mLabelsView.getRepo(), pageId);
     }
 
     @Override

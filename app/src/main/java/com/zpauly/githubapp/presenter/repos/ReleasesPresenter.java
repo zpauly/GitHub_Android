@@ -41,6 +41,7 @@ public class ReleasesPresenter extends NetPresenter implements ReleasesContract.
         releasesSubscriber = new Subscriber<List<ReleaseBean>>() {
             @Override
             public void onCompleted() {
+                pageId++;
                 mReleasesView.getReleasesSuccess();
             }
 
@@ -56,7 +57,7 @@ public class ReleasesPresenter extends NetPresenter implements ReleasesContract.
             }
         };
         repositoriesMethod.getRepositoryReleases(releasesSubscriber, auth,
-                mReleasesView.getOwner(), mReleasesView.getRepo(), pageId++);
+                mReleasesView.getOwner(), mReleasesView.getRepo(), pageId);
     }
 
     @Override

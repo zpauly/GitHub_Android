@@ -45,6 +45,7 @@ public class PullRequestContentPresenter extends NetPresenter implements PullReq
         commentsSubscriber = new Subscriber<List<CommentBean>>() {
             @Override
             public void onCompleted() {
+                pageId++;
                 mPullRequestContentView.getCommentsSuccess();
             }
 
@@ -63,7 +64,7 @@ public class PullRequestContentPresenter extends NetPresenter implements PullReq
                 mPullRequestContentView.getOwner(),
                 mPullRequestContentView.getRepo(),
                 mPullRequestContentView.getNumber(),
-                pageId++);
+                pageId);
     }
 
     @Override
@@ -71,6 +72,7 @@ public class PullRequestContentPresenter extends NetPresenter implements PullReq
         commitsSubscriber = new Subscriber<List<SingleCommitBean>>() {
             @Override
             public void onCompleted() {
+                pageId++;
                 mPullRequestContentView.getCommitsSuccess();
             }
 
@@ -89,7 +91,7 @@ public class PullRequestContentPresenter extends NetPresenter implements PullReq
                 mPullRequestContentView.getOwner(),
                 mPullRequestContentView.getRepo(),
                 mPullRequestContentView.getNumber(),
-                pageId++);
+                pageId);
     }
 
     @Override
@@ -97,6 +99,7 @@ public class PullRequestContentPresenter extends NetPresenter implements PullReq
         filesSubscriber = new Subscriber<List<FileBean>>() {
             @Override
             public void onCompleted() {
+                pageId++;
                 mPullRequestContentView.getFilesSuccess();
             }
 
@@ -113,7 +116,7 @@ public class PullRequestContentPresenter extends NetPresenter implements PullReq
         };
         pullRequestsMethod.getAPullFiles(filesSubscriber, auth,
                 mPullRequestContentView.getOwner(), mPullRequestContentView.getRepo(),
-                mPullRequestContentView.getNumber(), pageId++);
+                mPullRequestContentView.getNumber(), pageId);
     }
 
     @Override

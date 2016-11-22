@@ -54,6 +54,7 @@ public class IssuesOrPullRequestsPresenter extends NetPresenter implements Issue
         issuesSubscriber = new Subscriber<List<IssueBean>>() {
             @Override
             public void onCompleted() {
+                pageId++;
                 mIssuesView.getIssueSuccess();
             }
 
@@ -70,13 +71,13 @@ public class IssuesOrPullRequestsPresenter extends NetPresenter implements Issue
         };
         switch (mIssuesView.getIssueType()) {
             case IssuesOrPullRequestsActivity.USER_ISSUES:
-                issuesMethod.getIssues(issuesSubscriber, auth, mIssuesView.getFilter(), mIssuesView.getState(), null, mIssuesView.getSort(), mIssuesView.getDirection(), null, pageId++);
+                issuesMethod.getIssues(issuesSubscriber, auth, mIssuesView.getFilter(), mIssuesView.getState(), null, mIssuesView.getSort(), mIssuesView.getDirection(), null, pageId);
                 break;
             case IssuesOrPullRequestsActivity.REPO_ISSUES:
-                issuesMethod.getARepoIssues(issuesSubscriber, auth, mIssuesView.getUsername(), mIssuesView.getRepoName(), null, mIssuesView.getState(), null, null, null, mIssuesView.getSort(), mIssuesView.getDirection(), null, null, pageId++);
+                issuesMethod.getARepoIssues(issuesSubscriber, auth, mIssuesView.getUsername(), mIssuesView.getRepoName(), null, mIssuesView.getState(), null, null, null, mIssuesView.getSort(), mIssuesView.getDirection(), null, null, pageId);
                 break;
             case IssuesOrPullRequestsActivity.ORG_ISSUES:
-                issuesMethod.getOrgIssues(issuesSubscriber, auth, mIssuesView.getOrgName(), mIssuesView.getFilter(), mIssuesView.getState(), null, mIssuesView.getSort(), mIssuesView.getDirection(), null, pageId++);
+                issuesMethod.getOrgIssues(issuesSubscriber, auth, mIssuesView.getOrgName(), mIssuesView.getFilter(), mIssuesView.getState(), null, mIssuesView.getSort(), mIssuesView.getDirection(), null, pageId);
                 break;
             default:
                 break;
@@ -89,6 +90,7 @@ public class IssuesOrPullRequestsPresenter extends NetPresenter implements Issue
         pullRequestsSubscrber = new Subscriber<List<PullRequestBean>>() {
             @Override
             public void onCompleted() {
+                pageId++;
                 mIssuesView.getPullRequestsSuccess();
             }
 
@@ -106,7 +108,7 @@ public class IssuesOrPullRequestsPresenter extends NetPresenter implements Issue
         pullRequestsMethod.getPullRequests(pullRequestsSubscrber, auth,
                 mIssuesView.getUsername(), mIssuesView.getRepoName(), mIssuesView.getState(),
                 null, null,
-                mIssuesView.getSort(), mIssuesView.getDirection(), pageId++);
+                mIssuesView.getSort(), mIssuesView.getDirection(), pageId);
     }
 
     @Override
