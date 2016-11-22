@@ -1,5 +1,6 @@
 package com.zpauly.githubapp.view.profile;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.AppBarLayout;
@@ -228,10 +229,7 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
         mReposLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(OthersActivity.this, ReposActivity.class);
-                intent.putExtra(USERNAME, username);
-                startActivity(intent);
+                ReposActivity.launchActivity(OthersActivity.this, username);
             }
         });
 
@@ -308,6 +306,7 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
         intent.putExtra(USERNAME, username);
         intent.setClass(context, OthersActivity.class);
         context.startActivity(intent);
+        ((Activity) context).finish();
     }
 
     @Override

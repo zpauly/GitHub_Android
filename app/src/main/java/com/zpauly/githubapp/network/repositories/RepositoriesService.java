@@ -37,15 +37,13 @@ public interface RepositoriesService {
 
     String AFFILIATION_ORGANIZATION_MEMBER = "organization_member";
 
-    String SORT_ALL = "all";
+    String SORT_CREATED = "created";
 
-    String SORT_OWNER = "owner";
+    String SORT_UPDATED = "udpated";
 
-    String SORT_PUBLIC = "public";
+    String SORT_PUSHED = "pushed";
 
-    String SORT_PRIVATE = "private";
-
-    String SORT_MEMBER = "member";
+    String SORT_FULL_NAME = "full_name";
 
     String TARBALL = "tarball";
 
@@ -56,6 +54,26 @@ public interface RepositoriesService {
     String OLDEST = "oldest";
 
     String STARGAZERS = "stargazers";
+
+    String VISIBILITY_ALL = "all";
+
+    String VISIBILITY_PUBLIC = "public";
+
+    String VISIBILITY_PRIVATE  = "private";
+
+    String TYPE_ALL = "all";
+
+    String TYPE_OWNER = "owner";
+
+    String TYPE_PUBLIC = "public";
+
+    String TYPE_PRIVATE = "private";
+
+    String TYPE_MEMBER = "member";
+
+    String DIRECTION_ASC = "asc";
+
+    String DIRECTION_DESC = "desc";
 
     /**
      * List repositories that are accessible to the authenticated user.
@@ -69,16 +87,21 @@ public interface RepositoriesService {
      */
     @Headers("Cache-Control: public, max-age=600")
     @GET("/user/repos")
-    Observable<List<RepositoriesBean>> getOwendRepositories(@Header("Authorization") String auth
-            , @Nullable @Query("affiliation") List<String> affiliation
-            , @Nullable @Query("sort") String sort, @Query("page") int pageId);
+    Observable<List<RepositoriesBean>> getOwendRepositories(@Header("Authorization") String auth,
+                                                            @Nullable @Query("visibility") String visibility,
+                                                            @Nullable @Query("affiliation") List<String> affiliation,
+                                                            @Nullable @Query("type") String type,
+                                                            @Nullable @Query("sort") String sort,
+                                                            @Nullable @Query("direction") String direction,
+                                                            @Query("page") int pageId);
 
     @Headers("Cache-Control: public, max-age=600")
     @GET("/users/{username}/repos")
     Observable<List<RepositoriesBean>> getRepositories(@Header("Authorization") String auth,
                                                        @Path("username") String username,
-                                                       @Nullable @Query("affiliation") List<String> affiliation,
+                                                       @Nullable @Query("type") String type,
                                                        @Nullable @Query("sort") String sort,
+                                                       @Nullable @Query("direction") String direction,
                                                        @Query("page") int pageId);
 
     //repo

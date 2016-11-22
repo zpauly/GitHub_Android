@@ -153,11 +153,17 @@
     <string name="assignees">Assignees</string>
     <string name="labels">Labels</string>
 
+    <string name="type">Type</string>
     <string name="repos_all">All</string>
+    <string name="repos_owner">Owner</string>
     <string name="repos_public">Public</string>
     <string name="repos_private">Private</string>
     <string name="repos_sources">Sources</string>
     <string name="repos_forks">Forks</string>
+    <string name="repos_member">Member</string>
+    
+    <string name="name_az">Name(A-Z)</string>
+    <string name="name_za">Name(Z-A)</string>
 
     <string name="recently_starred">Recently starred</string>
     <string name="recently_active">Recently active</string>

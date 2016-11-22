@@ -235,7 +235,7 @@ public class ProfileActivity extends ToolbarActivity implements ProfileContract.
         mReposLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ReposActivity.launchActivity(ProfileActivity.this);
+                ReposActivity.launchActivity(ProfileActivity.this, null);
             }
         });
 

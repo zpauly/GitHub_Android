@@ -73,12 +73,18 @@ public class ReposPresenter extends NetPresenter implements ReposContract.Presen
                 }
             }
         };
-        List<String> affiliation = new ArrayList<>();
-        affiliation.add(RepositoriesService.AFFILIATION_OWNER);
+//        List<String> affiliation = new ArrayList<>();
+//        affiliation.add(RepositoriesService.AFFILIATION_OWNER);
         if (mReposView.getUsername() != null) {
-            mReposMethod.getRepositories(mReposSubscriber, auth, mReposView.getUsername(), affiliation, RepositoriesService.SORT_ALL, pageId);
+            mReposMethod.getRepositories(mReposSubscriber, auth, mReposView.getUsername(), mReposView.getType(), mReposView.getSort(), mReposView.getDirection(), pageId++);
         } else {
-            mReposMethod.getOwendRepositories(mReposSubscriber, auth, affiliation, RepositoriesService.SORT_ALL, pageId);
+            mReposMethod.getOwendRepositories(mReposSubscriber, auth, null, null, mReposView
+                    .getType(), mReposView.getSort(), mReposView.getDirection(), pageId++);
         }
+    }
+
+    @Override
+    public void setPageId(int pageId) {
+        this.pageId = pageId;
     }
 }

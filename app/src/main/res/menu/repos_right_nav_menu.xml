@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="@string/type">
+        <menu>
+            <group android:id="@+id/repos_right_nav_type_grp"
+                android:checkableBehavior="single">
+                <item android:id="@+id/repos_right_nav_type_all"
+                    android:title="@string/repos_all"/>
+                <item android:id="@+id/repos_right_nav_type_owner"
+                    android:title="@string/repos_owner"/>
+                <item android:id="@+id/repos_right_nav_type_public"
+                    android:title="@string/repos_public"/>
+                <item android:id="@+id/repos_right_nav_type_private"
+                    android:title="@string/repos_private"/>
+                <item android:id="@+id/repos_right_nav_type_sources"
+                    android:title="@string/repos_sources"/>
+                <item android:id="@+id/repos_right_nav_type_forks"
+                    android:title="@string/repos_forks"/>
+                <item android:id="@+id/repos_right_nav_type_member"
+                    android:title="@string/repos_member"/>
+            </group>
+        </menu>
+    </item>
+    <item android:title="@string/sort">
+        <menu>
+                <group android:id="@+id/repos_right_nav_sort_grp"
+                    android:checkableBehavior="single">
+                    <item android:id="@+id/repos_right_nav_sort_nameasc"
+                        android:title="@string/name_az"/>
+                    <item android:id="@+id/repos_right_nav_sort_namedesc"
+                        android:title="@string/name_za"/>
+                    <item android:id="@+id/repos_right_nav_sort_newest"
+                        android:title="@string/newest"/>
+                    <item android:id="@+id/repos_right_nav_sort_oldest"
+                        android:title="@string/oldest"/>
+                    <item android:id="@+id/repos_right_nav_sort_recently_updated"
+                        android:title="@string/recently_updated"/>
+                    <item android:id="@+id/repos_right_nav_sort_least_recently_updated"
+                        android:title="@string/least_recently_updated"/>
+                </group>
+        </menu>
+    </item>
+</menu>

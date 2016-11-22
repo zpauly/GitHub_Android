@@ -79,6 +79,10 @@ public abstract class RightDrawerActivity extends ToolbarActivity {
         mRightNav.inflateMenu(menuResId);
     }
 
+    public NavigationView getRightNav() {
+        return this.mRightNav;
+    }
+
     @Override
     public void initContent() {
         setContentView(R.layout.activity_right_drawer);

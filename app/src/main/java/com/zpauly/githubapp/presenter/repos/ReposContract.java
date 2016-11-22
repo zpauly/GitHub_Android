@@ -13,6 +13,8 @@ import java.util.List;
 public class ReposContract {
     public interface Presenter extends BasePresenter {
         void loadUserRepositories();
+
+        void setPageId(int pageId);
     }
 
     public interface View extends BaseView<Presenter> {
@@ -23,5 +25,11 @@ public class ReposContract {
         void loadSuccess();
 
         String getUsername();
+
+        String getType();
+
+        String getSort();
+
+        String getDirection();
     }
 }

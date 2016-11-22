@@ -51,17 +51,28 @@ public class RepositoriesMethod extends BaseNetMethod {
         return Nested.instance;
     }
 
-    public void getOwendRepositories(Observer<List<RepositoriesBean>> observer, String auth
-            , @Nullable List<String> affiliation, @Nullable String sort, int pageId) {
-        service.getOwendRepositories(auth, affiliation, sort, pageId)
+    public void getOwendRepositories(Observer<List<RepositoriesBean>> observer,
+                                     String auth,
+                                     String visibility,
+                                     @Nullable List<String> affiliation,
+                                     @Nullable String type,
+                                     @Nullable String sort,
+                                     @Nullable String direction,
+                                     int pageId) {
+        service.getOwendRepositories(auth, visibility, affiliation, type, sort, direction, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 
-    public void getRepositories(Observer<List<RepositoriesBean>> observer, String auth, String username,
-                                @Nullable List<String> affiliation, @Nullable String sort, int pageId) {
-        service.getRepositories(auth, username, affiliation, sort, pageId)
+    public void getRepositories(Observer<List<RepositoriesBean>> observer,
+                                String auth,
+                                String username,
+                                @Nullable String type,
+                                @Nullable String sort,
+                                @Nullable String direction,
+                                int pageId) {
+        service.getRepositories(auth, username, type, sort, direction, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
