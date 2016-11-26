@@ -215,6 +215,7 @@ public class ImageUtil {
         if (!context.isDestroyed()) {
             Glide.with(context)
                     .load(Uri.parse(url))
+                    .placeholder(R.mipmap.avatar)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .crossFade()
                     .centerCrop()

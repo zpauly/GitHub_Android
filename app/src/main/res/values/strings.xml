@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">GitHub</string>
+    <string name="app_name">GitDroid</string>
     <string name="test">11111</string>
 
     <string name="loading">Loading......</string>
