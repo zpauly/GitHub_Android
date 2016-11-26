@@ -9,7 +9,7 @@ A simple client for GitHub.
 
 Application of treasure(应用宝):http://sj.qq.com/myapp/detail.htm?apkName=com.zpauly.githubapp
 
-Coolapk(酷安):
+Coolapk(酷安):http://www.coolapk.com/apk/com.zpauly.githubapp
 
 
 
