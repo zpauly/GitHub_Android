@@ -318,6 +318,6 @@ public class ReposActivity extends RightDrawerActivity implements ReposContract.
         }
         intent.setClass(context, ReposActivity.class);
         context.startActivity(intent);
-        ((Activity) context).finish();
+//        ((Activity) context).finish();
     }
 }

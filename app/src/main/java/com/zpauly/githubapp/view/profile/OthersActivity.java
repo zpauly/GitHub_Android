@@ -22,12 +22,15 @@ import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.listener.OnMenuItemSelectedListener;
+import com.zpauly.githubapp.listener.OnNavItemClickListener;
 import com.zpauly.githubapp.presenter.profile.ProfileContract;
 import com.zpauly.githubapp.presenter.profile.ProfilePresenter;
 import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.utils.DisplayUtil;
 import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.SPUtil;
 import com.zpauly.githubapp.utils.TextUtil;
+import com.zpauly.githubapp.view.RightDrawerActivity;
 import com.zpauly.githubapp.view.ToolbarActivity;
 import com.zpauly.githubapp.view.events.EventsActivity;
 import com.zpauly.githubapp.view.repositories.ReposActivity;
@@ -39,7 +42,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by zpauly on 16-7-27.
  */
 
-public class OthersActivity extends ToolbarActivity implements ProfileContract.View {
+public class OthersActivity extends RightDrawerActivity implements ProfileContract.View {
     private final String TAG = getClass().getName();
 
     private ProfileContract.Presenter mPresenter;
@@ -94,6 +97,8 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
 
     @Override
     public void initViews() {
+        setContent(R.layout.content_others);
+
         username = getIntent().getStringExtra(USERNAME);
 
         new ProfilePresenter(this, this);
@@ -182,11 +187,6 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
                 onBackPressed();
             }
         });
-    }
-
-    @Override
-    public void initContent() {
-        setContentView(R.layout.activity_others);
     }
 
     private void setupSwipeRefreshLayout() {
@@ -409,6 +409,28 @@ public class OthersActivity extends ToolbarActivity implements ProfileContract.V
                         } else {
                             follow();
                         }
+                        break;
+                    case R.id.others_toolbar_choose:
+                        openDrawer();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+    }
+
+    @Override
+    public void initNavMenu() {
+        inflaterNavMenu(R.menu.profile_right_nav_menu);
+        setOnNavItemClickListener(new OnNavItemClickListener() {
+            @Override
+            public void onItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.profile_right_nav_share:
+                        DisplayUtil.share(OthersActivity.this,
+                                "User " + getUsername(),
+                                "https://github.com/" + getUsername());
                         break;
                     default:
                         break;

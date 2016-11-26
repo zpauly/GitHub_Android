@@ -3,6 +3,9 @@ package com.zpauly.githubapp.view.profile;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,12 +16,16 @@ import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.response.AuthenticatedUserBean;
 import com.zpauly.githubapp.entity.response.UserBean;
+import com.zpauly.githubapp.listener.OnMenuItemSelectedListener;
+import com.zpauly.githubapp.listener.OnNavItemClickListener;
 import com.zpauly.githubapp.presenter.profile.ProfileContract;
 import com.zpauly.githubapp.presenter.profile.ProfilePresenter;
 import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.utils.DisplayUtil;
 import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.SPUtil;
 import com.zpauly.githubapp.utils.TextUtil;
+import com.zpauly.githubapp.view.RightDrawerActivity;
 import com.zpauly.githubapp.view.ToolbarActivity;
 import com.zpauly.githubapp.view.events.EventsActivity;
 import com.zpauly.githubapp.view.repositories.ReposActivity;
@@ -30,7 +37,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by zpauly on 16-7-30.
  */
 
-public class ProfileActivity extends ToolbarActivity implements ProfileContract.View {
+public class ProfileActivity extends RightDrawerActivity implements ProfileContract.View {
     private final String TAG = getClass().getName();
 
     private ProfileContract.Presenter mPresenter;
@@ -320,5 +327,45 @@ public class ProfileActivity extends ToolbarActivity implements ProfileContract.
     @Override
     public void setPresenter(ProfileContract.Presenter presenter) {
         mPresenter = presenter;
+    }
+
+    @Override
+    public void initNavMenu() {
+        inflaterNavMenu(R.menu.profile_right_nav_menu);
+        setOnNavItemClickListener(new OnNavItemClickListener() {
+            @Override
+            public void onItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.profile_right_nav_share:
+                        DisplayUtil.share(ProfileActivity.this,
+                                "User " + getUsername(),
+                                "https://github.com/" + getUsername());
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+    }
+
+    @Override
+    public void createMenu(Menu menu) {
+        setOnMenuItemSelectedListener(new OnMenuItemSelectedListener() {
+            @Override
+            public void onItemSelected(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.profile_toolbar_choose:
+                        openDrawer();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+    }
+
+    @Override
+    public void inflateMenu(MenuInflater inflater, Menu menu) {
+        inflater.inflate(R.menu.profile_toolbar_menu, menu);
     }
 }

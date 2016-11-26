@@ -68,6 +68,8 @@
     <string name="comments">Comments</string>
     <string name="release_notes">Releases Notes</string>
     <string name="download">Download</string>
+    <string name="share">Share</string>
+    <string name="share_via">Share via</string>
     <string name="ensure_to_download">Are you sure to download?</string>
     <string name="downloading">Downloading</string>
     <string name="download_complete">Download complete</string>

@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/others_toolbar_follow"
-        android:title="@string/follow"
-        app:showAsAction="always"/>
-    <item android:id="@+id/others_toolbar_choose"
+    <item android:icon="@drawable/ic_more_vert_white_24dp"
+        android:id="@+id/profile_toolbar_choose"
         android:title="@string/choose"
-        android:icon="@drawable/ic_more_vert_white_24dp"
         app:showAsAction="always"/>
 </menu>

@@ -29,6 +29,7 @@ import com.zpauly.githubapp.presenter.repos.RepoContentContract;
 import com.zpauly.githubapp.presenter.repos.RepoContentPresenter;
 import com.zpauly.githubapp.service.DownloadSevice;
 import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.utils.DisplayUtil;
 import com.zpauly.githubapp.utils.HtmlImageGetter;
 import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.TextUtil;
@@ -678,7 +679,6 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
     @Override
     public void inflateMenu(MenuInflater inflater, Menu menu) {
         inflater.inflate(R.menu.repo_toolbar_menu, menu);
-        initNav();
     }
 
     @Override
@@ -726,6 +726,7 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
     @Override
     public void initNavMenu() {
         inflaterNavMenu(R.menu.repo_right_nav_menu);
+        initNav();
     }
 
     private void initNav() {
@@ -749,6 +750,9 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
                     case R.id.repo_right_nav_download:
                         mDownloadDialog.show();
                         break;
+                    case R.id.repo_right_nav_share:
+                        shareTheRepo();
+                        break;
                     case R.id.repo_right_nav_switch_branches:
                         if (branches.size() == 0) {
                             mLoadingDialog.show();
@@ -770,6 +774,12 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
                 }
             }
         });
+    }
+
+    private void shareTheRepo() {
+        DisplayUtil.share(this,
+                getUsername() + "/" + getRepoName(),
+                "https://github.com/" + getUsername() + "/" + getRepoName());
     }
 
     private void showStarAndWatch() {

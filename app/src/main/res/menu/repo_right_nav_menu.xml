@@ -16,8 +16,6 @@
             </group>
         </menu>
     </item>
-    <item android:id="@+id/repo_right_nav_download"
-        android:title="@string/download"/>
     <item android:id="@+id/repo_right_nav_branches_and_tags"
         android:title="@string/switch_branches_or_tags">
         <menu>
@@ -30,4 +28,8 @@
             </group>
         </menu>
     </item>
+    <item android:id="@+id/repo_right_nav_download"
+        android:title="@string/download"/>
+    <item android:id="@+id/repo_right_nav_share"
+        android:title="@string/share"/>
 </menu>
