@@ -105,7 +105,7 @@ public class IssueCreatePresenter extends NetPresenter implements IssueCreateCon
 
             @Override
             public void onNext(List<MilestoneBean> milestoneBeen) {
-
+                mIssueCreateView.gettingMilestones(milestoneBeen);
             }
         };
         Log.i(TAG, auth);

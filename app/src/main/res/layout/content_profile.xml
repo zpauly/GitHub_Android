@@ -369,6 +369,7 @@
                         android:layout_height="24dp" />
 
                     <TextView
+                        android:id="@+id/profile_organizations_TV"
                         style="@style/TextAppearance.AppCompat.Body1"
                         android:layout_marginLeft="@dimen/components_margin"
                         android:layout_centerVertical="true"

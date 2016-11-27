@@ -10,6 +10,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.response.OrganizationBean;
 import com.zpauly.githubapp.utils.ImageUtil;
+import com.zpauly.githubapp.view.profile.OthersActivity;
 import com.zpauly.githubapp.view.viewholder.UsersViewHolder;
 
 /**
@@ -30,13 +31,13 @@ public class OrgsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Organiz
 
     @Override
     public void bindContentViewHolder(UsersViewHolder holder, int position) {
-        OrganizationBean data = getData().get(position);
+        final OrganizationBean data = getData().get(position);
         ImageUtil.loadAvatarImageFromUrl(getContext(), data.getAvatar_url(), holder.mAvatarIV);
         holder.mUsernameTV.setText(data.getLogin());
         holder.mLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                OthersActivity.launchOrganizationActivity(getContext(), data.getLogin());
             }
         });
     }

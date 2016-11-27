@@ -1,6 +1,7 @@
 package com.zpauly.githubapp.network.organizations;
 
 import com.zpauly.githubapp.entity.response.OrganizationBean;
+import com.zpauly.githubapp.entity.response.UserBean;
 
 import java.util.List;
 
@@ -31,4 +32,10 @@ public interface OrganizationsService {
     Observable<List<OrganizationBean>> getUserOrgs(@Header("Authorization") String auth,
                                                    @Path("username") String username,
                                                    @Query("page") int pageId);
+
+    @Headers("Cache-Control: public, max-age=600")
+    @GET("/orgs/{org}/members")
+    Observable<List<UserBean>> getMembers(@Header("Authorization") String authm,
+                                          @Path("org") String org,
+                                          @Query("page") int pageId);
 }

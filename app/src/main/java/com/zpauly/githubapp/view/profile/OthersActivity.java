@@ -1,11 +1,8 @@
 package com.zpauly.githubapp.view.profile;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v4.view.ActionProvider;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,7 +28,6 @@ import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.SPUtil;
 import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.RightDrawerActivity;
-import com.zpauly.githubapp.view.ToolbarActivity;
 import com.zpauly.githubapp.view.events.EventsActivity;
 import com.zpauly.githubapp.view.repositories.ReposActivity;
 import com.zpauly.githubapp.view.users.UsersActivity;
@@ -48,9 +44,11 @@ public class OthersActivity extends RightDrawerActivity implements ProfileContra
     private ProfileContract.Presenter mPresenter;
 
     public static final String USERNAME = "USERNAME";
+    public static final String IS_ORG = "IS_ORG";
+
+    private boolean isOrg = false;
     private String username;
 
-    private AppBarLayout mABLayout;
     private SwipeRefreshLayout mSWLayout;
     private CircleImageView mAvatarIV;
     private TextView mLoginTV;
@@ -78,6 +76,7 @@ public class OthersActivity extends RightDrawerActivity implements ProfileContra
     private RelativeLayout mEventsLayout;
     private RelativeLayout mReposLayout;
     private RelativeLayout mOrgsLayout;
+    private TextView mOrgTV;
 
     private RefreshView mRefreshView;
 
@@ -100,10 +99,10 @@ public class OthersActivity extends RightDrawerActivity implements ProfileContra
         setContent(R.layout.content_others);
 
         username = getIntent().getStringExtra(USERNAME);
+        isOrg = getIntent().getBooleanExtra(IS_ORG, false);
 
         new ProfilePresenter(this, this);
 
-        mABLayout = (AppBarLayout) findViewById(R.id.others_ABLayout);
         mSWLayout = (SwipeRefreshLayout) findViewById(R.id.others_SWLayout);
         mAvatarIV = (CircleImageView) findViewById(R.id.profile_avatar);
         mLoginTV = (TextView) findViewById(R.id.profile_login_TV);
@@ -140,6 +139,12 @@ public class OthersActivity extends RightDrawerActivity implements ProfileContra
         mReposLayout = (RelativeLayout) findViewById(R.id.profile_repos_layout);
         mOrgsLayout = (RelativeLayout) findViewById(R.id.profile_orgs_layout);
         mRefreshView = (RefreshView) findViewById(R.id.others_RefreshView);
+        mOrgTV = (TextView) findViewById(R.id.profile_organizations_TV);
+        if (isOrg) {
+            mOrgTV.setText(getString(R.string.members));
+            mFollowersLayout.setVisibility(View.GONE);
+            mFollowingLayout.setVisibility(View.GONE);
+        }
 
         mLoadingDialog = new MaterialDialog.Builder(this)
                 .cancelable(false)
@@ -236,7 +241,11 @@ public class OthersActivity extends RightDrawerActivity implements ProfileContra
         mOrgsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UsersActivity.launchActivity(OthersActivity.this, username, UsersActivity.ORGS);
+                if (isOrg) {
+                    UsersActivity.launchMemberActivity(OthersActivity.this, username);
+                } else {
+                    UsersActivity.launchActivity(OthersActivity.this, username, UsersActivity.ORGS);
+                }
             }
         });
     }
@@ -304,9 +313,18 @@ public class OthersActivity extends RightDrawerActivity implements ProfileContra
     public static void lanuchActivity(Context context, String username) {
         Intent intent = new Intent();
         intent.putExtra(USERNAME, username);
+        intent.putExtra(IS_ORG, false);
         intent.setClass(context, OthersActivity.class);
         context.startActivity(intent);
-        ((Activity) context).finish();
+//        ((Activity) context).finish();
+    }
+
+    public static void launchOrganizationActivity(Context context, String organizationName) {
+        Intent intent = new Intent();
+        intent.putExtra(USERNAME, organizationName);
+        intent.putExtra(IS_ORG, true);
+        intent.setClass(context, OthersActivity.class);
+        context.startActivity(intent);
     }
 
     @Override
@@ -398,7 +416,11 @@ public class OthersActivity extends RightDrawerActivity implements ProfileContra
         super.createMenu(menu);
         mMenuItemFollow = menu.findItem(R.id.others_toolbar_follow);
         mMenuItemFollow.setVisible(false);
-        checkUserFollow();
+        if (!isOrg) {
+            checkUserFollow();
+        } else {
+            mToolbarPB.setVisibility(View.GONE);
+        }
         setOnMenuItemSelectedListener(new OnMenuItemSelectedListener() {
             @Override
             public void onItemSelected(MenuItem item) {

@@ -1,7 +1,6 @@
 package com.zpauly.githubapp.presenter.follow;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.zpauly.githubapp.base.NetPresenter;
 import com.zpauly.githubapp.entity.response.OrganizationBean;
@@ -34,6 +33,7 @@ public class FollowPresenter extends NetPresenter implements FollowContract.Pres
     private Subscriber<List<UserBean>> mWatchersSubscriber;
     private Subscriber<List<UserBean>> mStargazersSubscriber;
     private Subscriber<List<OrganizationBean>> mOrgsSubscriber;
+    private Subscriber<List<UserBean>> mMembersSubscriber;
 
     private int loadPageId = 1;
 
@@ -54,7 +54,7 @@ public class FollowPresenter extends NetPresenter implements FollowContract.Pres
 
     @Override
     public void stop() {
-        unsubscribe(mFollowersSubscriber, mFollowingSubscriber, mOrgsSubscriber, mWatchersSubscriber, mStargazersSubscriber);
+        unsubscribe(mFollowersSubscriber, mFollowingSubscriber, mOrgsSubscriber, mWatchersSubscriber, mStargazersSubscriber, mMembersSubscriber);
     }
 
     @Override
@@ -132,10 +132,8 @@ public class FollowPresenter extends NetPresenter implements FollowContract.Pres
             }
         };
             if (mFollowView.getUsername() == null) {
-                Log.i(TAG, "user orgs");
                 orgMethod.getUserOrgs(mOrgsSubscriber, auth, loadPageId);
             } else {
-                Log.i(TAG, "others orgs");
                 orgMethod.getUserOrgs(mOrgsSubscriber, auth, mFollowView.getUsername(), loadPageId);
             }
     }
@@ -184,6 +182,29 @@ public class FollowPresenter extends NetPresenter implements FollowContract.Pres
             }
         };
         activityMethod.getStargazers(mStargazersSubscriber, auth, mFollowView.getOwner(), mFollowView.getRepo(), loadPageId);
+    }
+
+    @Override
+    public void getMembers() {
+        mMembersSubscriber = new Subscriber<List<UserBean>>() {
+            @Override
+            public void onCompleted() {
+                loadPageId ++;
+                mFollowView.loadSuccess();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                mFollowView.loadFail();
+            }
+
+            @Override
+            public void onNext(List<UserBean> userBeen) {
+                mFollowView.loading(userBeen);
+            }
+        };
+        orgMethod.getMembers(mMembersSubscriber, auth, mFollowView.getOwner(), loadPageId);
     }
 
     @Override

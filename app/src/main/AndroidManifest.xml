@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data android:value="581c7cb8677baa60690007d2" android:name="UMENG_APPKEY"/>
-        <meta-data android:value="@string/YINGYONGBAO" android:name="UMENG_CHANNEL"/>
+        <meta-data android:value="@string/KUAN" android:name="UMENG_CHANNEL"/>
         <activity android:name=".view.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>

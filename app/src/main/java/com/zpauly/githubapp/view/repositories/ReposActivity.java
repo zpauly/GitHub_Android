@@ -248,7 +248,6 @@ public class ReposActivity extends RightDrawerActivity implements ReposContract.
         setOnNavItemClickListener(new OnNavItemClickListener() {
             @Override
             public void onItemClick(MenuItem item) {
-                item.setChecked(true);
                 switch (item.getItemId()) {
                     case R.id.repos_right_nav_type_all:
                         type = RepositoriesService.TYPE_ALL;

@@ -10,9 +10,7 @@ public interface Api {
 
     String CLIENT_SERECT = "ea17654842c83d567d93a1d6296058569aaea95a";
 
-    String[] SCPOES = {"public_repo"};
+    String[] SCPOES = {"public_repo", "read:org"};
 
     String NOTE = "admin script";
-
-    String BUGLY_ID = "900058702";
 }

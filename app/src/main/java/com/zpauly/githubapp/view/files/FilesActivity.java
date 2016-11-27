@@ -327,10 +327,7 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
                 || path.endsWith(".png") || path.endsWith(".PNG")){
             setImageOrFile(true);
             return;
-        } else if (path.endsWith(".md")){
-            setImageOrFile(false);
-            return;
-        } else if (path.endsWith(".xml")) {
+        } else if (path.endsWith(".xml") || path.endsWith(".html")) {
             fileContent = fileContent.replaceAll("<", "&lt;");
             fileContent = fileContent.replaceAll(">", "&gt;");
             fileContent = "<div class=\"plain\"><pre>" + fileContent + "</pre></div>";

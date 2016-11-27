@@ -10,7 +10,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.text.Html;
 import android.util.Log;
-import android.util.LruCache;
 import android.view.Display;
 import android.view.WindowManager;
 import android.widget.TextView;

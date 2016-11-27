@@ -13,6 +13,7 @@
     <string name="starred">Starred</string>
     <string name="following">Following</string>
     <string name="repos">Repositorites</string>
+    <string name="members">Members</string>
     <string name="code">Code</string>
     <string name="recently_indexed">Recently indexed</string>
     <string name="least_recently_indexed">Least recently indexed</string>

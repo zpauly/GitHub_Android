@@ -3,6 +3,7 @@ package com.zpauly.githubapp.network.organizations;
 import com.zpauly.githubapp.Api;
 import com.zpauly.githubapp.base.BaseNetMethod;
 import com.zpauly.githubapp.entity.response.OrganizationBean;
+import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.utils.RetrofitUtil;
 
 import java.util.List;
@@ -43,6 +44,13 @@ public class OrganizationsMethod extends BaseNetMethod {
 
     public void getUserOrgs(Observer<List<OrganizationBean>> observer, String auth, String username, int pageId) {
         service.getUserOrgs(auth, username, pageId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
+    public void getMembers(Observer<List<UserBean>> observer, String auth, String org, int pageId) {
+        service.getMembers(auth, org, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

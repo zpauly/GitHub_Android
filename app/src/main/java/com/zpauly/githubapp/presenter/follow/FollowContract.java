@@ -23,6 +23,8 @@ public class FollowContract {
 
         void getStargazers();
 
+        void getMembers();
+
         void setPageId(int pageId);
     }
 

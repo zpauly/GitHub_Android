@@ -26,6 +26,7 @@ public abstract class RightDrawerActivity extends ToolbarActivity {
     private AppCompatTextView mTitleTV;
 
     private ViewGroup mContentRoot;
+    private MenuItem mLastItem;
 
     private Menu mNavMenu;
 
@@ -50,6 +51,7 @@ public abstract class RightDrawerActivity extends ToolbarActivity {
         mRightNav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
                 if (mOnNavItemClickListener != null) {
                     mOnNavItemClickListener.onItemClick(item);
                     closeDrawer();

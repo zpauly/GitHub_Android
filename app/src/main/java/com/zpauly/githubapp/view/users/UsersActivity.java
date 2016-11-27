@@ -40,6 +40,7 @@ public class UsersActivity extends ToolbarActivity implements FollowContract.Vie
     public static final int ORGS = 2;
     public static final int WATCHERS = 3;
     public static final int STARGAZERS = 4;
+    public static final int MEMBER = 5;
 
     private int userId;
     private String owner;
@@ -113,6 +114,8 @@ public class UsersActivity extends ToolbarActivity implements FollowContract.Vie
             setToolbarTitle(R.string.watchers);
         } else if (userId == STARGAZERS) {
             setToolbarTitle(R.string.stargazers);
+        } else if (userId == MEMBER) {
+            setToolbarTitle(R.string.members);
         }
         setOnToolbarNavClickedListener(new View.OnClickListener() {
             @Override
@@ -128,7 +131,6 @@ public class UsersActivity extends ToolbarActivity implements FollowContract.Vie
         intent.putExtra(USERS_ID, userId);
         intent.setClass(context, UsersActivity.class);
         context.startActivity(intent);
-//        ((Activity) context).finish();
     }
 
     public static void launchWatchersActivity(Context context, String owner, String repo) {
@@ -145,6 +147,14 @@ public class UsersActivity extends ToolbarActivity implements FollowContract.Vie
         intent.putExtra(USERS_ID, STARGAZERS);
         intent.putExtra(OWNER, owner);
         intent.putExtra(REPO, repo);
+        intent.setClass(context, UsersActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void launchMemberActivity(Context context, String orgName) {
+        Intent intent = new Intent();
+        intent.putExtra(USERS_ID, MEMBER);
+        intent.putExtra(OWNER, orgName);
         intent.setClass(context, UsersActivity.class);
         context.startActivity(intent);
     }
@@ -188,6 +198,9 @@ public class UsersActivity extends ToolbarActivity implements FollowContract.Vie
                 break;
             case STARGAZERS:
                 mPresenter.getStargazers();
+                break;
+            case MEMBER:
+                mPresenter.getMembers();
                 break;
             default:
                 break;

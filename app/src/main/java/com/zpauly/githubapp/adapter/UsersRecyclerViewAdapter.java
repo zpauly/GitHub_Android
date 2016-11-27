@@ -38,7 +38,11 @@ public class UsersRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<UserBe
         holder.mLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OthersActivity.lanuchActivity(getContext(), bean.getLogin());
+                if (bean.getType().equals("User")) {
+                    OthersActivity.lanuchActivity(getContext(), bean.getLogin());
+                } else if (bean.getType().equals("Organization")) {
+                    OthersActivity.launchOrganizationActivity(getContext(), bean.getLogin());
+                }
             }
         });
         holder.mUsernameTV.setText(bean.getLogin());

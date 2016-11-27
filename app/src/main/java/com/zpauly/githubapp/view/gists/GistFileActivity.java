@@ -157,6 +157,8 @@ public class GistFileActivity extends ToolbarActivity {
             lang = Settings.Lang.RUBY;
         } else if (fileName.endsWith(".js")) {
             lang = Settings.Lang.JAVASCRIPT;
+        } else if (fileName.endsWith(".xml") || fileName.endsWith(".html")) {
+            lang = Settings.MimeType.TEXT_HTML;
         } else {
             lang = Settings.MimeType.TEXT_PLAIN;
         }
