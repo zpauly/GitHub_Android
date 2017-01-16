@@ -68,13 +68,20 @@ public class UsersActivity extends ToolbarActivity implements FollowContract.Vie
     }
 
     @Override
-    public void initViews() {
+    protected void getParams() {
         userId = getIntent().getIntExtra(USERS_ID, -1);
         owner = getIntent().getStringExtra(OWNER);
         repo = getIntent().getStringExtra(REPO);
+    }
 
+    @Override
+    public void initContent() {
+        super.initContent();
         setContent(R.layout.content_followers);
+    }
 
+    @Override
+    public void initViews() {
         new FollowPresenter(this, this);
 
         mRefreshView = (RefreshView) findViewById(R.id.followers_RefreshView);

@@ -50,6 +50,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        getParams();
+
         if (BaseApplication.getDayNightMode() == BaseApplication.DAY_MODE) {
             Log.i(TAG, "day mode");
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -126,4 +128,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     public abstract void initViews();
 
     public abstract void initContent();
+
+    protected void getParams() {}
 }

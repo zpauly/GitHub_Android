@@ -80,11 +80,6 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
 
     @Override
     public void initViews() {
-
-        getParams();
-
-        setContent(R.layout.content_files);
-
         new FilesPresenter(this, this);
 
         mSRLayout = (SwipeRefreshLayout) findViewById(R.id.files_SRLayout);
@@ -102,14 +97,20 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
         loadContents();
     }
 
-
-    private void getParams() {
+    @Override
+    protected void getParams() {
         repo = getIntent().getStringExtra(REPO);
         owner = getIntent().getStringExtra(OWNER);
         ref = getIntent().getStringExtra(REF);
         branch = getIntent().getStringExtra(BRANCH);
         url = getIntent().getStringExtra(URL);
         path = "";
+    }
+
+    @Override
+    public void initContent() {
+        super.initContent();
+        setContent(R.layout.content_files);
     }
 
     @Override

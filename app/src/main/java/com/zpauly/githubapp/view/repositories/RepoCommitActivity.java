@@ -49,9 +49,16 @@ public class RepoCommitActivity extends ToolbarActivity implements RepoCommitCon
     private LoadMoreInSwipeRefreshLayoutMoreManager loadMoreInSwipeRefreshLayoutMoreManager;
     private RefreshViewManager refreshViewManager;
 
-    private void getAttrs() {
+    @Override
+    protected void getParams() {
         repoName = getIntent().getStringExtra(REPONAME);
         owner = getIntent().getStringExtra(OWNER);
+    }
+
+    @Override
+    public void initContent() {
+        super.initContent();
+        setContent(R.layout.content_repo_commit);
     }
 
     @Override
@@ -62,10 +69,6 @@ public class RepoCommitActivity extends ToolbarActivity implements RepoCommitCon
 
     @Override
     public void initViews() {
-        getAttrs();
-
-        setContent(R.layout.content_repo_commit);
-
         new RepoCommitPresenter(this, this);
 
         mRefreshView = (RefreshView) findViewById(R.id.commit_RefreshView);

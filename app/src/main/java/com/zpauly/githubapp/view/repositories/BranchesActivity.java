@@ -64,10 +64,6 @@ public class BranchesActivity extends ToolbarActivity {
 
     @Override
     public void initViews() {
-        getParams();
-
-        setContent(R.layout.content_branches);
-
         mRefreshView = (RefreshView) findViewById(R.id.RefreshView);
         mSRLayout = (SwipeRefreshLayout) findViewById(R.id.SRLayout);
         mBranchRV = (RecyclerView) findViewById(R.id.branch_RV);
@@ -147,7 +143,14 @@ public class BranchesActivity extends ToolbarActivity {
         mBranchRV.setAdapter(mBranchAdapter);
     }
 
-    private void getParams() {
+    @Override
+    public void initContent() {
+        super.initContent();
+        setContent(R.layout.content_branches);
+    }
+
+    @Override
+    protected void getParams() {
         defaultBranch = getIntent().getStringExtra(DEFAULT_BRANCH);
         repo = getIntent().getStringExtra(REPO);
         owner = getIntent().getStringExtra(OWNER);

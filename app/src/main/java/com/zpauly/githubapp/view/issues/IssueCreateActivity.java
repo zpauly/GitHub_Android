@@ -88,10 +88,6 @@ public class IssueCreateActivity extends ToolbarActivity implements IssueCreateC
 
     @Override
     public void initViews() {
-        getParams();
-
-        setContent(R.layout.content_create_issue);
-
         new IssueCreatePresenter(this, this);
 
         setDialogs();
@@ -135,9 +131,16 @@ public class IssueCreateActivity extends ToolbarActivity implements IssueCreateC
         mRefreshView.startRefresh();
     }
 
-    private void getParams() {
+    @Override
+    protected void getParams() {
         username = getIntent().getStringExtra(USERNAME);
         repoName = getIntent().getStringExtra(REPONAME);
+    }
+
+    @Override
+    public void initContent() {
+        super.initContent();
+        setContent(R.layout.content_create_issue);
     }
 
     @Override

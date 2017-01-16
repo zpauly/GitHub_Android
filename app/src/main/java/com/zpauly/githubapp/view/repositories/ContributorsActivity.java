@@ -55,10 +55,6 @@ public class ContributorsActivity extends ToolbarActivity implements Contributor
 
     @Override
     public void initViews() {
-        getAttrs();
-
-        setContent(R.layout.content_contributors);
-
         new ContributorsPresenter(this, this);
 
         mRefreshView = (RefreshView) findViewById(R.id.contributors_RefreshView);
@@ -84,7 +80,14 @@ public class ContributorsActivity extends ToolbarActivity implements Contributor
         refreshViewManager = getViewManager(RefreshViewManager.class);
     }
 
-    private void getAttrs() {
+    @Override
+    public void initContent() {
+        super.initContent();
+        setContent(R.layout.content_contributors);
+    }
+
+    @Override
+    protected void getParams() {
         owner = getIntent().getStringExtra(OWNER);
         repo = getIntent().getStringExtra(REPO);
     }

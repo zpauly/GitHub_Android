@@ -49,10 +49,6 @@ public class LabelsActivity extends ToolbarActivity implements LabelsContract.Vi
 
     @Override
     public void initViews() {
-        getParams();
-
-        setContent(R.layout.content_labels);
-
         new LabelsPresenter(this, this);
 
         mRefreshView = (RefreshView) findViewById(R.id.labels_RefreshView);
@@ -81,9 +77,16 @@ public class LabelsActivity extends ToolbarActivity implements LabelsContract.Vi
         });
     }
 
-    private void getParams() {
+    @Override
+    protected void getParams() {
         repo = getIntent().getStringExtra(REPO);
         owner = getIntent().getStringExtra(OWNER);
+    }
+
+    @Override
+    public void initContent() {
+        super.initContent();
+        setContent(R.layout.content_labels);
     }
 
     public static void launchActivity(Context context, String repo, String owner) {

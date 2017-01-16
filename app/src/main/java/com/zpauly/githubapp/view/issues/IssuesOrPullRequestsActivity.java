@@ -39,8 +39,6 @@ public class IssuesOrPullRequestsActivity extends RightDrawerActivity {
 
     @Override
     public void initViews() {
-        getAttrs();
-
         setFragment();
     }
 
@@ -56,7 +54,8 @@ public class IssuesOrPullRequestsActivity extends RightDrawerActivity {
         });
     }
 
-    private void getAttrs() {
+    @Override
+    protected void getParams() {
         dataType = getIntent().getIntExtra(DATA_TYPE, USER_ISSUES);
         repoName = getIntent().getStringExtra(REPO_NAME);
         orgName = getIntent().getStringExtra(ORG_NAME);

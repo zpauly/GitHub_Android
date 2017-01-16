@@ -32,10 +32,6 @@ public class ReleaseContentActivity extends ToolbarActivity {
 
     @Override
     public void initViews() {
-        getAttrs();
-
-        setContent(R.layout.content_release_content);
-
         mUsernameTV = (AppCompatTextView) findViewById(R.id.release_username_TV);
         mAvatarIV = (CircleImageView) findViewById(R.id.release_avatar_IV);
         mTagTV = (AppCompatTextView) findViewById(R.id.release_tag_TV);
@@ -52,7 +48,14 @@ public class ReleaseContentActivity extends ToolbarActivity {
         }
     }
 
-    private void getAttrs() {
+    @Override
+    public void initContent() {
+        super.initContent();
+        setContent(R.layout.content_release_content);
+    }
+
+    @Override
+    protected void getParams() {
         releaseBean = getIntent().getParcelableExtra(RELEASE);
     }
 

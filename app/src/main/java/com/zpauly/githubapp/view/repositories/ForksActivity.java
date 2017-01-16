@@ -68,9 +68,6 @@ public class ForksActivity extends ToolbarActivity {
 
     @Override
     public void initViews() {
-        getParams();
-        setContent(R.layout.content_forks);
-
         mRefreshView = (RefreshView) findViewById(R.id.RefreshView);
         mSRLayout = (SwipeRefreshLayout) findViewById(R.id.SRLayout);
         mForksRV = (RecyclerView) findViewById(R.id.forks_RV);
@@ -105,7 +102,14 @@ public class ForksActivity extends ToolbarActivity {
         });
     }
 
-    private void getParams() {
+    @Override
+    public void initContent() {
+        super.initContent();
+        setContent(R.layout.content_forks);
+    }
+
+    @Override
+    protected void getParams() {
         repo = getIntent().getStringExtra(REPO);
         owner = getIntent().getStringExtra(OWNER);
         auth = SPUtil.getString(this, Constants.USER_INFO, Constants.USER_AUTH, null);

@@ -27,9 +27,12 @@ public class EventsActivity extends ToolbarActivity {
 
     @Override
     public void initViews() {
-        eventsId = getIntent().getIntExtra(EVENTS_ID, -1);
-
         setFragment();
+    }
+
+    @Override
+    protected void getParams() {
+        eventsId = getIntent().getIntExtra(EVENTS_ID, -1);
     }
 
     @Override

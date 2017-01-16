@@ -67,12 +67,7 @@ public class ReposActivity extends RightDrawerActivity implements ReposContract.
 
     @Override
     public void initViews() {
-        getParams();
-
         new ReposPresenter(this, this);
-
-        setContent(R.layout.content_repos);
-
         mRefreshView = (RefreshView) findViewById(R.id.RefreshView);
         mSRLayout = (SwipeRefreshLayout) findViewById(R.id.SRLayout);
         mReposRV = (RecyclerView) findViewById(R.id.repos_RV);
@@ -97,7 +92,14 @@ public class ReposActivity extends RightDrawerActivity implements ReposContract.
         setViewManager(loadMoreInSwipeRefreshLayoutMoreManager, refreshViewManager);
     }
 
-    private void getParams() {
+    @Override
+    public void initContent() {
+        super.initContent();
+        setContent(R.layout.content_repos);
+    }
+
+    @Override
+    protected void getParams() {
         username = getIntent().getStringExtra(USERNAME);
     }
 

@@ -51,10 +51,6 @@ public class CommentCreateActivity extends ToolbarActivity implements CommentCre
 
     @Override
     public void initViews() {
-        getParams();
-
-        setContent(R.layout.content_create_comment);
-
         new CommentCreatePresenter(this, this);
 
         uploadDialog = new MaterialDialog.Builder(this)
@@ -71,12 +67,19 @@ public class CommentCreateActivity extends ToolbarActivity implements CommentCre
         setFloatingActionButton();
     }
 
-    private void getParams() {
+    @Override
+    protected void getParams() {
         commentType = getIntent().getIntExtra(COMMENT_TYPE, -1);
         owner = getIntent().getStringExtra(OWNER);
         repo = getIntent().getStringExtra(REPO);
         number = getIntent().getIntExtra(NUM, -1);
         sha = getIntent().getStringExtra(SHA);
+    }
+
+    @Override
+    public void initContent() {
+        super.initContent();
+        setContent(R.layout.content_create_comment);
     }
 
     @Override

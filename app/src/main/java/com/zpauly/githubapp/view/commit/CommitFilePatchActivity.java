@@ -33,10 +33,6 @@ public class CommitFilePatchActivity extends ToolbarActivity {
 
     @Override
     public void initViews() {
-        getParams();
-
-        setContent(R.layout.content_commit_file_patch);
-
         mPatchCLTV = (ColoredLineTextView) findViewById(R.id.commit_file_patch_CLTV);
         mFilenameTV = (AppCompatTextView) findViewById(R.id.commit_file_name_TV);
         mChangesTV = (AppCompatTextView) findViewById(R.id.commit_file_changes_count_TV);
@@ -70,7 +66,14 @@ public class CommitFilePatchActivity extends ToolbarActivity {
         }
     }
 
-    private void getParams() {
+    @Override
+    public void initContent() {
+        super.initContent();
+        setContent(R.layout.content_commit_file_patch);
+    }
+
+    @Override
+    protected void getParams() {
         fileBean = getIntent().getParcelableExtra(FILE);
     }
 

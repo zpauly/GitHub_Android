@@ -56,10 +56,6 @@ public class GistFileActivity extends ToolbarActivity {
 
     @Override
     public void initViews() {
-        getParams();
-
-        setContent(R.layout.content_gist_file);
-
         auth = SPUtil.getString(this, Constants.USER_INFO, Constants.USER_AUTH, null);
         method = GistsMethod.getInstance();
 
@@ -85,9 +81,16 @@ public class GistFileActivity extends ToolbarActivity {
         mRefreshView.startRefresh();
     }
 
-    private void getParams() {
+    @Override
+    protected void getParams() {
         fileName = getIntent().getStringExtra(FILE_NAME);
         id = getIntent().getStringExtra(FILE_ID);
+    }
+
+    @Override
+    public void initContent() {
+        super.initContent();
+        setContent(R.layout.content_gist_file);
     }
 
     @Override

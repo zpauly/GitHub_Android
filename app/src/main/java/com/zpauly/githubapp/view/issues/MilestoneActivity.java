@@ -67,10 +67,6 @@ public class MilestoneActivity extends ToolbarActivity implements MilestoneContr
 
     @Override
     public void initViews() {
-        getParams();
-
-        setContent(R.layout.content_milestone);
-
         new MilestonePresenter(this, this);
 
         mRefreshView = (RefreshView) findViewById(R.id.milestone_RefreshView);
@@ -109,7 +105,14 @@ public class MilestoneActivity extends ToolbarActivity implements MilestoneContr
         });
     }
 
-    private void getParams() {
+    @Override
+    public void initContent() {
+        super.initContent();
+        setContent(R.layout.content_milestone);
+    }
+
+    @Override
+    protected void getParams() {
         repo = getIntent().getStringExtra(REPO);
         owner = getIntent().getStringExtra(OWNER);
     }

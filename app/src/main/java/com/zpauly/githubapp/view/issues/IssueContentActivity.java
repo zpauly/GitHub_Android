@@ -80,10 +80,6 @@ public class IssueContentActivity extends ToolbarActivity implements IssueConten
 
     @Override
     public void initViews() {
-        getParams();
-
-        setContent(R.layout.content_issue_content);
-
         new IssueContentPresenter(this, this);
 
         mRefreshView = (RefreshView) findViewById(R.id.issue_content_RefreshView);
@@ -134,11 +130,18 @@ public class IssueContentActivity extends ToolbarActivity implements IssueConten
         });
     }
 
-    private void getParams() {
+    @Override
+    protected void getParams() {
         issueBean = getIntent().getParcelableExtra(ISSUE);
         owner = getIntent().getStringExtra(ISSUE_OWNER);
         String strs[] = issueBean.getUrl().split("/");
         repoName = strs[strs.length - 3];
+    }
+
+    @Override
+    public void initContent() {
+        super.initContent();
+        setContent(R.layout.content_issue_content);
     }
 
     public static void launchActivity(Context context, IssueBean issue, String owner) {

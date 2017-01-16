@@ -31,10 +31,6 @@ public class PullRequestContentActivity extends ToolbarActivity {
 
     @Override
     public void initViews() {
-        getParams();
-
-        setContent(R.layout.content_pull_request_content);
-
         mTabLayout = (TabLayout) findViewById(R.id.tablayout);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mTabLayout.setVisibility(View.VISIBLE);
@@ -72,7 +68,14 @@ public class PullRequestContentActivity extends ToolbarActivity {
         mAdapter.addFragment(fragment, title);
     }
 
-    private void getParams() {
+    @Override
+    public void initContent() {
+        super.initContent();
+        setContent(R.layout.content_pull_request_content);
+    }
+
+    @Override
+    protected void getParams() {
         pullRequestBean = getIntent().getParcelableExtra(PULL_REQUEST);
     }
 

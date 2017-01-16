@@ -44,8 +44,6 @@ public class GistContentActivity extends ToolbarActivity {
 
     @Override
     public void initViews() {
-        getParams();
-
         mAvatarIV = (CircleImageView) findViewById(R.id.gist_content_avatar_IV);
         mLoginTV = (AppCompatTextView) findViewById(R.id.gist_content_login_TV);
         mUpdatedTV = (AppCompatTextView) findViewById(R.id.gist_content_updated_at_TV);
@@ -58,7 +56,8 @@ public class GistContentActivity extends ToolbarActivity {
         setViews();
     }
 
-    private void getParams() {
+    @Override
+    protected void getParams() {
         bean = getIntent().getParcelableExtra(GIST_BUNDLE);
         list = getIntent().getParcelableArrayListExtra(FILE_LIST_BUNDLE);
 

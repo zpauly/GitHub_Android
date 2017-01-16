@@ -120,10 +120,6 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
 
     @Override
     public void initViews() {
-        getAttrs();
-
-        setContent(R.layout.content_repo_content);
-
         new RepoContentPresenter(this, this);
 
         mSRLayout = (SwipeRefreshLayout) findViewById(R.id.repo_content_SRLayout);
@@ -176,7 +172,14 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
         mReadMeTV.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
-    private void getAttrs() {
+    @Override
+    public void initContent() {
+        super.initContent();
+        setContent(R.layout.content_repo_content);
+    }
+
+    @Override
+    protected void getParams() {
         Intent intent = getIntent();
         full_name = intent.getStringExtra(FULL_NAME);
         name = intent.getStringExtra(NAME);

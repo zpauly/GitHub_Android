@@ -26,7 +26,6 @@ import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.SPUtil;
 import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.RightDrawerActivity;
-import com.zpauly.githubapp.view.ToolbarActivity;
 import com.zpauly.githubapp.view.events.EventsActivity;
 import com.zpauly.githubapp.view.repositories.ReposActivity;
 import com.zpauly.githubapp.view.users.UsersActivity;
@@ -77,8 +76,6 @@ public class ProfileActivity extends RightDrawerActivity implements ProfileContr
 
     @Override
     public void initViews() {
-        setContent(R.layout.fragment_profile);
-
         new ProfilePresenter(this, this);
 
         mRefreshView = (RefreshView) findViewById(R.id.profile_RefreshView);
@@ -142,6 +139,12 @@ public class ProfileActivity extends RightDrawerActivity implements ProfileContr
             }
         });
         mRefreshView.startRefresh();
+    }
+
+    @Override
+    public void initContent() {
+        super.initContent();
+        setContent(R.layout.fragment_profile);
     }
 
     @Override

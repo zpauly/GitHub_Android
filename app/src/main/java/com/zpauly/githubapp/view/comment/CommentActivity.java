@@ -58,7 +58,8 @@ public class CommentActivity extends ToolbarActivity implements CommitCommentCon
     private LoadMoreInSwipeRefreshLayoutMoreManager loadMoreInSwipeRefreshLayoutMoreManager;
     private RefreshViewManager refreshViewManager;
 
-    private void getParams(){
+    @Override
+    protected void getParams(){
         commentType = getIntent().getIntExtra(COMMENT_TYPE, -1);
         switch (commentType) {
             case TYPE_COMMIT:
@@ -80,16 +81,6 @@ public class CommentActivity extends ToolbarActivity implements CommitCommentCon
 
     @Override
     public void initViews() {
-        getParams();
-
-        switch (commentType) {
-            case CommentActivity.TYPE_COMMIT:
-                setContent(R.layout.content_commit_comment);
-                break;
-            default:
-                break;
-        }
-
         mRefreshView = (RefreshView) findViewById(R.id.commit_comment_RefreshView);
         mContentLayout = (CoordinatorLayout) findViewById(R.id.comment_content_layout);
         mCommentRV = (RecyclerView) findViewById(R.id.commit_comment_RV);
@@ -100,6 +91,18 @@ public class CommentActivity extends ToolbarActivity implements CommitCommentCon
             case CommentActivity.TYPE_COMMIT:
                 new CommitCommentPresenter(this, this);
                 setupCommitComment();
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void initContent() {
+        super.initContent();
+        switch (commentType) {
+            case CommentActivity.TYPE_COMMIT:
+                setContent(R.layout.content_commit_comment);
                 break;
             default:
                 break;

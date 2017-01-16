@@ -96,11 +96,6 @@ public class OthersActivity extends RightDrawerActivity implements ProfileContra
 
     @Override
     public void initViews() {
-        setContent(R.layout.content_others);
-
-        username = getIntent().getStringExtra(USERNAME);
-        isOrg = getIntent().getBooleanExtra(IS_ORG, false);
-
         new ProfilePresenter(this, this);
 
         mSWLayout = (SwipeRefreshLayout) findViewById(R.id.others_SWLayout);
@@ -174,6 +169,18 @@ public class OthersActivity extends RightDrawerActivity implements ProfileContra
             }
         });
         mRefreshView.startRefresh();
+    }
+
+    @Override
+    protected void getParams() {
+        username = getIntent().getStringExtra(USERNAME);
+        isOrg = getIntent().getBooleanExtra(IS_ORG, false);
+    }
+
+    @Override
+    public void initContent() {
+        super.initContent();
+        setContent(R.layout.content_others);
     }
 
     @Override

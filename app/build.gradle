@@ -40,4 +40,7 @@ dependencies {
     compile 'Codeview-1.0.0:webviewcode:1.0.0'
     compile 'com.ms-square:expandableTextView:0.1.4'
     compile 'com.umeng.analytics:analytics:latest.integration'
+
+    compile 'com.jakewharton:butterknife:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 }

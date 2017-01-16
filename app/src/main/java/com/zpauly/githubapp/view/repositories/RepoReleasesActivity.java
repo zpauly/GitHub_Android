@@ -54,10 +54,6 @@ public class RepoReleasesActivity extends ToolbarActivity implements ReleasesCon
 
     @Override
     public void initViews() {
-        getAttrs();
-
-        setContent(R.layout.content_releases);
-
         new ReleasesPresenter(this, this);
 
         mRefreshView = (RefreshView) findViewById(R.id.releases_RefreshView);
@@ -96,7 +92,14 @@ public class RepoReleasesActivity extends ToolbarActivity implements ReleasesCon
         });
     }
 
-    private void getAttrs() {
+    @Override
+    public void initContent() {
+        super.initContent();
+        setContent(R.layout.content_releases);
+    }
+
+    @Override
+    protected void getParams() {
         owner = getIntent().getStringExtra(OWNER);
         repo = getIntent().getStringExtra(REPO);
     }

@@ -34,8 +34,6 @@ public class SettingsActivity extends ToolbarActivity {
 
     @Override
     public void initViews() {
-        setContent(R.layout.content_settings);
-
         mCodeStyleTV = (AppCompatTextView) findViewById(R.id.settings_code_style_TV);
         mAboutMeTV = (AppCompatTextView) findViewById(R.id.settings_about_me_TV);
         mOpenSourceComponentsTV = (AppCompatTextView) findViewById(R.id.settings_open_source_TV);
@@ -43,6 +41,12 @@ public class SettingsActivity extends ToolbarActivity {
 
         setupCodeStyleDialog();
         setupViews();
+    }
+
+    @Override
+    public void initContent() {
+        super.initContent();
+        setContent(R.layout.content_settings);
     }
 
     private void setupCodeStyleDialog() {

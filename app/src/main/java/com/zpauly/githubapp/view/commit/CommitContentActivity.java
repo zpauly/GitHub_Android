@@ -64,10 +64,6 @@ public class CommitContentActivity extends ToolbarActivity implements CommitCont
 
     @Override
     public void initViews() {
-        getParams();
-
-        setContent(R.layout.content_commit_content);
-
         new CommitContentPresenter(this, this);
 
         mRefreshView = (RefreshView) findViewById(R.id.commit_content_RefreshView);
@@ -114,10 +110,17 @@ public class CommitContentActivity extends ToolbarActivity implements CommitCont
         });
     }
 
-    private void getParams() {
+    @Override
+    protected void getParams() {
         owner = getIntent().getStringExtra(OWNER);
         repo = getIntent().getStringExtra(REPO);
         sha = getIntent().getStringExtra(SHA);
+    }
+
+    @Override
+    public void initContent() {
+        super.initContent();
+        setContent(R.layout.content_commit_content);
     }
 
     public static void launchActivity(Context context, String owner, String repo, String sha) {
