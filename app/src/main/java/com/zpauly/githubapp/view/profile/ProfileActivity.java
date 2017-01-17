@@ -30,6 +30,7 @@ import com.zpauly.githubapp.view.events.EventsActivity;
 import com.zpauly.githubapp.view.repositories.ReposActivity;
 import com.zpauly.githubapp.view.users.UsersActivity;
 
+import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -41,36 +42,34 @@ public class ProfileActivity extends RightDrawerActivity implements ProfileContr
 
     private ProfileContract.Presenter mPresenter;
 
-    private SwipeRefreshLayout mSwipeRefreshLayout;
-
-    private CircleImageView mAvatarIV;
-    private TextView mLoginTV;
-    private TextView mNameTV;
-    private TextView mBioTV;
-    private TextView mLocationTV;
-    private TextView mEmailTV;
-    private TextView mJoinTimeTV;
-    private TextView mFollowersTV;
-    private TextView mFollowingTV;
-    private TextView mCompanyTV;
-    private TextView mBlogTV;
-    private ImageView mLocationDividerIV;
-    private ImageView mEmailDividerIV;
-    private ImageView mTimeDividerIV;
-    private ImageView mCompanyDividerIV;
-    private ImageView mBlogDividerTV;
-    private LinearLayout mLocationLayout;
-    private LinearLayout mEmailLayout;
-    private LinearLayout mTimeLayout;
-    private LinearLayout mCompanyLayout;
-    private LinearLayout mBlogLayout;
-    private LinearLayout mFollowersLayout;
-    private LinearLayout mFollowingLayout;
-    private RelativeLayout mEventsLayout;
-    private RelativeLayout mReposLayout;
-    private RelativeLayout mOrgsLayout;
-
-    private RefreshView mRefreshView;
+    @BindView(R.id.profile_SRLayout) public SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.profile_avatar) public CircleImageView mAvatarIV;
+    @BindView(R.id.profile_login_TV) public TextView mLoginTV;
+    @BindView(R.id.profile_name_TV) public TextView mNameTV;
+    @BindView(R.id.profile_bio_TV) public TextView mBioTV;
+    @BindView(R.id.profile_location_TV) public TextView mLocationTV;
+    @BindView(R.id.profile_email_TV) public TextView mEmailTV;
+    @BindView(R.id.profile_join_time_TV) public TextView mJoinTimeTV;
+    @BindView(R.id.profile_followers_TV) public TextView mFollowersTV;
+    @BindView(R.id.profile_following_TV) public TextView mFollowingTV;
+    @BindView(R.id.profile_company_TV) public TextView mCompanyTV;
+    @BindView(R.id.profile_blog_TV) public TextView mBlogTV;
+    @BindView(R.id.profile_location_divider_IV) public ImageView mLocationDividerIV;
+    @BindView(R.id.profile_email_divider_IV) public ImageView mEmailDividerIV;
+    @BindView(R.id.profile_time_divider_IV) public ImageView mTimeDividerIV;
+    @BindView(R.id.profile_company_divider_IV) public ImageView mCompanyDividerIV;
+    @BindView(R.id.profile_blog_divider_IV) public ImageView mBlogDividerTV;
+    @BindView(R.id.profile_location_layout) public LinearLayout mLocationLayout;
+    @BindView(R.id.profile_email_layout) public LinearLayout mEmailLayout;
+    @BindView(R.id.profile_time_layout) public LinearLayout mTimeLayout;
+    @BindView(R.id.profile_company_layout) public LinearLayout mCompanyLayout;
+    @BindView(R.id.profile_blog_layout) public LinearLayout mBlogLayout;
+    @BindView(R.id.profile_followers_layout) public LinearLayout mFollowersLayout;
+    @BindView(R.id.profile_following_layout) public LinearLayout mFollowingLayout;
+    @BindView(R.id.profile_events_layout) public RelativeLayout mEventsLayout;
+    @BindView(R.id.profile_repos_layout) public RelativeLayout mReposLayout;
+    @BindView(R.id.profile_orgs_layout) public RelativeLayout mOrgsLayout;
+    @BindView(R.id.profile_RefreshView) public RefreshView mRefreshView;
 
     private AuthenticatedUserBean userBean;
 
@@ -78,43 +77,14 @@ public class ProfileActivity extends RightDrawerActivity implements ProfileContr
     public void initViews() {
         new ProfilePresenter(this, this);
 
-        mRefreshView = (RefreshView) findViewById(R.id.profile_RefreshView);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.profile_SRLayout);
-
-        mAvatarIV = (CircleImageView) findViewById(R.id.profile_avatar);
-        mLoginTV = (TextView) findViewById(R.id.profile_login_TV);
         mLoginTV.setText("");
-        mNameTV = (TextView) findViewById(R.id.profile_name_TV);
         mNameTV.setText("");
-        mBioTV = (TextView) findViewById(R.id.profile_bio_TV);
         mBioTV.setText("");
-        mLocationTV = (TextView) findViewById(R.id.profile_location_TV);
         mLocationTV.setText("");
-        mEmailTV = (TextView) findViewById(R.id.profile_email_TV);
         mEmailTV.setText("");
-        mJoinTimeTV = (TextView) findViewById(R.id.profile_join_time_TV);
         mJoinTimeTV.setText("");
-        mCompanyTV = (TextView) findViewById(R.id.profile_company_TV);
         mCompanyTV.setText("");
-        mBlogTV = (TextView) findViewById(R.id.profile_blog_TV);
         mBlogTV.setText("");
-        mLocationLayout = (LinearLayout) findViewById(R.id.profile_location_layout);
-        mEmailLayout = (LinearLayout) findViewById(R.id.profile_email_layout);
-        mTimeLayout = (LinearLayout) findViewById(R.id.profile_time_layout);
-        mCompanyLayout = (LinearLayout) findViewById(R.id.profile_company_layout);
-        mBlogLayout = (LinearLayout) findViewById(R.id.profile_blog_layout);
-        mLocationDividerIV = (ImageView) findViewById(R.id.profile_company_divider_IV);
-        mEmailDividerIV = (ImageView) findViewById(R.id.profile_email_divider_IV);
-        mTimeDividerIV = (ImageView) findViewById(R.id.profile_time_divider_IV);
-        mCompanyDividerIV = (ImageView) findViewById(R.id.profile_company_divider_IV);
-        mBlogDividerTV = (ImageView) findViewById(R.id.profile_blog_divider_IV);
-        mFollowersTV = (TextView) findViewById(R.id.profile_followers_TV);
-        mFollowingTV = (TextView) findViewById(R.id.profile_following_TV);
-        mFollowersLayout = (LinearLayout) findViewById(R.id.profile_followers_layout);
-        mFollowingLayout = (LinearLayout) findViewById(R.id.profile_following_layout);
-        mEventsLayout = (RelativeLayout) findViewById(R.id.profile_events_layout);
-        mReposLayout = (RelativeLayout) findViewById(R.id.profile_repos_layout);
-        mOrgsLayout = (RelativeLayout) findViewById(R.id.profile_orgs_layout);
 
         setUserInfo();
 

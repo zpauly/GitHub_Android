@@ -34,6 +34,9 @@ import com.zpauly.githubapp.view.ToolbarMenuFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.OnClick;
+
 /**
  * Created by zpauly on 16/9/4.
  */
@@ -42,10 +45,10 @@ public class IssuesOrPullRequestsFragment extends ToolbarMenuFragment implements
 
     private IssuesOrPullRequestsContract.Presenter mPresenter;
 
-    private RefreshView mRefreshView;
-    private SwipeRefreshLayout mSRLayout;
-    private RecyclerView mIssuesRV;
-    private FloatingActionButton mIssueCreateFAB;
+    @BindView(R.id.issue_RefreshView) public RefreshView mRefreshView;
+    @BindView(R.id.issue_SRLayout) public SwipeRefreshLayout mSRLayout;
+    @BindView(R.id.issue_RV) public RecyclerView mIssuesRV;
+    @BindView(R.id.issue_create_FAB) public FloatingActionButton mIssueCreateFAB;
 
     private MenuItem mState;
     private MenuItem mFilter;
@@ -256,20 +259,13 @@ public class IssuesOrPullRequestsFragment extends ToolbarMenuFragment implements
 
     @Override
     protected void initViews(View view) {
-        getAttrs();
-
         new IssuesOrPullRequestsPresenter(getContext(), this);
-
-        mRefreshView = (RefreshView) view.findViewById(R.id.issue_RefreshView);
-        mSRLayout = (SwipeRefreshLayout) view.findViewById(R.id.issue_SRLayout);
-        mIssuesRV = (RecyclerView) view.findViewById(R.id.issue_RV);
-        mIssueCreateFAB = (FloatingActionButton) view.findViewById(R.id.issue_create_FAB);
 
         mRightDrawer = (DrawerLayout) getActivity().findViewById(R.id.nav_drawer_layout);
 
         setupSwipeRefreshLayout();
         setupRecyclerView();
-        setupFloatingActionButton();
+        mIssueCreateFAB.attachButtonToRecyclerView(mIssuesRV);
 
         setViewManager(new LoadMoreInSwipeRefreshLayoutMoreManager(mIssuesRV, mSRLayout) {
             @Override
@@ -318,7 +314,8 @@ public class IssuesOrPullRequestsFragment extends ToolbarMenuFragment implements
         return inflater.inflate(R.layout.fragment_issue, container, false);
     }
 
-    private void getAttrs() {
+    @Override
+    protected void getParams() {
         Bundle bundle = getArguments();
         if (bundle != null) {
             dataType = bundle.getInt(IssuesOrPullRequestsActivity.DATA_TYPE, IssuesOrPullRequestsActivity.USER_ISSUES);
@@ -336,14 +333,9 @@ public class IssuesOrPullRequestsFragment extends ToolbarMenuFragment implements
         }
     }
 
-    private void setupFloatingActionButton() {
-        mIssueCreateFAB.attachButtonToRecyclerView(mIssuesRV);
-        mIssueCreateFAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                IssueCreateActivity.launchActivity(getContext(), username, repoName);
-            }
-        });
+    @OnClick(R.id.issue_create_FAB)
+    public void onIssueCreateButtonClick() {
+        IssueCreateActivity.launchActivity(getContext(), username, repoName);
     }
 
     private void setupSwipeRefreshLayout() {

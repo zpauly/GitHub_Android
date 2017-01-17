@@ -42,6 +42,7 @@ import com.zpauly.githubapp.view.users.UsersActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -63,31 +64,29 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
 
     private RepoContentContract.Presenter mPresenter;
 
-    private AppBarLayout mABLayout;
-    private SwipeRefreshLayout mSRLayout;
-    private LinearLayout mTitleLayout;
-    private CircleImageView mAvatarIV;
-    private AppCompatTextView mTitleTV;
-    private LinearLayout mDescLayout;
-    private AppCompatTextView mDescTV;
-    private LinearLayout mWatchersLayout;
-    private LinearLayout mStargazersLayout;
-    private LinearLayout mForksLayout;
-    private AppCompatTextView mWatchersTV;
-    private AppCompatTextView mStargazersTV;
-    private AppCompatTextView mForksTV;
-    private AppCompatTextView mIssuesTV;
-    private AppCompatTextView mReadMeTV;
-    private AppCompatTextView mLoadAgainTV;
-    private AppCompatTextView mViewFilesTV;
-    private AppCompatTextView mPullRequestsTV;
-    private ProgressBar mReadMePB;
+    @BindView(R.id.repo_content_RefreshView) public RefreshView mRefreshView;
+    @BindView(R.id.repo_content_SRLayout) public SwipeRefreshLayout mSRLayout;
+    @BindView(R.id.repo_content_title_layout) public LinearLayout mTitleLayout;
+    @BindView(R.id.repo_content_avatar_IV) public CircleImageView mAvatarIV;
+    @BindView(R.id.repo_content_title_TV) public AppCompatTextView mTitleTV;
+    @BindView(R.id.repo_content_desc_layout) public LinearLayout mDescLayout;
+    @BindView(R.id.repo_content_desc_TV) public AppCompatTextView mDescTV;
+    @BindView(R.id.repo_content_watchers_layout) public LinearLayout mWatchersLayout;
+    @BindView(R.id.repo_content_stargazers_layout) public LinearLayout mStargazersLayout;
+    @BindView(R.id.repo_content_forks_layout) public LinearLayout mForksLayout;
+    @BindView(R.id.repo_content_watchers_TV) public AppCompatTextView mWatchersTV;
+    @BindView(R.id.repo_content_stargazers_TV) public AppCompatTextView mStargazersTV;
+    @BindView(R.id.repo_content_forks_TV) public AppCompatTextView mForksTV;
+    @BindView(R.id.repo_content_issues_TV) public AppCompatTextView mIssuesTV;
+    @BindView(R.id.repo_content_readme_TV) public AppCompatTextView mReadMeTV;
+    @BindView(R.id.repo_content_readme_load_again_TV) public AppCompatTextView mLoadAgainTV;
+    @BindView(R.id.repo_content_view_files_TV) public AppCompatTextView mViewFilesTV;
+    @BindView(R.id.repo_content_pull_requests_TV) public AppCompatTextView mPullRequestsTV;
+    @BindView(R.id.repo_content_readme_PB) public ProgressBar mReadMePB;
 
     private MenuItem mMenuItemStar;
     private MenuItem mMenuWatch;
     private MenuItem mMenuFork;
-
-    private RefreshView mRefreshView;
 
     private String content;
     private RepositoriesBean repoBean;
@@ -121,27 +120,6 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
     @Override
     public void initViews() {
         new RepoContentPresenter(this, this);
-
-        mSRLayout = (SwipeRefreshLayout) findViewById(R.id.repo_content_SRLayout);
-        mTitleLayout = (LinearLayout) findViewById(R.id.repo_content_title_layout);
-        mAvatarIV = (CircleImageView) findViewById(R.id.repo_content_avatar_IV);
-        mTitleTV = (AppCompatTextView) findViewById(R.id.repo_content_title_TV);
-        mDescLayout = (LinearLayout) findViewById(R.id.repo_content_desc_layout);
-        mDescTV = (AppCompatTextView) findViewById(R.id.repo_content_desc_TV);
-        mWatchersLayout = (LinearLayout) findViewById(R.id.repo_content_watchers_layout);
-        mStargazersLayout = (LinearLayout) findViewById(R.id.repo_content_stargazers_layout);
-        mForksLayout = (LinearLayout) findViewById(R.id.repo_content_forks_layout);
-        mWatchersTV = (AppCompatTextView) findViewById(R.id.repo_content_watchers_TV);
-        mStargazersTV = (AppCompatTextView) findViewById(R.id.repo_content_stargazers_TV);
-        mForksTV = (AppCompatTextView) findViewById(R.id.repo_content_forks_TV);
-        mIssuesTV = (AppCompatTextView) findViewById(R.id.repo_content_issues_TV);
-        mReadMeTV = (AppCompatTextView) findViewById(R.id.repo_content_readme_TV);
-        mViewFilesTV = (AppCompatTextView) findViewById(R.id.repo_content_view_files_TV);
-        mPullRequestsTV = (AppCompatTextView) findViewById(R.id.repo_content_pull_requests_TV);
-        mLoadAgainTV = (AppCompatTextView) findViewById(R.id.repo_content_readme_load_again_TV);
-        mReadMePB = (ProgressBar) findViewById(R.id.repo_content_readme_PB);
-
-        mRefreshView = (RefreshView) findViewById(R.id.repo_content_RefreshView);
 
         setupSwipeRefreshLayout();
         setupViews();

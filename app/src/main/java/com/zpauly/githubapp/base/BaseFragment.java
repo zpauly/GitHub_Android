@@ -18,6 +18,9 @@ import com.zpauly.githubapp.view.profile.OthersActivity;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 /**
  * Created by zpauly on 16-6-10.
  */
@@ -31,13 +34,30 @@ public abstract class BaseFragment extends Fragment {
 
     private Context context;
 
+    private Unbinder mUnbinder;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getParams();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUnbinder.unbind();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = setContentView(inflater, container);
         if (getArguments() != null) {
-            username = getArguments().getString(OthersActivity.USERNAME, null);
+            username = getArguments().getString(OthersActivity.USERNAME);
         }
+
+        mUnbinder = ButterKnife.bind(this, mView);
+
         initViews(mView);
 
         for (ViewManager viewManager : viewManagerMap.values()) {
@@ -92,6 +112,8 @@ public abstract class BaseFragment extends Fragment {
         }
         return (T) result;
     }
+
+    protected void getParams() {}
 
     protected abstract void initViews(View view);
 

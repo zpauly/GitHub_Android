@@ -18,6 +18,8 @@ import com.zpauly.githubapp.view.ToolbarActivity;
 import com.zpauly.githubapp.view.dialog.AboutMeDialogFragment;
 import com.zpauly.githubapp.view.dialog.OpenSourceComponentsDialog;
 
+import butterknife.BindView;
+
 /**
  * Created by zpauly on 2016/10/23.
  */
@@ -25,20 +27,15 @@ import com.zpauly.githubapp.view.dialog.OpenSourceComponentsDialog;
 public class SettingsActivity extends ToolbarActivity {
     private final String TAG = getClass().getName();
 
-    private AppCompatTextView mCodeStyleTV;
-    private AppCompatTextView mAboutMeTV;
-    private AppCompatTextView mOpenSourceComponentsTV;
-    private SwitchCompat mNightSC;
+    @BindView(R.id.settings_code_style_TV) public AppCompatTextView mCodeStyleTV;
+    @BindView(R.id.settings_about_me_TV) public AppCompatTextView mAboutMeTV;
+    @BindView(R.id.settings_open_source_TV) public AppCompatTextView mOpenSourceComponentsTV;
+    @BindView(R.id.night_theme_SC) public SwitchCompat mNightSC;
 
     private MaterialDialog mCodeStyleDialog;
 
     @Override
     public void initViews() {
-        mCodeStyleTV = (AppCompatTextView) findViewById(R.id.settings_code_style_TV);
-        mAboutMeTV = (AppCompatTextView) findViewById(R.id.settings_about_me_TV);
-        mOpenSourceComponentsTV = (AppCompatTextView) findViewById(R.id.settings_open_source_TV);
-        mNightSC = (SwitchCompat) findViewById(R.id.night_theme_SC);
-
         setupCodeStyleDialog();
         setupViews();
     }

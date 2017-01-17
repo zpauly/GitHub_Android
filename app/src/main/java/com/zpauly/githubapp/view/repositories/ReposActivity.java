@@ -29,6 +29,8 @@ import com.zpauly.githubapp.view.RightDrawerActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * Created by zpauly on 16-7-18.
  */
@@ -49,9 +51,9 @@ public class ReposActivity extends RightDrawerActivity implements ReposContract.
     private String type;
     private int filter = 0;
 
-    private RefreshView mRefreshView;
-    private SwipeRefreshLayout mSRLayout;
-    private RecyclerView mReposRV;
+    @BindView(R.id.RefreshView) public RefreshView mRefreshView;
+    @BindView(R.id.SRLayout) public SwipeRefreshLayout mSRLayout;
+    @BindView(R.id.repos_RV) public RecyclerView mReposRV;
 
     private ReposRecyclerViewAdapter mReposAdapter;
     private List<RepositoriesBean> list = new ArrayList<>();
@@ -68,9 +70,6 @@ public class ReposActivity extends RightDrawerActivity implements ReposContract.
     @Override
     public void initViews() {
         new ReposPresenter(this, this);
-        mRefreshView = (RefreshView) findViewById(R.id.RefreshView);
-        mSRLayout = (SwipeRefreshLayout) findViewById(R.id.SRLayout);
-        mReposRV = (RecyclerView) findViewById(R.id.repos_RV);
 
         setupRecyclerView();
         setupSwipeRefeshLayout();

@@ -22,6 +22,8 @@ import com.zpauly.githubapp.view.profile.OthersActivity;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by zpauly on 16-6-8.
  */
@@ -66,6 +68,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         username = getIntent().getStringExtra(OthersActivity.USERNAME);
 
         initContent();
+
+        ButterKnife.bind(this);
 
         initViews();
 

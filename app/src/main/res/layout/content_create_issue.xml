@@ -87,7 +87,7 @@
 
                 <android.support.v7.widget.AppCompatButton
                     android:text="@string/milestone"
-                    android:id="@+id/issue_create_milestone_TV"
+                    android:id="@+id/issue_create_milestone_BTV"
                     style="@style/Base.TextAppearance.AppCompat.Medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -95,7 +95,7 @@
                 <android.support.v7.widget.AppCompatButton
                     android:layout_marginTop="@dimen/components_margin"
                     android:text="@string/assignees"
-                    android:id="@+id/issue_create_assignees_TV"
+                    android:id="@+id/issue_create_assignees_BTV"
                     style="@style/Base.TextAppearance.AppCompat.Medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -103,7 +103,7 @@
                 <android.support.v7.widget.AppCompatButton
                     android:layout_marginTop="@dimen/components_margin"
                     android:text="@string/labels"
-                    android:id="@+id/issue_create_labels_TV"
+                    android:id="@+id/issue_create_labels_BTV"
                     style="@style/Base.TextAppearance.AppCompat.Medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />

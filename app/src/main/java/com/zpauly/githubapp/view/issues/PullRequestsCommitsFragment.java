@@ -28,6 +28,8 @@ import com.zpauly.githubapp.utils.viewmanager.RefreshViewManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * Created by zpauly on 2016/10/23.
  */
@@ -37,9 +39,9 @@ public class PullRequestsCommitsFragment extends BaseFragment implements PullReq
 
     private PullRequestContentContract.Presenter mPresenter;
 
-    private RefreshView mRefreshView;
-    private SwipeRefreshLayout mSRLayout;
-    private RecyclerView mCommitRV;
+    @BindView(R.id.RefreshView) public RefreshView mRefreshView;
+    @BindView(R.id.SRLayout) public SwipeRefreshLayout mSRLayout;
+    @BindView(R.id.pull_request_commits_RV) public RecyclerView mCommitRV;
 
     private CommitsRecyclerViewAdapter mCommitAdapter;
 
@@ -58,13 +60,7 @@ public class PullRequestsCommitsFragment extends BaseFragment implements PullReq
 
     @Override
     protected void initViews(View view) {
-        getParams();
-
         new PullRequestContentPresenter(getContext(), this);
-
-        mRefreshView = (RefreshView) view.findViewById(R.id.RefreshView);
-        mSRLayout = (SwipeRefreshLayout) view.findViewById(R.id.SRLayout);
-        mCommitRV = (RecyclerView) view.findViewById(R.id.pull_request_commits_RV);
 
         setupRecyclerView();
         setupSwipeRefreshLayout();
@@ -84,7 +80,8 @@ public class PullRequestsCommitsFragment extends BaseFragment implements PullReq
         setViewManager(loadMoreInSwipeRefreshLayoutMoreManager, refreshViewManager);
     }
 
-    private void getParams() {
+    @Override
+    protected void getParams() {
         Bundle bundle = getArguments();
         if (bundle != null) {
             pullRequestBean = bundle.getParcelable(PullRequestContentActivity.PULL_REQUEST);

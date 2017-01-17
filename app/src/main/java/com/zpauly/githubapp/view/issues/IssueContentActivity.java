@@ -33,6 +33,8 @@ import com.zpauly.githubapp.view.profile.OthersActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -46,19 +48,19 @@ public class IssueContentActivity extends ToolbarActivity implements IssueConten
 
     private IssueContentContract.Presenter mPresenter;
 
-    private RefreshView mRefreshView;
-    private SwipeRefreshLayout mSRLayout;
-    private AppCompatTextView mTitleTV;
-    private CircleImageView mUserAvatarIV;
-    private AppCompatTextView mUsernameTV;
-    private AppCompatTextView mOpenTimeTV;
-    private ExpandableTextView mBodyTV;
-    private RecyclerView mCommentsRV;
-    private NestedScrollView mContentNSV;
-    private FloatingActionButton mIssueFAB;
-    private LinearLayout mLabelsLayout;
-    private AppCompatTextView mMilestoneTV;
-    private LinearLayout mMilestoneLayout;
+    @BindView(R.id.issue_content_RefreshView) public RefreshView mRefreshView;
+    @BindView(R.id.issue_content_SRLayout) public SwipeRefreshLayout mSRLayout;
+    @BindView(R.id.issue_content_title) public AppCompatTextView mTitleTV;
+    @BindView(R.id.issue_content_user_avatar) public CircleImageView mUserAvatarIV;
+    @BindView(R.id.issue_content_username) public AppCompatTextView mUsernameTV;
+    @BindView(R.id.issue_content_open_time) public AppCompatTextView mOpenTimeTV;
+    @BindView(R.id.issue_content_body_ETV) public ExpandableTextView mBodyTV;
+    @BindView(R.id.issue_content_comments_RV) public RecyclerView mCommentsRV;
+    @BindView(R.id.issue_content_NSV) public NestedScrollView mContentNSV;
+    @BindView(R.id.issue_content_FAB) public FloatingActionButton mIssueFAB;
+    @BindView(R.id.issue_content_labels_layout) public LinearLayout mLabelsLayout;
+    @BindView(R.id.issue_content_milestone_TV) public AppCompatTextView mMilestoneTV;
+    @BindView(R.id.issue_content_milestone_layout) public LinearLayout mMilestoneLayout;
 
     private IssueBean issueBean;
     private String owner;
@@ -82,23 +84,9 @@ public class IssueContentActivity extends ToolbarActivity implements IssueConten
     public void initViews() {
         new IssueContentPresenter(this, this);
 
-        mRefreshView = (RefreshView) findViewById(R.id.issue_content_RefreshView);
-        mSRLayout = (SwipeRefreshLayout) findViewById(R.id.issue_content_SRLayout);
-        mTitleTV = (AppCompatTextView) findViewById(R.id.issue_content_title);
-        mUserAvatarIV = (CircleImageView) findViewById(R.id.issue_content_user_avatar);
-        mUsernameTV = (AppCompatTextView) findViewById(R.id.issue_content_username);
-        mOpenTimeTV = (AppCompatTextView) findViewById(R.id.issue_content_open_time);
-        mBodyTV = (ExpandableTextView) findViewById(R.id.issue_content_body_ETV);
-        mCommentsRV = (RecyclerView) findViewById(R.id.issue_content_comments_RV);
-        mContentNSV = (NestedScrollView) findViewById(R.id.issue_content_NSV);
-        mIssueFAB = (FloatingActionButton) findViewById(R.id.issue_content_FAB);
-        mLabelsLayout = (LinearLayout) findViewById(R.id.issue_content_labels_layout);
-        mMilestoneTV = (AppCompatTextView) findViewById(R.id.issue_content_milestone_TV);
-        mMilestoneLayout = (LinearLayout) findViewById(R.id.issue_content_milestone_layout);
-
         setupSwipeRefreshLayout();
         setupRecyclerView();
-        setupFloatingActionButton();
+        mIssueFAB.attachButtonToNestedScrollView(mContentNSV);
 
         setupViews();
 
@@ -153,14 +141,9 @@ public class IssueContentActivity extends ToolbarActivity implements IssueConten
 //        ((Activity) context).finish();
     }
 
-    private void setupFloatingActionButton() {
-        mIssueFAB.attachButtonToNestedScrollView(mContentNSV);
-        mIssueFAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CommentCreateActivity.launchIssueCommentActivity(IssueContentActivity.this, owner, repoName, issueBean.getNumber());
-            }
-        });
+    @OnClick(R.id.issue_content_FAB)
+    public void jump2CommentCreateActivity() {
+        CommentCreateActivity.launchIssueCommentActivity(IssueContentActivity.this, owner, repoName, issueBean.getNumber());
     }
 
     private void addLabel(LabelBean labelBean) {

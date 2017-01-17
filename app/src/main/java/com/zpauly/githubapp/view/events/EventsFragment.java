@@ -23,6 +23,8 @@ import com.zpauly.githubapp.utils.viewmanager.RefreshViewManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * Created by zpauly on 16-7-20.
  */
@@ -32,12 +34,11 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
 
     private EventsContract.Presenter mPresenter;
 
-    private SwipeRefreshLayout mEventsSRLayout;
-    private RecyclerView mEventsRV;
+    @BindView(R.id.events_RefreshView) public RefreshView mRefreshView;
+    @BindView(R.id.events_SRLayout) public SwipeRefreshLayout mEventsSRLayout;
+    @BindView(R.id.events_RV) public RecyclerView mEventsRV;
 
     private EventsRecyclerViewAdapter mAdapter;
-
-    private RefreshView mRefreshView;
 
     private int events_id = -1;
 
@@ -55,14 +56,13 @@ public class EventsFragment extends BaseFragment implements EventsContract.View 
     }
 
     @Override
-    protected void initViews(View view) {
+    protected void getParams() {
         events_id = getArguments().getInt(EventsActivity.EVENTS_ID);
+    }
 
+    @Override
+    protected void initViews(View view) {
         new EventsPresenter(getContext(), this);
-
-        mRefreshView = (RefreshView) view.findViewById(R.id.events_RefreshView);
-        mEventsSRLayout = (SwipeRefreshLayout) view.findViewById(R.id.events_SRLayout);
-        mEventsRV = (RecyclerView) view.findViewById(R.id.events_RV);
 
         setupSwipeRefreshLayout();
         setupRecyclerView();

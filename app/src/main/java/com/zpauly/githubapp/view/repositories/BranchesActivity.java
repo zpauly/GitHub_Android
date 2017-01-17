@@ -23,6 +23,7 @@ import com.zpauly.githubapp.view.ToolbarActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import rx.Subscriber;
 
 /**
@@ -36,9 +37,9 @@ public class BranchesActivity extends ToolbarActivity {
     public static final String OWNER = "OWNER";
     public static final String DEFAULT_BRANCH = "DEFAULT_BRANCH";
 
-    private RefreshView mRefreshView;
-    private SwipeRefreshLayout mSRLayout;
-    private RecyclerView mBranchRV;
+    @BindView(R.id.RefreshView) public RefreshView mRefreshView;
+    @BindView(R.id.SRLayout) public SwipeRefreshLayout mSRLayout;
+    @BindView(R.id.branch_RV) public RecyclerView mBranchRV;
 
     private BranchesRecyclerViewAdapter mBranchAdapter;
 
@@ -64,10 +65,6 @@ public class BranchesActivity extends ToolbarActivity {
 
     @Override
     public void initViews() {
-        mRefreshView = (RefreshView) findViewById(R.id.RefreshView);
-        mSRLayout = (SwipeRefreshLayout) findViewById(R.id.SRLayout);
-        mBranchRV = (RecyclerView) findViewById(R.id.branch_RV);
-
         repositoriesMethod = RepositoriesMethod.getInstance();
 
         setupSwipeRefreshLayout();

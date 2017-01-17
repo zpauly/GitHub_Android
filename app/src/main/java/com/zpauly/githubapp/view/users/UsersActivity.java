@@ -26,6 +26,8 @@ import com.zpauly.githubapp.view.profile.OthersActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * Created by zpauly on 16-6-15.
  */
@@ -51,10 +53,9 @@ public class UsersActivity extends ToolbarActivity implements FollowContract.Vie
     private List<OrganizationBean> orgsList = new ArrayList<>();
     private LoadMoreRecyclerViewAdapter mRVAdapter;
 
-    private SwipeRefreshLayout mSRLayout;
-    private RecyclerView mContentRV;
-
-    private RefreshView mRefreshView;
+    @BindView(R.id.followers_SWLayout) public SwipeRefreshLayout mSRLayout;
+    @BindView(R.id.followers_content_RV) public RecyclerView mContentRV;
+    @BindView(R.id.followers_RefreshView) public RefreshView mRefreshView;
 
     private LoadMoreInSwipeRefreshLayoutMoreManager loadMoreInSwipeRefreshLayoutMoreManager;
     private RefreshViewManager refreshViewManager;
@@ -83,11 +84,6 @@ public class UsersActivity extends ToolbarActivity implements FollowContract.Vie
     @Override
     public void initViews() {
         new FollowPresenter(this, this);
-
-        mRefreshView = (RefreshView) findViewById(R.id.followers_RefreshView);
-
-        mSRLayout = (SwipeRefreshLayout) findViewById(R.id.followers_SWLayout);
-        mContentRV = (RecyclerView) findViewById(R.id.followers_content_RV);
 
         setupSwipeRefreshLayout();
         setupRecyclerView();

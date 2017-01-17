@@ -27,6 +27,8 @@ import com.zpauly.githubapp.view.ToolbarMenuFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * Created by zpauly on 16-7-16.
  */
@@ -36,10 +38,9 @@ public class StarsFragment extends ToolbarMenuFragment implements StarContract.V
 
     private StarContract.Presenter mPresenter;
 
-    private SwipeRefreshLayout mStarredReposSRLayout;
-    private RecyclerView mStarredReposRV;
-
-    private RefreshView mRefreshView;
+    @BindView(R.id.starred_repos_SRLayout) public SwipeRefreshLayout mStarredReposSRLayout;
+    @BindView(R.id.starred_repos_RV) public RecyclerView mStarredReposRV;
+    @BindView(R.id.starred_repos_RefreshView) public RefreshView mRefreshView;
 
     private ReposRecyclerViewAdapter mAdapter;
 
@@ -62,11 +63,6 @@ public class StarsFragment extends ToolbarMenuFragment implements StarContract.V
     @Override
     protected void initViews(View view) {
         new StarPresenter(getContext(), this);
-        mPresenter.start();
-
-        mRefreshView = (RefreshView) view.findViewById(R.id.starred_repos_RefreshView);
-        mStarredReposSRLayout = (SwipeRefreshLayout) view.findViewById(R.id.starred_repos_SRLayout);
-        mStarredReposRV = (RecyclerView) view.findViewById(R.id.starred_repos_RV);
 
         setupRecyclerView();
         setupSwipeRefreshLayout();

@@ -21,6 +21,8 @@ import com.zpauly.githubapp.view.ToolbarActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * Created by zpauly on 16/9/25.
  */
@@ -36,9 +38,9 @@ public class ContributorsActivity extends ToolbarActivity implements Contributor
 
     private ContributorsContract.Presenter mPresenter;
 
-    private RefreshView mRefreshView;
-    private SwipeRefreshLayout mContributorsSRLayout;
-    private RecyclerView mContributorsRV;
+    @BindView(R.id.contributors_RefreshView) public RefreshView mRefreshView;
+    @BindView(R.id.contributors_SRLayout) public SwipeRefreshLayout mContributorsSRLayout;
+    @BindView(R.id.contributors_RV) public RecyclerView mContributorsRV;
 
     private ContributorsRecyclerViewAdapter mContributorsAdapter;
 
@@ -56,10 +58,6 @@ public class ContributorsActivity extends ToolbarActivity implements Contributor
     @Override
     public void initViews() {
         new ContributorsPresenter(this, this);
-
-        mRefreshView = (RefreshView) findViewById(R.id.contributors_RefreshView);
-        mContributorsSRLayout = (SwipeRefreshLayout) findViewById(R.id.contributors_SRLayout);
-        mContributorsRV = (RecyclerView) findViewById(R.id.contributors_RV);
 
         setupSwipeRefreshLayout();
         setupRecyclerView();

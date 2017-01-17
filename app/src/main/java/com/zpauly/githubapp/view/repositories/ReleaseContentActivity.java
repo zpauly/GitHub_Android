@@ -11,6 +11,7 @@ import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.ToolbarActivity;
 
+import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -24,20 +25,14 @@ public class ReleaseContentActivity extends ToolbarActivity {
 
     private ReleaseBean releaseBean;
 
-    private CircleImageView mAvatarIV;
-    private AppCompatTextView mUsernameTV;
-    private AppCompatTextView mTagTV;
-    private AppCompatTextView mTimeTV;
-    private AppCompatTextView mBodyTV;
+    @BindView(R.id.release_avatar_IV) public CircleImageView mAvatarIV;
+    @BindView(R.id.release_username_TV) public AppCompatTextView mUsernameTV;
+    @BindView(R.id.release_tag_TV) public AppCompatTextView mTagTV;
+    @BindView(R.id.release_time_TV) public AppCompatTextView mTimeTV;
+    @BindView(R.id.release_body_TV) public AppCompatTextView mBodyTV;
 
     @Override
     public void initViews() {
-        mUsernameTV = (AppCompatTextView) findViewById(R.id.release_username_TV);
-        mAvatarIV = (CircleImageView) findViewById(R.id.release_avatar_IV);
-        mTagTV = (AppCompatTextView) findViewById(R.id.release_tag_TV);
-        mTimeTV = (AppCompatTextView) findViewById(R.id.release_time_TV);
-        mBodyTV = (AppCompatTextView) findViewById(R.id.release_body_TV);
-
         if (releaseBean != null) {
             mUsernameTV.setText(releaseBean.getAuthor().getLogin());
             mTagTV.setText(releaseBean.getTag_name());

@@ -23,6 +23,9 @@ import com.zpauly.githubapp.view.ToolbarActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.OnClick;
+
 /**
  * Created by zpauly on 16/9/22.
  */
@@ -45,12 +48,12 @@ public class CommentActivity extends ToolbarActivity implements CommitCommentCon
     private String repo;
     private String ref;
 
-    private RefreshView mRefreshView;
+    @BindView(R.id.commit_comment_RefreshView) public RefreshView mRefreshView;
+    @BindView(R.id.commit_comment_create_FAB) public FloatingActionButton mCommentFAB;
+    @BindView(R.id.comment_content_layout) public CoordinatorLayout mContentLayout;
+    @BindView(R.id.commit_comment_RV) public RecyclerView mCommentRV;
+    @BindView(R.id.comment_SRLayout) public SwipeRefreshLayout mCommentSRLayout;
 
-    private FloatingActionButton mCommentFAB;
-    private CoordinatorLayout mContentLayout;
-    private RecyclerView mCommentRV;
-    private SwipeRefreshLayout mCommentSRLayout;
     private CommentsRecyclerViewAdapter mCommentAdapter;
 
     private List<CommentBean> commentList = new ArrayList<>();
@@ -81,12 +84,6 @@ public class CommentActivity extends ToolbarActivity implements CommitCommentCon
 
     @Override
     public void initViews() {
-        mRefreshView = (RefreshView) findViewById(R.id.commit_comment_RefreshView);
-        mContentLayout = (CoordinatorLayout) findViewById(R.id.comment_content_layout);
-        mCommentRV = (RecyclerView) findViewById(R.id.commit_comment_RV);
-        mCommentSRLayout = (SwipeRefreshLayout) findViewById(R.id.comment_SRLayout);
-        mCommentFAB = (FloatingActionButton) findViewById(R.id.commit_comment_create_FAB);
-
         switch (commentType) {
             case CommentActivity.TYPE_COMMIT:
                 new CommitCommentPresenter(this, this);
@@ -135,7 +132,7 @@ public class CommentActivity extends ToolbarActivity implements CommitCommentCon
     private void setupCommitComment() {
         setupSwipeRefreshLayout();
         setupCommitCommmentRecyclerView();
-        setupFloatingActionButton();
+        mCommentFAB.attachButtonToRecyclerView(mCommentRV);
 
         setViewManager(new LoadMoreInSwipeRefreshLayoutMoreManager(mCommentRV, mCommentSRLayout) {
             @Override
@@ -167,15 +164,10 @@ public class CommentActivity extends ToolbarActivity implements CommitCommentCon
         });
     }
 
-    private void setupFloatingActionButton() {
-        mCommentFAB.attachButtonToRecyclerView(mCommentRV);
-        mCommentFAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CommentCreateActivity.launchCommitCommentActivity(CommentActivity.this,
-                        owner, repo, ref);
-            }
-        });
+    @OnClick(R.id.create_comment_FAB)
+    public void jumpToCommentCreateActivity() {
+        CommentCreateActivity.launchCommitCommentActivity(CommentActivity.this,
+                owner, repo, ref);
     }
 
     private void setupCommitCommmentRecyclerView() {

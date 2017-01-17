@@ -26,6 +26,8 @@ import com.zpauly.githubapp.view.ToolbarActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * Created by zpauly on 2016/10/11.
  */
@@ -38,10 +40,10 @@ public class MilestoneActivity extends ToolbarActivity implements MilestoneContr
 
     private MilestoneContract.Presenter mPresenter;
 
-    private RefreshView mRefreshView;
-    private SwipeRefreshLayout mSRLayout;
-    private RecyclerView mMilestoneRV;
-    private FloatingActionButton mMilestoneFAB;
+    @BindView(R.id.milestone_RefreshView) public RefreshView mRefreshView;
+    @BindView(R.id.milestone_SRLayout) public SwipeRefreshLayout mSRLayout;
+    @BindView(R.id.milestone_RV) public RecyclerView mMilestoneRV;
+    @BindView(R.id.milestone_FAB) public FloatingActionButton mMilestoneFAB;
 
     private MilestonesRecyclerViewAdapter mMilestoneAdapter;
 
@@ -68,11 +70,6 @@ public class MilestoneActivity extends ToolbarActivity implements MilestoneContr
     @Override
     public void initViews() {
         new MilestonePresenter(this, this);
-
-        mRefreshView = (RefreshView) findViewById(R.id.milestone_RefreshView);
-        mSRLayout = (SwipeRefreshLayout) findViewById(R.id.milestone_SRLayout);
-        mMilestoneRV = (RecyclerView) findViewById(R.id.milestone_RV);
-        mMilestoneFAB = (FloatingActionButton) findViewById(R.id.milestone_FAB);
 
         setupSwipeRefreshLayout();
         setupRecyclerView();

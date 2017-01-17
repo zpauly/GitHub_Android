@@ -13,6 +13,8 @@ import com.zpauly.githubapp.adapter.ViewPagerAdapter;
 import com.zpauly.githubapp.entity.response.PullRequestBean;
 import com.zpauly.githubapp.view.ToolbarActivity;
 
+import butterknife.BindView;
+
 /**
  * Created by zpauly on 2016/10/22.
  */
@@ -22,8 +24,8 @@ public class PullRequestContentActivity extends ToolbarActivity {
 
     public static final String PULL_REQUEST = "PULL_REQUEST";
 
-    private TabLayout mTabLayout;
-    private ViewPager mViewPager;
+    @BindView(R.id.tablayout) TabLayout mTabLayout;
+    @BindView(R.id.viewpager) ViewPager mViewPager;
 
     private ViewPagerAdapter mAdapter;
 
@@ -31,8 +33,6 @@ public class PullRequestContentActivity extends ToolbarActivity {
 
     @Override
     public void initViews() {
-        mTabLayout = (TabLayout) findViewById(R.id.tablayout);
-        mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mTabLayout.setVisibility(View.VISIBLE);
 
         mAdapter = new ViewPagerAdapter(getSupportFragmentManager());

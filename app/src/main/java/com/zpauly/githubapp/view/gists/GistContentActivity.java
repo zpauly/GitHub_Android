@@ -18,6 +18,7 @@ import com.zpauly.githubapp.view.ToolbarActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -30,12 +31,12 @@ public class GistContentActivity extends ToolbarActivity {
     public static final String GIST_BUNDLE = "GIST_BUNDLE";
     public static final String FILE_LIST_BUNDLE = "FILE_LIST_BUNDLE";
 
-    private CircleImageView mAvatarIV;
-    private AppCompatTextView mLoginTV;
-    private AppCompatTextView mUpdatedTV;
-    private AppCompatTextView mCreatedTV;
-    private AppCompatTextView mDescTV;
-    private RecyclerView mFilesRV;
+    @BindView(R.id.gist_content_avatar_IV) public CircleImageView mAvatarIV;
+    @BindView(R.id.gist_content_login_TV) public AppCompatTextView mLoginTV;
+    @BindView(R.id.gist_content_updated_at_TV) public AppCompatTextView mUpdatedTV;
+    @BindView(R.id.gist_content_created_at_TV) public AppCompatTextView mCreatedTV;
+    @BindView(R.id.gist_content_desc_TV) public AppCompatTextView mDescTV;
+    @BindView(R.id.gist_content_RV) public RecyclerView mFilesRV;
 
     private GistFileRecyclerViewAdapter mFileAdapter;
 
@@ -44,13 +45,6 @@ public class GistContentActivity extends ToolbarActivity {
 
     @Override
     public void initViews() {
-        mAvatarIV = (CircleImageView) findViewById(R.id.gist_content_avatar_IV);
-        mLoginTV = (AppCompatTextView) findViewById(R.id.gist_content_login_TV);
-        mUpdatedTV = (AppCompatTextView) findViewById(R.id.gist_content_updated_at_TV);
-        mCreatedTV = (AppCompatTextView) findViewById(R.id.gist_content_created_at_TV);
-        mDescTV = (AppCompatTextView) findViewById(R.id.gist_content_desc_TV);
-        mFilesRV = (RecyclerView) findViewById(R.id.gist_content_RV);
-
         setupRecyclerView();
 
         setViews();

@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * Created by zpauly on 16-8-6.
  */
@@ -38,10 +40,9 @@ public class GistsFragment extends BaseFragment implements GistsContract.View {
 
     private GistsContract.Presenter mPresenter;
 
-    private SwipeRefreshLayout mSRLayout;
-    private RecyclerView mGistsRV;
-
-    private RefreshView mRefreshView;
+    @BindView(R.id.gists_SRLayout) SwipeRefreshLayout mSRLayout;
+    @BindView(R.id.gists_RV) RecyclerView mGistsRV;
+    @BindView(R.id.gists_RefreshView) RefreshView mRefreshView;
 
     private GistsRecyclerViewAdapter mGistsRVAdapter;
 
@@ -63,11 +64,6 @@ public class GistsFragment extends BaseFragment implements GistsContract.View {
         getAttrs();
 
         new GistsPresenter(getContext(), this);
-
-        mRefreshView = (RefreshView) view.findViewById(R.id.gists_RefreshView);
-
-        mSRLayout = (SwipeRefreshLayout) view.findViewById(R.id.gists_SRLayout);
-        mGistsRV = (RecyclerView) view.findViewById(R.id.gists_RV);
 
         setupRecyclerView();
         setupSwipeRefreshLayout();

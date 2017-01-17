@@ -1,41 +1,34 @@
 package com.zpauly.githubapp.view.viewholder;
 
 import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.zpauly.githubapp.R;
+import com.zpauly.githubapp.base.BaseRecyclerViewViewHolder;
 
+import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by zpauly on 16/9/4.
  */
-public class IssueViewHolder extends RecyclerView.ViewHolder {
-    public final LinearLayout mLayout;
+public class IssueViewHolder extends BaseRecyclerViewViewHolder {
+    @BindView(R.id.issue_item_layout) public LinearLayout mLayout;
 
-    public final CircleImageView mAvatar;
+    @BindView(R.id.issue_item_avatar) public CircleImageView mAvatar;
 
-    public final AppCompatTextView mNum;
+    @BindView(R.id.issue_item_num) public AppCompatTextView mNum;
 
-    public final AppCompatTextView mUsername;
+    @BindView(R.id.issue_item_username) public AppCompatTextView mUsername;
 
-    public final AppCompatTextView mTitle;
+    @BindView(R.id.issue_item_title) public AppCompatTextView mTitle;
 
-    public final AppCompatTextView mTime;
+    @BindView(R.id.issue_item_time) public AppCompatTextView mTime;
 
-    public final AppCompatTextView mCommentCount;
+    @BindView(R.id.issue_item_comment_count) public AppCompatTextView mCommentCount;
 
     public IssueViewHolder(View itemView) {
         super(itemView);
-
-        mLayout = (LinearLayout) itemView.findViewById(R.id.issue_item_layout);
-        mAvatar = (CircleImageView) itemView.findViewById(R.id.issue_item_avatar);
-        mNum = (AppCompatTextView) itemView.findViewById(R.id.issue_item_num);
-        mUsername = (AppCompatTextView) itemView.findViewById(R.id.issue_item_username);
-        mTitle = (AppCompatTextView) itemView.findViewById(R.id.issue_item_title);
-        mTime = (AppCompatTextView) itemView.findViewById(R.id.issue_item_time);
-        mCommentCount = (AppCompatTextView) itemView.findViewById(R.id.issue_item_comment_count);
     }
 }

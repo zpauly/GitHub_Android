@@ -14,6 +14,9 @@ import com.zpauly.githubapp.presenter.comment.CommentCreatePresenter;
 import com.zpauly.githubapp.ui.FloatingActionButton;
 import com.zpauly.githubapp.view.ToolbarActivity;
 
+import butterknife.BindView;
+import butterknife.OnClick;
+
 /**
  * Created by zpauly on 16/9/8.
  */
@@ -31,8 +34,8 @@ public class CommentCreateActivity extends ToolbarActivity implements CommentCre
 
     private CommentCreateContract.Presenter mPresenter;
 
-    private AppCompatEditText mCommentET;
-    private FloatingActionButton mCommentFAB;
+    @BindView(R.id.create_comment_ET) public AppCompatEditText mCommentET;
+    @BindView(R.id.create_comment_FAB) FloatingActionButton mCommentFAB;
 
     private int commentType;
     private String repo;
@@ -60,11 +63,7 @@ public class CommentCreateActivity extends ToolbarActivity implements CommentCre
                 .content(R.string.uploading)
                 .build();
 
-        mCommentET = (AppCompatEditText) findViewById(R.id.create_comment_ET);
-        mCommentFAB = (FloatingActionButton) findViewById(R.id.create_comment_FAB);
         mCommentET.setText("");
-
-        setFloatingActionButton();
     }
 
     @Override
@@ -115,17 +114,13 @@ public class CommentCreateActivity extends ToolbarActivity implements CommentCre
         context.startActivity(intent);
     }
 
-    private void setFloatingActionButton() {
-        mCommentFAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mCommentET.getText() == null || mCommentET.getText().toString().equals("")) {
-                    Snackbar.make(getCurrentFocus(), R.string.please_input_body_first, Snackbar.LENGTH_SHORT).show();
-                } else {
-                    createAComment();
-                }
-            }
-        });
+    @OnClick(R.id.create_comment_FAB)
+    public void comment() {
+        if (mCommentET.getText() == null || mCommentET.getText().toString().equals("")) {
+            Snackbar.make(getCurrentFocus(), R.string.please_input_body_first, Snackbar.LENGTH_SHORT).show();
+        } else {
+            createAComment();
+        }
     }
 
     private void createAComment() {

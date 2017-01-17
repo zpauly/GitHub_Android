@@ -14,6 +14,8 @@ import com.zpauly.githubapp.view.ToolbarActivity;
 
 import java.util.Iterator;
 
+import butterknife.BindView;
+
 /**
  * Created by zpauly on 16/9/22.
  */
@@ -23,22 +25,16 @@ public class CommitFilePatchActivity extends ToolbarActivity {
 
     public static final String FILE = "FILE";
 
-    private ColoredLineTextView mPatchCLTV;
-    private AppCompatTextView mFilenameTV;
-    private AppCompatTextView mChangesTV;
-    private AppCompatTextView mAdditonsTV;
-    private AppCompatTextView mDeletionsTV;
+    @BindView(R.id.commit_file_patch_CLTV) public ColoredLineTextView mPatchCLTV;
+    @BindView(R.id.commit_file_name_TV) public AppCompatTextView mFilenameTV;
+    @BindView(R.id.commit_file_changes_count_TV) public AppCompatTextView mChangesTV;
+    @BindView(R.id.commit_file_additions_count_TV) public AppCompatTextView mAdditonsTV;
+    @BindView(R.id.commit_file_deletions_count_TV) public AppCompatTextView mDeletionsTV;
 
     private FileBean fileBean;
 
     @Override
     public void initViews() {
-        mPatchCLTV = (ColoredLineTextView) findViewById(R.id.commit_file_patch_CLTV);
-        mFilenameTV = (AppCompatTextView) findViewById(R.id.commit_file_name_TV);
-        mChangesTV = (AppCompatTextView) findViewById(R.id.commit_file_changes_count_TV);
-        mAdditonsTV = (AppCompatTextView) findViewById(R.id.commit_file_additions_count_TV);
-        mDeletionsTV = (AppCompatTextView) findViewById(R.id.commit_file_deletions_count_TV);
-
         mFilenameTV.setText(fileBean.getFilename());
         mChangesTV.setText(String.valueOf(fileBean.getChanges()));
         mAdditonsTV.setText(String.valueOf(fileBean.getAdditions()));

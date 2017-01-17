@@ -24,6 +24,7 @@ import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.ToolbarActivity;
 import com.zpauly.githubapp.view.comment.CommentActivity;
 
+import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -39,14 +40,14 @@ public class CommitContentActivity extends ToolbarActivity implements CommitCont
 
     private CommitContentContract.Presenter mPresenter;
 
-    private RefreshView mRefreshView;
-    private NestedScrollView mContentNSV;
-    private AppCompatTextView mMessageTV;
-    private CircleImageView mAvatarIV;
-    private AppCompatTextView mUsernameTV;
-    private AppCompatTextView mShaTV;
-    private AppCompatTextView mTimeTV;
-    private RecyclerView mPatchRV;
+    @BindView(R.id.commit_content_RefreshView) public RefreshView mRefreshView;
+    @BindView(R.id.commit_content_layout) public NestedScrollView mContentNSV;
+    @BindView(R.id.commit_content_message_TV) public AppCompatTextView mMessageTV;
+    @BindView(R.id.commit_content_committer_avatar_IV) public CircleImageView mAvatarIV;
+    @BindView(R.id.commit_content_committer_name_TV) public AppCompatTextView mUsernameTV;
+    @BindView(R.id.commit_content_sha_TV) public AppCompatTextView mShaTV;
+    @BindView(R.id.commit_content_time_TV) public AppCompatTextView mTimeTV;
+    @BindView(R.id.commit_content_patch_RV) public RecyclerView mPatchRV;
 
     private PatchRecyclerViewAdapter mPatchAdapter;
 
@@ -65,15 +66,6 @@ public class CommitContentActivity extends ToolbarActivity implements CommitCont
     @Override
     public void initViews() {
         new CommitContentPresenter(this, this);
-
-        mRefreshView = (RefreshView) findViewById(R.id.commit_content_RefreshView);
-        mContentNSV = (NestedScrollView) findViewById(R.id.commit_content_layout);
-        mMessageTV = (AppCompatTextView) findViewById(R.id.commit_content_message_TV);
-        mAvatarIV = (CircleImageView) findViewById(R.id.commit_content_committer_avatar_IV);
-        mUsernameTV = (AppCompatTextView) findViewById(R.id.commit_content_committer_name_TV);
-        mShaTV = (AppCompatTextView) findViewById(R.id.commit_content_sha_TV);
-        mTimeTV = (AppCompatTextView) findViewById(R.id.commit_content_time_TV);
-        mPatchRV = (RecyclerView) findViewById(R.id.commit_content_patch_RV);
 
         setupRecyclerView();
 

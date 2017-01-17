@@ -18,6 +18,8 @@ import com.zpauly.githubapp.view.ToolbarActivity;
 
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * Created by zpauly on 2016/10/13.
  */
@@ -30,9 +32,9 @@ public class LabelsActivity extends ToolbarActivity implements LabelsContract.Vi
 
     private LabelsContract.Presenter mPresenter;
 
-    private RefreshView mRefreshView;
-    private RecyclerView mLabelsRV;
-    private FloatingActionButton mEditFAB;
+    @BindView(R.id.labels_RefreshView) public RefreshView mRefreshView;
+    @BindView(R.id.labels_RV) public RecyclerView mLabelsRV;
+    @BindView(R.id.labels_edit_FAB) public FloatingActionButton mEditFAB;
 
     private LabelsRecycelrViewAdapter mLabelsAdapter;
 
@@ -50,10 +52,6 @@ public class LabelsActivity extends ToolbarActivity implements LabelsContract.Vi
     @Override
     public void initViews() {
         new LabelsPresenter(this, this);
-
-        mRefreshView = (RefreshView) findViewById(R.id.labels_RefreshView);
-        mLabelsRV = (RecyclerView) findViewById(R.id.labels_RV);
-        mEditFAB = (FloatingActionButton) findViewById(R.id.labels_edit_FAB);
 
         setupRecyclerView();
 

@@ -31,6 +31,8 @@ import com.zpauly.githubapp.view.ToolbarActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * Created by zpauly on 16-8-1.
  */
@@ -62,13 +64,13 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
     private String fileContent;
     private boolean isFileLoading = false;
 
-    private SwipeRefreshLayout mSRLayout;
-    private RecyclerView mPathRV;
-    private RecyclerView mContentRV;
-    private WebView mCodeWB;
-    private LinearLayout mContentLayout;
-    private NestedScrollView mFileLayout;
-    private AppCompatTextView mFileTV;
+    @BindView(R.id.files_SRLayout) public SwipeRefreshLayout mSRLayout;
+    @BindView(R.id.files_path_RV) public RecyclerView mPathRV;
+    @BindView(R.id.files_content_RV) public RecyclerView mContentRV;
+    @BindView(R.id.files_code_WB) public WebView mCodeWB;
+    @BindView(R.id.files_file_content_layout) public LinearLayout mContentLayout;
+    @BindView(R.id.files_file_NSV) public NestedScrollView mFileLayout;
+    @BindView(R.id.files_file_TV) public AppCompatTextView mFileTV;
 
     private List<RepositoryContentBean> contentList = new ArrayList<>();
 
@@ -81,14 +83,6 @@ public class FilesActivity extends ToolbarActivity implements FilesContract.View
     @Override
     public void initViews() {
         new FilesPresenter(this, this);
-
-        mSRLayout = (SwipeRefreshLayout) findViewById(R.id.files_SRLayout);
-        mPathRV = (RecyclerView) findViewById(R.id.files_path_RV);
-        mContentRV = (RecyclerView) findViewById(R.id.files_content_RV);
-        mCodeWB = (WebView) findViewById(R.id.files_code_WB);
-        mContentLayout = (LinearLayout) findViewById(R.id.files_file_content_layout);
-        mFileLayout = (NestedScrollView) findViewById(R.id.files_file_NSV);
-        mFileTV = (AppCompatTextView) findViewById(R.id.files_file_TV);
 
         setupRecyclerView();
         setupSwipeRefreshLayout();

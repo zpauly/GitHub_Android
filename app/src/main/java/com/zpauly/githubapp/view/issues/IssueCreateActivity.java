@@ -28,6 +28,9 @@ import com.zpauly.githubapp.view.ToolbarActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.OnClick;
+
 /**
  * Created by zpauly on 16/9/12.
  */
@@ -39,19 +42,15 @@ public class IssueCreateActivity extends ToolbarActivity implements IssueCreateC
 
     private IssueCreateContract.Presenter mPresenter;
 
-    private LinearLayout mChooseLayout;
-
-    private RefreshView mRefreshView;
-    private LinearLayout mLayout;
-
-    private AppCompatButton mMilestoneBTN;
-    private AppCompatButton mAssigneesBTN;
-    private AppCompatButton mLabelsBTN;
-
-    private TextInputEditText mTitleET;
-    private TextInputEditText mBodyET;
-
-    private FloatingActionButton mSendFAB;
+    @BindView(R.id.issue_create_choose_layout) public LinearLayout mChooseLayout;
+    @BindView(R.id.issue_create_RefreshView) public RefreshView mRefreshView;
+    @BindView(R.id.issue_create_layout) public LinearLayout mLayout;
+    @BindView(R.id.issue_create_milestone_BTV) public AppCompatButton mMilestoneBTN;
+    @BindView(R.id.issue_create_assignees_BTV) public AppCompatButton mAssigneesBTN;
+    @BindView(R.id.issue_create_labels_BTV) public AppCompatButton mLabelsBTN;
+    @BindView(R.id.issue_create_title_ET) public TextInputEditText mTitleET;
+    @BindView(R.id.issue_create_body_ET) public TextInputEditText mBodyET;
+    @BindView(R.id.issue_create_send_FAB) public FloatingActionButton mSendFAB;
 
     private String username;
     private String repoName;
@@ -92,21 +91,7 @@ public class IssueCreateActivity extends ToolbarActivity implements IssueCreateC
 
         setDialogs();
 
-        mRefreshView = (RefreshView) findViewById(R.id.issue_create_RefreshView);
-        mLayout = (LinearLayout) findViewById(R.id.issue_create_layout);
-        mChooseLayout = (LinearLayout) findViewById(R.id.issue_create_choose_layout);
-        mMilestoneBTN = (AppCompatButton) findViewById(R.id.issue_create_milestone_TV);
-        mAssigneesBTN = (AppCompatButton) findViewById(R.id.issue_create_assignees_TV);
-        mLabelsBTN = (AppCompatButton) findViewById(R.id.issue_create_labels_TV);
-
-        mTitleET = (TextInputEditText) findViewById(R.id.issue_create_title_ET);
-        mBodyET = (TextInputEditText) findViewById(R.id.issue_create_body_ET);
-
-        mSendFAB = (FloatingActionButton) findViewById(R.id.issue_create_send_FAB);
-
         mChooseLayout.setVisibility(View.GONE);
-
-        setListener();
 
         mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
             @Override
@@ -278,54 +263,45 @@ public class IssueCreateActivity extends ToolbarActivity implements IssueCreateC
                 .build();
     }
 
-    private void setListener() {
-        mMilestoneBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mChooseLayout.isEnabled()) {
-                    getMilestones();
-                }
-            }
-        });
+    @OnClick(R.id.issue_create_milestone_BTV)
+    public void onMileStonesButtonClick() {
+        if (mChooseLayout.isEnabled()) {
+            getMilestones();
+        }
+    }
 
-        mAssigneesBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mChooseLayout.isEnabled()) {
-                    getAssignees();
-                }
-            }
-        });
+    @OnClick(R.id.issue_create_assignees_BTV)
+    public void onAssigneesButtonClick() {
+        if (mChooseLayout.isEnabled()) {
+            getAssignees();
+        }
+    }
 
-        mLabelsBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mChooseLayout.isEnabled()) {
-                    getLabels();
-                }
-            }
-        });
-        mSendFAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mTitleET.getText() == null ||
-                        mTitleET.getText().toString().equals("")) {
-                    Snackbar.make(getCurrentFocus(), R.string.issue_no_title, Snackbar.LENGTH_SHORT).show();
-                    return;
-                } else {
-                    title = mTitleET.getText().toString();
-                }
-                if (mBodyET.getText() != null) {
-                    body = mBodyET.getText().toString();
-                }
-                createdIssueRequestBean.setAssignee(SPUtil.getString(IssueCreateActivity.this,
-                        Constants.USER_INFO, Constants.USER_LOGIN, null));
-                createdIssueRequestBean.setTitle(title);
-                createdIssueRequestBean.setBody(body);
-                mUploadingDialog.show();
-                mPresenter.createAnIssue();
-            }
-        });
+    @OnClick(R.id.issue_create_labels_BTV)
+    public void onLabelsButtonClick() {
+        if (mChooseLayout.isEnabled()) {
+            getLabels();
+        }
+    }
+
+    @OnClick(R.id.issue_create_send_FAB)
+    public void onSendButtonClick() {
+        if (mTitleET.getText() == null ||
+                mTitleET.getText().toString().equals("")) {
+            Snackbar.make(getCurrentFocus(), R.string.issue_no_title, Snackbar.LENGTH_SHORT).show();
+            return;
+        } else {
+            title = mTitleET.getText().toString();
+        }
+        if (mBodyET.getText() != null) {
+            body = mBodyET.getText().toString();
+        }
+        createdIssueRequestBean.setAssignee(SPUtil.getString(IssueCreateActivity.this,
+                Constants.USER_INFO, Constants.USER_LOGIN, null));
+        createdIssueRequestBean.setTitle(title);
+        createdIssueRequestBean.setBody(body);
+        mUploadingDialog.show();
+        mPresenter.createAnIssue();
     }
 
     private void checkAssignee() {

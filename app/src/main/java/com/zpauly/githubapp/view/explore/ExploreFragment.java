@@ -32,6 +32,8 @@ import com.zpauly.githubapp.utils.viewmanager.LoadMoreInSwipeRefreshLayoutMoreMa
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * Created by zpauly on 16-8-9.
  */
@@ -45,8 +47,8 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
 
     private ExploreContract.Presenter mPresenter;
 
-    private SwipeRefreshLayout mExploreSRLayout;
-    private RecyclerView mExploreRV;
+    @BindView(R.id.explore_SRLayout) SwipeRefreshLayout mExploreSRLayout;
+    @BindView(R.id.explore_RV) RecyclerView mExploreRV;
 
     private ReposRecyclerViewAdapter mReposAdapter;
     private UsersRecyclerViewAdapter mUsersAdapter;
@@ -71,9 +73,6 @@ public class ExploreFragment extends BaseFragment implements ExploreContract.Vie
     @Override
     protected void initViews(View view) {
         new ExplorePresenter(getContext(), this);
-
-        mExploreSRLayout = (SwipeRefreshLayout) view.findViewById(R.id.explore_SRLayout);
-        mExploreRV = (RecyclerView) view.findViewById(R.id.explore_RV);
 
         setupSwipeRefreshLayout();
         setupRecyclerView();

@@ -20,6 +20,8 @@ import com.zpauly.githubapp.view.ToolbarActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * Created by zpauly on 16/9/24.
  */
@@ -35,9 +37,9 @@ public class RepoReleasesActivity extends ToolbarActivity implements ReleasesCon
     private String owner;
     private String repo;
 
-    private RefreshView mRefreshView;
-    private SwipeRefreshLayout mReleasesSRLayout;
-    private RecyclerView mReleasesRV;
+    @BindView(R.id.releases_RefreshView) public RefreshView mRefreshView;
+    @BindView(R.id.releases_SRLayout) public SwipeRefreshLayout mReleasesSRLayout;
+    @BindView(R.id.releases_RV) public RecyclerView mReleasesRV;
 
     private ReleasesRecyclerViewAdapter mReleasesAdapter;
 
@@ -55,10 +57,6 @@ public class RepoReleasesActivity extends ToolbarActivity implements ReleasesCon
     @Override
     public void initViews() {
         new ReleasesPresenter(this, this);
-
-        mRefreshView = (RefreshView) findViewById(R.id.releases_RefreshView);
-        mReleasesSRLayout = (SwipeRefreshLayout) findViewById(R.id.releases_SRLayout);
-        mReleasesRV = (RecyclerView) findViewById(R.id.releases_RV);
 
         setupSwipeRefreshLayout();
         setupRecyclerView();

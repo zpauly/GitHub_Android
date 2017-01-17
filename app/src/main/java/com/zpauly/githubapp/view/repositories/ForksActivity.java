@@ -26,6 +26,7 @@ import com.zpauly.githubapp.view.ToolbarActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import rx.Subscriber;
 
 /**
@@ -44,9 +45,10 @@ public class ForksActivity extends ToolbarActivity {
 
     private RepositoriesMethod repoMethod;
 
-    private RefreshView mRefreshView;
-    private SwipeRefreshLayout mSRLayout;
-    private RecyclerView mForksRV;
+    @BindView(R.id.RefreshView) public RefreshView mRefreshView;
+    @BindView(R.id.SRLayout) public SwipeRefreshLayout mSRLayout;
+    @BindView(R.id.forks_RV) public RecyclerView mForksRV;
+
     private ReposRecyclerViewAdapter mForksAdapter;
 
     private LoadMoreInSwipeRefreshLayoutMoreManager loadMoreInSwipeRefreshLayoutMoreManager;
@@ -68,10 +70,6 @@ public class ForksActivity extends ToolbarActivity {
 
     @Override
     public void initViews() {
-        mRefreshView = (RefreshView) findViewById(R.id.RefreshView);
-        mSRLayout = (SwipeRefreshLayout) findViewById(R.id.SRLayout);
-        mForksRV = (RecyclerView) findViewById(R.id.forks_RV);
-
         setupRecyclerView();
         setupSwipeRefreshLayout();
 

@@ -18,6 +18,7 @@ import com.zpauly.githubapp.utils.DisplayUtil;
 import com.zpauly.githubapp.utils.SPUtil;
 import com.zpauly.githubapp.view.ToolbarActivity;
 
+import butterknife.BindView;
 import rx.Subscriber;
 
 /**
@@ -30,9 +31,8 @@ public class GistFileActivity extends ToolbarActivity {
     public static final String FILE_ID = "FILE_ID";
     public static final String FILE_NAME = "FILE_NAME";
 
-    private WebView mWB;
-
-    private RefreshView mRefreshView;
+    @BindView(R.id.gist_file_WB) public WebView mWB;
+    @BindView(R.id.gist_file_RefreshView) public RefreshView mRefreshView;
 
     private Subscriber<GistsBean> gistFileSubscriber;
 
@@ -58,9 +58,6 @@ public class GistFileActivity extends ToolbarActivity {
     public void initViews() {
         auth = SPUtil.getString(this, Constants.USER_INFO, Constants.USER_AUTH, null);
         method = GistsMethod.getInstance();
-
-        mRefreshView = (RefreshView) findViewById(R.id.gist_file_RefreshView);
-        mWB = (WebView) findViewById(R.id.gist_file_WB);
 
         mRefreshView.setOnRefreshStateListener(new RefreshView.OnRefreshStateListener() {
             @Override

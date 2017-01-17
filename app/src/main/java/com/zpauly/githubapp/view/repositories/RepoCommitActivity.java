@@ -23,6 +23,8 @@ import com.zpauly.githubapp.view.commit.CommitContentActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * Created by zpauly on 16/9/20.
  */
@@ -38,9 +40,9 @@ public class RepoCommitActivity extends ToolbarActivity implements RepoCommitCon
     private String repoName;
     private String owner;
 
-    private RefreshView mRefreshView;
-    private SwipeRefreshLayout mCommitSRLayout;
-    private RecyclerView mCommitRV;
+    @BindView(R.id.RefreshView) public RefreshView mRefreshView;
+    @BindView(R.id.commit_SRLayout) public SwipeRefreshLayout mCommitSRLayout;
+    @BindView(R.id.commit_RV) public RecyclerView mCommitRV;
 
     private CommitsRecyclerViewAdapter mCommitAdapter;
 
@@ -70,10 +72,6 @@ public class RepoCommitActivity extends ToolbarActivity implements RepoCommitCon
     @Override
     public void initViews() {
         new RepoCommitPresenter(this, this);
-
-        mRefreshView = (RefreshView) findViewById(R.id.commit_RefreshView);
-        mCommitSRLayout = (SwipeRefreshLayout) findViewById(R.id.commit_SRLayout);
-        mCommitRV = (RecyclerView) findViewById(R.id.commit_RV);
 
         setupSwipeRefreshLayout();
         setupRecyclerView();

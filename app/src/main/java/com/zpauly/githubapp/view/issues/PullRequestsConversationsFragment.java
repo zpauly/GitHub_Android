@@ -31,6 +31,7 @@ import com.zpauly.githubapp.utils.viewmanager.RefreshViewManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -42,16 +43,16 @@ public class PullRequestsConversationsFragment extends BaseFragment implements P
 
     private PullRequestContentContract.Presenter mPresenter;
 
-    private RefreshView mRefreshView;
-    private SwipeRefreshLayout mSRLayout;
-    private AppCompatTextView mTitleTV;
-    private AppCompatButton mStateBTN;
-    private AppCompatTextView mDescTV;
-    private CircleImageView mAvatarIV;
-    private AppCompatTextView mUsernameTV;
-    private AppCompatTextView mTimeTV;
-    private ExpandableTextView mBodyTV;
-    private RecyclerView mCommentsRV;
+    @BindView(R.id.RefreshView) public RefreshView mRefreshView;
+    @BindView(R.id.SRLayout) public SwipeRefreshLayout mSRLayout;
+    @BindView(R.id.pull_request_title_TV) public AppCompatTextView mTitleTV;
+    @BindView(R.id.pull_request_state_BTN) public AppCompatButton mStateBTN;
+    @BindView(R.id.pull_request_description_TV) public AppCompatTextView mDescTV;
+    @BindView(R.id.pull_request_avatar_TV) public CircleImageView mAvatarIV;
+    @BindView(R.id.pull_request_username_TV) public AppCompatTextView mUsernameTV;
+    @BindView(R.id.pull_request_time_TV) public AppCompatTextView mTimeTV;
+    @BindView(R.id.pull_request_body_ETV) public ExpandableTextView mBodyTV;
+    @BindView(R.id.pull_request_comments_RV) public RecyclerView mCommentsRV;
 
     private CommentsRecyclerViewAdapter mCommentsAdapter;
 
@@ -70,20 +71,7 @@ public class PullRequestsConversationsFragment extends BaseFragment implements P
 
     @Override
     protected void initViews(View view) {
-        getParams();
-
         new PullRequestContentPresenter(getContext(), this);
-
-        mRefreshView = (RefreshView) view.findViewById(R.id.RefreshView);
-        mSRLayout = (SwipeRefreshLayout) view.findViewById(R.id.SRLayout);
-        mTitleTV = (AppCompatTextView) view.findViewById(R.id.pull_request_title_TV);
-        mStateBTN = (AppCompatButton) view.findViewById(R.id.pull_request_state_BTN);
-        mDescTV = (AppCompatTextView) view.findViewById(R.id.pull_request_description_TV);
-        mAvatarIV = (CircleImageView) view.findViewById(R.id.pull_request_avatar_TV);
-        mUsernameTV = (AppCompatTextView) view.findViewById(R.id.pull_request_username_TV);
-        mTimeTV = (AppCompatTextView) view.findViewById(R.id.pull_request_time_TV);
-        mBodyTV = (ExpandableTextView) view.findViewById(R.id.pull_request_body_ETV);
-        mCommentsRV = (RecyclerView) view.findViewById(R.id.pull_request_comments_RV);
 
         setupViews();
         setupRecyclerView();
@@ -104,7 +92,8 @@ public class PullRequestsConversationsFragment extends BaseFragment implements P
         setViewManager(loadMoreInSwipeRefreshLayoutMoreManager, refreshViewManager);
     }
 
-    private void getParams() {
+    @Override
+    protected void getParams() {
         Bundle bundle = getArguments();
         if (bundle != null) {
             pullRequestBean = bundle.getParcelable(PullRequestContentActivity.PULL_REQUEST);

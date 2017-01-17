@@ -1,37 +1,32 @@
 package com.zpauly.githubapp.view.viewholder;
 
 import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.zpauly.githubapp.R;
+import com.zpauly.githubapp.base.BaseRecyclerViewViewHolder;
+
+import butterknife.BindView;
 
 /**
  * Created by zpauly on 16-7-15.
  */
 
-public class ReposViewHolder extends RecyclerView.ViewHolder {
-    public final LinearLayout mLayout;
+public class ReposViewHolder extends BaseRecyclerViewViewHolder {
+    @BindView(R.id.repos_layout) public LinearLayout mLayout;
 
-    public final AppCompatTextView mReposTitleTV;
+    @BindView(R.id.repos_title_TV) public AppCompatTextView mReposTitleTV;
 
-    public final AppCompatTextView mReposUpdateTimeTV;
+    @BindView(R.id.repos_update_time_TV) public AppCompatTextView mReposUpdateTimeTV;
 
-    public final AppCompatTextView mReposTechLanguageTV;
+    @BindView(R.id.repos_tech_language_TV) public AppCompatTextView mReposTechLanguageTV;
 
-    public final AppCompatTextView mReposStarsTV;
+    @BindView(R.id.repos_stars_TV) public AppCompatTextView mReposStarsTV;
 
-    public final AppCompatTextView mReposForksTV;
+    @BindView(R.id.repos_forks_TV) public AppCompatTextView mReposForksTV;
 
     public ReposViewHolder(View itemView) {
         super(itemView);
-
-        mLayout = (LinearLayout) itemView.findViewById(R.id.repos_layout);
-        mReposTitleTV = (AppCompatTextView) itemView.findViewById(R.id.repos_title_TV);
-        mReposUpdateTimeTV = (AppCompatTextView) itemView.findViewById(R.id.repos_update_time_TV);
-        mReposTechLanguageTV = (AppCompatTextView) itemView.findViewById(R.id.repos_tech_language_TV);
-        mReposStarsTV = (AppCompatTextView) itemView.findViewById(R.id.repos_stars_TV);
-        mReposForksTV = (AppCompatTextView) itemView.findViewById(R.id.repos_forks_TV);
     }
 }
