@@ -3,7 +3,6 @@ package com.zpauly.githubapp.view.repositories;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
@@ -13,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
@@ -43,7 +43,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by zpauly on 16-7-31.
@@ -67,7 +66,7 @@ public class RepoContentActivity extends RightDrawerActivity implements RepoCont
     @BindView(R.id.repo_content_RefreshView) public RefreshView mRefreshView;
     @BindView(R.id.repo_content_SRLayout) public SwipeRefreshLayout mSRLayout;
     @BindView(R.id.repo_content_title_layout) public LinearLayout mTitleLayout;
-    @BindView(R.id.repo_content_avatar_IV) public CircleImageView mAvatarIV;
+    @BindView(R.id.repo_content_avatar_IV) public ImageView mAvatarIV;
     @BindView(R.id.repo_content_title_TV) public AppCompatTextView mTitleTV;
     @BindView(R.id.repo_content_desc_layout) public LinearLayout mDescLayout;
     @BindView(R.id.repo_content_desc_TV) public AppCompatTextView mDescTV;

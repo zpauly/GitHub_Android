@@ -14,7 +14,7 @@
         android:background="?attr/selectableItemBackground"
         android:padding="@dimen/components_padding">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:id="@+id/followers_avatar_IV"
             android:layout_width="56dp"
             android:layout_height="56dp" />

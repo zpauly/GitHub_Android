@@ -6,11 +6,11 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.PatchRecyclerViewAdapter;
@@ -25,7 +25,6 @@ import com.zpauly.githubapp.view.ToolbarActivity;
 import com.zpauly.githubapp.view.comment.CommentActivity;
 
 import butterknife.BindView;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by zpauly on 16/9/22.
@@ -43,7 +42,7 @@ public class CommitContentActivity extends ToolbarActivity implements CommitCont
     @BindView(R.id.commit_content_RefreshView) public RefreshView mRefreshView;
     @BindView(R.id.commit_content_layout) public NestedScrollView mContentNSV;
     @BindView(R.id.commit_content_message_TV) public AppCompatTextView mMessageTV;
-    @BindView(R.id.commit_content_committer_avatar_IV) public CircleImageView mAvatarIV;
+    @BindView(R.id.commit_content_committer_avatar_IV) public ImageView mAvatarIV;
     @BindView(R.id.commit_content_committer_name_TV) public AppCompatTextView mUsernameTV;
     @BindView(R.id.commit_content_sha_TV) public AppCompatTextView mShaTV;
     @BindView(R.id.commit_content_time_TV) public AppCompatTextView mTimeTV;

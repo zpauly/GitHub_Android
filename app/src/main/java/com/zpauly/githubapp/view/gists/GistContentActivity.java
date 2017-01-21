@@ -6,6 +6,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.GistFileRecyclerViewAdapter;
@@ -19,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by zpauly on 16-8-6.
@@ -31,7 +31,7 @@ public class GistContentActivity extends ToolbarActivity {
     public static final String GIST_BUNDLE = "GIST_BUNDLE";
     public static final String FILE_LIST_BUNDLE = "FILE_LIST_BUNDLE";
 
-    @BindView(R.id.gist_content_avatar_IV) public CircleImageView mAvatarIV;
+    @BindView(R.id.gist_content_avatar_IV) public ImageView mAvatarIV;
     @BindView(R.id.gist_content_login_TV) public AppCompatTextView mLoginTV;
     @BindView(R.id.gist_content_updated_at_TV) public AppCompatTextView mUpdatedTV;
     @BindView(R.id.gist_content_created_at_TV) public AppCompatTextView mCreatedTV;

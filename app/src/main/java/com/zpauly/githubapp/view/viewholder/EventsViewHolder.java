@@ -10,7 +10,6 @@ import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.base.BaseRecyclerViewViewHolder;
 
 import butterknife.BindView;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by zpauly on 16-6-14.
@@ -18,7 +17,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class EventsViewHolder extends BaseRecyclerViewViewHolder {
     @BindView(R.id.events_item_layout) public LinearLayout mLayout;
 
-    @BindView(R.id.events_avatar_CIV) public CircleImageView mUserAvatarIV;
+    @BindView(R.id.events_avatar_IV) public ImageView mUserAvatarIV;
 
     @BindView(R.id.events_loginname_TV) public AppCompatTextView mUsernameTV;
 

@@ -60,10 +60,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
-                            <de.hdodenhof.circleimageview.CircleImageView
+                            <ImageView
                                 android:id="@+id/issue_content_user_avatar"
-                                app:civ_border_color="@color/md_divider_white"
-                                app:civ_border_width="2dp"
                                 android:layout_width="@dimen/nav_header_image_size"
                                 android:layout_height="@dimen/nav_header_image_size" />
 

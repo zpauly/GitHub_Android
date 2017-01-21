@@ -9,6 +9,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.ms.square.android.expandabletextview.ExpandableTextView;
@@ -35,7 +36,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by zpauly on 16/9/5.
@@ -51,7 +51,7 @@ public class IssueContentActivity extends ToolbarActivity implements IssueConten
     @BindView(R.id.issue_content_RefreshView) public RefreshView mRefreshView;
     @BindView(R.id.issue_content_SRLayout) public SwipeRefreshLayout mSRLayout;
     @BindView(R.id.issue_content_title) public AppCompatTextView mTitleTV;
-    @BindView(R.id.issue_content_user_avatar) public CircleImageView mUserAvatarIV;
+    @BindView(R.id.issue_content_user_avatar) public ImageView mUserAvatarIV;
     @BindView(R.id.issue_content_username) public AppCompatTextView mUsernameTV;
     @BindView(R.id.issue_content_open_time) public AppCompatTextView mOpenTimeTV;
     @BindView(R.id.issue_content_body_ETV) public ExpandableTextView mBodyTV;

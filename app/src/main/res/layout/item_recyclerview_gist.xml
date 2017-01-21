@@ -16,7 +16,7 @@
         android:background="?attr/selectableItemBackground"
         android:id="@+id/gist_item_layout">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:id="@+id/gist_item_avatar_IV"
             android:layout_width="@dimen/list_item_avatar_size"
             android:layout_height="@dimen/list_item_avatar_size" />

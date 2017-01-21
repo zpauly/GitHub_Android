@@ -31,7 +31,6 @@ import com.zpauly.githubapp.view.repositories.ReposActivity;
 import com.zpauly.githubapp.view.users.UsersActivity;
 
 import butterknife.BindView;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by zpauly on 16-7-30.
@@ -43,7 +42,7 @@ public class ProfileActivity extends RightDrawerActivity implements ProfileContr
     private ProfileContract.Presenter mPresenter;
 
     @BindView(R.id.profile_SRLayout) public SwipeRefreshLayout mSwipeRefreshLayout;
-    @BindView(R.id.profile_avatar) public CircleImageView mAvatarIV;
+    @BindView(R.id.profile_avatar) public ImageView mAvatarIV;
     @BindView(R.id.profile_login_TV) public TextView mLoginTV;
     @BindView(R.id.profile_name_TV) public TextView mNameTV;
     @BindView(R.id.profile_bio_TV) public TextView mBioTV;

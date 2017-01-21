@@ -22,7 +22,9 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Build;
@@ -34,6 +36,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
 import com.zpauly.githubapp.R;
@@ -180,46 +184,85 @@ public class ImageUtil {
     public static void loadAvatarImageFromUrl(Context context, String url, ImageView imageView) {
         if (context == null)
             return;
-        if (context instanceof Activity) {
-            loadAvatarImageFromUrl((Activity) context, url, imageView);
-        } else {
-            Glide.with(context)
-                    .load(Uri.parse(url))
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .crossFade()
-                    .centerCrop()
-                    .into(imageView);
-        }
+        Glide.with(context)
+                .load(Uri.parse(url))
+                .placeholder(R.mipmap.avatar)
+                .error(R.mipmap.avatar)
+                .transform(new CircleTransform(context))
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .crossFade()
+                .into(imageView);
     }
 
-    public static void loadAvatarImageFromUrl(Fragment context, String url, ImageView imageView) {
-        if (context == null) {
+    public static void loadAvatarImageFromUrl(Fragment fragment, String url, ImageView imageView) {
+        if (fragment == null) {
             return;
         }
-        if (!context.isDetached()) {
-            Glide.with(context)
+        if (!fragment.isDetached()) {
+            Glide.with(fragment)
                     .load(Uri.parse(url))
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .placeholder(R.mipmap.avatar)
+                    .error(R.mipmap.avatar)
+                    .transform(new CircleTransform(fragment.getContext()))
+                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
                     .crossFade()
-                    .centerCrop()
                     .into(imageView);
         }
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public static void loadAvatarImageFromUrl(Activity context, String url, ImageView imageView) {
-        if (context == null) {
+    public static void loadAvatarImageFromUrl(Activity activity, String url, ImageView imageView) {
+        if (activity == null) {
+            Log.i(TAG, "context is null");
             return;
         }
-        if (!context.isDestroyed()) {
-            Glide.with(context)
+        if (!activity.isDestroyed()) {
+            Glide.with(activity)
                     .load(Uri.parse(url))
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .placeholder(R.mipmap.avatar)
+                    .error(R.mipmap.avatar)
+                    .transform(new CircleTransform(activity))
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .crossFade()
-                    .centerCrop()
                     .into(imageView);
+        }
+    }
+
+    public static class CircleTransform extends BitmapTransformation {
+        public CircleTransform(Context context) {
+            super(context);
+        }
+
+        @Override protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
+            return circleCrop(pool, toTransform);
+        }
+
+        private static Bitmap circleCrop(BitmapPool pool, Bitmap source) {
+            if (source == null) return null;
+
+            int size = Math.min(source.getWidth(), source.getHeight());
+            int x = (source.getWidth() - size) / 2;
+            int y = (source.getHeight() - size) / 2;
+
+            // TODO this could be acquired from the pool too
+            Bitmap squared = Bitmap.createBitmap(source, x, y, size, size);
+
+            Bitmap result = pool.get(size, size, Bitmap.Config.ARGB_8888);
+            if (result == null) {
+                result = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+            }
+
+            Canvas canvas = new Canvas(result);
+            Paint paint = new Paint();
+            paint.setShader(new BitmapShader(squared, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
+            paint.setAntiAlias(true);
+            float r = size / 2f;
+            canvas.drawCircle(r, r, r, paint);
+            return result;
+        }
+
+        @Override public String getId() {
+            return getClass().getName();
         }
     }
 }

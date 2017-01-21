@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.zpauly.githubapp.R;
@@ -32,7 +33,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by zpauly on 2016/10/23.
@@ -48,7 +48,7 @@ public class PullRequestsConversationsFragment extends BaseFragment implements P
     @BindView(R.id.pull_request_title_TV) public AppCompatTextView mTitleTV;
     @BindView(R.id.pull_request_state_BTN) public AppCompatButton mStateBTN;
     @BindView(R.id.pull_request_description_TV) public AppCompatTextView mDescTV;
-    @BindView(R.id.pull_request_avatar_TV) public CircleImageView mAvatarIV;
+    @BindView(R.id.pull_request_avatar_TV) public ImageView mAvatarIV;
     @BindView(R.id.pull_request_username_TV) public AppCompatTextView mUsernameTV;
     @BindView(R.id.pull_request_time_TV) public AppCompatTextView mTimeTV;
     @BindView(R.id.pull_request_body_ETV) public ExpandableTextView mBodyTV;

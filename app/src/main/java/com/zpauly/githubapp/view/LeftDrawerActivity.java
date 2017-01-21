@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -16,9 +17,8 @@ import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.listener.OnNavHeaderAvatarClickListener;
 import com.zpauly.githubapp.listener.OnNavItemClickListener;
+import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.SPUtil;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by zpauly on 16-6-9.
@@ -29,7 +29,7 @@ public abstract class LeftDrawerActivity extends ToolbarActivity {
     protected DrawerLayout mDrawerLayout;
     protected NavigationView mLeftNavigationView;
 
-    protected CircleImageView mDrawerAvatar;
+    protected ImageView mDrawerAvatar;
     protected TextView mDrawerName;
     protected TextView mDrawerEmail;
 
@@ -59,7 +59,7 @@ public abstract class LeftDrawerActivity extends ToolbarActivity {
 
         View nav_header = mLeftNavigationView.getHeaderView(0);
 
-        mDrawerAvatar = (CircleImageView) nav_header.findViewById(R.id.drawer_avatar_IV);
+        mDrawerAvatar = (ImageView) nav_header.findViewById(R.id.drawer_avatar_IV);
         mDrawerName = (TextView) nav_header.findViewById(R.id.drawer_name_TV);
         mDrawerEmail = (TextView) nav_header.findViewById(R.id.drawer_email_TV);
 
@@ -105,12 +105,7 @@ public abstract class LeftDrawerActivity extends ToolbarActivity {
         String avatar = SPUtil.getString(this, Constants.USER_INFO, Constants.USER_AVATAR, null);
         String email = SPUtil.getString(this, Constants.USER_INFO, Constants.USER_EMAIL, null);
         String username = SPUtil.getString(this, Constants.USER_INFO, Constants.USER_LOGIN, null);
-        Glide.with(this)
-                .load(avatar)
-                .centerCrop()
-                .crossFade()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(mDrawerAvatar);
+        ImageUtil.loadAvatarImageFromUrl(this, avatar, mDrawerAvatar);
         mDrawerName.setText(username);
         mDrawerEmail.setText(email);
     }

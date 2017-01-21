@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <de.hdodenhof.circleimageview.CircleImageView
+                <ImageView
                     android:id="@+id/release_avatar_IV"
                     android:layout_width="@dimen/nav_header_image_size"
                     android:layout_height="@dimen/nav_header_image_size" />

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.response.repos.ReleaseBean;
@@ -12,7 +13,6 @@ import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.ToolbarActivity;
 
 import butterknife.BindView;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by zpauly on 16/9/25.
@@ -25,7 +25,7 @@ public class ReleaseContentActivity extends ToolbarActivity {
 
     private ReleaseBean releaseBean;
 
-    @BindView(R.id.release_avatar_IV) public CircleImageView mAvatarIV;
+    @BindView(R.id.release_avatar_IV) public ImageView mAvatarIV;
     @BindView(R.id.release_username_TV) public AppCompatTextView mUsernameTV;
     @BindView(R.id.release_tag_TV) public AppCompatTextView mTagTV;
     @BindView(R.id.release_time_TV) public AppCompatTextView mTimeTV;
