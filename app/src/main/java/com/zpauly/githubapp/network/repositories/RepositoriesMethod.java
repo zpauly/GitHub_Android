@@ -134,7 +134,7 @@ public class RepositoriesMethod extends BaseNetMethod {
 
     public void getACommitComments(Observer<List<CommentBean>> observer, String auth,
                                    String owner, String repo, String ref, int pageId) {
-        service.getACommitComments(auth, owner, repo, ref, pageId)
+        service.getACommitComments(auth, "application/vnd.github.VERSION.html", owner, repo, ref, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

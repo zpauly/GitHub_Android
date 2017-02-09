@@ -48,6 +48,16 @@ public class IssueBean implements Parcelable {
     private String state;
     private String title;
     private String body;
+    private String body_html;
+
+    public String getBody_html() {
+        return body_html;
+    }
+
+    public void setBody_html(String body_html) {
+        this.body_html = body_html;
+    }
+
     /**
      * login : octocat
      * id : 1
@@ -316,6 +326,9 @@ public class IssueBean implements Parcelable {
         return assignees;
     }
 
+    public IssueBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -334,6 +347,7 @@ public class IssueBean implements Parcelable {
         dest.writeString(this.state);
         dest.writeString(this.title);
         dest.writeString(this.body);
+        dest.writeString(this.body_html);
         dest.writeParcelable(this.user, flags);
         dest.writeParcelable(this.assignee, flags);
         dest.writeTypedList(this.assignees);
@@ -348,9 +362,6 @@ public class IssueBean implements Parcelable {
         dest.writeTypedList(this.labels);
     }
 
-    public IssueBean() {
-    }
-
     protected IssueBean(Parcel in) {
         this.id = in.readInt();
         this.url = in.readString();
@@ -363,6 +374,7 @@ public class IssueBean implements Parcelable {
         this.state = in.readString();
         this.title = in.readString();
         this.body = in.readString();
+        this.body_html = in.readString();
         this.user = in.readParcelable(UserBean.class.getClassLoader());
         this.assignee = in.readParcelable(AssigneeBean.class.getClassLoader());
         this.assignees = in.createTypedArrayList(AssigneeBean.CREATOR);
@@ -377,7 +389,7 @@ public class IssueBean implements Parcelable {
         this.labels = in.createTypedArrayList(LabelBean.CREATOR);
     }
 
-    public static final Parcelable.Creator<IssueBean> CREATOR = new Parcelable.Creator<IssueBean>() {
+    public static final Creator<IssueBean> CREATOR = new Creator<IssueBean>() {
         @Override
         public IssueBean createFromParcel(Parcel source) {
             return new IssueBean(source);

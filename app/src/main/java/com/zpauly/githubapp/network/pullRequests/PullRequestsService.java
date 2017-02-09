@@ -38,6 +38,7 @@ public interface PullRequestsService {
 
     @GET("/repos/{owner}/{repo}/pulls")
     Observable<List<PullRequestBean>> getPullRequests(@Header("Authorzation") String auth,
+                                                      @Header("Accept") String acc,
                                                       @Path("owner") String owner,
                                                       @Path("repo") String repo,
                                                       @Query("state") String state,
@@ -57,6 +58,7 @@ public interface PullRequestsService {
      */
     @GET("/repos/{owner}/{repo}/pulls/{number}/comments")
     Observable<List<CommentBean>> getAPullComments(@Header("Authorization") String auth,
+                                                   @Header("Accept") String acc,
                                                    @Path("owner") String owner,
                                                    @Path("repo") String repo,
                                                    @Path("number") int number,

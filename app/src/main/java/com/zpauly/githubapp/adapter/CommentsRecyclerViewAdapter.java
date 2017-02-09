@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.response.CommentBean;
+import com.zpauly.githubapp.utils.HtmlImageGetter;
 import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.profile.OthersActivity;
@@ -32,7 +33,7 @@ public class CommentsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Com
         final CommentBean data = getData().get(position);
         holder.mUsernameTV.setText(data.getUser().getLogin());
         holder.mTimeTV.setText(TextUtil.timeConverter(data.getCreated_at()));
-        holder.mBodyTV.setText(data.getBody());
+        TextUtil.showReadMe(holder.mBodyTV, data.getBody_html(), new HtmlImageGetter(holder.mBodyTV, getContext(), ""));
         ImageUtil.loadAvatarImageFromUrl(getContext(), data.getUser().getAvatar_url(), holder.mAvatarIV);
         holder.mAvatarIV.setOnClickListener(new View.OnClickListener() {
             @Override

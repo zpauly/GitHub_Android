@@ -1,11 +1,14 @@
 package com.zpauly.githubapp.entity.response;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.zpauly.githubapp.entity.response.UserBean;
 
 /**
  * Created by zpauly on 16/9/4.
  */
-public class CommentBean {
+public class CommentBean implements Parcelable {
 
     /**
      * html_url : https://github.com/octocat/Hello-World/commit/6dcb09b5b57875f334f61aebed695e2e4193db5e#commitcomment-1
@@ -25,6 +28,16 @@ public class CommentBean {
     private String url;
     private int id;
     private String body;
+    private String body_html;
+
+    public String getBody_html() {
+        return body_html;
+    }
+
+    public void setBody_html(String body_html) {
+        this.body_html = body_html;
+    }
+
     private String path;
     private int position;
     private int line;
@@ -140,4 +153,55 @@ public class CommentBean {
     public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.html_url);
+        dest.writeString(this.url);
+        dest.writeInt(this.id);
+        dest.writeString(this.body);
+        dest.writeString(this.body_html);
+        dest.writeString(this.path);
+        dest.writeInt(this.position);
+        dest.writeInt(this.line);
+        dest.writeString(this.commit_id);
+        dest.writeParcelable(this.user, flags);
+        dest.writeString(this.created_at);
+        dest.writeString(this.updated_at);
+    }
+
+    public CommentBean() {
+    }
+
+    protected CommentBean(Parcel in) {
+        this.html_url = in.readString();
+        this.url = in.readString();
+        this.id = in.readInt();
+        this.body = in.readString();
+        this.body_html = in.readString();
+        this.path = in.readString();
+        this.position = in.readInt();
+        this.line = in.readInt();
+        this.commit_id = in.readString();
+        this.user = in.readParcelable(UserBean.class.getClassLoader());
+        this.created_at = in.readString();
+        this.updated_at = in.readString();
+    }
+
+    public static final Parcelable.Creator<CommentBean> CREATOR = new Parcelable.Creator<CommentBean>() {
+        @Override
+        public CommentBean createFromParcel(Parcel source) {
+            return new CommentBean(source);
+        }
+
+        @Override
+        public CommentBean[] newArray(int size) {
+            return new CommentBean[size];
+        }
+    };
 }

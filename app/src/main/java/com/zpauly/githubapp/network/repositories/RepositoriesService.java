@@ -195,6 +195,7 @@ public interface RepositoriesService {
     @Headers("Cache-Control: public, max-age=600")
     @GET("/repos/{owner}/{repo}/commits/{ref}/comments")
     Observable<List<CommentBean>> getACommitComments(@Header("Authorization") String auth,
+                                                     @Header("Accept") String acc,
                                                      @Path("owner") String owner,
                                                      @Path("repo") String repo,
                                                      @Path("ref") String ref,

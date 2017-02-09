@@ -7,7 +7,10 @@ import android.text.style.BackgroundColorSpan;
 import android.text.style.StrikethroughSpan;
 import android.text.style.TypefaceSpan;
 
+import org.markdown4j.Markdown4jProcessor;
 import org.xml.sax.XMLReader;
+
+import java.io.IOException;
 
 /**
  * Created by zpauly on 2016/10/20.
@@ -112,6 +115,15 @@ public class HtmlUtil {
                 index++;
             }
             start = html.indexOf(PRE_START, end + PRE_END.length());
+        }
+    }
+
+    public static String parseMarkdownMarkdownToHtml(String markdown) {
+        try {
+            return new Markdown4jProcessor().process(markdown);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return markdown;
         }
     }
 

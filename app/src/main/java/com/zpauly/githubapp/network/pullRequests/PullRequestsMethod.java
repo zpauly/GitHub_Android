@@ -41,7 +41,7 @@ public class PullRequestsMethod extends BaseNetMethod {
                                  String auth, String owner, String repo,
                                  String state, String head, String base,
                                  String sort, String direction, int pageId) {
-        service.getPullRequests(auth, owner, repo, state, head, base, sort, direction, pageId)
+        service.getPullRequests(auth, "application/vnd.github.VERSION.html", owner, repo, state, head, base, sort, direction, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
@@ -50,7 +50,7 @@ public class PullRequestsMethod extends BaseNetMethod {
     public void getAPullComments(Observer<List<CommentBean>> observer,
                                  String auth, String owner, String repo,
                                  int number, int pageId) {
-        service.getAPullComments(auth, owner, repo, number, pageId)
+        service.getAPullComments(auth, "application/vnd.github.VERSION.html", owner, repo, number, pageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

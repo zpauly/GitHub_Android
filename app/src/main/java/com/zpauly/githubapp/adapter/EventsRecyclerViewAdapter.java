@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.response.events.EventsBean;
 import com.zpauly.githubapp.entity.response.events.Payload;
+import com.zpauly.githubapp.utils.HtmlUtil;
 import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.profile.OthersActivity;
@@ -124,7 +125,7 @@ public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Event
             List<Payload.CommitsBean> list = new ArrayList<>();
             Payload.CommitsBean bean = new Payload.CommitsBean();
             bean.setSha(payloadBean.getComment().getCommit_id());
-            bean.setMessage(payloadBean.getComment().getBody());
+            bean.setMessage(payloadBean.getComment().getBody_html());
             list.add(bean);
             mAdapter.swapAllData(list);
         } else if ("MemberEvent".equals(type)) {
@@ -133,7 +134,7 @@ public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Event
             holder.mTypeIV.setImageResource(R.mipmap.ic_comment);
             holder.mActionTV.setText("comment on issue " + payloadBean.getIssue().getNumber() + " at ");
             holder.mCommentTV.setVisibility(View.VISIBLE);
-            holder.mCommentTV.setText(payloadBean.getComment().getBody());
+            holder.mCommentTV.setText(TextUtil.tranformHtml(payloadBean.getComment().getBody(), null));
         } else if ("DeleteEvent".equals(type)) {
             holder.mTypeIV.setImageResource(R.mipmap.ic_delete);
             holder.mActionTV.setText("delete " + payloadBean.getRef_type() + " " + payloadBean.getRef() + " at");
@@ -149,7 +150,7 @@ public class EventsRecyclerViewAdapter extends LoadMoreRecyclerViewAdapter<Event
                 holder.mTypeIV.setImageResource(R.mipmap.ic_issue_reopened);
             }
             holder.mCommentTV.setVisibility(View.VISIBLE);
-            holder.mCommentTV.setText(payloadBean.getIssue().getBody());
+            holder.mCommentTV.setText(TextUtil.tranformHtml(payloadBean.getIssue().getBody(), null));
         } else if ("PublicEvent".equals(type)) {
             holder.mTypeIV.setImageResource(R.mipmap.ic_repos);
             holder.mActionTV.setText("made the repository public");

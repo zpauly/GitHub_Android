@@ -72,6 +72,7 @@ public interface IssuesService {
     @Headers("Cache-Control: public, max-age=600")
     @GET("/issues")
     Observable<List<IssueBean>> getIssues(@Header("Authorization") String auth,
+                                          @Header("Accept") String acc,
                                           @Nullable @Query("filter") String filter,
                                           @Nullable @Query("state") String state,
                                           @Nullable @Query("labels") String labels,
@@ -94,6 +95,7 @@ public interface IssuesService {
     @Headers("Cache-Control: public, max-age=600")
     @GET("/user/issues")
     Observable<List<IssueBean>> getUserIssues(@Header("Authorization") String auth,
+                                              @Header("Accept") String acc,
                                               @Nullable @Query("filter") String filter,
                                               @Nullable @Query("state") String state,
                                               @Nullable @Query("labels") String labels,
@@ -117,6 +119,7 @@ public interface IssuesService {
     @Headers("Cache-Control: public, max-age=600")
     @GET("/orgs/{org}/issues")
     Observable<List<IssueBean>> getOrgIssues(@Header("Authorization") String auth,
+                                             @Header("Accept") String acc,
                                              @Path("org") String org,
                                              @Nullable @Query("filter") String filter,
                                              @Nullable @Query("state") String state,
@@ -145,6 +148,7 @@ public interface IssuesService {
     @Headers("Cache-Control: public, max-age=600")
     @GET("/repos/{owner}/{repo}/issues")
     Observable<List<IssueBean>> getARepoIssues(@Header("Authorization") String auth,
+                                               @Header("Accept") String acc,
                                                @Path("owner") String owner,
                                                @Path("repo") String repo,
                                                @Nullable @Query("milestone") String milestone,
@@ -169,6 +173,7 @@ public interface IssuesService {
     @Headers("Cache-Control: public, max-age=600")
     @GET("/repos/{owner}/{repo}/issues/{number}")
     Observable<IssueBean> getASingleIssue(@Header("Authorization") String auth,
+                                          @Header("Accept") String acc,
                                           @Path("owner") String owner,
                                           @Path("repo") String repo,
                                           @Path("number") int number,
@@ -186,6 +191,7 @@ public interface IssuesService {
     @Headers("Cache-Control: public, max-age=600")
     @GET("/repos/{owner}/{repo}/issues/{number}/comments")
     Observable<List<CommentBean>> getAnIssueComments(@Header("Authorization") String auth,
+                                                     @Header("Accept") String acc,
                                                      @Path("owner") String owner,
                                                      @Path("repo") String repo,
                                                      @Path("number") int number,

@@ -104,6 +104,7 @@ public interface ActivityService {
     @Headers("Cache-Control: public, max-age=600")
     @GET("/users/{username}/received_events")
     Observable<List<EventsBean>> getReceivedEvents(@Header("Authorization") String auth,
+                                                   @Header("Accept") String acc,
                                                    @Path("username") String username,
                                                    @Query("page") int pageId);
 
@@ -119,6 +120,7 @@ public interface ActivityService {
     @Headers("Cache-Control: public, max-age=600")
     @GET("/users/{username}/events")
     Observable<List<EventsBean>> getUserEvents(@Header("Authorization") String auth,
+                                               @Header("Accept") String acc,
                                                @Path("username") String username,
                                                @Query("page") int pageId);
 

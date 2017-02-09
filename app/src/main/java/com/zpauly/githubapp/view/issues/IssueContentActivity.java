@@ -23,6 +23,7 @@ import com.zpauly.githubapp.presenter.issues.IssueContentPresenter;
 import com.zpauly.githubapp.ui.FloatingActionButton;
 import com.zpauly.githubapp.ui.IssueLabelView;
 import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.utils.HtmlImageGetter;
 import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.utils.viewmanager.LoadMoreInSwipeRefreshLayoutMoreManager;
@@ -54,7 +55,8 @@ public class IssueContentActivity extends ToolbarActivity implements IssueConten
     @BindView(R.id.issue_content_user_avatar) public ImageView mUserAvatarIV;
     @BindView(R.id.issue_content_username) public AppCompatTextView mUsernameTV;
     @BindView(R.id.issue_content_open_time) public AppCompatTextView mOpenTimeTV;
-    @BindView(R.id.issue_content_body_ETV) public ExpandableTextView mBodyTV;
+    @BindView(R.id.issue_content_body_ETV) public ExpandableTextView mBodyETV;
+    @BindView(R.id.expandable_text) public AppCompatTextView mBodyTV;
     @BindView(R.id.issue_content_comments_RV) public RecyclerView mCommentsRV;
     @BindView(R.id.issue_content_NSV) public NestedScrollView mContentNSV;
     @BindView(R.id.issue_content_FAB) public FloatingActionButton mIssueFAB;
@@ -162,7 +164,8 @@ public class IssueContentActivity extends ToolbarActivity implements IssueConten
         } else {
             mOpenTimeTV.setText("closed at " + TextUtil.timeConverter(issueBean.getClosed_at()));
         }
-        mBodyTV.setText(issueBean.getBody());
+        mBodyETV.setText(TextUtil.tranformHtml(issueBean.getBody_html(), new HtmlImageGetter(mBodyTV, this, "")));
+        mBodyTV.setMovementMethod(TextUtil.CHECKING_LINK_METHOD);
         mUserAvatarIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

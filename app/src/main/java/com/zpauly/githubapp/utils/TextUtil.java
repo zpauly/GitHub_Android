@@ -51,13 +51,10 @@ public class TextUtil {
                 .map(new Func1<String, Spanned>() {
                     @Override
                     public Spanned call(String s) {
-                        s = HtmlUtil.format(s);
-                        Spanned spanned = Html.fromHtml(s, imageGetter,
-                                HtmlUtil.getTagHandler());
-                        return spanned;
+                        return tranformHtml(s, imageGetter);
                     }
                 })
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Spanned>() {
                     @Override
@@ -66,5 +63,12 @@ public class TextUtil {
                         textView.setMovementMethod(CHECKING_LINK_METHOD);
                     }
                 });
+    }
+
+    public static Spanned tranformHtml(String s, final Html.ImageGetter imageGetter) {
+        s = HtmlUtil.format(s);
+        Spanned spanned = Html.fromHtml(s, imageGetter,
+                HtmlUtil.getTagHandler());
+        return spanned;
     }
 }

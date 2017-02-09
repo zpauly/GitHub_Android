@@ -7,6 +7,7 @@ import com.zpauly.githubapp.base.BaseNetMethod;
 import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.entity.response.events.EventsBean;
+import com.zpauly.githubapp.utils.HtmlUtil;
 import com.zpauly.githubapp.utils.RetrofitUtil;
 import com.zpauly.githubapp.utils.StringConverterFactory;
 
@@ -16,6 +17,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -58,14 +60,49 @@ public class ActivityMethod extends BaseNetMethod {
     }
 
     public void getUserEvents(Observer<List<EventsBean>> observer, String auth, String username, int pageId) {
-        service.getUserEvents(auth, username, pageId)
+        service.getUserEvents(auth, "application/vnd.github.VERSION.html", username, pageId)
+                .map(new Func1<List<EventsBean>, List<EventsBean>>() {
+                    @Override
+                    public List<EventsBean> call(List<EventsBean> been) {
+                        for (EventsBean bean : been) {
+                            bean.getPayload().getComment().setBody(
+                                    HtmlUtil.parseMarkdownMarkdownToHtml(bean.getPayload().getComment().getBody())
+                            );
+                        }
+                        return been;
+                    }
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 
     public void getReceivedEvents(Observer<List<EventsBean>> observer, String auth, String username, int pageId) {
-        service.getReceivedEvents(auth, username, pageId)
+        service.getReceivedEvents(auth, "application/vnd.github.VERSION.html", username, pageId)
+                .map(new Func1<List<EventsBean>, List<EventsBean>>() {
+                    @Override
+                    public List<EventsBean> call(List<EventsBean> been) {
+                        String body;
+                        for (EventsBean bean : been) {
+                            if (bean.getPayload().getComment() != null) {
+                                if ((body = bean.getPayload().getComment().getBody()) != null) {
+                                    bean.getPayload().getComment().setBody(HtmlUtil.parseMarkdownMarkdownToHtml(body));
+                                }
+                            }
+                            if (bean.getPayload().getIssue() != null) {
+                                if ((body = bean.getPayload().getIssue().getBody()) != null) {
+                                    bean.getPayload().getIssue().setBody(HtmlUtil.parseMarkdownMarkdownToHtml(body));
+                                }
+                            }
+                            if (bean.getPayload().getPull_request() != null) {
+                                if ((body = bean.getPayload().getPull_request().getBody()) != null) {
+                                    bean.getPayload().getPull_request().setBody(HtmlUtil.parseMarkdownMarkdownToHtml(body));
+                                }
+                            }
+                        }
+                        return been;
+                    }
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
