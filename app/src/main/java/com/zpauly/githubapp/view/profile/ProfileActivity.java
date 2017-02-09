@@ -20,7 +20,7 @@ import com.zpauly.githubapp.listener.OnMenuItemSelectedListener;
 import com.zpauly.githubapp.listener.OnNavItemClickListener;
 import com.zpauly.githubapp.presenter.profile.ProfileContract;
 import com.zpauly.githubapp.presenter.profile.ProfilePresenter;
-import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.widget.RefreshView;
 import com.zpauly.githubapp.utils.DisplayUtil;
 import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.SPUtil;

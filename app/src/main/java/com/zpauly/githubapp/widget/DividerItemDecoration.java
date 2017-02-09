@@ -1,4 +1,4 @@
-package com.zpauly.githubapp.ui;
+package com.zpauly.githubapp.widget;
 
 /*
  * Copyright (C) 2014 The Android Open Source Project

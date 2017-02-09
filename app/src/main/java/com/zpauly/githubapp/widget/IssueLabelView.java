@@ -1,11 +1,8 @@
-package com.zpauly.githubapp.ui;
+package com.zpauly.githubapp.widget;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
-import android.graphics.drawable.shapes.Shape;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.AppCompatTextView;

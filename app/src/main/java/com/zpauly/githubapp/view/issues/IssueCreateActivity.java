@@ -20,8 +20,8 @@ import com.zpauly.githubapp.entity.response.issues.LabelBean;
 import com.zpauly.githubapp.entity.response.MilestoneBean;
 import com.zpauly.githubapp.presenter.issues.IssueCreateContract;
 import com.zpauly.githubapp.presenter.issues.IssueCreatePresenter;
-import com.zpauly.githubapp.ui.FloatingActionButton;
-import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.widget.FloatingActionButton;
+import com.zpauly.githubapp.widget.RefreshView;
 import com.zpauly.githubapp.utils.SPUtil;
 import com.zpauly.githubapp.view.ToolbarActivity;
 

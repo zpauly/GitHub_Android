@@ -14,9 +14,8 @@ import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.BranchesRecyclerViewAdapter;
 import com.zpauly.githubapp.entity.response.repos.BranchBean;
 import com.zpauly.githubapp.network.repositories.RepositoriesMethod;
-import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.widget.RefreshView;
 import com.zpauly.githubapp.utils.SPUtil;
-import com.zpauly.githubapp.utils.viewmanager.LoadMoreInSwipeRefreshLayoutMoreManager;
 import com.zpauly.githubapp.utils.viewmanager.RefreshViewManager;
 import com.zpauly.githubapp.view.ToolbarActivity;
 

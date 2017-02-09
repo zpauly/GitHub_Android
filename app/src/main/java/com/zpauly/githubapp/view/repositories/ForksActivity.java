@@ -17,7 +17,7 @@ import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.listener.OnMenuItemSelectedListener;
 import com.zpauly.githubapp.network.repositories.RepositoriesMethod;
 import com.zpauly.githubapp.network.repositories.RepositoriesService;
-import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.widget.RefreshView;
 import com.zpauly.githubapp.utils.SPUtil;
 import com.zpauly.githubapp.utils.viewmanager.LoadMoreInSwipeRefreshLayoutMoreManager;
 import com.zpauly.githubapp.utils.viewmanager.RefreshViewManager;

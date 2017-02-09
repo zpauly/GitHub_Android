@@ -28,7 +28,7 @@ import com.zpauly.githubapp.network.repositories.RepositoriesService;
 import com.zpauly.githubapp.presenter.repos.RepoContentContract;
 import com.zpauly.githubapp.presenter.repos.RepoContentPresenter;
 import com.zpauly.githubapp.service.DownloadSevice;
-import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.widget.RefreshView;
 import com.zpauly.githubapp.utils.DisplayUtil;
 import com.zpauly.githubapp.utils.HtmlImageGetter;
 import com.zpauly.githubapp.utils.ImageUtil;

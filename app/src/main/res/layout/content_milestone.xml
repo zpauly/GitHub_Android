@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.zpauly.githubapp.ui.RefreshView
+    <com.zpauly.githubapp.widget.RefreshView
         android:id="@+id/milestone_RefreshView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -21,7 +21,7 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <com.zpauly.githubapp.ui.FloatingActionButton
+    <com.zpauly.githubapp.widget.FloatingActionButton
         android:id="@+id/milestone_FAB"
         android:visibility="gone"
         android:src="@drawable/ic_add_white"

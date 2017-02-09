@@ -13,7 +13,6 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
 
-import com.protectsoft.webviewcode.Codeview;
 import com.protectsoft.webviewcode.Settings;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.FileDirRecyclerViewAdapter;
@@ -22,7 +21,7 @@ import com.zpauly.githubapp.entity.response.repos.RepositoryContentBean;
 import com.zpauly.githubapp.listener.OnDirItemClickListener;
 import com.zpauly.githubapp.presenter.files.FilesContract;
 import com.zpauly.githubapp.presenter.files.FilesPresenter;
-import com.zpauly.githubapp.ui.DividerItemDecoration;
+import com.zpauly.githubapp.widget.DividerItemDecoration;
 import com.zpauly.githubapp.utils.DisplayUtil;
 import com.zpauly.githubapp.utils.HtmlImageGetter;
 import com.zpauly.githubapp.utils.TextUtil;

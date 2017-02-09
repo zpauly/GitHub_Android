@@ -12,7 +12,7 @@ import com.zpauly.githubapp.adapter.ReleasesRecyclerViewAdapter;
 import com.zpauly.githubapp.entity.response.repos.ReleaseBean;
 import com.zpauly.githubapp.presenter.repos.ReleasesContract;
 import com.zpauly.githubapp.presenter.repos.ReleasesPresenter;
-import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.widget.RefreshView;
 import com.zpauly.githubapp.utils.viewmanager.LoadMoreInSwipeRefreshLayoutMoreManager;
 import com.zpauly.githubapp.utils.viewmanager.RefreshViewManager;
 import com.zpauly.githubapp.view.ToolbarActivity;

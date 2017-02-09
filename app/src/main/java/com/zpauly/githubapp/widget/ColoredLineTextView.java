@@ -1,4 +1,4 @@
-package com.zpauly.githubapp.ui;
+package com.zpauly.githubapp.widget;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

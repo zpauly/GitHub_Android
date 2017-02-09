@@ -11,7 +11,7 @@ import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.response.CommentBean;
 import com.zpauly.githubapp.presenter.comment.CommentCreateContract;
 import com.zpauly.githubapp.presenter.comment.CommentCreatePresenter;
-import com.zpauly.githubapp.ui.FloatingActionButton;
+import com.zpauly.githubapp.widget.FloatingActionButton;
 import com.zpauly.githubapp.view.ToolbarActivity;
 
 import butterknife.BindView;

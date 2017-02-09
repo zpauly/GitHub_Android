@@ -11,8 +11,8 @@ import com.zpauly.githubapp.adapter.LabelsRecycelrViewAdapter;
 import com.zpauly.githubapp.entity.response.issues.LabelBean;
 import com.zpauly.githubapp.presenter.issues.LabelsContract;
 import com.zpauly.githubapp.presenter.issues.LabelsPresenter;
-import com.zpauly.githubapp.ui.FloatingActionButton;
-import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.widget.FloatingActionButton;
+import com.zpauly.githubapp.widget.RefreshView;
 import com.zpauly.githubapp.utils.viewmanager.RefreshViewManager;
 import com.zpauly.githubapp.view.ToolbarActivity;
 

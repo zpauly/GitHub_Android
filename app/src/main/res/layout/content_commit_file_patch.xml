@@ -96,7 +96,7 @@
 
         </android.support.v7.widget.CardView>
 
-        <com.zpauly.githubapp.ui.ColoredLineTextView
+        <com.zpauly.githubapp.widget.ColoredLineTextView
             android:layout_marginTop="@dimen/components_margin"
             android:clickable="true"
             android:background="?attr/selectableItemBackground"

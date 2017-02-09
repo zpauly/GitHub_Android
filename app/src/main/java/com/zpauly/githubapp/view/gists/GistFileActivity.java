@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.view.View;
 import android.webkit.WebView;
 
-import com.protectsoft.webviewcode.Codeview;
 import com.protectsoft.webviewcode.Settings;
 import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.R;
@@ -13,7 +12,7 @@ import com.zpauly.githubapp.entity.response.gists.GistFileBean;
 import com.zpauly.githubapp.entity.response.gists.GistFileMapBean;
 import com.zpauly.githubapp.entity.response.gists.GistsBean;
 import com.zpauly.githubapp.network.gists.GistsMethod;
-import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.widget.RefreshView;
 import com.zpauly.githubapp.utils.DisplayUtil;
 import com.zpauly.githubapp.utils.SPUtil;
 import com.zpauly.githubapp.view.ToolbarActivity;

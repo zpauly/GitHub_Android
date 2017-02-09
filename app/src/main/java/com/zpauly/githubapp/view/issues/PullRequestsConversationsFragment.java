@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.CommentsRecyclerViewAdapter;
 import com.zpauly.githubapp.base.BaseFragment;
@@ -23,11 +22,12 @@ import com.zpauly.githubapp.entity.response.repos.FileBean;
 import com.zpauly.githubapp.entity.response.repos.SingleCommitBean;
 import com.zpauly.githubapp.presenter.issues.PullRequestContentContract;
 import com.zpauly.githubapp.presenter.issues.PullRequestContentPresenter;
-import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.utils.HtmlImageGetter;
 import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.utils.viewmanager.LoadMoreInSwipeRefreshLayoutMoreManager;
 import com.zpauly.githubapp.utils.viewmanager.RefreshViewManager;
+import com.zpauly.githubapp.widget.RefreshView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +51,7 @@ public class PullRequestsConversationsFragment extends BaseFragment implements P
     @BindView(R.id.pull_request_avatar_TV) public ImageView mAvatarIV;
     @BindView(R.id.pull_request_username_TV) public AppCompatTextView mUsernameTV;
     @BindView(R.id.pull_request_time_TV) public AppCompatTextView mTimeTV;
-    @BindView(R.id.pull_request_body_ETV) public ExpandableTextView mBodyTV;
+    @BindView(R.id.pull_request_body_TV) public AppCompatTextView mBodyTV;
     @BindView(R.id.pull_request_comments_RV) public RecyclerView mCommentsRV;
 
     private CommentsRecyclerViewAdapter mCommentsAdapter;
@@ -112,7 +112,7 @@ public class PullRequestsConversationsFragment extends BaseFragment implements P
             mTimeTV.setText("closed at " + TextUtil.timeConverter(pullRequestBean.getClosed_at()));
             mStateBTN.setBackgroundColor(getResources().getColor(R.color.mergeStateColor));
         }
-        mBodyTV.setText(pullRequestBean.getBody());
+        TextUtil.showReadMe(mBodyTV, pullRequestBean.getBody(), new HtmlImageGetter(mBodyTV, getContext(), null));
     }
 
     private void setupRecyclerView() {

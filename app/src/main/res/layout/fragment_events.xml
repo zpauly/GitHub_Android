@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.zpauly.githubapp.ui.RefreshView
+    <com.zpauly.githubapp.widget.RefreshView
         android:id="@+id/events_RefreshView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

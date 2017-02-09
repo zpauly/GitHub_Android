@@ -1,4 +1,4 @@
-package com.zpauly.githubapp.ui;
+package com.zpauly.githubapp.widget;
 
 import android.annotation.TargetApi;
 import android.content.Context;

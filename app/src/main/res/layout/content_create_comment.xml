@@ -18,7 +18,7 @@
 
     </LinearLayout>
 
-    <com.zpauly.githubapp.ui.FloatingActionButton
+    <com.zpauly.githubapp.widget.FloatingActionButton
         android:id="@+id/create_comment_FAB"
         android:src="@drawable/ic_send_white_24dp"
         android:layout_gravity="bottom|end"

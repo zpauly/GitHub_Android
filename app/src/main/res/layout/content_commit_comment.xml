@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.zpauly.githubapp.ui.RefreshView
+    <com.zpauly.githubapp.widget.RefreshView
         android:id="@+id/commit_comment_RefreshView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -26,7 +26,7 @@
 
         </android.support.v4.widget.SwipeRefreshLayout>
 
-        <com.zpauly.githubapp.ui.FloatingActionButton
+        <com.zpauly.githubapp.widget.FloatingActionButton
             android:layout_gravity="bottom|end"
             android:id="@+id/commit_comment_create_FAB"
             android:src="@drawable/ic_edit_white_24dp"

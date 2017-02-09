@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.entity.response.repos.FileBean;
-import com.zpauly.githubapp.ui.ColoredLineTextView;
+import com.zpauly.githubapp.widget.ColoredLineTextView;
 import com.zpauly.githubapp.view.ToolbarActivity;
 
 import java.util.Iterator;

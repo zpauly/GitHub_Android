@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.zpauly.githubapp.R;
 import com.zpauly.githubapp.adapter.CommentsRecyclerViewAdapter;
 import com.zpauly.githubapp.entity.response.CommentBean;
@@ -20,9 +19,6 @@ import com.zpauly.githubapp.entity.response.issues.IssueBean;
 import com.zpauly.githubapp.entity.response.issues.LabelBean;
 import com.zpauly.githubapp.presenter.issues.IssueContentContract;
 import com.zpauly.githubapp.presenter.issues.IssueContentPresenter;
-import com.zpauly.githubapp.ui.FloatingActionButton;
-import com.zpauly.githubapp.ui.IssueLabelView;
-import com.zpauly.githubapp.ui.RefreshView;
 import com.zpauly.githubapp.utils.HtmlImageGetter;
 import com.zpauly.githubapp.utils.ImageUtil;
 import com.zpauly.githubapp.utils.TextUtil;
@@ -31,6 +27,9 @@ import com.zpauly.githubapp.utils.viewmanager.RefreshViewManager;
 import com.zpauly.githubapp.view.ToolbarActivity;
 import com.zpauly.githubapp.view.comment.CommentCreateActivity;
 import com.zpauly.githubapp.view.profile.OthersActivity;
+import com.zpauly.githubapp.widget.FloatingActionButton;
+import com.zpauly.githubapp.widget.IssueLabelView;
+import com.zpauly.githubapp.widget.RefreshView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,8 +54,7 @@ public class IssueContentActivity extends ToolbarActivity implements IssueConten
     @BindView(R.id.issue_content_user_avatar) public ImageView mUserAvatarIV;
     @BindView(R.id.issue_content_username) public AppCompatTextView mUsernameTV;
     @BindView(R.id.issue_content_open_time) public AppCompatTextView mOpenTimeTV;
-    @BindView(R.id.issue_content_body_ETV) public ExpandableTextView mBodyETV;
-    @BindView(R.id.expandable_text) public AppCompatTextView mBodyTV;
+    @BindView(R.id.issue_content_body_TV) public AppCompatTextView mBodyTV;
     @BindView(R.id.issue_content_comments_RV) public RecyclerView mCommentsRV;
     @BindView(R.id.issue_content_NSV) public NestedScrollView mContentNSV;
     @BindView(R.id.issue_content_FAB) public FloatingActionButton mIssueFAB;
@@ -164,7 +162,7 @@ public class IssueContentActivity extends ToolbarActivity implements IssueConten
         } else {
             mOpenTimeTV.setText("closed at " + TextUtil.timeConverter(issueBean.getClosed_at()));
         }
-        mBodyETV.setText(TextUtil.tranformHtml(issueBean.getBody_html(), new HtmlImageGetter(mBodyTV, this, "")));
+        TextUtil.showReadMe(mBodyTV, issueBean.getBody(), new HtmlImageGetter(mBodyTV, this, null));
         mBodyTV.setMovementMethod(TextUtil.CHECKING_LINK_METHOD);
         mUserAvatarIV.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -66,6 +66,9 @@ public class TextUtil {
     }
 
     public static Spanned tranformHtml(String s, final Html.ImageGetter imageGetter) {
+        if (s == null) {
+            s = "";
+        }
         s = HtmlUtil.format(s);
         Spanned spanned = Html.fromHtml(s, imageGetter,
                 HtmlUtil.getTagHandler());

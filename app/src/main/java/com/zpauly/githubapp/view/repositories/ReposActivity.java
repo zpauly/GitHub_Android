@@ -1,6 +1,5 @@
 package com.zpauly.githubapp.view.repositories;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
@@ -21,7 +20,7 @@ import com.zpauly.githubapp.listener.OnNavItemClickListener;
 import com.zpauly.githubapp.network.repositories.RepositoriesService;
 import com.zpauly.githubapp.presenter.repos.ReposContract;
 import com.zpauly.githubapp.presenter.repos.ReposPresenter;
-import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.widget.RefreshView;
 import com.zpauly.githubapp.utils.viewmanager.LoadMoreInSwipeRefreshLayoutMoreManager;
 import com.zpauly.githubapp.utils.viewmanager.RefreshViewManager;
 import com.zpauly.githubapp.view.RightDrawerActivity;

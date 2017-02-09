@@ -6,7 +6,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.zpauly.githubapp.R;
@@ -17,7 +16,7 @@ import com.zpauly.githubapp.entity.response.OrganizationBean;
 import com.zpauly.githubapp.entity.response.UserBean;
 import com.zpauly.githubapp.presenter.follow.FollowContract;
 import com.zpauly.githubapp.presenter.follow.FollowPresenter;
-import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.widget.RefreshView;
 import com.zpauly.githubapp.utils.viewmanager.LoadMoreInSwipeRefreshLayoutMoreManager;
 import com.zpauly.githubapp.utils.viewmanager.RefreshViewManager;
 import com.zpauly.githubapp.view.ToolbarActivity;

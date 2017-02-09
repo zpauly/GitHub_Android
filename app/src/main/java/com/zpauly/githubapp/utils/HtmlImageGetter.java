@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.umeng.analytics.MobclickAgent;
 import com.zpauly.githubapp.Constants;
 import com.zpauly.githubapp.R;
-import com.zpauly.githubapp.ui.URLDrawable;
+import com.zpauly.githubapp.widget.URLDrawable;
 
 import java.io.BufferedInputStream;
 import java.io.File;

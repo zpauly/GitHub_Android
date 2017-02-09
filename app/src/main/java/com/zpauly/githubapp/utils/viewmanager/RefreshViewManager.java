@@ -3,7 +3,7 @@ package com.zpauly.githubapp.utils.viewmanager;
 import android.view.View;
 
 import com.zpauly.githubapp.listener.LoadListener;
-import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.widget.RefreshView;
 
 /**
  * Created by zpauly on 16/9/23.

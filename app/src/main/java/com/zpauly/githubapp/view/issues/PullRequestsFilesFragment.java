@@ -19,7 +19,7 @@ import com.zpauly.githubapp.entity.response.repos.FileBean;
 import com.zpauly.githubapp.entity.response.repos.SingleCommitBean;
 import com.zpauly.githubapp.presenter.issues.PullRequestContentContract;
 import com.zpauly.githubapp.presenter.issues.PullRequestContentPresenter;
-import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.widget.RefreshView;
 import com.zpauly.githubapp.utils.viewmanager.LoadMoreInSwipeRefreshLayoutMoreManager;
 import com.zpauly.githubapp.utils.viewmanager.RefreshViewManager;
 

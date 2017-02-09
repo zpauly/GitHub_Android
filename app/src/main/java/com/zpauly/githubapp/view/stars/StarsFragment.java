@@ -19,7 +19,7 @@ import com.zpauly.githubapp.listener.OnMenuItemSelectedListener;
 import com.zpauly.githubapp.network.activity.ActivityService;
 import com.zpauly.githubapp.presenter.star.StarContract;
 import com.zpauly.githubapp.presenter.star.StarPresenter;
-import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.widget.RefreshView;
 import com.zpauly.githubapp.utils.viewmanager.LoadMoreInSwipeRefreshLayoutMoreManager;
 import com.zpauly.githubapp.utils.viewmanager.RefreshViewManager;
 import com.zpauly.githubapp.view.ToolbarMenuFragment;

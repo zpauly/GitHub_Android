@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.zpauly.githubapp.ui.RefreshView
+    <com.zpauly.githubapp.widget.RefreshView
         android:id="@+id/RefreshView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -101,30 +101,12 @@
 
                         </LinearLayout>
 
-                        <com.ms.square.android.expandabletextview.ExpandableTextView
-                            android:id="@+id/pull_request_body_ETV"
-                            expandableTextView:maxCollapsedLines="4"
-                            expandableTextView:animDuration="200"
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/pull_request_body_TV"
                             android:background="@color/colorPrimaryLight"
+                            android:padding="@dimen/components_padding"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <android.support.v7.widget.AppCompatTextView
-                                android:id="@+id/expandable_text"
-                                android:padding="@dimen/components_padding"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
-
-                            <android.support.v7.widget.AppCompatImageButton
-                                android:layout_margin="@dimen/components_padding"
-                                android:layout_gravity="bottom|center_horizontal"
-                                android:id="@+id/expand_collapse"
-                                android:background="@null"
-                                android:src="@drawable/ic_expand"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-
-                        </com.ms.square.android.expandabletextview.ExpandableTextView>
+                            android:layout_height="wrap_content" />
 
                     </LinearLayout>
 

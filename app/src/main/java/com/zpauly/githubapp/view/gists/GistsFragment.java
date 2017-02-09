@@ -16,7 +16,7 @@ import com.zpauly.githubapp.base.BaseFragment;
 import com.zpauly.githubapp.entity.response.gists.GistsBean;
 import com.zpauly.githubapp.presenter.gists.GistsContract;
 import com.zpauly.githubapp.presenter.gists.GistsPresenter;
-import com.zpauly.githubapp.ui.RefreshView;
+import com.zpauly.githubapp.widget.RefreshView;
 import com.zpauly.githubapp.utils.viewmanager.LoadMoreInSwipeRefreshLayoutMoreManager;
 import com.zpauly.githubapp.utils.viewmanager.RefreshViewManager;
 
