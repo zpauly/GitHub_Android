@@ -6,29 +6,29 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zpauly.githubapp.R;
+import com.zpauly.githubapp.base.BaseAdapter;
 import com.zpauly.githubapp.entity.response.repos.RepositoriesBean;
 import com.zpauly.githubapp.utils.TextUtil;
 import com.zpauly.githubapp.view.repositories.RepoContentActivity;
 import com.zpauly.githubapp.view.viewholder.ReposViewHolder;
 
 /**
- * Created by zpauly on 16-7-15.
+ * Created by zpauly on 2017/2/10.
  */
 
-public class ReposRecyclerViewAdapter extends
-        LoadMoreRecyclerViewAdapter<RepositoriesBean, ReposViewHolder> {
-    public ReposRecyclerViewAdapter(Context context) {
+public class TrendingRecyclerViewAdapter extends BaseAdapter<RepositoriesBean, ReposViewHolder> {
+    public TrendingRecyclerViewAdapter(Context context) {
         super(context);
     }
     @Override
-    public ReposViewHolder createContentViewHolder(ViewGroup parent, int viewType) {
+    public ReposViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View mView = LayoutInflater.from(getContext()).inflate(R.layout.item_recyclerview_repositories, parent, false);
         ReposViewHolder holder = new ReposViewHolder(mView);
         return holder;
     }
 
     @Override
-    public void bindContentViewHolder(ReposViewHolder holder, int position) {
+    public void onBindViewHolder(ReposViewHolder holder, int position) {
         final RepositoriesBean repo = getData().get(position);
         holder.mReposForksTV.setText(String.valueOf(repo.getForks_count()));
         holder.mReposStarsTV.setText(String.valueOf(repo.getStargazers_count()));

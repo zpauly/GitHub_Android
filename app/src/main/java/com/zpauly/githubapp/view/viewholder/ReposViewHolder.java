@@ -18,6 +18,8 @@ public class ReposViewHolder extends BaseRecyclerViewViewHolder {
 
     @BindView(R.id.repos_title_TV) public AppCompatTextView mReposTitleTV;
 
+    @BindView(R.id.repos_desc_TV) public AppCompatTextView mReposDescTV;
+
     @BindView(R.id.repos_update_time_TV) public AppCompatTextView mReposUpdateTimeTV;
 
     @BindView(R.id.repos_tech_language_TV) public AppCompatTextView mReposTechLanguageTV;

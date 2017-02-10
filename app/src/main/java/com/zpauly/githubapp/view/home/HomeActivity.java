@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -23,8 +24,12 @@ import com.zpauly.githubapp.view.issues.IssuesOrPullRequestsActivity;
 import com.zpauly.githubapp.view.issues.IssuesOrPullRequestsFragment;
 import com.zpauly.githubapp.view.login.LoginActivity;
 import com.zpauly.githubapp.view.profile.ProfileActivity;
+import com.zpauly.githubapp.view.repositories.TrendingFragment;
 import com.zpauly.githubapp.view.settings.SettingsActivity;
 import com.zpauly.githubapp.view.stars.StarsFragment;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by zpauly on 16-6-9.
@@ -41,11 +46,13 @@ public class HomeActivity extends LeftDrawerActivity {
     private static final int All_GISTS = 4;
     private static final int STARRED_GISTS = 5;
     private static final int ISSUES = 6;
+    private static final int TRENDING = 7;
 
-    private int currentFragmentID = EVENTS;
+    private static int currentFragmentID = EVENTS;
 
     private BaseFragment mCurrentFragment;
     private BaseFragment[] fragments;
+    private Map<BaseFragment, String> fragmentTitleMap = new HashMap<>();
 
     private FragmentManager mFragmentManager;
     private FragmentTransaction mFragmentTransaction;
@@ -53,7 +60,15 @@ public class HomeActivity extends LeftDrawerActivity {
     @Override
     public void initViews() {
         fragments = new BaseFragment[]{ new EventsFragment(), new StarsFragment()
-                , new ExploreFragment(), new GistsFragment(), new GistsFragment(), new GistsFragment(), new IssuesOrPullRequestsFragment()};
+                , new ExploreFragment(), new GistsFragment(), new GistsFragment(), new GistsFragment(), new IssuesOrPullRequestsFragment(), new TrendingFragment()};
+        fragmentTitleMap.put(fragments[EVENTS], getString(R.string.events));
+        fragmentTitleMap.put(fragments[STARS], getString(R.string.starred));
+        fragmentTitleMap.put(fragments[EXPLORE], getString(R.string.explore));
+        fragmentTitleMap.put(fragments[GISTS], getString(R.string.gists));
+        fragmentTitleMap.put(fragments[All_GISTS], getString(R.string.all_gists));
+        fragmentTitleMap.put(fragments[STARRED_GISTS], getString(R.string.starred_gists));
+        fragmentTitleMap.put(fragments[ISSUES], getString(R.string.issues));
+        fragmentTitleMap.put(fragments[TRENDING], getString(R.string.trending));
 
         Bundle eventsBundle = new Bundle();
         eventsBundle.putInt(EventsActivity.EVENTS_ID, EventsActivity.RECEIVED_EVENTS);
@@ -77,10 +92,7 @@ public class HomeActivity extends LeftDrawerActivity {
 
         setListener();
         mFragmentManager = getSupportFragmentManager();
-        mFragmentTransaction = mFragmentManager.beginTransaction();
-        mCurrentFragment = fragments[currentFragmentID];
-        mFragmentTransaction.replace(R.id.nav_content, mCurrentFragment);
-        mFragmentTransaction.commit();
+        changeFragment(currentFragmentID);
     }
 
     private void setListener() {
@@ -99,7 +111,7 @@ public class HomeActivity extends LeftDrawerActivity {
                         if (currentFragmentID == STARS) {
                         } else {
                             changeFragment(STARS);
-                            setToolbarTitle(R.string.starred);
+                            setToolbarTitle(fragmentTitleMap.get(mCurrentFragment));
                             item.setChecked(true);
                         }
                         break;
@@ -107,7 +119,7 @@ public class HomeActivity extends LeftDrawerActivity {
                         if (currentFragmentID == EVENTS) {
                         } else {
                             changeFragment(EVENTS);
-                            setToolbarTitle(R.string.events);
+                            setToolbarTitle(fragmentTitleMap.get(mCurrentFragment));
                             item.setChecked(true);
                         }
                         break;
@@ -116,7 +128,7 @@ public class HomeActivity extends LeftDrawerActivity {
 
                         } else {
                             changeFragment(EXPLORE);
-                            setToolbarTitle(R.string.explore);
+                            setToolbarTitle(fragmentTitleMap.get(mCurrentFragment));
                             item.setChecked(true);
                         }
                         break;
@@ -125,7 +137,7 @@ public class HomeActivity extends LeftDrawerActivity {
 
                         } else {
                             changeFragment(GISTS);
-                            setToolbarTitle(R.string.gists);
+                            setToolbarTitle(fragmentTitleMap.get(mCurrentFragment));
                             item.setChecked(true);
                         }
                         break;
@@ -134,7 +146,7 @@ public class HomeActivity extends LeftDrawerActivity {
 
                         } else {
                             changeFragment(All_GISTS);
-                            setToolbarTitle(R.string.all_gists);
+                            setToolbarTitle(fragmentTitleMap.get(mCurrentFragment));
                             item.setChecked(true);
                         }
                         break;
@@ -143,7 +155,7 @@ public class HomeActivity extends LeftDrawerActivity {
 
                         } else {
                             changeFragment(STARRED_GISTS);
-                            setToolbarTitle(R.string.starred_gists);
+                            setToolbarTitle(fragmentTitleMap.get(mCurrentFragment));
                             item.setChecked(true);
                         }
                         break;
@@ -152,7 +164,16 @@ public class HomeActivity extends LeftDrawerActivity {
 
                         } else {
                             changeFragment(ISSUES);
-                            setToolbarTitle(R.string.issues);
+                            setToolbarTitle(fragmentTitleMap.get(mCurrentFragment));
+                            item.setChecked(true);
+                        }
+                        break;
+                    case R.id.navigation_trending:
+                        if (currentFragmentID == TRENDING) {
+
+                        } else {
+                            changeFragment(TRENDING);
+                            setToolbarTitle(fragmentTitleMap.get(mCurrentFragment));
                             item.setChecked(true);
                         }
                         break;
@@ -180,7 +201,7 @@ public class HomeActivity extends LeftDrawerActivity {
     @Override
     protected void setToolbar() {
         super.setToolbar();
-        setToolbarTitle(R.string.events);
+        setToolbarTitle(fragmentTitleMap.get(mCurrentFragment));
     }
 
     private void exit() {

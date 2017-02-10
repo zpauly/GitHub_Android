@@ -20,6 +20,10 @@
             android:icon="@drawable/ic_info_outline_grey_700_24dp"
             android:title="@string/issues"/>
         <item
+            android:id="@+id/navigation_trending"
+            android:icon="@drawable/ic_fire_black_24px"
+            android:title="@string/trending"/>
+        <item
             android:id="@+id/navigation_gists_grp"
             android:icon="@drawable/ic_code"
             android:title="@string/gists">

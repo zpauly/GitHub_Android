@@ -209,12 +209,31 @@
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.AppCompatTextView
-            android:text="@string/expandabletextview"
+            android:text="@string/butterknife"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <android.support.v7.widget.AppCompatTextView
-            android:text="@string/expandabletextview_link"
+            android:text="@string/butterknife_link"
+            android:autoLink="web"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_margin="@dimen/components_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:text="@string/jsoup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:text="@string/jsoup_link"
             android:autoLink="web"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

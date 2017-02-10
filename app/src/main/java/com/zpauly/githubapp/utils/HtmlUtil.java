@@ -7,10 +7,13 @@ import android.text.style.BackgroundColorSpan;
 import android.text.style.StrikethroughSpan;
 import android.text.style.TypefaceSpan;
 
+import org.jsoup.Jsoup;
+import org.jsoup.select.Elements;
 import org.markdown4j.Markdown4jProcessor;
 import org.xml.sax.XMLReader;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by zpauly on 2016/10/20.
@@ -125,6 +128,10 @@ public class HtmlUtil {
             e.printStackTrace();
             return markdown;
         }
+    }
+
+    public static Elements parseHtml(String html, String cssQuery) {
+        return Jsoup.parse(html).select(cssQuery);
     }
 
     public static Html.TagHandler getTagHandler() {

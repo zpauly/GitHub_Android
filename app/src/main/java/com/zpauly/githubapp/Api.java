@@ -4,6 +4,8 @@ package com.zpauly.githubapp;
  * Created by zpauly on 16-6-9.
  */
 public interface Api {
+    String GITHUB_URL = "https://github.com/";
+
     String GitHubApi = "https://api.github.com/";
 
     String CLIENT_ID = "a087c2ffd5edfc494849";

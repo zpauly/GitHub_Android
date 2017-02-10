@@ -75,6 +75,12 @@ public interface RepositoriesService {
 
     String DIRECTION_DESC = "desc";
 
+    String TODAY_URL = "daily";
+
+    String WEEK_URL = "weekly";
+
+    String MONTH_URL = "monthly";
+
     /**
      * List repositories that are accessible to the authenticated user.
      * This includes repositories owned by the authenticated user,
@@ -327,4 +333,22 @@ public interface RepositoriesService {
     Observable<RepositoriesBean> createAFork(@Header("Authorization") String auth,
                                              @Path("owner") String owner,
                                              @Path("repo") String repo);
+
+    /**
+     * Get trending repositories
+     * @param lang
+     * @param since
+     * @return
+     */
+    @GET("/trending/{lang}")
+    Observable<String> getTrendings(@Path("lang") String lang,
+                                    @Query("since") String since);
+
+    /**
+     * Get default trending repositories
+     * @param since
+     * @return
+     */
+    @GET("/trending")
+    Observable<String> getDefaultTrendings(@Query("since") String since);
 }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/trending_toolbar_menu_time"
+          android:title="@string/time"
+          app:showAsAction="always">
+        <menu>
+            <group android:id="@+id/trending_toolbar_menu_time_grp"
+                   android:checkableBehavior="single">
+                <item android:id="@+id/trending_toolbar_time_today"
+                      android:title="@string/today"
+                      android:checked="true"/>
+                <item android:id="@+id/trending_toolbar_item_week"
+                      android:title="@string/this_week"/>
+                <item android:id="@+id/trending_toolbar_item_month"
+                      android:title="@string/this_month"/>
+            </group>
+        </menu>
+    </item>
+</menu>

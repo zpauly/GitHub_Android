@@ -139,6 +139,12 @@
     <string name="most_complete">Most complete</string>
     <string name="most_issues">Most issues</string>
     <string name="least_issues">Least issues</string>
+
+    <string name="trending">Trending</string>
+    <string name="time">Time</string>
+    <string name="today">Today</string>
+    <string name="this_week">This week</string>
+    <string name="this_month">This month</string>
     
     <string name="complete">complete</string>
     <string name="open">open</string>
@@ -206,8 +212,10 @@
     <string name="androidsvg_link">https://github.com/BigBadaboom/androidsvg</string>
     <string name="codeview">avraampiperidis/Codeview</string>
     <string name="codeview_link">https://github.com/avraampiperidis/Codeview</string>
-    <string name="expandabletextview">Manabu-GT/ExpandableTextView</string>
-    <string name="expandabletextview_link">https://github.com/Manabu-GT/ExpandableTextView</string>
+    <string name="butterknife">JakeWharton/butterknife</string>
+    <string name="butterknife_link">https://github.com/JakeWharton/butterknife</string>
+    <string name="jsoup">jhy/jsoup</string>
+    <string name="jsoup_link">https://github.com/jhy/jsoup</string>
 
     <string name="choose_code_style">Choose A Code Style</string>
     <string name="code_style">Code Style</string>

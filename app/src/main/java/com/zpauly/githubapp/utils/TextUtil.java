@@ -43,6 +43,9 @@ public class TextUtil {
     };
 
     public static final String timeConverter(String time) {
+        if (time == null) {
+            return "";
+        }
         return time.substring(0, 10);
     }
 
